@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AppMaterialModule } from './app-material/app-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
+import { HeaderComponent } from './core/header/header.component';
+import { HomeComponent } from './core/home/home.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-import { HomeComponent } from './core/home/home/home.component';
-import { HeaderComponent } from './core/header/header.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
@@ -19,10 +24,13 @@ import { LoginComponent } from './login/login.component';
     LoginComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    AppMaterialModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
