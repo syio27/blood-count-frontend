@@ -7,7 +7,12 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  onClick = false
   constructor(private authService: AuthService) { }
+  
+  toggleClick(){
+    this.onClick = !this.onClick
+  }
 
   onLogout() {
     this.authService.logout();

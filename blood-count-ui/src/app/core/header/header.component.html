@@ -1,4 +1,4 @@
-<div class="flex justify-between items-center py-9 px-9">
+<div class="flex justify-between items-center py-9 px-9 relative">
   <div class="px-16 py-[11px] border border-red-500">
     <span class="text-4xl font-normal">LOGO</span>
   </div>
@@ -11,7 +11,14 @@
         EN
       </div>
     </div>
-    <div class="w-20 h-20 border border-black bg-red-400 rounded-full">
+    <div class="w-20 h-20 border border-black bg-red-400 rounded-full cursor-pointer" 
+         (click)="toggleClick()">
+    </div>
+    <div class="mr-10 p-2 absolute top-[117px] right-0 
+                bg-white cursor-pointer shadow-md select-none" *ngIf="onClick">
+      <div class="text-xl">My Profile</div>
+      <hr class="my-2">
+      <div (click)="onLogout()" class="text-xl">Log Out</div>
     </div>
   </div>
-  </div>
+</div>
