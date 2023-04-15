@@ -1,24 +1,24 @@
-<div class="flex justify-between items-center py-9 px-9 relative">
-  <div class="px-16 py-[11px] border border-red-500">
-    <span class="text-4xl font-normal">LOGO</span>
+<div class="flex flex-row justify-between items-center py-4 md:py-9 px-4 md:px-9 relative">
+  <div class="md:px-8 md:py-3 sm:px-6 sm:py-2 border border-red-500">
+    <span class="text-2xl md:text-4xl font-normal">LOGO</span>
   </div>
-  <div class="flex items-center gap-36">
+  <div class="flex items-center gap-3 md:gap-5">
     <div class="flex">
-      <div class="px-7 py-2 text-4xl bg-gray-400">
+      <div class="px-4 md:px-7 py-2 text-lg md:text-4xl bg-gray-400">
         PL
       </div>
-      <div class="px-7 py-2 text-4xl bg-red-300">
+      <div class="px-4 md:px-7 py-2 text-lg md:text-4xl bg-red-300">
         EN
       </div>
     </div>
-    <div class="w-20 h-20 border border-black bg-red-400 rounded-full cursor-pointer" 
-         (click)="toggleClick()">
+    <div class="w-12 h-12 md:w-20 md:h-20 border border-black bg-red-400 rounded-full cursor-pointer
+    select-none" (click)="toggleClick()">
     </div>
-    <div class="mr-10 p-2 absolute top-[117px] right-0 
-                bg-white cursor-pointer shadow-md select-none" *ngIf="onClick">
-      <div class="text-xl">My Profile</div>
-      <hr class="my-2">
-      <div (click)="onLogout()" class="text-xl">Log Out</div>
+    <div class="mr-5 md:mr-10 p-2 md:p-4 absolute top-[68px] md:top-[117px] right-0 
+                bg-white cursor-pointer shadow-md select-none rounded-lg text-center" *ngIf="onClick">
+      <div class="text-md md:text-xl">My Profile</div>
+      <hr class="my-1 md:my-2">
+      <div (click)="onLogout()" class="text-md md:text-xl">Log Out</div>
     </div>
   </div>
 </div>
