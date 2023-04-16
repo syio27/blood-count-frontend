@@ -1,0 +1,53 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
+
+function passwordMatchValidator(form: FormGroup) {
+  const password = form.get('password').value;
+  const confirmPassword = form.get('confirmPassword').value;
+
+  if (password !== confirmPassword) {
+    return { passwordMismatch: true };
+  }
+
+  return null;
+}
+
+@Component({
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
+})
+export class RegistrationComponent implements OnInit {
+  form: FormGroup;
+  formSubmitAttempt: boolean;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) { }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      userName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    }, {
+      validator: passwordMatchValidator
+    });
+  }
+  isFieldInvalid(field: string) {
+    return (
+      (!this.form.get(field).valid && this.form.get(field).touched) ||
+      (this.formSubmitAttempt && !this.form.get(field).valid)
+    );
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.authService.register(this.form.value);
+    }
+    this.formSubmitAttempt = true;
+  }
+}

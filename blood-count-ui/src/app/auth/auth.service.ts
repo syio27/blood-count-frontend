@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   login(user: User) {
-    if (user.userName !== '' && user.password !== '' ) {
+    if (user.userName !== '' && user.password !== '') {
       this.loggedIn.next(true);
       this.router.navigate(['/']);
     }
@@ -25,5 +25,14 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
+  }
+
+  register(user: User) {
+    // Here you would send a request to your backend API to create a new user
+    // Once the request is successful, you can log the user in and navigate to the home page
+    if (user.userName !== '' && user.password !== '' && user.email !== '') {
+      this.loggedIn.next(true);
+      this.router.navigate(['/']);
+    }
   }
 }

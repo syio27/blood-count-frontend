@@ -1,0 +1,68 @@
+<div class="flex justify-center items-center h-screen bg-gray-200">
+    <div class="max-w-sm w-full">
+        <div class="bg-white shadow-md rounded px-8 py-8 pt-8">
+            <div class="mb-3">
+                <p class="text-xl font-bold">Register a new account</p>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="username">
+                        User
+                    </label>
+                    <input
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="username" type="text" placeholder="User" formControlName="userName" required>
+                    <mat-error *ngIf="isFieldInvalid('userName')" class="text-red-500 text-xs italic">
+                        Please inform your user name
+                    </mat-error>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="block text-gray-700 font-bold mb-2">Email address</label>
+                    <input type="email"
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="email" formControlName="email" placeholder="Email">
+                    <mat-error *ngIf="form.get('email').invalid && (form.get('email').dirty || formSubmitAttempt)"
+                        class="text-red-500 text-xs italic">
+                        Please enter a valid email address.
+                    </mat-error>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-gray-700 font-bold mb-2" for="password">
+                        Password
+                    </label>
+                    <input
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="password" type="password" placeholder="Password" formControlName="password" required>
+                    <mat-error *ngIf="isFieldInvalid('password')" class="text-red-500 text-xs italic">
+                        Please inform your password
+                    </mat-error>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-gray-700 font-bold mb-2" for="confirmPassword">
+                        Confirm Password
+                    </label>
+                    <input
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="confirmPassword" type="password" placeholder="Confirm Password"
+                        formControlName="confirmPassword" required>
+                    <mat-error *ngIf="form.get('password').value !== form.get('confirmPassword').value || isFieldInvalid('confirmPassword')" class="text-red-500 text-xs italic">
+                        Confirm password is required and must match the password field
+                    </mat-error>
+                </div>
+                <div class="flex flex-col items-center lg:items-start gap-2">
+                    <div class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full lg:w-auto text-center cursor-pointer"
+                        (click)="onSubmit()">
+                        Register
+                    </div>
+                    <div>
+                        Already have an account?
+                        <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                            routerLink="/login">
+                            Login here.
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

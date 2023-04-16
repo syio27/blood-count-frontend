@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AuthGuard } from './auth/auth.guard';
-import { HomeComponent } from './core/home/home.component';
+import { HomeComponent } from './components/home/home.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+
 
 const routes: Routes = [
   {
@@ -24,7 +26,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      }
+      },
+      { 
+        path: 'register', 
+        component: RegistrationComponent },
     ]
   },
   { path: '**', redirectTo: '' }
