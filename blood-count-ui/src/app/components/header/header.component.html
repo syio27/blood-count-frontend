@@ -14,14 +14,16 @@
     <!-- <div class="w-12 h-12 md:w-20 md:h-20 border border-black bg-red-400 rounded-full cursor-pointer
     select-none" (click)="toggleClick()">
     </div> -->
-    <span class="material-symbols-outlined cursor-pointer select-none text-6xl text-red-400" (click)="toggleClick()">
+    <span class="material-symbols-outlined cursor-pointer select-none text-5xl md:text-7xl text-red-400"
+      (click)="toggleClick()">
       account_circle
     </span>
-    <div class="mr-5 md:mr-10 p-2 md:p-4 absolute top-[68px] md:top-[117px] right-0 
-                bg-white cursor-pointer shadow-md select-none rounded-lg text-center" *ngIf="onClick">
-      <div class="text-md md:text-xl">My Profile</div>
-      <hr class="my-1 md:my-2">
-      <div (click)="onLogout()" class="text-md md:text-xl">Log Out</div>
+    <div class="mr-5 md:mr-10 absolute top-16 md:top-28 right-0 cursor-pointer select-none" *ngIf="onClick">
+      <div class="bg-white shadow-md rounded-lg text-center overflow-hidden">
+        <div class="text-base md:text-xl py-2 px-4 hover:bg-gray-100  rounded-t-lg">My Profile</div>
+        <hr class="mx-4">
+        <div (click)="onLogout()" class="text-base md:text-xl py-2 px-4 hover:bg-gray-100 rounded-b-lg">Log Out</div>
+      </div>
     </div>
   </div>
 </div>
