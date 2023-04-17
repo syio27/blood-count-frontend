@@ -34,7 +34,7 @@
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="password" type="password" placeholder="Password" formControlName="password" required>
                     <mat-error *ngIf="isFieldInvalid('password')" class="text-red-500 text-xs italic">
-                        Please inform your password
+                        Password must be at least 8 characters long and contain at least 1 symbol.
                     </mat-error>
                 </div>
                 <div class="mb-3">
@@ -45,8 +45,11 @@
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="confirmPassword" type="password" placeholder="Confirm Password"
                         formControlName="confirmPassword" required>
-                    <mat-error *ngIf="form.get('password').value !== form.get('confirmPassword').value || isFieldInvalid('confirmPassword')" class="text-red-500 text-xs italic">
-                        Confirm password is required and must match the password field
+                    <mat-error *ngIf="form.get('confirmPassword').touched || formSubmitAttempt" class="text-red-500 text-xs italic">
+                        <span *ngIf="form.get('confirmPassword').hasError('required')">Confirm password is
+                            required</span>
+                        <span *ngIf="form.hasError('passwordMismatch') && form.get('confirmPassword').value !== '' ">Passwords do not
+                            match</span>
                     </mat-error>
                 </div>
                 <div class="flex flex-col items-center lg:items-start gap-2">
