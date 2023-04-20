@@ -3,31 +3,13 @@
     <span class="text-2xl md:text-4xl font-normal">LOGO</span>
   </div>
   <div class="flex items-center gap-3 md:gap-5">
-    <div class="flex cursor-pointer select-none">
-      <div class="px-4 md:px-7 py-2 text-lg md:text-4xl" 
-           [ngClass]="{'bg-red-300': currentLang === 'pl', 'bg-gray-400': currentLang === 'en'}"
-           (click)="switchLang('pl')">
-        PL
-      </div>
-      <div class="px-4 md:px-7 py-2 text-lg md:text-4xl" 
-           [ngClass]="{'bg-red-300': currentLang === 'en', 'bg-gray-400': currentLang === 'pl'}"
-           (click)="switchLang('en')">
-        EN
-      </div>
-    </div>
-    <!-- <div class="w-12 h-12 md:w-20 md:h-20 border border-black bg-red-400 rounded-full cursor-pointer
-    select-none" (click)="toggleClick()">
-    </div> -->
+      <app-lang-switcher />
     <span class="material-symbols-outlined cursor-pointer select-none text-5xl md:text-7xl text-red-400"
       (click)="toggleClick()">
       account_circle
     </span>
     <div class="mr-5 md:mr-10 absolute top-16 md:top-28 right-0 cursor-pointer select-none" *ngIf="onClick">
-      <div class="bg-white shadow-md rounded-lg text-center overflow-hidden">
-        <div class="text-base md:text-xl py-2 px-4 hover:bg-gray-100  rounded-t-lg">My Profile</div>
-        <hr class="mx-4">
-        <div (click)="onLogout()" class="text-base md:text-xl py-2 px-4 hover:bg-gray-100 rounded-b-lg">Log Out</div>
-      </div>
+      <app-popup />
     </div>
   </div>
 </div>

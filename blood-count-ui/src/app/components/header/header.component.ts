@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,19 +7,9 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class HeaderComponent {
   onClick = false;
-  currentLang = 'en';
-
-  constructor(private authService: AuthService) { }
   
   toggleClick() {
     this.onClick = !this.onClick;
   }
 
-  onLogout() {
-    this.authService.logout();
-  }
-
-  switchLang(lang: string) {
-    this.currentLang = lang;
-  }
 }
