@@ -15,8 +15,8 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { PopupComponent } from './components/popup/popup.component';
-import { LangSwitcherComponent } from './components/lang-switcher/lang-switcher.component';
+import { PopupComponent } from './components/header/popup/popup.component';
+import { LangSwitcherComponent } from './components/header/lang-switcher/lang-switcher.component';
 
 @NgModule({
   declarations: [
