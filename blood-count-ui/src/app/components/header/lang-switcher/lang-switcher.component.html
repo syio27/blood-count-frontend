@@ -1,0 +1,12 @@
+<div class="flex cursor-pointer select-none">
+    <div class="px-4 md:px-7 py-2 text-lg md:text-4xl"
+        [ngClass]="{'bg-red-300': currentLang === 'pl', 'bg-gray-400': currentLang === 'en'}"
+        (click)="switchLang('pl')">
+        PL
+    </div>
+    <div class="px-4 md:px-7 py-2 text-lg md:text-4xl"
+        [ngClass]="{'bg-red-300': currentLang === 'en', 'bg-gray-400': currentLang === 'pl'}"
+        (click)="switchLang('en')">
+        EN
+    </div>
+</div>
