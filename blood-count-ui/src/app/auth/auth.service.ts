@@ -13,10 +13,10 @@ export class AuthService {
 
   constructor(
     private router: Router
-  ) {}
+  ) { }
 
   login(user: User) {
-    if (user.userName !== '' && user.password !== '') {
+    if (user.email !== '' && user.password !== '') {
       this.loggedIn.next(true);
       this.router.navigate(['/']);
     }
