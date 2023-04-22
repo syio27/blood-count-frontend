@@ -29,7 +29,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      userName: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
       confirmPassword: ['', Validators.required],
@@ -46,7 +46,7 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.authService.register(this.form.value);
+      this.authService.register(this.form.value).subscribe();
     }
     this.formSubmitAttempt = true;
   }
