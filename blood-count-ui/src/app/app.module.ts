@@ -17,6 +17,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PopupComponent } from './components/header/popup/popup.component';
 import { LangSwitcherComponent } from './components/header/lang-switcher/lang-switcher.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,13 +36,14 @@ import { LangSwitcherComponent } from './components/header/lang-switcher/lang-sw
     AppMaterialModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }
