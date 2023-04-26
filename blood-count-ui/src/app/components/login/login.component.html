@@ -12,7 +12,7 @@
           <input
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email" type="text" placeholder="Enter email" formControlName="email" required>
-          <mat-error *ngIf="isFieldInvalid('email')" class="text-red-500 text-xs italic">
+          <mat-error *ngIf="formSubmitAttempt && form.get('email').value == ''" class="text-red-500 text-xs italic">
             Please inform your email
           </mat-error>
         </div>
@@ -23,8 +23,13 @@
           <input
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password" type="password" placeholder="Password" formControlName="password" required>
-          <mat-error *ngIf="isFieldInvalid('password')" class="text-red-500 text-xs italic">
+          <mat-error *ngIf="formSubmitAttempt && form.get('password').value == ''" class="text-red-500 text-xs italic">
             Please inform your password
+          </mat-error>
+          <mat-error *ngIf="formSubmitAttempt && invalidLogin && 
+          form.get('password').value && form.get('email').value != ''"
+          class="text-red-500 text-xs italic">
+            Invalid email or password
           </mat-error>
         </div>
         <div class="flex flex-col items-center lg:items-start gap-2">
