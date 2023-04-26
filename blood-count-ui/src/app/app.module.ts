@@ -18,6 +18,8 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { PopupComponent } from './components/header/popup/popup.component';
 import { LangSwitcherComponent } from './components/header/lang-switcher/lang-switcher.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { HistoryComponent } from './components/user-profile/history/history.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegistrationComponent,
     PopupComponent,
     LangSwitcherComponent,
+    UserProfileComponent,
+    HistoryComponent,
   ],
   imports: [
     ReactiveFormsModule,

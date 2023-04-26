@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-popup',
@@ -8,7 +10,14 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class PopupComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
+
+  onMyProfile() {
+    this.router.navigate(['/profile']);
+  }
 
   onLogout() {
     this.authService.logout();
