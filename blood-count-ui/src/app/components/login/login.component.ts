@@ -9,7 +9,9 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  private formSubmitAttempt: boolean;
+  formSubmitAttempt = false;
+  invalidLogin: boolean;
+
 
   constructor(
     private fb: FormBuilder,
@@ -20,6 +22,10 @@ export class LoginComponent implements OnInit {
     this.form = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
+    });
+    this.form.valueChanges.subscribe(() => {
+      this.formSubmitAttempt = false;
+      this.invalidLogin = false;
     });
   }
 
@@ -32,7 +38,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.authService.login(this.form.value).subscribe();
+      this.authService.login(this.form.value).subscribe(
+        result => {
+          if (result) {
+            this.invalidLogin = false;
+          } else {
+            this.invalidLogin = true;
+          }
+        }
+      );
     }
     this.formSubmitAttempt = true;
   }

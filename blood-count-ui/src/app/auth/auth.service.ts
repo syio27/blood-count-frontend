@@ -6,7 +6,7 @@ import { RegisterRequest } from './registerRequest';
 import { AuthenticationResponse } from './authenticationResponse';
 import { HttpClient } from '@angular/common/http';
 import { tap, shareReplay, catchError, of, Observable } from 'rxjs';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 @Injectable()
 export class AuthService {
