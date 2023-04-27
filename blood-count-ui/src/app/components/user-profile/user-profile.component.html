@@ -4,7 +4,7 @@
       User Profile
     </div>
     <hr class="mt-4 border-black">
-    <div class="my-6 md:mt-8 mx-4 lg:mx-16 xl:mx-28">
+    <div class="my-6 md:mt-8">
       <!-- Profile Information -->
       <div class="mb-6">
         <div class="text-xl md:text-2xl font-medium mb-2">Personal Information</div>
@@ -16,45 +16,56 @@
           <div class="text-lg font-medium">Email:</div>
           <div class="text-lg">nursultan@example.com</div>
         </div>
-        <div class="flex flex-row gap-2">
-          <div class="text-lg font-medium">Phone:</div>
-          <div class="text-lg">+7 777 777 77 77</div>
+        <div>
+          <div *ngIf="!emailChange" class="cursor-pointer text-blue-500 select-none" (click)="onChangeEmail()">Change email</div>
+          <div *ngIf="emailChange" class="cursor-pointer text-red-500 select-none" (click)="onChangeEmail()">Cancel</div>
+          <form *ngIf="emailChange" [formGroup]="emailForm">
+            <div class="flex gap-3">
+              <input id="current-email" type="email" formControlName="newEmail" class="pr-36 border text-lg"
+                placeholder="Enter new email" required>
+              <div (click)="changeEmail()"
+                class="px-3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
+                Change email</div>
+            </div>
+          </form>
         </div>
         <div class="flex justify-start mt-4">
-          <div (click)="onHistory()" class="w-full md:w-1/2 lg:w-1/3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
+          <div (click)="onHistory()"
+            class="px-3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
             View History
           </div>
         </div>
       </div>
+      <hr class="mt-4 border-black">
       <!-- Change Password Form -->
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-">
         <div class="text-xl md:text-2xl font-medium ">Change Password</div>
-        <form class="flex flex-col gap-4" [formGroup]="form">
-          <div class="flex flex-col gap-4">
+        <form class="flex flex-col gap-2" [formGroup]="passwordForm">
+          <div class="flex flex-col gap-2">
             <label for="current-password" class="w-full md:w-1/3 text-lg font-medium">Current Password:</label>
             <div class="w-full md:w-2/3">
-              <input id="current-password" type="password" formControlName="currentPassword" class="w-full border text-lg" placeholder="Enter current password" required>
+              <input id="current-password" type="password" formControlName="currentPassword"
+                class="pr-36 border text-lg" placeholder="Enter current password" required>
             </div>
-          </div>
-          <div class="flex flex-col gap-4">
             <label for="new-password" class="w-full md:w-1/3 text-lg font-medium">New Password:</label>
-            <div class="w-full md:w-2/3">
-              <input id="new-password" type="password" formControlName="password" class="w-full border text-lg" placeholder="Enter new password" required>
+            <div>
+              <input id="new-password" type="password" formControlName="password" class="pr-36 border text-lg"
+                placeholder="Enter new password" required>
             </div>
-          </div>
-          <div class="flex flex-col gap-4">
             <label for="confirm-password" class="w-full md:w-1/3 text-lg font-medium">Confirm Password:</label>
-            <div class="w-full md:w-2/3">
-              <input id="confirm-password"  formControlName="confirmPassword" type="password" class="w-full border text-lg" placeholder="Confirm new password" required>
+            <div>
+              <input id="confirm-password" formControlName="confirmPassword" type="password"
+                class="pr-36 border text-lg" placeholder="Confirm new password" required>
             </div>
           </div>
-          <div class="flex">
-            <div (click)="changePassword()" class="w-full md:w-1/2 lg:w-1/3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
+          <div class="flex mt-4">
+            <div (click)="changePassword()"
+              class="px-3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
               Change Password
             </div>
           </div>
         </form>
-      </div>   
+      </div>
     </div>
   </div>
 </div>
