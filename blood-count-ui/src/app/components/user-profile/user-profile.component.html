@@ -17,8 +17,10 @@
           <div class="text-lg">nursultan@example.com</div>
         </div>
         <div>
-          <div *ngIf="!emailChange" class="cursor-pointer text-blue-500 select-none" (click)="onChangeEmail()">Change email</div>
-          <div *ngIf="emailChange" class="cursor-pointer text-red-500 select-none" (click)="onChangeEmail()">Cancel</div>
+          <div *ngIf="!emailChange" class="cursor-pointer text-blue-500 select-none" (click)="onChangeEmail()">Change
+            email</div>
+          <div *ngIf="emailChange" class="cursor-pointer text-red-500 select-none" (click)="onChangeEmail()">Cancel
+          </div>
           <form *ngIf="emailChange" [formGroup]="emailForm">
             <div class="flex gap-3">
               <input id="current-email" type="email" formControlName="newEmail" class="pr-36 border text-lg"
@@ -38,7 +40,7 @@
       </div>
       <hr class="mt-4 border-black">
       <!-- Change Password Form -->
-      <div class="flex flex-col gap-">
+      <div class="flex flex-col gap-2 md:mt-8">
         <div class="text-xl md:text-2xl font-medium ">Change Password</div>
         <form class="flex flex-col gap-2" [formGroup]="passwordForm">
           <div class="flex flex-col gap-2">
