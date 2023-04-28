@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-lang-switcher',
   templateUrl: './lang-switcher.component.html',
