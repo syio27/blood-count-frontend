@@ -20,7 +20,7 @@ function passwordMatchValidator(form: FormGroup) {
 })
 export class RegistrationComponent implements OnInit {
   form: FormGroup;
-  formSubmitAttempt: boolean;
+  formSubmitAttempt = false;
 
   constructor(
     private fb: FormBuilder,
@@ -33,9 +33,13 @@ export class RegistrationComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
       confirmPassword: ['', Validators.required],
-    }, {
-      validator: passwordMatchValidator
-    });
+    },
+      {
+        validator: passwordMatchValidator
+      }),
+      this.form.valueChanges.subscribe(() => {
+        this.formSubmitAttempt = false;
+      });
   }
   isFieldInvalid(field: string) {
     return (

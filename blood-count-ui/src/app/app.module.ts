@@ -20,6 +20,7 @@ import { LangSwitcherComponent } from './components/header/lang-switcher/lang-sw
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HistoryComponent } from './components/user-profile/history/history.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { HistoryComponent } from './components/user-profile/history/history.comp
     LangSwitcherComponent,
     UserProfileComponent,
     HistoryComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     ReactiveFormsModule,

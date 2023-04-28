@@ -4,10 +4,10 @@ import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 
 function passwordMatchValidator(passwordForm: FormGroup) {
-  const password = passwordForm.get('password').value;
+  const newPassword = passwordForm.get('newPassword').value;
   const confirmPassword = passwordForm.get('confirmPassword').value;
 
-  if (password !== confirmPassword) {
+  if (newPassword !== confirmPassword) {
     return { passwordMismatch: true };
   }
 
@@ -22,7 +22,7 @@ function passwordMatchValidator(passwordForm: FormGroup) {
 export class UserProfileComponent implements OnInit {
   passwordForm: FormGroup;
   emailForm: FormGroup;
-  formSubmitAttempt: boolean;
+  formSubmitAttempt = false;
   emailChange = false;
 
   constructor(
@@ -34,44 +34,67 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.passwordForm = this.fb.group({
       currentPassword: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
       confirmPassword: ['', Validators.required],
     }, {
       validator: passwordMatchValidator
     }),
-    this.emailForm = this.fb.group({
-      newEmail: ['', [Validators.required, Validators.email]]
-    })
+      this.emailForm = this.fb.group({
+        newEmail: ['', [Validators.required, Validators.email]]
+      }),
+      this.passwordForm.valueChanges.subscribe(() => {
+        this.formSubmitAttempt = false;
+      }),
+      this.emailForm.valueChanges.subscribe(() => {
+        this.formSubmitAttempt = false;
+      })
+
   }
 
   isFieldInvalid(field: string) {
-    return (
-      (!this.passwordForm.get(field).valid && this.passwordForm.get(field).touched) ||
-      (this.passwordForm.get(field).untouched && this.formSubmitAttempt)
-    );
+    switch (field) {
+      case 'newEmail':
+        return (
+          (!this.emailForm.get(field).valid && this.emailForm.get(field).touched) ||
+          (this.emailForm.get(field).untouched && this.formSubmitAttempt)
+        );
+      default:
+        return (
+          (!this.passwordForm.get(field).valid && this.passwordForm.get(field).touched) ||
+          (this.passwordForm.get(field).untouched && this.formSubmitAttempt)
+        );
+    }
   }
 
-  onHistory(){
+
+  onHistory() {
     this.router.navigate(['/history'])
   }
-  onChangeEmail(){
+  onChangeEmail() {
     this.emailChange = !this.emailChange
   }
-  changeEmail(){
-
+  changeEmail() {
+    if (this.emailForm.valid) {
+      const data = {
+        newEmail: this.emailForm.value.newEmail
+      };
+      /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
+         // do something with the response
+       });*/
+    }
+    this.formSubmitAttempt = true;
   }
   changePassword() {
     if (this.passwordForm.valid) {
       const data = {
         currentPassword: this.passwordForm.value.currentPassword,
-        newPassword: this.passwordForm.value.password
+        newPassword: this.passwordForm.value.newPassword
       };
-     /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
-        // do something with the response
-      });*/
+      /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
+         // do something with the response
+       });*/
     }
-    else {
-      this.formSubmitAttempt = true;
-    }
+    this.formSubmitAttempt = true;
   }
+
 }

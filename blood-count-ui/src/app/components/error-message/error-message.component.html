@@ -1,0 +1,10 @@
+<mat-error class="text-red-500 text-xs italic">
+    <span *ngIf="isInvalidName">Please inform your Full Name</span>
+    <span *ngIf="isInvalidEmail">Please enter a valid email address</span>
+    <span *ngIf="isInvalidPassword">Password must be at least 8 characters long and contain at least 1 symbol.</span>
+    <span *ngIf="isInvalidConfirmPassword">Confirm password is required</span>
+    <span *ngIf="passwordMissMatch">Passwords do not match</span>
+    <span *ngIf="enterEmail">Please inform your email</span>
+    <span *ngIf="enterPassword">Please inform your password</span>
+    <span *ngIf="invalidLogin">Invalid email or password</span>
+</mat-error>

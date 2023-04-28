@@ -7,57 +7,47 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="mb-4">
           <label class="block text-gray-700 font-bold mb-2" for="name">
-            User
+            Full Name:
           </label>
           <input
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name" type="text" placeholder="User" formControlName="name" required>
-          <mat-error *ngIf="isFieldInvalid('name')" class="text-red-500 text-xs italic">
-            Please inform your user name
-          </mat-error>
+            id="name" type="text" placeholder="Full Name" formControlName="name" required>
+          <app-error-message *ngIf="formSubmitAttempt" [isInvalidName]="isFieldInvalid('name')"></app-error-message>
         </div>
         <div class="mb-3">
-          <label for="email" class="block text-gray-700 font-bold mb-2">Email address</label>
+          <label for="email" class="block text-gray-700 font-bold mb-2">Email address:</label>
           <input type="email"
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email" formControlName="email" placeholder="Email">
-          <mat-error *ngIf="form.get('email').invalid && (form.get('email').dirty || formSubmitAttempt)"
-            class="text-red-500 text-xs italic">
-            Please enter a valid email address.
-          </mat-error>
+          <app-error-message *ngIf="formSubmitAttempt" [isInvalidEmail]="isFieldInvalid('email')"></app-error-message>
         </div>
         <div class="mb-3">
           <label class="block text-gray-700 font-bold mb-2" for="password">
-            Password
+            Password:
           </label>
           <input
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password" type="password" placeholder="Password" formControlName="password" required>
-          <mat-error *ngIf="isFieldInvalid('password')" class="text-red-500 text-xs italic">
-            Password must be at least 8 characters long and contain at least 1 symbol.
-          </mat-error>
+          <app-error-message *ngIf="formSubmitAttempt"
+            [isInvalidPassword]="isFieldInvalid('password')"></app-error-message>
         </div>
         <div class="mb-3">
           <label class="block text-gray-700 font-bold mb-2" for="confirmPassword">
-            Confirm Password
+            Confirm Password:
           </label>
           <input
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="confirmPassword" type="password" placeholder="Confirm Password" formControlName="confirmPassword"
             required>
-          <mat-error *ngIf="form.get('confirmPassword').touched || formSubmitAttempt"
-            class="text-red-500 text-xs italic">
-            <span *ngIf="form.get('confirmPassword').hasError('required')">Confirm password is
-              required</span>
-            <span *ngIf="form.hasError('passwordMismatch') && form.get('confirmPassword').value !== '' ">Passwords do
-              not
-              match</span>
-          </mat-error>
+          <app-error-message *ngIf="formSubmitAttempt"
+            [isInvalidConfirmPassword]="isFieldInvalid('confirmPassword')"></app-error-message>
+          <div *ngIf="form.hasError('passwordMismatch') && form.get('confirmPassword').value !== ''">
+            <app-error-message *ngIf="formSubmitAttempt" [passwordMissMatch]="true"></app-error-message>
+          </div>
         </div>
         <div class="flex flex-col items-center lg:items-start gap-2">
-          <div
-            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full lg:w-auto text-center cursor-pointer"
-            (click)="onSubmit()">
+          <div class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
+             focus:outline-none focus:shadow-outline w-full lg:w-auto text-center cursor-pointer" (click)="onSubmit()">
             Register
           </div>
           <div>
