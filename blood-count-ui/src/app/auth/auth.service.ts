@@ -10,7 +10,7 @@ import * as moment from 'moment';
 
 @Injectable()
 export class AuthService {
-  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoginExpired());
 
   private readonly baseUrl = "http://localhost:8080/api/v1/auth/"
 
@@ -70,7 +70,7 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  public isLoginExpired() {
+  public isLoginExpired(): boolean {
     return moment().isBefore(this.getExpiration());
   }
 
