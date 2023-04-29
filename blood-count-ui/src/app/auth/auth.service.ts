@@ -21,9 +21,12 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient
-  ) { }
+  ) {
+    this.loggedIn.next(this.isLoginExpired());
+  }
 
   login(authenticationRequest: AuthenticationRequest) {
+    authenticationRequest.timezoneOffset = this.getTimezoneoffset();
     return this.http.post<AuthenticationResponse>(this.baseUrl + "authenticate", authenticationRequest, { observe: 'body' })
       .pipe(
         tap(res => {
@@ -44,6 +47,7 @@ export class AuthService {
   }
 
   register(registerRequest: RegisterRequest) {
+    registerRequest.timezoneOffset = this.getTimezoneoffset();
     return this.http.post<AuthenticationResponse>(this.baseUrl + "register", registerRequest, { observe: 'body' })
       .pipe(
         tap(res => {
@@ -57,21 +61,20 @@ export class AuthService {
   }
 
   private setSession(authResult) {
-    const expiresAt = moment().add(authResult.expirationDate, 'second');
-
-    localStorage.setItem('token', authResult.token);
-    localStorage.setItem("expirationDate", JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem('jwt', authResult.token);
+    localStorage.setItem("expirationDate", JSON.stringify(authResult.expirationDate.valueOf()));
   }
 
   logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("jwt");
     localStorage.removeItem("expirationDate");
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
 
   public isLoginExpired(): boolean {
-    return moment().isBefore(this.getExpiration());
+    const expirationDate = this.getExpiration();
+    return moment().isBefore(expirationDate);
   }
 
   isLoggedOut() {
@@ -81,6 +84,10 @@ export class AuthService {
   getExpiration() {
     const expirationDate = localStorage.getItem("expirationDate");
     const expiresAt = JSON.parse(expirationDate);
-    return moment(expiresAt);
+    return moment.parseZone(expiresAt);
+  }
+
+  getTimezoneoffset() {
+    return new Date().getTimezoneOffset() * -1;
   }
 }
