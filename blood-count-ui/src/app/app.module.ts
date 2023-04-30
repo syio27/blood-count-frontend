@@ -17,10 +17,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PopupComponent } from './components/header/popup/popup.component';
 import { LangSwitcherComponent } from './components/header/lang-switcher/lang-switcher.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HistoryComponent } from './components/user-profile/history/history.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent],
 
 })

@@ -5,8 +5,10 @@ import { AuthenticationRequest } from './authenticationRequest';
 import { RegisterRequest } from './registerRequest';
 import { AuthenticationResponse } from './authenticationResponse';
 import { HttpClient } from '@angular/common/http';
-import { tap, shareReplay, catchError, of, Observable } from 'rxjs';
+import { tap, shareReplay, catchError, of, switchMap } from 'rxjs';
 import * as moment from 'moment';
+import { UserDetails } from '../interfaces/userDetails';
+import { UserDetailsService } from '../services/user-details.service';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +22,8 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private userDetailsService: UserDetailsService
   ) {
     this.loggedIn.next(this.isLoginExpired());
   }
@@ -29,10 +32,18 @@ export class AuthService {
     authenticationRequest.timezoneOffset = this.getTimezoneoffset();
     return this.http.post<AuthenticationResponse>(this.baseUrl + "authenticate", authenticationRequest, { observe: 'body' })
       .pipe(
-        tap(res => {
+        switchMap((res: AuthenticationResponse) => {
           this.setSession(res)
           this.loggedIn.next(true);
-          this.router.navigate(['/']);
+
+          return this.userDetailsService.fetchUserDetailsByEmail(authenticationRequest.email);
+        }),
+        tap((userDetails: UserDetails) => {
+          //save userDetails to BehaviorSubject
+          console.log("USER DETAILS ->")
+          console.log(userDetails)
+          this.userDetailsService.setUserDetails(userDetails),
+            this.router.navigate(['/']);
         }),
         catchError(error => {
           if (error.status === 401) {
@@ -74,6 +85,11 @@ export class AuthService {
 
   public isLoginExpired(): boolean {
     const expirationDate = this.getExpiration();
+    // console.log("exp date");
+    // console.log(expirationDate)
+    // console.log("current date")
+    // console.log(moment())
+    // console.log(moment().isBefore(expirationDate))
     return moment().isBefore(expirationDate);
   }
 
@@ -88,6 +104,7 @@ export class AuthService {
   }
 
   getTimezoneoffset() {
-    return new Date().getTimezoneOffset() * -1;
+    //return new Date().getTimezoneOffset() * -1;
+    return 0;
   }
 }

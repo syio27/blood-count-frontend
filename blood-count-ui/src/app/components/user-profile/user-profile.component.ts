@@ -27,8 +27,8 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
@@ -48,7 +48,6 @@ export class UserProfileComponent implements OnInit {
       this.emailForm.valueChanges.subscribe(() => {
         this.formSubmitAttempt = false;
       })
-
   }
 
   isFieldInvalid(field: string) {
