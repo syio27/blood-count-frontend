@@ -2,6 +2,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgIconsModule } from '@ng-icons/core';
+import { iconoirTimer } from '@ng-icons/iconoir'
 
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +23,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HistoryComponent } from './components/user-profile/history/history.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { WhiteBoxComponent } from './components/white-box/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
@@ -37,6 +41,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     UserProfileComponent,
     HistoryComponent,
     ErrorMessageComponent,
+    FooterComponent,
+    WhiteBoxComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -44,7 +50,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgIconsModule.withIcons({ iconoirTimer })
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

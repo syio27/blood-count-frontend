@@ -1,14 +1,14 @@
-<div class="flex flex-row justify-between items-center py-4 md:py-9 px-4 md:px-9 relative">
-  <div class="md:px-8 md:py-3 sm:px-6 sm:py-2 border border-red-500">
-    <span (click)="onLogo()" class="text-2xl md:text-4xl font-normal">LOGO</span>
+<div class="flex flex-row justify-between items-center relative">
+  <div class="md:px-8 md:py-3 sm:px-6 sm:py-2">
+    <span (click)="onLogo()" class="text-2xl md:text-4xl font-normal select-none cursor-pointer">LOGO</span>
   </div>
   <div class="flex items-center gap-3 md:gap-5">
       <app-lang-switcher />
-    <span class="material-symbols-outlined cursor-pointer select-none text-5xl md:text-7xl text-red-400"
+    <span class="material-symbols-outlined cursor-pointer select-none text-5xl text-black"
       (click)="toggleClick()">
       account_circle
     </span>
-    <div class="mr-5 md:mr-10 absolute top-16 md:top-28 right-0 cursor-pointer select-none" *ngIf="onClick">
+    <div class="absolute top-11 md:top-16 right-0 cursor-pointer select-none" *ngIf="onClick">
       <app-popup />
     </div>
   </div>
