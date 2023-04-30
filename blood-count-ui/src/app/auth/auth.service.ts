@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap, shareReplay, catchError, of, switchMap } from 'rxjs';
 import * as moment from 'moment';
 import { UserDetails } from '../interfaces/userDetails';
-import { UserDetailsService } from '../services/user-details.service';
+import { SharedUserDetailsService } from '../services/shared-user-details.service';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private userDetailsService: UserDetailsService
+    private userDetailsService: SharedUserDetailsService
   ) {
     this.loggedIn.next(this.isLoginExpired());
   }
