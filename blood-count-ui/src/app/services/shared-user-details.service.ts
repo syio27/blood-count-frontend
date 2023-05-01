@@ -17,7 +17,7 @@ export class SharedUserDetailsService {
   private userDetailsSource: BehaviorSubject<UserDetails> = new BehaviorSubject<UserDetails>(null);
   private readonly baseUrl = "http://localhost:8080/api/v1/users/"
 
-  get userDetails() {
+  getUserDetails() {
     return this.userDetailsSource.asObservable();
   }
 

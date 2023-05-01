@@ -10,11 +10,11 @@
         <div class="text-xl md:text-2xl font-medium mb-2">Personal Information</div>
         <div class="flex flex-row gap-2">
           <div class="text-lg font-medium">Name:</div>
-          <div class="text-lg">Nursultan Nazarbayev</div>
+          <div class="text-lg">{{userDetails.name}}</div>
         </div>
         <div class="flex flex-row gap-2">
           <div class="text-lg font-medium">Email:</div>
-          <div class="text-lg">nursultan@example.com</div>
+          <div class="text-lg">{{userDetails.email}}</div>
         </div>
         <div>
           <div *ngIf="!emailChange" class="cursor-pointer inline-block text-blue-500 select-none"

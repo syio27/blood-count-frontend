@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthService } from '../../auth/auth.service';
+import { SharedUserDetailsService } from '../../services/shared-user-details.service'
 import { Router } from '@angular/router';
+import { UserDetails } from '../../interfaces/userDetails';
+
 
 function passwordMatchValidator(passwordForm: FormGroup) {
   const newPassword = passwordForm.get('newPassword').value;
@@ -24,11 +26,12 @@ export class UserProfileComponent implements OnInit {
   emailForm: FormGroup;
   formSubmitAttempt = false;
   emailChange = false;
+  userDetails: UserDetails;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-
+    private sharedUserService: SharedUserDetailsService
   ) { }
 
   ngOnInit() {
@@ -47,7 +50,10 @@ export class UserProfileComponent implements OnInit {
       }),
       this.emailForm.valueChanges.subscribe(() => {
         this.formSubmitAttempt = false;
-      })
+      }),
+      this.sharedUserService.getUserDetails().subscribe(userDetails => {
+        this.userDetails = userDetails;
+      });
   }
 
   isFieldInvalid(field: string) {
@@ -94,6 +100,7 @@ export class UserProfileComponent implements OnInit {
        });*/
     }
     this.formSubmitAttempt = true;
+    console.log(this.userDetails)
   }
 
 }
