@@ -87,6 +87,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("expirationDate");
+    localStorage.removeItem("userDetails");
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
