@@ -61,10 +61,18 @@ export class AuthService {
     registerRequest.timezoneOffset = this.getTimezoneoffset();
     return this.http.post<AuthenticationResponse>(this.baseUrl + "register", registerRequest, { observe: 'body' })
       .pipe(
-        tap(res => {
+        switchMap((res: AuthenticationResponse) => {
           this.setSession(res)
           this.loggedIn.next(true);
-          this.router.navigate(['/']);
+
+          return this.userDetailsService.fetchUserDetailsByEmail(registerRequest.email);
+        }),
+        tap((userDetails: UserDetails) => {
+          //save userDetails to BehaviorSubject
+          console.log("USER DETAILS ->")
+          console.log(userDetails)
+          this.userDetailsService.setUserDetails(userDetails),
+            this.router.navigate(['/']);
         }),
         catchError(() => []),
         shareReplay()
