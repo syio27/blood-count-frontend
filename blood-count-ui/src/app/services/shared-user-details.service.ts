@@ -23,6 +23,7 @@ export class SharedUserDetailsService {
 
   setUserDetails(userDetails: UserDetails) {
     this.userDetailsSource.next(userDetails);
+    this.persistUserDetailsToLocalStore(userDetails);
   }
 
   constructor(private http: HttpClient) { }
@@ -30,10 +31,6 @@ export class SharedUserDetailsService {
   fetchUserDetailsByEmail(email: string): Observable<UserDetails> {
     return this.http.get<UserDetails>(this.baseUrl + `email/${email}`, { observe: 'body', responseType: 'json' })
       .pipe(
-        tap((res: UserDetails) => {
-          this.persistUserDetailsToLocalStore(res);
-        }
-        ),
         retry(3),
         catchError(this.handleException)
       );
