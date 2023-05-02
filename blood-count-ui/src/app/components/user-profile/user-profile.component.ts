@@ -81,11 +81,13 @@ export class UserProfileComponent implements OnInit {
   changeEmail() {
     if (this.emailForm.valid) {
       const data = {
-        newEmail: this.emailForm.value.newEmail
+        id: this.userDetails.id,
+        email: this.emailForm.value.newEmail,
+        name: this.userDetails.name,
+        role: this.userDetails.role
       };
-      /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
-         // do something with the response
-       });*/
+      this.sharedUserService.setUserDetails(data).subscribe(() => {
+      });
     }
     this.formSubmitAttempt = true;
   }
@@ -100,7 +102,6 @@ export class UserProfileComponent implements OnInit {
        });*/
     }
     this.formSubmitAttempt = true;
-    console.log(this.userDetails)
   }
 
 }
