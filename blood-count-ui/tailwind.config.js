@@ -6,7 +6,7 @@ module.exports = {
       backgroundImage: {
         polandFlag: "url('./assets/polandflag.png')",
         englishFlag: "url('/assets/englishflag.png')"
-      }
+      },
     },
   },
   plugins: [],

@@ -1,15 +1,20 @@
 <div class="flex flex-row justify-between items-center relative">
-  <div class="md:px-8 md:py-3 sm:px-6 sm:py-2">
+  <div class="md:px-8 md:py-3 sm:px-6 sm:py-2 z-10">
     <span (click)="onLogo()" class="text-2xl md:text-4xl font-normal select-none cursor-pointer">LOGO</span>
   </div>
   <div class="flex items-center gap-3 md:gap-5">
-      <app-lang-switcher />
-    <span class="material-symbols-outlined cursor-pointer select-none text-5xl text-black"
-      (click)="toggleClick()">
-      account_circle
-    </span>
-    <div class="absolute top-11 md:top-16 right-0 cursor-pointer select-none" *ngIf="onClick">
-      <app-popup />
+    <app-lang-switcher />
+    <div class="relative">
+      <div class="text-xl px-2 py-1 flex shadow-xl bg-white select-none cursor-pointer z-[100]" (click)="toggleClick()">
+        {{userDetails.name}}
+        <span class="material-symbols-outlined text-xl font-bold transition duration-150 transform"
+          [class.rotate-180]="onClick" [class.rotate-0]="!onClick">
+          expand_more
+        </span>
+      </div>
+      <div class="absolute top-full right-0 w-full bg-white shadow-xl transition duration-150 transform origin-top"
+        [class.scale-y-0]="!onClick" [class.scale-y-100]="onClick">
+        <app-popup class="z-[10] relative" />
+      </div>
     </div>
   </div>
-</div>
