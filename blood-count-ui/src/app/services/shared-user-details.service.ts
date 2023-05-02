@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDetails } from '../interfaces/userDetails';
-import { BehaviorSubject, throwError, catchError, retry, tap } from 'rxjs';
+import { BehaviorSubject, throwError, catchError, retry, tap, Observable } from 'rxjs';
 
 /**
  * Shared Service used to hold the User's Details information from `users/email/{email}` api
@@ -27,12 +27,11 @@ export class SharedUserDetailsService {
 
   constructor(private http: HttpClient) { }
 
-  fetchUserDetailsByEmail(email: string) {
+  fetchUserDetailsByEmail(email: string): Observable<UserDetails> {
     return this.http.get<UserDetails>(this.baseUrl + `email/${email}`, { observe: 'body', responseType: 'json' })
       .pipe(
         tap((res: UserDetails) => {
-          const userDetailsString = JSON.stringify(res)
-          localStorage.setItem('userDetails', userDetailsString);
+          this.persistUserDetailsToLocalStore(res);
         }
         ),
         retry(3),
@@ -41,7 +40,17 @@ export class SharedUserDetailsService {
   }
 
 
-  private getUserDetailsFromLocalStorage() {
+  /**
+   * Sets userDetails to localStorage to be persisted inside the whole application
+   * and can be returned and used with BehaviorSubject on other components of app
+   * @param userDetails 
+   */
+  private persistUserDetailsToLocalStore(userDetails: UserDetails) {
+    const userDetailsString = JSON.stringify(userDetails)
+    localStorage.setItem('userDetails', userDetailsString);
+  }
+
+  private getUserDetailsFromLocalStorage(): UserDetails {
     const userDetailsString = localStorage.getItem('userDetails');
     const userDetails = JSON.parse(userDetailsString);
     return userDetails;
