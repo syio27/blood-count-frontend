@@ -80,26 +80,13 @@ export class UserProfileComponent implements OnInit {
   }
   changeEmail() {
     if (this.emailForm.valid) {
-      const data = {
-        id: this.userDetails.id,
-        email: this.emailForm.value.newEmail,
-        name: this.userDetails.name,
-        role: this.userDetails.role
-      };
-      this.sharedUserService.setUserDetails(data).subscribe(() => {
-      });
+      //TODO
     }
     this.formSubmitAttempt = true;
   }
   changePassword() {
     if (this.passwordForm.valid) {
-      const data = {
-        currentPassword: this.passwordForm.value.currentPassword,
-        newPassword: this.passwordForm.value.newPassword
-      };
-      /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
-         // do something with the response
-       });*/
+      
     }
     this.formSubmitAttempt = true;
   }

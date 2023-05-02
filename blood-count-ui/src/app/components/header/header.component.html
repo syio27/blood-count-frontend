@@ -1,11 +1,11 @@
-<div class="flex flex-row justify-between items-center relative">
+<div #header class="flex flex-row justify-between items-center relative">
   <div class="md:px-8 md:py-3 sm:px-6 sm:py-2 z-10">
     <span (click)="onLogo()" class="text-2xl md:text-4xl font-normal select-none cursor-pointer">LOGO</span>
   </div>
   <div class="flex items-center gap-3 md:gap-5">
     <app-lang-switcher />
     <div class="relative">
-      <div class="text-xl py-1 px-2 w-30 flex justify-center text-center transition duration-75 
+      <div class="text-xl py-1 px-2 min-w-[120px] flex justify-center text-center transition duration-75 
       items-center shadow-lg bg-white select-none cursor-pointer z-[100] hover:bg-gray-100" [class.rounded-t-md]="onClick"
         [class.rounded-md]="!onClick" (click)="toggleClick()">
         {{userDetails.name}}
