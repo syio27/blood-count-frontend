@@ -13,7 +13,6 @@ import { BehaviorSubject, throwError, catchError, retry, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedUserDetailsService {
-
   private userDetailsSource: BehaviorSubject<UserDetails> = new BehaviorSubject<UserDetails>(this.getUserDetailsFromLocalStorage() || null);
   private readonly baseUrl = "http://localhost:8080/api/v1/users/"
 
