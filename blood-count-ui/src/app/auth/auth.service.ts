@@ -81,11 +81,15 @@ export class AuthService {
   }
 
   logout() {
+    this.removeAccess();
+    this.router.navigate(['/login']);
+  }
+
+  removeAccess() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("expirationDate");
     localStorage.removeItem("userDetails");
     this.loggedIn.next(false);
-    this.router.navigate(['/login']);
   }
 
   public isLoginExpired(): boolean {

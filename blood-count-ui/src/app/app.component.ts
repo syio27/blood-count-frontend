@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthService } from './auth/auth.service';
 
 
 interface AppState {
@@ -14,7 +15,10 @@ interface AppState {
 export class AppComponent implements OnInit {
   title = 'blood-count-ui';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit() {
@@ -24,18 +28,8 @@ export class AppComponent implements OnInit {
       )
       .subscribe((event: NavigationEnd) => {
         if (event.url === '/login' || event.url === '/register') {
-          this.removeAccess();
-          this.removeUserDetails();
+          this.authService.removeAccess();
         }
       });
-  }
-
-  private removeAccess() {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("expirationDate");
-  }
-
-  private removeUserDetails() {
-    localStorage.removeItem("userDetails");
   }
 }
