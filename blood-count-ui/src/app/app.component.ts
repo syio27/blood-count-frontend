@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
         filter(event => event instanceof NavigationEnd)
       )
       .subscribe((event: NavigationEnd) => {
-        if (event.url === '/login') {
+        if (event.url === '/login' || event.url === '/register') {
           this.removeAccess();
           this.removeUserDetails();
         }
