@@ -75,20 +75,34 @@ export class UserProfileComponent implements OnInit {
   onHistory() {
     this.router.navigate(['/history'])
   }
+
   onChangeEmail() {
     this.emailChange = !this.emailChange
   }
+
   changeEmail() {
     if (this.emailForm.valid) {
-      //TODO
-    }
-    this.formSubmitAttempt = true;
-  }
-  changePassword() {
-    if (this.passwordForm.valid) {
-      
+      const data = {
+        newEmail: this.emailForm.value.newEmail
+      };
+      /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
+         // do something with the response
+       });*/
     }
     this.formSubmitAttempt = true;
   }
 
+  changePassword() {
+    if (this.passwordForm.valid) {
+      const data = {
+        currentPassword: this.passwordForm.value.currentPassword,
+        newPassword: this.passwordForm.value.newPassword
+      };
+      /* this.authService.updateUser(data).subscribe((res: any) => { updateUser func
+         // do something with the response
+       });*/
+    }
+    this.formSubmitAttempt = true;
+    console.log(this.userDetails)
+  }
 }

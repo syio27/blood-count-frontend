@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { AuthenticationRequest } from './authenticationRequest';
-import { RegisterRequest } from './registerRequest';
-import { AuthenticationResponse } from './authenticationResponse';
+import { AuthenticationRequest } from '../interfaces/authenticationRequest';
+import { RegisterRequest } from '../interfaces/registerRequest';
+import { AuthenticationResponse } from '../interfaces/authenticationResponse';
 import { HttpClient } from '@angular/common/http';
 import { tap, shareReplay, catchError, of, switchMap } from 'rxjs';
 import * as moment from 'moment';
@@ -40,8 +40,6 @@ export class AuthService {
         }),
         tap((userDetails: UserDetails) => {
           //save userDetails to BehaviorSubject
-          console.log("USER DETAILS ->")
-          console.log(userDetails)
           this.userDetailsService.setUserDetails(userDetails),
             this.router.navigate(['/']);
         }),
@@ -69,8 +67,6 @@ export class AuthService {
         }),
         tap((userDetails: UserDetails) => {
           //save userDetails to BehaviorSubject
-          console.log("USER DETAILS ->")
-          console.log(userDetails)
           this.userDetailsService.setUserDetails(userDetails),
             this.router.navigate(['/']);
         }),
@@ -94,11 +90,6 @@ export class AuthService {
 
   public isLoginExpired(): boolean {
     const expirationDate = this.getExpiration();
-    // console.log("exp date");
-    // console.log(expirationDate)
-    // console.log("current date")
-    // console.log(moment())
-    // console.log(moment().isBefore(expirationDate))
     return moment().isBefore(expirationDate);
   }
 
