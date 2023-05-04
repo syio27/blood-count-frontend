@@ -33,10 +33,10 @@ export class HeaderComponent {
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const clickedInside = this.elementRef.nativeElement.contains(event.target);
-    if (this.onClick && !clickedInside) {
-      this.onClick = false;
-    }
+onDocumentClick(event: MouseEvent) {
+  const targetElement = document.querySelector('#tapper');
+  if (this.onClick && event.target !== targetElement) {
+    this.onClick = false;
   }
+}
 }
