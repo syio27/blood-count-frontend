@@ -4,8 +4,9 @@
   </div>
   <div class="flex items-center gap-3 md:gap-5">
     <app-lang-switcher />
+    <app-status-button />
     <div class="relative">
-      <div id="tapper" class="text-xl py-1 px-2 min-w-[120px] flex justify-center text-center transition duration-75 
+      <div id="tapper" class="text-xl py-1 px-2 min-w-[120px] max-w-[120px] flex justify-center text-center transition duration-75 
       items-center shadow-lg bg-white select-none cursor-pointer z-[100] hover:bg-gray-100" [class.rounded-t-md]="onClick"
         [class.rounded-md]="!onClick" (click)="toggleClick()">
         {{userDetails.name}}
