@@ -1,0 +1,30 @@
+<app-white-box>
+    <div class="overflow-x-auto">
+        <table class="table-auto border w-full text-center">
+            <thead>
+                <tr class="border">
+                    <th rowspan="2" class="px-2 py-2 border">Value</th>
+                    <th rowspan="2" class="px-2 py-2 border">Unit</th>
+                    <th colspan="2" class="px-2 py-2 border">Female</th>
+                    <th colspan="2" class="px-2 py-2 border">Male</th>
+                </tr>
+                <tr class="border">
+                    <th class="px-2 py-2 border">Min</th>
+                    <th class="px-2 py-2 border">Max</th>
+                    <th class="px-2 py-2 border">Min</th>
+                    <th class="px-2 py-2 border">Max</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of cbcData">
+                    <td class="border px-2 py-2">{{ data.value }}</td>
+                    <td class="border px-2 py-2">{{ data.unit }}</td>
+                    <td class="border px-2 py-2">{{ data.femaleMin }}</td>
+                    <td class="border px-2 py-2">{{ data.femaleMax }}</td>
+                    <td class="border px-2 py-2">{{ data.maleMin }}</td>
+                    <td class="border px-2 py-2">{{ data.maleMax }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-white-box>
