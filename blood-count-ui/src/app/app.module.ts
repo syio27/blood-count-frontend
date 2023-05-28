@@ -25,6 +25,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { WhiteBoxComponent } from './components/white-box/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { StatusButtonComponent } from './components/header/status-button/status-button.component';
+import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { StatusButtonComponent } from './components/header/status-button/status-
     FooterComponent,
     WhiteBoxComponent,
     StatusButtonComponent,
+    CbcTableComponent,
   ],
   imports: [
     ReactiveFormsModule,

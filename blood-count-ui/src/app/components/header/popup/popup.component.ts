@@ -18,7 +18,9 @@ export class PopupComponent {
   onMyProfile() {
     this.router.navigate(['/profile']);
   }
-
+  onCBC(){
+    this.router.navigate(['/table']);
+  }
   onLogout() {
     this.authService.logout();
   }

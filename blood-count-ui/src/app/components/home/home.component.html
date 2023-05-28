@@ -35,7 +35,8 @@
           [class.rotate-180]="onClick" [class.rotate-0]="!onClick">
           expand_more
         </span>
-        <ul class="absolute left-0 right-0 bg-white border rounded-b overflow-hidden transition origin-top duration-150"
+        <ul
+          class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150"
           [class.scale-y-0]="!onClick" [class.scale-y-100]="onClick">
           <li *ngFor="let option of dropdownOptions" class="py-2 px-3 cursor-pointer hover:bg-gray-100"
             (click)="selectOption(option)" [class.selected]="option === selectedOption">
