@@ -4,11 +4,12 @@ import { BehaviorSubject } from 'rxjs';
 import { AuthenticationRequest } from '../interfaces/authenticationRequest';
 import { RegisterRequest } from '../interfaces/registerRequest';
 import { AuthenticationResponse } from '../interfaces/authenticationResponse';
-import { HttpClient } from '@angular/common/http';
-import { tap, shareReplay, catchError, of, switchMap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { tap, shareReplay, catchError, of, switchMap, throwError } from 'rxjs';
 import * as moment from 'moment';
 import { UserDetails } from '../interfaces/userDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
+import { PasswordChangeRequest } from '../interfaces/passwordChangeRequest';
 
 @Injectable()
 export class AuthService {
@@ -75,7 +76,7 @@ export class AuthService {
       )
   }
 
-  private setSession(authResult) {
+  setSession(authResult) {
     localStorage.setItem('jwt', authResult.token);
     localStorage.setItem("expirationDate", JSON.stringify(authResult.expirationDate.valueOf()));
   }

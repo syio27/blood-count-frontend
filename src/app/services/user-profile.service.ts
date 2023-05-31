@@ -5,6 +5,8 @@ import { PasswordChangeRequest } from '../interfaces/passwordChangeRequest';
 import { EmailChangeRequest } from '../interfaces/emailChangeRequest';
 import { UserDetails } from '../interfaces/userDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
+import { AuthService } from '../auth/auth.service';
+import { AuthenticationResponse } from '../interfaces/authenticationResponse';
 
 /**
  * Service for UserProfile component to communicate with backend
@@ -18,7 +20,8 @@ export class UserProfileService {
 
   constructor(
     private http: HttpClient,
-    private userDetailsService: SharedUserDetailsService
+    private userDetailsService: SharedUserDetailsService,
+    private authService: AuthService
   ) { }
 
   /**
@@ -27,8 +30,13 @@ export class UserProfileService {
    * @param id of current logged-in user, passed from localStorage.getItem("userDetails")
    */
   updatePassword(passwordChangeRequest: PasswordChangeRequest, id: string) {
-    return this.http.put<void>(this.baseUrl + `${id}/password`, passwordChangeRequest, { observe: 'body' })
+    return this.http.put<AuthenticationResponse>(this.baseUrl + `${id}/password`, passwordChangeRequest, { observe: 'body' })
       .pipe(
+        tap((res: AuthenticationResponse) => {
+          localStorage.removeItem("jwt")
+          localStorage.removeItem("expirationDate")
+          this.authService.setSession(res)
+        }),
         catchError(this.handleException)
       );
   }
@@ -47,7 +55,7 @@ export class UserProfileService {
     if (exception.status === 0) {
       console.error(`Error on client-side occured:, ${exception.error}`)
     } else {
-      console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.error}`)
+      console.error(`Error on server-side occured with status code: ${exception.status} and message: ${JSON.stringify(exception.error)}`)
     }
 
     return throwError(() => new Error("Error happened; Try again"))
