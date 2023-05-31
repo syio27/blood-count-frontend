@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDetails } from 'src/app/interfaces/userDetails';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
 
 @Component({
@@ -33,10 +33,10 @@ export class HeaderComponent {
   }
 
   @HostListener('document:click', ['$event'])
-onDocumentClick(event: MouseEvent) {
-  const targetElement = document.querySelector('#tapper');
-  if (this.onClick && event.target !== targetElement) {
-    this.onClick = false;
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = document.querySelector('#tapper');
+    if (this.onClick && event.target !== targetElement) {
+      this.onClick = false;
+    }
   }
-}
 }

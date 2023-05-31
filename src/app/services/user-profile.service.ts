@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, catchError, tap } from 'rxjs';
-import { PasswordChangeRequest } from '../interfaces/passwordChangeRequest';
-import { EmailChangeRequest } from '../interfaces/emailChangeRequest';
-import { UserDetails } from '../interfaces/userDetails';
+import { PasswordChangeRequest } from '../interfaces/IPasswordChangeRequest';
+import { EmailChangeRequest } from '../interfaces/IEmailChangeRequest';
+import { UserDetails } from '../interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthenticationResponse } from '../interfaces/authenticationResponse';
+import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
 
 /**
  * Service for UserProfile component to communicate with backend

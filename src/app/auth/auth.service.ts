@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { AuthenticationRequest } from '../interfaces/authenticationRequest';
-import { RegisterRequest } from '../interfaces/registerRequest';
-import { AuthenticationResponse } from '../interfaces/authenticationResponse';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AuthenticationRequest } from '../interfaces/IAuthenticationRequest';
+import { RegisterRequest } from '../interfaces/IRegisterRequest';
+import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
+import { HttpClient } from '@angular/common/http';
 import { tap, shareReplay, catchError, of, switchMap, throwError } from 'rxjs';
 import * as moment from 'moment';
-import { UserDetails } from '../interfaces/userDetails';
+import { UserDetails } from '../interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
-import { PasswordChangeRequest } from '../interfaces/passwordChangeRequest';
 
 @Injectable()
 export class AuthService {

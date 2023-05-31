@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
 import { Router } from '@angular/router';
-import { UserDetails } from '../../interfaces/userDetails';
+import { UserDetails } from '../../interfaces/IUserDetails';
 import { UserProfileService } from 'src/app/services/user-profile.service';
-import { PasswordChangeRequest } from 'src/app/interfaces/passwordChangeRequest';
-import { EmailChangeRequest } from 'src/app/interfaces/emailChangeRequest';
+import { PasswordChangeRequest } from 'src/app/interfaces/IPasswordChangeRequest';
+import { EmailChangeRequest } from 'src/app/interfaces/IEmailChangeRequest';
 
 
 function passwordMatchValidator(passwordForm: FormGroup) {
