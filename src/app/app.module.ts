@@ -26,6 +26,10 @@ import { WhiteBoxComponent } from './components/white-box/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { StatusButtonComponent } from './components/header/status-button/status-button.component';
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
+import { RootUserComponent } from './components/roles/root-user/root-user.component';
+import { NavigationBarComponent } from './components/roles/navigation-bar/navigation-bar.component';
+import { UsersTableComponent } from './components/roles/root-user/users-table/users-table.component';
+import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,10 @@ import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
     WhiteBoxComponent,
     StatusButtonComponent,
     CbcTableComponent,
+    RootUserComponent,
+    NavigationBarComponent,
+    UsersTableComponent,
+    InviteUserComponent,
   ],
   imports: [
     ReactiveFormsModule,

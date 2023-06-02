@@ -1,0 +1,9 @@
+<app-navigation-bar (optionSelected)="onOptionSelected($event)"></app-navigation-bar>
+<app-white-box>
+    <div class="text-3xl mb-6">
+        Root Panel
+        <hr class="mt-4 border-black">
+    </div>
+    <app-invite-user *ngIf="selectedOption === 'invite user'"></app-invite-user>
+    <app-users-table *ngIf="selectedOption === 'manage all'"></app-users-table>
+</app-white-box>

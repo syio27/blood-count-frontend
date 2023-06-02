@@ -1,0 +1,32 @@
+<div class="bg-gray-100 flex text-center select-none">
+    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(1)" [class.border-b-4]="currentCategory === 1"
+        [class.border-blue-500]="currentCategory === 1">
+        Category 1
+    </div>
+    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(2)" [class.border-b-4]="currentCategory === 2"
+        [class.border-blue-500]="currentCategory === 2">
+        Category 2
+    </div>
+    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(3)" [class.border-b-4]="currentCategory === 3"
+        [class.border-blue-500]="currentCategory === 3">
+        Category 3
+    </div>
+</div>
+<table class="w-full border">
+    <thead class="border">
+        <tr>
+            <th class="py-2 w-1/12 border">#</th>
+            <th class="py-2 w-5/12 border">Email</th>
+            <th class="py-2 w-3/12 border">Code</th>
+            <th class="py-2 w-3/12 border">Role</th>
+        </tr>
+    </thead>
+    <tbody id="table-body" class="items-center text-center">
+        <tr *ngFor="let item of tableData; let i = index">
+            <td class="py-2 border">{{ i + 1 }}</td>
+            <td class="border">{{ item.email }}</td>
+            <td class="border">{{ item.code }}</td>
+            <td class="border">{{ item.role }}</td>
+        </tr>
+    </tbody>
+</table>

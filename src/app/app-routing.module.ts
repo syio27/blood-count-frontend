@@ -9,6 +9,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HistoryComponent } from './components/user-profile/history/history.component'
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
+import { RootUserComponent } from './components/roles/root-user/root-user.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'table',
         component: CbcTableComponent
+      },
+      {
+        path: 'root',
+        component: RootUserComponent
       }
     ]
   },
