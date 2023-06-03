@@ -19,6 +19,9 @@ function passwordMatchValidator(form: FormGroup) {
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  onClick = false;
+  dropdownOptions = ['Group 1', 'Group 2', 'Group 3'];
+  selectedOption = '';
   form: FormGroup;
   formSubmitAttempt = false;
 
@@ -53,5 +56,14 @@ export class RegistrationComponent implements OnInit {
       this.authService.register(this.form.value).subscribe();
     }
     this.formSubmitAttempt = true;
+  }
+
+  toggleClick() {
+    this.onClick = !this.onClick;
+  }
+
+  selectOption(option: string) {
+    this.selectedOption = option;
+    this.onClick = false;
   }
 }

@@ -1,0 +1,33 @@
+<div class="flex flex-col justify-center items-center">
+    <div class="w-full lg:w-1/2 p-2" *ngFor="let group of displayedGroups">
+        <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
+            <div class="flex flex-col">
+                <div class="text-gray-700 font-bold text-xl mb-2">Group {{ group.number }}</div>
+                <div class="text-gray-600 mb-2">Total Students: {{ group.totalStudents }}</div>
+            </div>
+            <div>
+                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Details
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full mt-4 flex justify-center">
+        <nav class="inline-flex">
+            <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                (click)="previousPage()" [class.opacity-50]="currentPage === 1">
+                Previous
+            </div>
+            <ng-container *ngFor="let page of pages">
+                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                    [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                    {{ page }}
+                </div>
+            </ng-container>
+            <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
+                [class.opacity-50]="currentPage === totalPages">
+                Next
+            </div>
+        </nav>
+    </div>
+</div>

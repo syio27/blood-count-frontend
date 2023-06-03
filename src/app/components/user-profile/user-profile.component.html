@@ -9,33 +9,22 @@
       <div class="mb-6">
         <div class="text-xl md:text-2xl font-medium mb-2">Personal Information</div>
         <div class="flex flex-row gap-2">
-          <div class="text-lg font-medium">Name:</div>
-          <div class="text-lg">{{userDetails.name}}</div>
-        </div>
-        <div class="flex flex-row gap-2">
           <div class="text-lg font-medium">Email:</div>
           <div class="text-lg">{{userDetails.email}}</div>
         </div>
-        <div>
-          <div *ngIf="!emailChange" class="cursor-pointer inline-block text-blue-500 select-none"
-            (click)="onChangeEmail()">Change email</div>
-          <div *ngIf="emailChange" class="cursor-pointer inline-block text-red-500 select-none"
-            (click)="onChangeEmail()">Cancel</div>
-          <form *ngIf="emailChange" [formGroup]="emailForm">
-            <div class="flex gap-3">
-              <input id="current-email" type="email" formControlName="newEmail" class="pr-36 border text-lg"
-                placeholder="Enter new email" required>
-              <div (click)="changeEmail()"
-                class="px-3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
-                Change email</div>
-            </div>
-            <app-error-message *ngIf="formSubmitAttempt && emailChange" [isInvalidEmail]="isFieldInvalid('newEmail')">
-            </app-error-message>
-          </form>
+        <div class="flex flex-row gap-2 items-center">
+          <div class="text-lg font-medium">Group number:</div>
+          <div class="text-lg">Group number</div>
+          <div class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
+          focus:outline-none focus:shadow-outline text-center cursor-pointer">See group</div>
+        </div>
+        <div class="flex flex-row gap-2">
+          <div class="text-lg font-medium">Role:</div>
+          <div class="text-lg">Role</div>
         </div>
         <div class="flex justify-start mt-4">
-          <div (click)="onHistory()"
-            class="px-3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
+          <div (click)="onHistory()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
+            focus:outline-none focus:shadow-outline w-full lg:w-36 text-center cursor-pointer">
             View History
           </div>
         </div>
@@ -47,14 +36,16 @@
         <form class="flex flex-col gap-2" [formGroup]="passwordForm">
           <div class="flex flex-col gap-2">
             <label for="current-password" class="w-full md:w-1/3 text-lg font-medium">Current Password:</label>
-            <div class="w-full md:w-2/3">
+            <div>
               <input id="current-password" type="password" formControlName="currentPassword"
-                class="pr-36 border text-lg" placeholder="Enter current password" required>
+                class="appearance-none border rounded w-full lg:w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter current password" required>
             </div>
             <label for="new-password" class="w-full md:w-1/3 text-lg font-medium">New Password:</label>
             <div>
               <div>
-                <input id="new-password" type="password" formControlName="newPassword" class="pr-36 border text-lg"
+                <input id="new-password" type="password" formControlName="newPassword"
+                  class="appearance-none border rounded w-full lg:w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter new password" required>
               </div>
               <app-error-message *ngIf="formSubmitAttempt" [isInvalidPassword]="isFieldInvalid('newPassword')">
@@ -64,7 +55,8 @@
             <div>
               <div>
                 <input id="confirm-password" formControlName="confirmPassword" type="password"
-                  class="pr-36 border text-lg" placeholder="Confirm new password" required>
+                  class="appearance-none border rounded w-full lg:w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Confirm new password" required>
               </div>
               <div
                 *ngIf="passwordForm.hasError('passwordMismatch') && passwordForm.get('confirmPassword').value !== ''">
@@ -78,8 +70,8 @@
             <div class="text-xs text-gray-500">Make sure it's at least 8 characters including
               a number, an uppercase letter, a lowercase letter and a symbol</div>
             <div class="flex">
-              <div (click)="changePassword()"
-                class="px-3 border text-center cursor-pointer select-none bg-gray-500 text-white text-lg font-medium">
+              <div (click)="changePassword()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
+                focus:outline-none focus:shadow-outline w-full lg:w-52 text-center cursor-pointer">
                 Change Password
               </div>
             </div>
