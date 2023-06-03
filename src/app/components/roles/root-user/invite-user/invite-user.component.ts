@@ -6,16 +6,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./invite-user.component.css']
 })
 export class InviteUserComponent {
-  onClick = false;
+  roleDropdownOpen = false;
+  groupDropdownOpen = false;
   dropdownOptions = ['Student', 'Teacher', 'Admin'];
-  selectedOption = '';
+  groupDropdownOptions = ['Group 1', 'Group 2','Group 3'];
 
-  toggleClick() {
-    this.onClick = !this.onClick;
+  selectedRoleOption = '';
+  selectedGroupOption = '';
+
+  toggleRoleDropdown() {
+    this.roleDropdownOpen = !this.roleDropdownOpen;
   }
 
-  selectOption(option: string) {
-    this.selectedOption = option;
-    this.onClick = false;
+  toggleGroupDropdown() {
+    this.groupDropdownOpen = !this.groupDropdownOpen;
+  }
+
+  selectRoleOption(option: string) {
+    this.selectedRoleOption = option;
+    this.roleDropdownOpen = false;
+  }
+
+  selectGroupOption(option: string) {
+    this.selectedGroupOption = option;
+    this.groupDropdownOpen = false;
   }
 }
