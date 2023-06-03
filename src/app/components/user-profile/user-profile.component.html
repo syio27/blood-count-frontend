@@ -38,14 +38,14 @@
             <label for="current-password" class="w-full md:w-1/3 text-lg font-medium">Current Password:</label>
             <div>
               <input id="current-password" type="password" formControlName="currentPassword"
-                class="appearance-none border rounded w-full lg:w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter current password" required>
             </div>
             <label for="new-password" class="w-full md:w-1/3 text-lg font-medium">New Password:</label>
             <div>
               <div>
                 <input id="new-password" type="password" formControlName="newPassword"
-                  class="appearance-none border rounded w-full lg:w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter new password" required>
               </div>
               <app-error-message *ngIf="formSubmitAttempt" [isInvalidPassword]="isFieldInvalid('newPassword')">
@@ -55,7 +55,7 @@
             <div>
               <div>
                 <input id="confirm-password" formControlName="confirmPassword" type="password"
-                  class="appearance-none border rounded w-full lg:w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Confirm new password" required>
               </div>
               <div
