@@ -1,5 +1,5 @@
 export interface RegisterRequest {
-    name: string;
+    groupNumber: string
     password: string;
     email: string;
     timezoneOffset: number;

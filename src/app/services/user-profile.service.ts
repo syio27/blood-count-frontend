@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, catchError, tap } from 'rxjs';
 import { PasswordChangeRequest } from '../interfaces/IPasswordChangeRequest';
-import { EmailChangeRequest } from '../interfaces/IEmailChangeRequest';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
 import { AuthService } from '../auth/auth.service';
@@ -36,16 +35,6 @@ export class UserProfileService {
           localStorage.removeItem("jwt")
           localStorage.removeItem("expirationDate")
           this.authService.setSession(res)
-        }),
-        catchError(this.handleException)
-      );
-  }
-
-  changeEmail(emailChangeRequest: EmailChangeRequest, id: string) {
-    return this.http.put<UserDetails>(this.baseUrl + `${id}/email`, emailChangeRequest, { observe: 'body', responseType: 'json' })
-      .pipe(
-        tap((res: UserDetails) => {
-          this.userDetailsService.setUserDetails(res)
         }),
         catchError(this.handleException)
       );

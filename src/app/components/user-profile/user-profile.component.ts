@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { UserDetails } from '../../interfaces/IUserDetails';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { PasswordChangeRequest } from 'src/app/interfaces/IPasswordChangeRequest';
-import { EmailChangeRequest } from 'src/app/interfaces/IEmailChangeRequest';
 
 
 function passwordMatchValidator(passwordForm: FormGroup) {
@@ -78,32 +77,6 @@ export class UserProfileComponent implements OnInit {
 
   onHistory() {
     this.router.navigate(['/history'])
-  }
-
-  onChangeEmail() {
-    this.emailChange = !this.emailChange
-  }
-
-  changeEmail() {
-    const userId: string = this.userDetails.id;
-    console.log("user's id -> " + userId)
-    if (this.emailForm.valid) {
-      console.log(this.emailForm.value)
-      const emailChangeRequest: EmailChangeRequest = {
-        email: this.emailForm.value.newEmail
-      };
-      console.log(emailChangeRequest)
-      this.profileService.changeEmail(emailChangeRequest, userId).subscribe(
-        result => {
-          if (result) {
-            // change state of valid email to true
-          } else {
-            // change state of valid email to false
-          }
-        }
-      )
-    }
-    this.formSubmitAttempt = true;
   }
 
   changePassword() {

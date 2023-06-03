@@ -1,6 +1,6 @@
 export interface UserDetails {
     id: string
-    name: string
     email: string
     role: string
+    groupNumber: string
 }
