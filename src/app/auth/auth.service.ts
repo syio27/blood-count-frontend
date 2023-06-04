@@ -40,8 +40,8 @@ export class AuthService {
         }),
         tap((userDetails: UserDetails) => {
           //save userDetails to BehaviorSubject
-          this.userDetailsService.setUserDetails(userDetails),
-            this.router.navigate(['/']);
+          this.userDetailsService.setUserDetails(userDetails);
+          this.router.navigate(['/']);
         }),
         catchError(error => {
           if (error.status === 401) {
@@ -67,8 +67,8 @@ export class AuthService {
         }),
         tap((userDetails: UserDetails) => {
           //save userDetails to BehaviorSubject
-          this.userDetailsService.setUserDetails(userDetails),
-            this.router.navigate(['/']);
+          this.userDetailsService.setUserDetails(userDetails);
+          this.router.navigate(['/']);
         }),
         catchError(() => []),
         shareReplay()
