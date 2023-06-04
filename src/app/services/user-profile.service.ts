@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, catchError, tap } from 'rxjs';
 import { PasswordChangeRequest } from '../interfaces/IPasswordChangeRequest';
-import { UserDetails } from '../interfaces/IUserDetails';
-import { SharedUserDetailsService } from '../services/shared-user-details.service';
 import { AuthService } from '../auth/auth.service';
 import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
 
@@ -19,7 +17,6 @@ export class UserProfileService {
 
   constructor(
     private http: HttpClient,
-    private userDetailsService: SharedUserDetailsService,
     private authService: AuthService
   ) { }
 
