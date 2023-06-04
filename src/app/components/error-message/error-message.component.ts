@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ErrorMessageComponent {
   //registration
-  @Input() isInvalidName: boolean
   @Input() isInvalidEmail: boolean
   @Input() isInvalidPassword: boolean
   @Input() isInvalidConfirmPassword: boolean

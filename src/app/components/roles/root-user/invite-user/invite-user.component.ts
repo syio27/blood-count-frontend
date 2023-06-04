@@ -1,19 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-invite-user',
   templateUrl: './invite-user.component.html',
   styleUrls: ['./invite-user.component.css']
 })
-export class InviteUserComponent {
+export class InviteUserComponent implements OnInit {
+  form: FormGroup;
   roleDropdownOpen = false;
   groupDropdownOpen = false;
   dropdownOptions = ['Student', 'Teacher', 'Admin'];
-  groupDropdownOptions = ['Group 1', 'Group 2','Group 3'];
-
+  groupDropdownOptions = ['Group 1', 'Group 2', 'Group 3'];
   selectedRoleOption = '';
   selectedGroupOption = '';
 
+  constructor(
+    private fb: FormBuilder,
+  ) { }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      email: ['', Validators.required],
+    });
+  }
   toggleRoleDropdown() {
     this.roleDropdownOpen = !this.roleDropdownOpen;
   }
@@ -28,7 +38,7 @@ export class InviteUserComponent {
   }
 
   selectGroupOption(option: string) {
-    this.selectedGroupOption = option;
+    this.selectedGroupOption = option
     this.groupDropdownOpen = false;
   }
 }
