@@ -54,7 +54,10 @@ export class AdminService {
 
     fetchGroupParticipants(groupNumber: string): Observable<UserDetails> {
         let params = new HttpParams().set('groupNumber', groupNumber);
-        return this.http.get<UserDetails>(this.baseUrl + "group", { params: params });
+        return this.http.get<UserDetails>(this.baseUrl + "group", { params: params })
+            .pipe(
+                catchError(this.handleException)
+            );
     }
 
     private handleException(exception: HttpErrorResponse) {
