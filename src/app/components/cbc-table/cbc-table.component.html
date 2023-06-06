@@ -5,27 +5,27 @@
     <div class="overflow-x-auto">
         <table class="table-auto border w-full text-center">
             <thead>
-                <tr class="border">
-                    <th rowspan="2" class="px-2 py-2 border">Value</th>
-                    <th rowspan="2" class="px-2 py-2 border">Unit</th>
-                    <th colspan="2" class="px-2 py-2 border">Female</th>
-                    <th colspan="2" class="px-2 py-2 border">Male</th>
+                <tr class="border-black">
+                    <th rowspan="2" class="px-2 py-2 border bg-orange-500">Value</th>
+                    <th rowspan="2" class="px-2 py-2 border bg-green-500">Unit</th>
+                    <th colspan="2" class="px-2 py-2 border bg-pink-500">Female</th>
+                    <th colspan="2" class="px-2 py-2 border bg-blue-500">Male</th>
                 </tr>
                 <tr class="border">
-                    <th class="px-2 py-2 border">Min</th>
-                    <th class="px-2 py-2 border">Max</th>
-                    <th class="px-2 py-2 border">Min</th>
-                    <th class="px-2 py-2 border">Max</th>
+                    <th class="px-2 py-2 border bg-blue-200">Min</th>
+                    <th class="px-2 py-2 border bg-red-500">Max</th>
+                    <th class="px-2 py-2 border bg-blue-200">Min</th>
+                    <th class="px-2 py-2 border bg-red-500">Max</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of cbcData">
-                    <td class="border px-2 py-2">{{ data.value }}</td>
+                    <td class="border px-2 py-2">{{ data.parameter }}</td>
                     <td class="border px-2 py-2">{{ data.unit }}</td>
-                    <td class="border px-2 py-2">{{ data.femaleMin }}</td>
-                    <td class="border px-2 py-2">{{ data.femaleMax }}</td>
-                    <td class="border px-2 py-2">{{ data.maleMin }}</td>
-                    <td class="border px-2 py-2">{{ data.maleMax }}</td>
+                    <td class="border px-2 py-2">{{ data.minFemale }}</td>
+                    <td class="border px-2 py-2">{{ data.maxFemale }}</td>
+                    <td class="border px-2 py-2">{{ data.minMale }}</td>
+                    <td class="border px-2 py-2">{{ data.maxMale }}</td>
                 </tr>
             </tbody>
         </table>
