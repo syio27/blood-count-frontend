@@ -3,7 +3,6 @@
         Invite User
     </div>
     <form [formGroup]="form">
-
         <div class="mb-3">
             <label for="email" class="block text-gray-700 font-bold mb-2">Email address:</label>
             <input type="email"
@@ -49,7 +48,7 @@
             </ul>
         </div>
         <div class="mt-12 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
-             focus:outline-none focus:shadow-outline w-full lg:w-20 text-center cursor-pointer">
+             focus:outline-none focus:shadow-outline w-full lg:w-20 text-center cursor-pointer" (click)="inviteUser()">
             Submit
         </div>
     </form>

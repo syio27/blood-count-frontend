@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { GroupService } from '../../../../services/group.service';
+import { IGroupResponse } from '../../../../interfaces/IGroupResponse';
 
 @Component({
   selector: 'app-groups-manage',
   templateUrl: './groups-manage.component.html',
   styleUrls: ['./groups-manage.component.css']
 })
-export class GroupsManageComponent {
-  groups = []; 
+export class GroupsManageComponent implements OnInit {
+  groups: IGroupResponse[] = [];
 
   currentPage = 1;
   groupsPerPage = 4;
+
+  constructor(private groupService: GroupService) {}
 
   get totalPages(): number {
     return Math.ceil(this.groups.length / this.groupsPerPage);
   }
 
-  get displayedGroups(): any[] {
+  get displayedGroups(): IGroupResponse[] {
     const startIndex = (this.currentPage - 1) * this.groupsPerPage;
     const endIndex = startIndex + this.groupsPerPage;
     return this.groups.slice(startIndex, endIndex);
@@ -44,21 +48,25 @@ export class GroupsManageComponent {
   }
 
   ngOnInit(): void {
-    this.populateGroups();
+    this.fetchGroups();
   }
 
-  populateGroups(): void {
-    this.groups = [
-      { number: 1, totalStudents: 20 },
-      { number: 2, totalStudents: 15 },
-      { number: 3, totalStudents: 18 },
-      { number: 4, totalStudents: 12 },
-      { number: 5, totalStudents: 25 },
-      { number: 6, totalStudents: 16 },
-      { number: 7, totalStudents: 22 },
-      { number: 8, totalStudents: 19 },
-      { number: 9, totalStudents: 17 },
-      { number: 10, totalStudents: 23 },
-    ];
+  fetchGroups(): void {
+    this.groupService.fetchAllGroups().subscribe(
+      (data) => {
+        this.groups = [data].flatMap((subArray) => subArray).sort((a, b) => {
+          if (a.groupType === 'ADMIN_GROUP') {
+            return -1; 
+          } else if (b.groupType === 'ADMIN_GROUP') {
+            return 1;
+          } else {
+            return 0; 
+          }
+        });
+      },
+      (error) => {
+        console.error('Failed to fetch groups:', error);
+      }
+    );
   }
 }
