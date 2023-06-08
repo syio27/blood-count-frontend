@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { throwError, catchError, retry, tap, Observable } from 'rxjs';
 import { IInviteUserRequest } from '../interfaces/IInviteUserRequest';
 import { UserDetails } from '../interfaces/IUserDetails';
+import { Roles } from '../enums/role.enum';
 
 
 @Injectable({
@@ -55,6 +56,14 @@ export class AdminService {
     fetchGroupParticipants(groupNumber: string): Observable<UserDetails> {
         let params = new HttpParams().set('groupNumber', groupNumber);
         return this.http.get<UserDetails>(this.baseUrl + "group", { params: params })
+            .pipe(
+                catchError(this.handleException)
+            );
+    }
+
+    fetchUsersByRole(role: Roles): Observable<UserDetails> {
+        let params = new HttpParams().set('role', role);
+        return this.http.get<UserDetails>(this.baseUrl, { params: params })
             .pipe(
                 catchError(this.handleException)
             );
