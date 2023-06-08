@@ -1,6 +1,6 @@
 import { IAbnormalityResponse } from "./IAbnormalityResponse"
 
-export interface Root {
+export interface ICaseResponse {
     id: number
     firstMinAge: number
     firstMaxAge: number
