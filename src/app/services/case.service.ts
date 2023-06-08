@@ -38,6 +38,26 @@ export class CaseService {
         ).subscribe();
     }
 
+    getAllCasesWithAbnormalities(): Observable<ICaseResponse> {
+        return this.http.get<ICaseResponse>(this.baseUrl + "abnormalities", , { observe: 'body', responseType: 'json' })
+            .pipe(
+                retry(3),
+                catchError(this.handleException)
+            );
+    }
+
+    getCaseWithAbnormalities(id: number): Observable<ICaseResponse> {
+        return this.http.get<ICaseResponse>(this.baseUrl + `${id}/abnormalities`, { observe: 'body', responseType: 'json' })
+            .pipe(
+                retry(3),
+                catchError(this.handleException)
+            );
+    }
+
+    deleteCase(id: number) {
+        return this.http.delete(this.baseUrl + `${id}`);
+    }
+
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {
             console.error(`Error on client-side occured:, ${exception.error}`)
