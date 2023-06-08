@@ -22,18 +22,18 @@ export class CaseService {
             );
     }
 
-    private createAbnormality(caseId: number, abnormalityRequest: ICreateAbnormalityRequest) {
-        return this.http.post<void>(this.baseUrl + `${caseId}/abnormality`, abnormalityRequest)
+    private createAbnormality(caseId: number, abnormalityRequestList: ICreateAbnormalityRequest[]) {
+        return this.http.post<void>(this.baseUrl + `${caseId}/abnormalities`, abnormalityRequestList)
             .pipe(
                 catchError(this.handleException)
             );
     }
 
-    createCaseWithAbnormality(caseData: ICreateCaseRequest, abnormalityData: ICreateAbnormalityRequest) {
+    createCaseWithAbnormality(caseData: ICreateCaseRequest, abnormalityDataList: ICreateAbnormalityRequest[]) {
         this.createCase(caseData).pipe(
             switchMap((caseResponse: ICaseResponse) => {
                 const caseId = caseResponse.id;
-                return this.createAbnormality(caseId, abnormalityData);
+                return this.createAbnormality(caseId, abnormalityDataList);
             })
         ).subscribe();
     }
