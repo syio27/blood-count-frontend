@@ -11,7 +11,8 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   private excludedUrls: string[] = [
     'http://localhost:8080/api/v1/auth/authenticate',
-    'http://localhost:8080/api/v1/auth/register'
+    'http://localhost:8080/api/v1/auth/register',
+    'http://localhost:8080/public/api/v1/groups'
   ];
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

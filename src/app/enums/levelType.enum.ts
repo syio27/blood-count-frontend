@@ -1,5 +1,5 @@
 export enum LevelTypes {
-    INCREASED,
-    NORMAL,
-    DECREASED
+    INCREASED = 'INCREASED',
+    NORMAL = 'NORMAL',
+    DECREASED = 'DECREASED'
 }

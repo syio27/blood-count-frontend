@@ -1,6 +1,6 @@
 export enum AffectedGenders {
-    FEMALE,
-    MALE,
-    BOTH,
-    NONE
+    FEMALE = 'FEMALE',
+    MALE = 'MALE',
+    BOTH = 'BOTH',
+    NONE = 'NONE'
 }

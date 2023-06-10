@@ -89,13 +89,13 @@
                         Parameter: {{ item.parameter }}
                     </div>
                     <div>
-                        Range: {{ item.minAge }} - {{ item.maxAge }}
+                        Range: {{ item.minValue }} - {{ item.maxValue }}
                     </div>
                     <div>
-                        Level Type: {{ item.levelType }}
+                        Level Type: {{ item.type }}
                     </div>
                     <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer"
-                        (click)="removeValue(item.id)">
+                        (click)="removeValue(item.parameter)">
                         -
                     </div>
                 </div>
@@ -148,6 +148,11 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="flex justify-end mt-10">
+            <div (click)="createCaseWithAbnormality()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded cursor-pointer">
+                Create
+            </div>
         </div>
     </div>
 </div>
