@@ -61,13 +61,14 @@ export class AdminService {
             );
     }
 
-    fetchUsersByRole(role: Roles): Observable<UserDetails> {
+    fetchUsersByRole(role: Roles): Observable<UserDetails[]> {
         let params = new HttpParams().set('role', role);
-        return this.http.get<UserDetails>(this.baseUrl, { params: params })
-            .pipe(
-                catchError(this.handleException)
-            );
-    }
+        return this.http.get<UserDetails[]>(this.baseUrl, { params: params })
+          .pipe(
+            catchError(this.handleException)
+          );
+      }
+    
 
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {

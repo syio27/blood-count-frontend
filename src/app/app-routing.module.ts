@@ -10,6 +10,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { HistoryComponent } from './components/user-profile/history/history.component'
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
 import { RootUserComponent } from './components/roles/root-user/root-user.component';
+import { UsersTableComponent } from './components/roles/root-user/users-table/users-table.component';
+import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
+import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
 
 const routes: Routes = [
   {
@@ -33,10 +36,7 @@ const routes: Routes = [
         path: 'table',
         component: CbcTableComponent
       },
-      {
-        path: 'root',
-        component: RootUserComponent
-      }
+
     ]
   },
   {
@@ -50,6 +50,29 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegistrationComponent
+      },
+    ]
+  },
+  {
+    path: 'root',
+    component: RootUserComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'users'
+      },
+      {
+        path: 'users',
+        component: UsersTableComponent
+      },
+      {
+        path: 'invite',
+        component: InviteUserComponent
+      },
+      {
+        path: 'groups',
+        component: GroupsManageComponent
       },
     ]
   },

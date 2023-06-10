@@ -6,10 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./root-user.component.css']
 })
 export class RootUserComponent {
-  selectedOption: string;
-
-  onOptionSelected(option: string) {
-    this.selectedOption = option;
-    // Handle the selected option in your component logic
-  }
 }

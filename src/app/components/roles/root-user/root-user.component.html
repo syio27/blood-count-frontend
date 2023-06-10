@@ -1,6 +1,6 @@
-<app-navigation-bar (optionSelected)="onOptionSelected($event)"></app-navigation-bar>
+<app-header></app-header>
+<app-navigation-bar></app-navigation-bar>
 <app-white-box>
-    <app-invite-user *ngIf="selectedOption === 'invite user'"></app-invite-user>
-    <app-users-table *ngIf="selectedOption === 'manage all'"></app-users-table>
-    <app-groups-manage *ngIf="selectedOption === 'group manage'"></app-groups-manage>
+    <router-outlet></router-outlet>
 </app-white-box>
+<app-footer></app-footer>

@@ -39,7 +39,7 @@ export class CaseService {
     }
 
     getAllCasesWithAbnormalities(): Observable<ICaseResponse> {
-        return this.http.get<ICaseResponse>(this.baseUrl + "abnormalities", , { observe: 'body', responseType: 'json' })
+        return this.http.get<ICaseResponse>(this.baseUrl + "abnormalities", { observe: 'body', responseType: 'json' })
             .pipe(
                 retry(3),
                 catchError(this.handleException)

@@ -1,32 +1,44 @@
 <div class="bg-gray-100 flex text-center select-none mb-10">
-    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(1)" [class.border-b-4]="currentCategory === 1"
-        [class.border-blue-500]="currentCategory === 1">
-        Category 1
+    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)"
+        [class.border-b-4]="currentCategory === Roles.Student"
+        [class.border-blue-500]="currentCategory === Roles.Student">
+        Student
     </div>
-    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(2)" [class.border-b-4]="currentCategory === 2"
-        [class.border-blue-500]="currentCategory === 2">
-        Category 2
+    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Teacher)"
+        [class.border-b-4]="currentCategory === Roles.Teacher"
+        [class.border-blue-500]="currentCategory === Roles.Teacher">
+        Supervisor
     </div>
-    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(3)" [class.border-b-4]="currentCategory === 3"
-        [class.border-blue-500]="currentCategory === 3">
-        Category 3
+    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Admin)"
+        [class.border-b-4]="currentCategory === Roles.Admin" [class.border-blue-500]="currentCategory === Roles.Admin">
+        Admin
     </div>
 </div>
-<table class="w-full border">
-    <thead class="border">
-        <tr>
-            <th class="py-2 w-1/12 border">#</th>
-            <th class="py-2 w-5/12 border">Email</th>
-            <th class="py-2 w-3/12 border">Code</th>
-            <th class="py-2 w-3/12 border">Role</th>
-        </tr>
-    </thead>
-    <tbody id="table-body" class="items-center text-center">
-        <tr *ngFor="let item of tableData; let i = index">
-            <td class="py-2 border">{{ i + 1 }}</td>
-            <td class="border">{{ item.email }}</td>
-            <td class="border">{{ item.code }}</td>
-            <td class="border">{{ item.role }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="overflow-x-auto">
+
+    <table class="w-full border">
+        <thead class="border">
+            <tr>
+                <th class="py-2 w-3/12 border">Email</th>
+                <th class="py-2 w-3/12 border">Group</th>
+                <th class="py-2 w-3/12 border">Role</th>
+                <th class="py-2 w-3/12 border">More</th>
+            </tr>
+        </thead>
+        <tbody id="table-body" class="items-center text-center">
+            <tr *ngFor="let item of tableData">
+                <td class="border">{{ item.email }}</td>
+                <td class="border">{{ item.groupNumber }}</td>
+                <td class="border">{{ item.role }}</td>
+                <td class="border">
+                    <div class="flex justify-center">
+                        <div
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded cursor-pointer">
+                            Details
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
