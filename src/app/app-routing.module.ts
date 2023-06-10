@@ -13,6 +13,7 @@ import { RootUserComponent } from './components/roles/root-user/root-user.compon
 import { UsersTableComponent } from './components/roles/root-user/users-table/users-table.component';
 import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
 import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
+import { CaseEntityComponent } from './components/roles/root-user/case-entity/case-entity.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,10 @@ const routes: Routes = [
       {
         path: 'groups',
         component: GroupsManageComponent
+      },
+      {
+        path: 'cases',
+        component: CaseEntityComponent
       },
     ]
   },

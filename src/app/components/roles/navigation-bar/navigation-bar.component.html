@@ -22,6 +22,12 @@
                         [routerLinkActive]="'text-gray-700'">
                         groups
                     </a>
+                </span>/
+                <span class="hover:text-gray-700 cursor-pointer">
+                    <a [routerLink]="['/root', 'cases']" [routerLinkActiveOptions]="{exact: true}"
+                        [routerLinkActive]="'text-gray-700'">
+                        cases
+                    </a>
                 </span>
             </div>
         </div>

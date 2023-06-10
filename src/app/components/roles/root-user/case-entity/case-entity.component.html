@@ -1,0 +1,153 @@
+<div>
+    <div class="flex text-3xl justify-center mb-8">
+        Add Case
+    </div>
+    <form [formGroup]="form">
+        <div class="flex flex-col md:flex-row justify-center gap-10">
+            <div class="w-full  md:w-4/12">
+                <div class="mb-3">
+                    <input type="text"
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="anemia-type" formControlName="anemia-type" placeholder="Anemia type">
+                </div>
+                <div class="mb-3">
+                    <input type="text"
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="diagnosis" formControlName="diagnosis" placeholder="Diagnosis">
+                </div>
+                <div>
+                    <div class="mt-2 w-full relative mb-2" [class.open]="genderDropdownOpen">
+                        <input type="text"
+                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            placeholder="Affected Gender" (click)="toggleGenderDropdown()"
+                            [class.rounded-t]="genderDropdownOpen" [class.rounded]="!genderDropdownOpen"
+                            [value]="selectedGenderOption" readonly>
+                        <span
+                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                            [class.rotate-180]="genderDropdownOpen" [class.rotate-0]="!genderDropdownOpen">
+                            expand_more
+                        </span>
+                        <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
+                            [class.scale-y-0]="!genderDropdownOpen" [class.scale-y-100]="genderDropdownOpen">
+                            <li *ngFor="let option of genderDropdownOptions"
+                                class="py-2 px-3 cursor-pointer hover:bg-gray-100" (click)="selectGenderOption(option)"
+                                [class.selected]="option === selectedGenderOption">
+                                {{ option }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-4/12">
+                <div class="mb-3 relative">
+                    <div class="absolute bottom-9 left-0">First Range</div>
+                    <input type="number"
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="first-min" formControlName="first-min" placeholder="Min age">
+                </div>
+                <div class="mb-3">
+                    <input type="number"
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="first-max" formControlName="first-max" placeholder="Max age">
+                </div>
+                <div class="mt-4 flex justify-center" *ngIf="!showSecondRangeForm">
+                    <div class="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full select-none cursor-pointer"
+                        (click)="addSecondRangeForm()">
+                        <span class="text-2xl">+</span>
+                    </div>
+                </div>
+                <div class="mt-6" *ngIf="showSecondRangeForm">
+                    <div class="mb-3 relative flex items-center">
+                        <div class="absolute w-full bottom-9 left-0 flex justify-between items-center">
+                            <div>Second Range</div>
+                            <div class="w-0 h-0 p-2 flex items-center justify-center bg-red-500 hover:bg-red-700 text-white text-sm rounded-full select-none cursor-pointer"
+                                (click)="removeSecondRangeForm()">
+                                <span class="text-2xl">-</span>
+                            </div>
+                        </div>
+                        <input type="number"
+                            class="appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="second-min" formControlName="second-min" placeholder="Min age">
+                    </div>
+                    <div class="mb-3">
+                        <input type="number"
+                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="second-max" formControlName="second-max" placeholder="Max age">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center mb-4">
+            <hr class="mt-4 border-black w-full md:w-3/4">
+        </div>
+    </form>
+    <div class="w-full flex flex-col">
+        <div class="flex justify-center mb-3">
+            <div class="w-full md:w-3/4 flex flex-col bg-gray-200 rounded-md">
+                <div *ngFor="let item of addedValues" class="flex items-center justify-between  my-1">
+                    <div>
+                        Parameter: {{ item.parameter }}
+                    </div>
+                    <div>
+                        Range: {{ item.minAge }} - {{ item.maxAge }}
+                    </div>
+                    <div>
+                        Level Type: {{ item.levelType }}
+                    </div>
+                    <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer"
+                        (click)="removeValue(item.id)">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <form [formGroup]="parameterForm" class="w-full md:w-3/4">
+                <div class="flex justify-center gap-2">
+                    <div>
+                        <input type="text"
+                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="parameter" formControlName="parameter" placeholder="Parameter">
+                    </div>
+                    <div>
+                        <input type="number"
+                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="parameter-min" formControlName="parameter-min" placeholder="Min age">
+                    </div>
+                    <div>
+                        <input type="number"
+                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="parameter-max" formControlName="parameter-max" placeholder="Max age">
+                    </div>
+                    <div class="relative" [class.open]="levelTypeDropdownOpen">
+                        <input type="text"
+                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            placeholder="Level Type" (click)="toggleLevelTypeDropdown()"
+                            [class.rounded-t]="levelTypeDropdownOpen" [class.rounded]="!levelTypeDropdownOpen"
+                            [value]="selectedLevelTypeOption" readonly>
+                        <span
+                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                            [class.rotate-180]="levelTypeDropdownOpen" [class.rotate-0]="!levelTypeDropdownOpen">
+                            expand_more
+                        </span>
+                        <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
+                            [class.scale-y-0]="!levelTypeDropdownOpen" [class.scale-y-100]="levelTypeDropdownOpen">
+                            <li *ngFor="let option of levelTypeDropdownOptions"
+                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                (click)="selectLevelTypeOption(option)"
+                                [class.selected]="option === selectedLevelTypeOption">
+                                {{ option }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded cursor-pointer"
+                            (click)="addValue()">
+                            Add
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
