@@ -33,29 +33,70 @@ export class CaseEntityComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       'anemia-type': ['', Validators.required],
-      diagnosis: ['', Validators.required],
+      'diagnosis': ['', Validators.required],
       'first-min': ['', Validators.required],
       'first-max': ['', Validators.required],
       'second-min': [''],
       'second-max': [''],
     });
     this.parameterForm = this.fb.group({
-      parameter: [''],
+      'parameter': [''],
       'parameter-min': [''],
       'parameter-max': ['']
     });
   }
 
+
   ngOnInit() {
-    const storedValues = localStorage.getItem('addedValues');
-    if (storedValues) {
-      this.addedValues = JSON.parse(storedValues);
+    this.restoreFormValues();
+  }
+
+
+  restoreFormValues() {
+    this.form.get('anemia-type').setValue(localStorage.getItem('anemia-type'));
+    this.form.get('diagnosis').setValue(localStorage.getItem('diagnosis'));
+    this.form.get('first-min').setValue(localStorage.getItem('first-min'));
+    this.form.get('first-max').setValue(localStorage.getItem('first-max'));
+    this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(localStorage.getItem('second-min'))
+    this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(localStorage.getItem('second-max'))
+    this.parameterForm.get('parameter').setValue(localStorage.getItem('parameter'));
+    this.parameterForm.get('parameter-min').setValue(localStorage.getItem('parameter-min'));
+    this.parameterForm.get('parameter-max').setValue(localStorage.getItem('parameter-max'));
+
+    const storedAddedValues = localStorage.getItem('addedValues');
+    if (storedAddedValues) {
+      this.addedValues = JSON.parse(storedAddedValues);
     }
-    const secondForm = localStorage.getItem('showSecondRangeForm');
-    if(secondForm){
-      this.showSecondRangeForm = JSON.parse(secondForm)
+
+    const storedShowSecondRangeForm = localStorage.getItem('showSecondRangeForm');
+    if (storedShowSecondRangeForm) {
+      this.showSecondRangeForm = JSON.parse(storedShowSecondRangeForm);
+    }
+
+    const storedSelectedGenderOption = localStorage.getItem('selectedGenderOption');
+    if (storedSelectedGenderOption) {
+      this.selectedGenderOption = storedSelectedGenderOption;
+    }
+
+    const storedSelectedLevelTypeOption = localStorage.getItem('selectedLevelTypeOption');
+    if (storedSelectedLevelTypeOption) {
+      this.selectedLevelTypeOption = storedSelectedLevelTypeOption;
     }
   }
+
+  saveFormValues() {
+    localStorage.setItem('anemia-type', this.form.get('anemia-type').value);
+    localStorage.setItem('diagnosis', this.form.get('diagnosis').value);
+    localStorage.setItem('first-min', this.form.get('first-min').value);
+    localStorage.setItem('first-max', this.form.get('first-max').value);
+    localStorage.setItem('second-min', this.form.get('second-min').value);
+    localStorage.setItem('second-max', this.form.get('second-max').value);
+    localStorage.setItem('parameter', this.parameterForm.get('parameter').value);
+    localStorage.setItem('parameter-min', this.parameterForm.get('parameter-min').value);
+    localStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
+  }
+
+
 
   toggleGenderDropdown() {
     this.genderDropdownOpen = !this.genderDropdownOpen;
@@ -64,6 +105,7 @@ export class CaseEntityComponent implements OnInit {
   selectGenderOption(option: string) {
     this.selectedGenderOption = option;
     this.genderDropdownOpen = false;
+    localStorage.setItem('selectedGenderOption', option);
   }
 
   addSecondRangeForm() {
@@ -83,10 +125,11 @@ export class CaseEntityComponent implements OnInit {
   selectLevelTypeOption(option: string) {
     this.selectedLevelTypeOption = option;
     this.levelTypeDropdownOpen = false;
+    localStorage.setItem('selectedLevelTypeOption', option);
   }
 
-  removeValue(parameter: string) {
-    const index = this.addedValues.findIndex(item => item.parameter === parameter);
+  removeValue(parameter) {
+    const index = this.addedValues.findIndex(item => item === parameter);
     if (index !== -1) {
       this.addedValues.splice(index, 1);
       localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
@@ -117,7 +160,6 @@ export class CaseEntityComponent implements OnInit {
     this.addedValues.push(abnormalityData);
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
-
     localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
   }
 

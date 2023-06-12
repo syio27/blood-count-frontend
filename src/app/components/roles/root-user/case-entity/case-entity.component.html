@@ -6,12 +6,12 @@
         <div class="flex flex-col md:flex-row justify-center gap-10">
             <div class="w-full  md:w-4/12">
                 <div class="mb-3">
-                    <input type="text"
+                    <input type="text" (input)="saveFormValues()"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="anemia-type" formControlName="anemia-type" placeholder="Anemia type">
                 </div>
                 <div class="mb-3">
-                    <input type="text"
+                    <input type="text" (input)="saveFormValues()"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="diagnosis" formControlName="diagnosis" placeholder="Diagnosis">
                 </div>
@@ -41,12 +41,12 @@
             <div class="w-full md:w-4/12">
                 <div class="mb-3 relative">
                     <div class="absolute bottom-9 left-0">First Range</div>
-                    <input type="number"
+                    <input type="number" (input)="saveFormValues()"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="first-min" formControlName="first-min" placeholder="Min age">
                 </div>
                 <div class="mb-3">
-                    <input type="number"
+                    <input type="number" (input)="saveFormValues()"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="first-max" formControlName="first-max" placeholder="Max age">
                 </div>
@@ -65,12 +65,12 @@
                                 <div class="text-base">-</div>
                             </div>
                         </div>
-                        <input type="number"
+                        <input type="number" (input)="saveFormValues()"
                             class="appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="second-min" formControlName="second-min" placeholder="Min age">
                     </div>
                     <div class="mb-3">
-                        <input type="number"
+                        <input type="number" (input)="saveFormValues()"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="second-max" formControlName="second-max" placeholder="Max age">
                     </div>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer text-center mr-1"
-                        (click)="removeValue(item.parameter)">
+                        (click)="removeValue(item)">
                         -
                     </div>
                 </div>
@@ -107,19 +107,19 @@
             <form [formGroup]="parameterForm" class="w-full md:w-3/4">
                 <div class="flex flex-col md:flex-row justify-center gap-2">
                     <div>
-                        <input type="text"
+                        <input type="text" (input)="saveFormValues()"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter" formControlName="parameter" placeholder="Parameter">
                     </div>
                     <div>
-                        <input type="number"
+                        <input type="number" (input)="saveFormValues()"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter-min" formControlName="parameter-min" placeholder="Min age">
+                            id="parameter-min" formControlName="parameter-min" placeholder="Min value">
                     </div>
                     <div>
-                        <input type="number"
+                        <input type="number" (input)="saveFormValues()"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter-max" formControlName="parameter-max" placeholder="Max age">
+                            id="parameter-max" formControlName="parameter-max" placeholder="Max value">
                     </div>
                     <div class="relative" [class.open]="levelTypeDropdownOpen">
                         <input type="text"
