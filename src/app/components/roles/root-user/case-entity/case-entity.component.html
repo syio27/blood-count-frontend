@@ -6,12 +6,12 @@
         <div class="flex flex-col md:flex-row justify-center gap-10">
             <div class="w-full  md:w-4/12">
                 <div class="mb-3">
-                    <input type="text" (input)="saveFormValues()"
+                    <input type="text" (input)="saveFormValues(1)"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="anemia-type" formControlName="anemia-type" placeholder="Anemia type">
                 </div>
                 <div class="mb-3">
-                    <input type="text" (input)="saveFormValues()"
+                    <input type="text" (input)="saveFormValues(2)"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="diagnosis" formControlName="diagnosis" placeholder="Diagnosis">
                 </div>
@@ -41,12 +41,12 @@
             <div class="w-full md:w-4/12">
                 <div class="mb-3 relative">
                     <div class="absolute bottom-9 left-0">First Range</div>
-                    <input type="number" (input)="saveFormValues()"
+                    <input type="number" (input)="saveFormValues(3)"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="first-min" formControlName="first-min" placeholder="Min age">
                 </div>
                 <div class="mb-3">
-                    <input type="number" (input)="saveFormValues()"
+                    <input type="number" (input)="saveFormValues(4)"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="first-max" formControlName="first-max" placeholder="Max age">
                 </div>
@@ -65,12 +65,12 @@
                                 <div class="text-base">-</div>
                             </div>
                         </div>
-                        <input type="number" (input)="saveFormValues()"
+                        <input type="number" (input)="saveFormValues(5)"
                             class="appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="second-min" formControlName="second-min" placeholder="Min age">
                     </div>
                     <div class="mb-3">
-                        <input type="number" (input)="saveFormValues()"
+                        <input type="number" (input)="saveFormValues(6)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="second-max" formControlName="second-max" placeholder="Max age">
                     </div>
@@ -107,17 +107,17 @@
             <form [formGroup]="parameterForm" class="w-full md:w-3/4">
                 <div class="flex flex-col md:flex-row justify-center gap-2">
                     <div>
-                        <input type="text" (input)="saveFormValues()"
+                        <input type="text" (input)="saveFormValues(7)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter" formControlName="parameter" placeholder="Parameter">
                     </div>
                     <div>
-                        <input type="number" (input)="saveFormValues()"
+                        <input type="number" (input)="saveFormValues(8)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter-min" formControlName="parameter-min" placeholder="Min value">
                     </div>
                     <div>
-                        <input type="number" (input)="saveFormValues()"
+                        <input type="number" (input)="saveFormValues(9)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter-max" formControlName="parameter-max" placeholder="Max value">
                     </div>
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center md:justify-end mt-10">
-                    <div (click)="createCaseWithAbnormality()"
+                    <div (click)="createCaseWithAbnormality()" 
                         class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
                         Create
                     </div>

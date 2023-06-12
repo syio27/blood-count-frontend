@@ -83,6 +83,15 @@ export class AuthService {
   logout() {
     this.removeAccess();
     this.router.navigate(['/login']);
+    localStorage.removeItem('anemia-type');
+    localStorage.removeItem('diagnosis');
+    localStorage.removeItem('first-min');
+    localStorage.removeItem('first-max');
+    localStorage.removeItem('second-min');
+    localStorage.removeItem('second-max');
+    localStorage.removeItem('selectedGenderOption'); 
+    localStorage.removeItem('showSecondRangeForm'); 
+    
   }
 
   removeAccess() {

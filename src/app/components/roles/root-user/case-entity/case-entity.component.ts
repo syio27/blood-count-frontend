@@ -7,6 +7,7 @@ import { AffectedGenders } from 'src/app/enums/affectedGender.enum';
 import { LevelTypes } from 'src/app/enums/levelType.enum';
 import { addAbnormality, removeAbnormality } from 'src/app/store/actions/abnormalities.action';
 import { Store } from '@ngrx/store';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-case-entity',
@@ -18,12 +19,12 @@ export class CaseEntityComponent implements OnInit {
   parameterForm: FormGroup;
   addedValues: ICreateAbnormalityRequest[] = [];
   genderDropdownOptions = Object.values(AffectedGenders);
-  selectedGenderOption: string | null = null;
+  selectedGenderOption = '';
   genderDropdownOpen = false;
   showSecondRangeForm = false;
 
   levelTypeDropdownOptions = Object.values(LevelTypes);
-  selectedLevelTypeOption: string | null = null;
+  selectedLevelTypeOption = '';
   levelTypeDropdownOpen = false;
 
   constructor(
@@ -53,13 +54,15 @@ export class CaseEntityComponent implements OnInit {
 
 
   restoreFormValues() {
-    this.form.get('anemia-type').setValue(localStorage.getItem('anemia-type'));
-    this.form.get('diagnosis').setValue(localStorage.getItem('diagnosis'));
+    this.form.get('anemia-type').setValue(localStorage.getItem('anemia-type'))
+    this.form.get('diagnosis').setValue(localStorage.getItem('diagnosis'))
+
     this.form.get('first-min').setValue(localStorage.getItem('first-min'));
     this.form.get('first-max').setValue(localStorage.getItem('first-max'));
     this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(localStorage.getItem('second-min'))
     this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(localStorage.getItem('second-max'))
-    this.parameterForm.get('parameter').setValue(localStorage.getItem('parameter'));
+    this.parameterForm.get('parameter').setValue(localStorage.getItem('parameter'))
+
     this.parameterForm.get('parameter-min').setValue(localStorage.getItem('parameter-min'));
     this.parameterForm.get('parameter-max').setValue(localStorage.getItem('parameter-max'));
 
@@ -84,16 +87,36 @@ export class CaseEntityComponent implements OnInit {
     }
   }
 
-  saveFormValues() {
-    localStorage.setItem('anemia-type', this.form.get('anemia-type').value);
-    localStorage.setItem('diagnosis', this.form.get('diagnosis').value);
-    localStorage.setItem('first-min', this.form.get('first-min').value);
-    localStorage.setItem('first-max', this.form.get('first-max').value);
-    localStorage.setItem('second-min', this.form.get('second-min').value);
-    localStorage.setItem('second-max', this.form.get('second-max').value);
-    localStorage.setItem('parameter', this.parameterForm.get('parameter').value);
-    localStorage.setItem('parameter-min', this.parameterForm.get('parameter-min').value);
-    localStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
+  saveFormValues(input) {
+    switch (input) {
+      case 1:
+        localStorage.setItem('anemia-type', this.form.get('anemia-type').value);
+        break;
+      case 2:
+        localStorage.setItem('diagnosis', this.form.get('diagnosis').value);
+        break;
+      case 3:
+        localStorage.setItem('first-min', this.form.get('first-min').value);
+        break;
+      case 4:
+        localStorage.setItem('first-max', this.form.get('first-max').value);
+        break;
+      case 5:
+        localStorage.setItem('second-min', this.form.get('second-min').value);
+        break;
+      case 6:
+        localStorage.setItem('second-max', this.form.get('second-max').value);
+        break;
+      case 7:
+        localStorage.setItem('parameter', this.parameterForm.get('parameter').value);
+        break;
+      case 8:
+        localStorage.setItem('parameter-min', this.parameterForm.get('parameter-min').value);
+        break;
+      case 9:
+        localStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
+        break;
+    }
   }
 
 
@@ -161,6 +184,10 @@ export class CaseEntityComponent implements OnInit {
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
     localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
+    localStorage.removeItem('parameter')
+    localStorage.removeItem('parameter-min')
+    localStorage.removeItem('parameter-max')
+    localStorage.removeItem('selectedLevelTypeOption')
   }
 
   createCaseWithAbnormality() {
@@ -174,6 +201,34 @@ export class CaseEntityComponent implements OnInit {
       affectedGender: this.selectedGenderOption as AffectedGenders
     };
     console.log(caseData, this.addedValues);
-    this.caseService.createCaseWithAbnormality(caseData, this.addedValues);
+    this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
+      () => {
+        console.log('Case creation successful');
+        this.selectedGenderOption = '';
+        this.parameterForm.reset();
+        this.form.reset();
+        this.selectedLevelTypeOption = '';
+        localStorage.setItem('anemia-type', '');
+        localStorage.setItem('diagnosis', '');
+        localStorage.removeItem('first-min');
+        localStorage.removeItem('first-max');
+        localStorage.removeItem('second-min');
+        localStorage.removeItem('second-max');
+        localStorage.removeItem('selectedGenderOption');
+        localStorage.removeItem('showSecondRangeForm');
+        localStorage.removeItem('addedValues');
+        localStorage.setItem('parameter', '')
+        localStorage.removeItem('parameter-min')
+        localStorage.removeItem('parameter-max')
+        localStorage.removeItem('selectedLevelTypeOption')
+        this.addedValues.splice(0, this.addedValues.length);
+        localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
+      },
+      (error: HttpErrorResponse) => {
+        console.error('An error occurred during case creation:', error);
+        console.log('HTTP Status Code:', error.status); // Access the status code from the error object
+
+      })
+
   }
 }

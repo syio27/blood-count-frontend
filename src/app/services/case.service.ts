@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, catchError, retry, tap, Observable, switchMap } from 'rxjs';
+import { throwError, catchError, retry, tap, Observable, switchMap, map } from 'rxjs';
 import { ICreateCaseRequest } from '../interfaces/ICreateCaseRequest';
 import { ICreateAbnormalityRequest } from '../interfaces/ICreateAbnormalityRequest';
 import { ICaseResponse } from '../interfaces/ICaseResponse';
@@ -29,13 +29,15 @@ export class CaseService {
             );
     }
 
-    createCaseWithAbnormality(caseData: ICreateCaseRequest, abnormalityDataList: ICreateAbnormalityRequest[]) {
-        this.createCase(caseData).pipe(
+    createCaseWithAbnormality(caseData: ICreateCaseRequest, abnormalityDataList: ICreateAbnormalityRequest[]): Observable<ICaseResponse> {
+        return this.createCase(caseData).pipe(
             switchMap((caseResponse: ICaseResponse) => {
                 const caseId = caseResponse.id;
-                return this.createAbnormality(caseId, abnormalityDataList);
+                return this.createAbnormality(caseId, abnormalityDataList).pipe(
+                    map(() => caseResponse) // Return the caseResponse object
+                );
             })
-        ).subscribe();
+        );
     }
 
     getAllCasesWithAbnormalities(): Observable<ICaseResponse> {
