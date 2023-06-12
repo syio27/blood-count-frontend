@@ -51,18 +51,18 @@
                         id="first-max" formControlName="first-max" placeholder="Max age">
                 </div>
                 <div class="mt-4 flex justify-center" *ngIf="!showSecondRangeForm">
-                    <div class="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full select-none cursor-pointer"
+                    <div class="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full select-none cursor-pointer relative"
                         (click)="addSecondRangeForm()">
-                        <span class="text-2xl">+</span>
+                        <div class="text-2xl absolute bottom-[1px]">+</div>
                     </div>
                 </div>
                 <div class="mt-6" *ngIf="showSecondRangeForm">
                     <div class="mb-3 relative flex items-center">
                         <div class="absolute w-full bottom-9 left-0 flex justify-between items-center">
                             <div>Second Range</div>
-                            <div class="w-0 h-0 p-2 flex items-center justify-center bg-red-500 hover:bg-red-700 text-white text-sm rounded-full select-none cursor-pointer"
+                            <div class="w-5 h-4 flex items-center justify-center bg-red-500 hover:bg-red-700 font-bold text-white rounded-sm select-none cursor-pointer relative"
                                 (click)="removeSecondRangeForm()">
-                                <span class="text-2xl">-</span>
+                                <div class="text-base">-</div>
                             </div>
                         </div>
                         <input type="number"
@@ -84,17 +84,19 @@
     <div class="w-full flex flex-col">
         <div class="flex justify-center mb-3">
             <div class="w-full md:w-3/4 flex flex-col bg-gray-200 rounded-md">
-                <div *ngFor="let item of addedValues" class="flex items-center justify-between  my-1">
-                    <div>
-                        Parameter: {{ item.parameter }}
+                <div *ngFor="let item of addedValues" class="flex flex-row my-1 justify-between items-center">
+                    <div class="flex flex-col md:flex-row justify-between w-3/4">
+                        <div>
+                            Parameter: {{ item.parameter }}
+                        </div>
+                        <div>
+                            Range: {{ item.minValue }} - {{ item.maxValue }}
+                        </div>
+                        <div>
+                            Level Type: {{ item.type }}
+                        </div>
                     </div>
-                    <div>
-                        Range: {{ item.minValue }} - {{ item.maxValue }}
-                    </div>
-                    <div>
-                        Level Type: {{ item.type }}
-                    </div>
-                    <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer"
+                    <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer text-center mr-1"
                         (click)="removeValue(item.parameter)">
                         -
                     </div>
@@ -103,7 +105,7 @@
         </div>
         <div class="flex justify-center">
             <form [formGroup]="parameterForm" class="w-full md:w-3/4">
-                <div class="flex justify-center gap-2">
+                <div class="flex flex-col md:flex-row justify-center gap-2">
                     <div>
                         <input type="text"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -141,18 +143,19 @@
                         </ul>
                     </div>
                     <div>
-                        <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded cursor-pointer"
+                        <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded cursor-pointer text-center"
                             (click)="addValue()">
                             Add
                         </div>
                     </div>
                 </div>
+                <div class="flex justify-center md:justify-end mt-10">
+                    <div (click)="createCaseWithAbnormality()"
+                        class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
+                        Create
+                    </div>
+                </div>
             </form>
-        </div>
-        <div class="flex justify-end mt-10">
-            <div (click)="createCaseWithAbnormality()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded cursor-pointer">
-                Create
-            </div>
         </div>
     </div>
 </div>

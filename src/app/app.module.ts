@@ -2,7 +2,9 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
 
+import { abnormalitiesReducer } from './store/state/abnormalities.state';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -64,7 +66,9 @@ import { CaseEntityComponent } from './components/roles/root-user/case-entity/ca
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({}), 
+    StoreModule.forFeature('abnormalities', abnormalitiesReducer)
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
