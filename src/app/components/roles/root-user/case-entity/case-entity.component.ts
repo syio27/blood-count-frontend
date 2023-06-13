@@ -223,6 +223,7 @@ export class CaseEntityComponent implements OnInit {
         localStorage.removeItem('selectedLevelTypeOption')
         this.addedValues.splice(0, this.addedValues.length);
         localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
+        window.location.reload();
       },
       (error: HttpErrorResponse) => {
         console.error('An error occurred during case creation:', error);

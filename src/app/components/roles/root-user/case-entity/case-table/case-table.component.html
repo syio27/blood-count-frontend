@@ -2,7 +2,7 @@
     <div class="flex justify-center text-3xl mb-3">
         Cases
     </div>
-    <div class="relative h-96 mb-8">
+    <div class="relative h-[75vh] mb-8">
         <table class="w-full border">
             <thead class="border">
                 <tr>
@@ -10,7 +10,13 @@
                     <th class="py-2 w-1/5  border">Diagnosis</th>
                     <th class="py-2 w-1/5 border">First Range</th>
                     <th class="py-2 w-1/5 border">Second Range</th>
-                    <th class="py-2 w-1/5 border">Abnormality</th>
+                    <th class="w-1/5">
+                        <div class="flex items-center">
+                            <div class="w-3/4 border-r">Abnormalities</div>
+                            <div class="w-1/4">
+                            </div>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody id="table-body" class="items-center text-center" [class.blur]="openedPopup">
@@ -20,11 +26,16 @@
                     <td class="border-b">{{ item.firstMinAge }} - {{ item.firstMaxAge }}</td>
                     <td class="border-b">{{ item.secondMinAge }} - {{ item.secondMaxAge }}</td>
                     <td class="border-b">
-                        <div class="flex justify-center">
+                        <div class="flex justify-center items-center">
                             <div (click)="openPopup(item)" [class.pointer-events-none]="openedPopup"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2  rounded cursor-pointer"
-                                [class.disabled]="openedPopup">
+                                class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
                                 Details
+                            </div>
+                            <div class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2  rounded cursor-pointer"
+                                (click)="deletCase(item.id)" [class.pointer-events-none]="openedPopup">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
                             </div>
                         </div>
                     </td>
@@ -32,21 +43,31 @@
             </tbody>
         </table>
         <div *ngIf="openedPopup"
-            class="absolute right-50 md:right-20  top-1/2 w-full md:w-3/4 h-1/5 bg-white shadow-2xl rounded-xl">
+            class="absolute right-0 md:right-20 overflow-y-auto bottom-1/2 w-full md:w-3/4 h-44 bg-white shadow-2xl rounded-xl">
             <div class="p-4">
                 <div>
                     <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
                 </div>
-                <div class="flex gap-10" *ngFor="let abnormality of abnormalityData">
-                    <div class="flex flex-col">
-                        <p><strong>Parameter:</strong> {{ abnormality.parameter }}</p>
-                        <p><strong>Unit:</strong> {{ abnormality.unit }}</p>
-                    </div>
-                    <div class="flex flex-col">
-                        <p><strong>Range:</strong> {{ abnormality.minValue }} - {{ abnormality.maxValue }}</p>
-                        <p><strong>Level Type:</strong> {{ abnormality.type }}</p>
-                    </div>
-                </div>
+                <table class="w-full border">
+                    <thead>
+                        <tr>
+                            <th class="py-2 w-1/5 border">Parameter</th>
+                            <th class="py-2 w-1/5 border">Unit</th>
+                            <th class="py-2 w-1/5 border">Range</th>
+                            <th class="py-2 w-1/5 border">Level Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="items-center text-center">
+                        <tr *ngFor="let abnormality of abnormalityData">
+                            <td class="border">{{ abnormality.parameter }}</td>
+                            <td class="border">{{ abnormality.unit }}</td>
+                            <td class="border">{{ abnormality.minValue }} - {{ abnormality.maxValue }}</td>
+                            <td class="border">
+                                {{ abnormality.type }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
