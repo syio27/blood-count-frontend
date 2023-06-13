@@ -55,6 +55,9 @@ export class InviteUserComponent implements OnInit {
       this.adminService.invite(inviteRequest).subscribe(
         () => {
           console.log('Invitation sent');
+          this.form.reset()
+          this.selectedRoleOption = '';
+          this.selectedGroupOption = '';
         },
         (error) => {
           console.error('Failed to send invitation:', error);

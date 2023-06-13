@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../../../../services/group.service';
 import { IGroupResponse } from '../../../../interfaces/IGroupResponse';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ICreateGroupRequest } from 'src/app/interfaces/ICreateGroupRequest';
+import { GroupType } from 'src/app/enums/groupType.enum';
 
 @Component({
   selector: 'app-groups-manage',
@@ -9,11 +12,57 @@ import { IGroupResponse } from '../../../../interfaces/IGroupResponse';
 })
 export class GroupsManageComponent implements OnInit {
   groups: IGroupResponse[] = [];
-
+  form: FormGroup;
   currentPage = 1;
   groupsPerPage = 4;
+  groupTypeDropdownOpen = false;
+  selectedGroupTypeOption = null;
+  groupTypeDropdownOptions = Object.values(GroupType);
 
-  constructor(private groupService: GroupService) {}
+
+  constructor(
+    private groupService: GroupService,
+    private fb: FormBuilder,
+  ) {
+    this.form = this.fb.group({
+      'groupName': ['', Validators.required],
+    });
+  }
+
+  createGroup(): void {
+    if (this.form.valid && this.selectedGroupTypeOption) {
+      const groupName = this.form.get('groupName').value;
+      const groupType = this.selectedGroupTypeOption;
+      const groupRequest: ICreateGroupRequest = {
+        groupNumber: groupName,
+        groupType: groupType
+      };
+
+      this.groupService.createNewGroup(groupRequest).subscribe(
+        (response) => {
+          console.log('New group created:', response);
+
+          this.form.reset();
+          this.selectedGroupTypeOption = null;
+
+          this.fetchGroups();
+        },
+        (error) => {
+          console.error('Failed to create group:', error);
+        }
+      );
+    }
+  }
+
+  toggleGroupTypeDropdown(): void {
+    this.groupTypeDropdownOpen = !this.groupTypeDropdownOpen;
+  }
+
+  selectGroupTypeOption(option: GroupType): void {
+    this.selectedGroupTypeOption = option;
+    this.groupTypeDropdownOpen = false;
+    localStorage.setItem('selectedLevelTypeOption', option);
+  }
 
   get totalPages(): number {
     return Math.ceil(this.groups.length / this.groupsPerPage);
@@ -55,12 +104,12 @@ export class GroupsManageComponent implements OnInit {
     this.groupService.fetchAllGroups().subscribe(
       (data) => {
         this.groups = [data].flatMap((subArray) => subArray).sort((a, b) => {
-          if (a.groupType === 'ADMIN_GROUP') {
-            return -1; 
-          } else if (b.groupType === 'ADMIN_GROUP') {
+          if (a.groupType === GroupType.ADMIN_GROUP) {
+            return -1;
+          } else if (b.groupType === GroupType.ADMIN_GROUP) {
             return 1;
           } else {
-            return 0; 
+            return 0;
           }
         });
       },
