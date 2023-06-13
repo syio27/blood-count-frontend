@@ -56,6 +56,22 @@ export class GroupService {
             );
     }
 
+    deleteGroup(groupNumber: string): Observable<void> {
+        return this.http.delete<void>(this.baseUrl + groupNumber, { observe: 'body' })
+            .pipe(
+                retry(3),
+                catchError(this.handleException)
+            );
+    }
+
+    deleteUserFromGroup(groupNumber: string, userId: string): Observable<void> {
+        return this.http.post<void>(this.baseUrl + `${groupNumber}/users/${userId}`, { observe: 'body' })
+            .pipe(
+                retry(3),
+                catchError(this.handleException)
+            );
+    }
+
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {
             console.error(`Error on client-side occured:, ${exception.error}`)
