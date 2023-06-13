@@ -97,9 +97,6 @@ export class AuthService {
     localStorage.removeItem('parameter-min');
     localStorage.removeItem('parameter-max');
     localStorage.removeItem('selectedLevelTypeOption');
-    // let addedValues: ICreateAbnormalityRequest[] = [];
-    // addedValues.splice(0, addedValues.length);
-    // localStorage.setItem('addedValues', JSON.stringify(addedValues));
   }
 
   removeAccess() {
