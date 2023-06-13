@@ -34,6 +34,7 @@ import { UsersTableComponent } from './components/roles/root-user/users-table/us
 import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
 import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
 import { CaseEntityComponent } from './components/roles/root-user/case-entity/case-entity.component';
+import { CaseTableComponent } from './components/roles/root-user/case-entity/case-table/case-table.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CaseEntityComponent } from './components/roles/root-user/case-entity/ca
     InviteUserComponent,
     GroupsManageComponent,
     CaseEntityComponent,
+    CaseTableComponent,
   ],
   imports: [
     ReactiveFormsModule,

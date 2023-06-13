@@ -61,7 +61,6 @@ export class GroupsManageComponent implements OnInit {
   selectGroupTypeOption(option: GroupType): void {
     this.selectedGroupTypeOption = option;
     this.groupTypeDropdownOpen = false;
-    localStorage.setItem('selectedLevelTypeOption', option);
   }
 
   get totalPages(): number {
@@ -112,6 +111,7 @@ export class GroupsManageComponent implements OnInit {
             return 0;
           }
         });
+        console.log(this.groups)
       },
       (error) => {
         console.error('Failed to fetch groups:', error);
