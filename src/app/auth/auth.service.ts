@@ -9,7 +9,7 @@ import { tap, shareReplay, catchError, of, switchMap, throwError } from 'rxjs';
 import * as moment from 'moment';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
-import { CaseEntityComponent } from '../components/roles/root-user/case-entity/case-entity.component';
+import { ICreateAbnormalityRequest } from '../interfaces/ICreateAbnormalityRequest';
 
 @Injectable()
 export class AuthService {
@@ -97,7 +97,9 @@ export class AuthService {
     localStorage.removeItem('parameter-min');
     localStorage.removeItem('parameter-max');
     localStorage.removeItem('selectedLevelTypeOption');
-    localStorage.setItem('addedValues', JSON.stringify(new Array(0).fill(0)));
+    // let addedValues: ICreateAbnormalityRequest[] = [];
+    // addedValues.splice(0, addedValues.length);
+    // localStorage.setItem('addedValues', JSON.stringify(addedValues));
   }
 
   removeAccess() {
