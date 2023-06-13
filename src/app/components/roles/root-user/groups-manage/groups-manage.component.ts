@@ -15,6 +15,7 @@ export class GroupsManageComponent implements OnInit {
   form: FormGroup;
   currentPage = 1;
   groupsPerPage = 4;
+  openedPopup = false
   groupTypeDropdownOpen = false;
   selectedGroupTypeOption = null;
   groupTypeDropdownOptions = Object.values(GroupType);
@@ -117,5 +118,13 @@ export class GroupsManageComponent implements OnInit {
         console.error('Failed to fetch groups:', error);
       }
     );
+  }
+  openPopup(item){
+    this.openedPopup = true
+  }
+  
+  closePopup(){
+    this.openedPopup = false
+
   }
 }

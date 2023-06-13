@@ -39,7 +39,7 @@
         </div>
     </div>
     <hr class="mt-4 border-black w-full mb-5">
-    <div class="w-full lg:w-1/2 h-[60vh]">
+    <div class="w-full lg:w-1/2 h-[60vh] mb-3 relative">
         <div class="p-2" *ngFor="let group of displayedGroups">
             <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
                 <div class="flex flex-col">
@@ -47,12 +47,14 @@
                     <div class="text-gray-600 mb-2">Total Students: {{ group.totalParticipants }}</div>
                 </div>
                 <div class="flex items-center">
-                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer select-none" 
+                    [class.pointer-events-none]="openedPopup" (click)="openPopup(group)">
                         Details
                     </div>
                 </div>
             </div>
         </div>
+        
     </div>
     <div class="w-full mt-4 flex justify-center select-none">
         <nav class="inline-flex">

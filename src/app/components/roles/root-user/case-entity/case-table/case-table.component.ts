@@ -76,4 +76,9 @@ export class CaseTableComponent implements OnInit {
     this.openedPopup = false
 
   }
+  deletCase(item){
+    this.caseService.deleteCase(item).subscribe();
+    window.location.reload();
+
+  }
 }

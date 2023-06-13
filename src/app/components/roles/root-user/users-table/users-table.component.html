@@ -1,44 +1,63 @@
-<div class="bg-gray-100 flex text-center select-none mb-10">
-    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)"
-        [class.border-b-4]="currentCategory === Roles.Student"
-        [class.border-blue-500]="currentCategory === Roles.Student">
-        Student
+<div>
+    <div class="bg-gray-100 flex text-center select-none mb-10">
+        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)"
+            [class.border-b-4]="currentCategory === Roles.Student"
+            [class.border-blue-500]="currentCategory === Roles.Student">
+            Student
+        </div>
+        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Teacher)"
+            [class.border-b-4]="currentCategory === Roles.Teacher"
+            [class.border-blue-500]="currentCategory === Roles.Teacher">
+            Supervisor
+        </div>
+        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Admin)"
+            [class.border-b-4]="currentCategory === Roles.Admin"
+            [class.border-blue-500]="currentCategory === Roles.Admin">
+            Admin
+        </div>
     </div>
-    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Teacher)"
-        [class.border-b-4]="currentCategory === Roles.Teacher"
-        [class.border-blue-500]="currentCategory === Roles.Teacher">
-        Supervisor
-    </div>
-    <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Admin)"
-        [class.border-b-4]="currentCategory === Roles.Admin" [class.border-blue-500]="currentCategory === Roles.Admin">
-        Admin
-    </div>
-</div>
-<div class="overflow-x-auto">
-
-    <table class="w-full border">
-        <thead class="border">
-            <tr>
-                <th class="py-2 w-3/12 border">Email</th>
-                <th class="py-2 w-3/12 border">Group</th>
-                <th class="py-2 w-3/12 border">Role</th>
-                <th class="py-2 w-3/12 border">More</th>
-            </tr>
-        </thead>
-        <tbody id="table-body" class="items-center text-center">
-            <tr *ngFor="let item of tableData">
-                <td class="border-b ">{{ item.email }}</td>
-                <td class="border-b">{{ item.groupNumber }}</td>
-                <td class="border-b">{{ item.role }}</td>
-                <td class="border-b">
-                    <div class="flex justify-center">
-                        <div
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded cursor-pointer">
-                            Details
+    <div class="overflow-x-auto h-[60vh] mb-2">
+        <table class="w-full border">
+            <thead class="border">
+                <tr>
+                    <th class="py-2 w-3/12 border">Email</th>
+                    <th class="py-2 w-3/12 border">Group</th>
+                    <th class="py-2 w-3/12 border">Role</th>
+                    <th class="py-2 w-3/12 border">More</th>
+                </tr>
+            </thead>
+            <tbody id="table-body" class="items-center text-center">
+                <tr *ngFor="let item of displayedGroups">
+                    <td class="border-b ">{{ item.email }}</td>
+                    <td class="border-b">{{ item.groupNumber }}</td>
+                    <td class="border-b">{{ item.role }}</td>
+                    <td class="border-b">
+                        <div class="flex justify-center">
+                            <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
+                                Details
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="w-full mt-4 flex justify-center select-none">
+        <nav class="inline-flex">
+            <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                (click)="previousPage()" [class.opacity-50]="currentPage === 1">
+                Previous
+            </div>
+            <ng-container *ngFor="let page of pages">
+                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                    [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                    {{ page }}
+                </div>
+            </ng-container>
+            <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
+                [class.opacity-50]="currentPage === totalPages">
+                Next
+            </div>
+        </nav>
+    </div>
 </div>
