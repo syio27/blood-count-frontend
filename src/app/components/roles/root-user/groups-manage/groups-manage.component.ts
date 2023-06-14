@@ -4,7 +4,8 @@ import { IGroupResponse } from '../../../../interfaces/IGroupResponse';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICreateGroupRequest } from 'src/app/interfaces/ICreateGroupRequest';
 import { GroupType } from 'src/app/enums/groupType.enum';
-
+import { AdminService } from 'src/app/services/administration.service';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
 @Component({
   selector: 'app-groups-manage',
   templateUrl: './groups-manage.component.html',
@@ -19,11 +20,13 @@ export class GroupsManageComponent implements OnInit {
   groupTypeDropdownOpen = false;
   selectedGroupTypeOption = null;
   groupTypeDropdownOptions = Object.values(GroupType);
-
+  groupParticipants: UserDetails[] = []
+  selectedGroup: any;
 
   constructor(
     private groupService: GroupService,
     private fb: FormBuilder,
+    private adminService: AdminService
   ) {
     this.form = this.fb.group({
       'groupName': ['', Validators.required],
@@ -98,6 +101,7 @@ export class GroupsManageComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchGroups();
+    this.groupParticipants;
   }
 
   fetchGroups(): void {
@@ -119,12 +123,31 @@ export class GroupsManageComponent implements OnInit {
       }
     );
   }
+
   openPopup(item){
+    this.adminService.fetchGroupParticipants(item).subscribe(
+      (data)=>{
+        this.groupParticipants = data
+      }
+    )
     this.openedPopup = true
   }
   
   closePopup(){
     this.openedPopup = false
+  }
 
+  deleteGroup(group){
+    console.log(group.groupNumber)
+    this.groupService.deleteGroup(group.groupNumber).subscribe()
+    window.location.reload();
+  }
+  deleteUserFromGroup(groupNumber, id){
+    this.groupService.deleteUserFromGroup(groupNumber, id).subscribe()
+    window.location.reload();
+  }
+  clearGroup(group){
+    this.groupService.clearGroup(group.groupNumber).subscribe()
+    window.location.reload();
   }
 }
