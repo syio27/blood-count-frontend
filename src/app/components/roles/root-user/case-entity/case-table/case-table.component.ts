@@ -27,7 +27,7 @@ export class CaseTableComponent implements OnInit {
     this.fetchTableData()
     this.caseDataService.refreshTable$.subscribe(() => {
       this.fetchTableData();
-    });      this.caseDataService.refreshTable();
+    });     
 
   }
 

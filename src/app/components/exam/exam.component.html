@@ -1,0 +1,65 @@
+<app-timer></app-timer>
+<app-white-box>
+    <div class="flex flex-col">
+        <div class="overflow-x-auto">
+            <table class="table-auto border w-full text-center text-xs md:text-base">
+                <thead>
+                    <tr class="border-black">
+                        <th rowspan="2" class="px-1 py-1 border-b">Parameter</th>
+                        <th rowspan="2" class="px-1 py-1  border-b">Unit</th>
+                        <th rowspan="2" class="px-1 py-1  border-b border-r">Value</th>
+                        <th rowspan="2" class="px-1 py-1">Decreased</th>
+                        <th rowspan="2" class="px-1 py-1">Normal</th>
+                        <th rowspan="2" class="px-1 py-1">Increased</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of displayedElements">
+                        <td class=" px-1 py-1">{{ data.parameter }}</td>
+                        <td class="px-1 py-1">{{ data.unit }}</td>
+                        <td class="border-r px-1 py-1">{{ data.minFemale }}</td>
+                        <td class="px-1 py-1">
+                            <input type="radio" [name]="'option_' + data.id" [value]="'option1_' + data.id">
+                        </td>
+                        <td class="px-1 py-1">
+                            <input type="radio" [name]="'option_' + data.id" [value]="'option2_' + data.id">
+                        </td>
+                        <td class="px-1 py-1">
+                            <input type="radio" [name]="'option_' + data.id" [value]="'option3_' + data.id">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-14">
+            <div class="overflow-x-auto">
+                <table class="table-auto border w-full text-center">
+                    <thead>
+                        <tr class="border-black">
+                            <th rowspan="2" class="px-2 py-2 border bg-orange-500">Value</th>
+                            <th rowspan="2" class="px-2 py-2 border bg-green-500">Unit</th>
+                            <th colspan="2" class="px-2 py-2 border bg-pink-500">Female</th>
+                            <th colspan="2" class="px-2 py-2 border bg-blue-500">Male</th>
+                        </tr>
+                        <tr class="border">
+                            <th class="px-2 py-2 border bg-blue-200">Min</th>
+                            <th class="px-2 py-2 border bg-red-500">Max</th>
+                            <th class="px-2 py-2 border bg-blue-200">Min</th>
+                            <th class="px-2 py-2 border bg-red-500">Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of displayedElements2">
+                            <td class="border px-2 py-2">{{ data.parameter }}</td>
+                            <td class="border px-2 py-2">{{ data.unit }}</td>
+                            <td class="border px-2 py-2">{{ data.minFemale }}</td>
+                            <td class="border px-2 py-2">{{ data.maxFemale }}</td>
+                            <td class="border px-2 py-2">{{ data.minMale }}</td>
+                            <td class="border px-2 py-2">{{ data.maxMale }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</app-white-box>

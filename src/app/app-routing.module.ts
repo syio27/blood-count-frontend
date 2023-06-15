@@ -14,6 +14,7 @@ import { UsersTableComponent } from './components/roles/root-user/users-table/us
 import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
 import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
 import { CaseEntityComponent } from './components/roles/root-user/case-entity/case-entity.component';
+import { ExamComponent } from './components/exam/exam.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,10 @@ const routes: Routes = [
         path: 'table',
         component: CbcTableComponent
       },
-
+      {
+        path: 'exam',
+        component: ExamComponent
+      },
     ]
   },
   {
