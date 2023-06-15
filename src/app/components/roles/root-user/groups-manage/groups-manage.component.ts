@@ -6,6 +6,9 @@ import { ICreateGroupRequest } from 'src/app/interfaces/ICreateGroupRequest';
 import { GroupType } from 'src/app/enums/groupType.enum';
 import { AdminService } from 'src/app/services/administration.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgToastService } from 'ng-angular-popup'
+
 @Component({
   selector: 'app-groups-manage',
   templateUrl: './groups-manage.component.html',
@@ -26,7 +29,9 @@ export class GroupsManageComponent implements OnInit {
   constructor(
     private groupService: GroupService,
     private fb: FormBuilder,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private toast: NgToastService
+
   ) {
     this.form = this.fb.group({
       'groupName': ['', Validators.required],
@@ -48,11 +53,14 @@ export class GroupsManageComponent implements OnInit {
 
           this.form.reset();
           this.selectedGroupTypeOption = null;
+          this.toast.success({detail:"Operation done successfully",summary:'Group has been created',duration: 2000});
 
           this.fetchGroups();
         },
         (error) => {
           console.error('Failed to create group:', error);
+          this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+
         }
       );
     }
@@ -120,6 +128,8 @@ export class GroupsManageComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to fetch groups:', error);
+        this.toast.error({detail:"Error",summary: error.message ,duration: 1000});
+
       }
     );
   }
@@ -139,15 +149,43 @@ export class GroupsManageComponent implements OnInit {
 
   deleteGroup(group){
     console.log(group.groupNumber)
-    this.groupService.deleteGroup(group.groupNumber).subscribe()
-    window.location.reload();
+    this.groupService.deleteGroup(group.groupNumber).subscribe(
+      () => {
+        this.toast.success({detail:"Operation done successfully",summary:'Group has been created',duration: 2000});
+        this.openedPopup = false
+        this.fetchGroups()
+      },
+      (error: HttpErrorResponse) => {
+        console.error('An error occurred during case creation:', error);
+        console.log('HTTP Status Code:', error.status);
+        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+      }
+    )
   }
   deleteUserFromGroup(groupNumber, id){
-    this.groupService.deleteUserFromGroup(groupNumber, id).subscribe()
-    window.location.reload();
+    this.groupService.deleteUserFromGroup(groupNumber, id).subscribe(
+      () => {
+        this.toast.success({detail:"Operation done successfully",summary:'User has been deleted from the group',duration: 2000});
+        this.openPopup(groupNumber)
+      },
+      (error: HttpErrorResponse) => {
+        console.error('An error occurred during case creation:', error);
+        console.log('HTTP Status Code:', error.status);
+        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+      }
+    )
   }
   clearGroup(group){
-    this.groupService.clearGroup(group.groupNumber).subscribe()
-    window.location.reload();
+    this.groupService.clearGroup(group.groupNumber).subscribe(
+      () => {
+        this.toast.success({detail:"Operation done successfully",summary:'Group has been cleared',duration: 2000});
+        this.openPopup(group.groupNumber)
+      },
+      (error: HttpErrorResponse) => {
+        console.error('An error occurred during case creation:', error);
+        console.log('HTTP Status Code:', error.status);
+        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+      }
+    )
   }
 }

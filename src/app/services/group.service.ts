@@ -79,6 +79,6 @@ export class GroupService {
             console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.error}`)
         }
 
-        return throwError(() => new Error("Error happened; Try again"))
+        return throwError(() => exception.error)
     }
 }

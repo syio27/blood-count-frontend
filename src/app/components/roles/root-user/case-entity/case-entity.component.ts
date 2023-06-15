@@ -8,6 +8,9 @@ import { LevelTypes } from 'src/app/enums/levelType.enum';
 import { addAbnormality, removeAbnormality } from 'src/app/store/actions/abnormalities.action';
 import { Store } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgToastService } from 'ng-angular-popup'
+import { CaseDataService } from 'src/app/services/CaseDataService.service';
+
 
 @Component({
   selector: 'app-case-entity',
@@ -30,7 +33,10 @@ export class CaseEntityComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private caseService: CaseService,
-    private store: Store
+    private store: Store,
+    private toast: NgToastService,
+    private caseDataService: CaseDataService
+
   ) {
     this.form = this.fb.group({
       'anemia-type': ['', Validators.required],
@@ -47,41 +53,40 @@ export class CaseEntityComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
     this.restoreFormValues();
   }
 
 
   restoreFormValues() {
-    this.form.get('anemia-type').setValue(localStorage.getItem('anemia-type'))
-    this.form.get('diagnosis').setValue(localStorage.getItem('diagnosis'))
+    this.form.get('anemia-type').setValue(sessionStorage.getItem('anemia-type'))
+    this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
 
-    this.form.get('first-min').setValue(localStorage.getItem('first-min'));
-    this.form.get('first-max').setValue(localStorage.getItem('first-max'));
-    this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(localStorage.getItem('second-min'))
-    this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(localStorage.getItem('second-max'))
-    this.parameterForm.get('parameter').setValue(localStorage.getItem('parameter'))
+    this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
+    this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
+    this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
+    this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
+    this.parameterForm.get('parameter').setValue(sessionStorage.getItem('parameter'))
 
-    this.parameterForm.get('parameter-min').setValue(localStorage.getItem('parameter-min'));
-    this.parameterForm.get('parameter-max').setValue(localStorage.getItem('parameter-max'));
+    this.parameterForm.get('parameter-min').setValue(sessionStorage.getItem('parameter-min'));
+    this.parameterForm.get('parameter-max').setValue(sessionStorage.getItem('parameter-max'));
 
-    const storedAddedValues = localStorage.getItem('addedValues');
+    const storedAddedValues = sessionStorage.getItem('addedValues');
     if (storedAddedValues) {
       this.addedValues = JSON.parse(storedAddedValues);
     }
 
-    const storedShowSecondRangeForm = localStorage.getItem('showSecondRangeForm');
+    const storedShowSecondRangeForm = sessionStorage.getItem('showSecondRangeForm');
     if (storedShowSecondRangeForm) {
       this.showSecondRangeForm = JSON.parse(storedShowSecondRangeForm);
     }
 
-    const storedSelectedGenderOption = localStorage.getItem('selectedGenderOption');
+    const storedSelectedGenderOption = sessionStorage.getItem('selectedGenderOption');
     if (storedSelectedGenderOption) {
       this.selectedGenderOption = storedSelectedGenderOption;
     }
 
-    const storedSelectedLevelTypeOption = localStorage.getItem('selectedLevelTypeOption');
+    const storedSelectedLevelTypeOption = sessionStorage.getItem('selectedLevelTypeOption');
     if (storedSelectedLevelTypeOption) {
       this.selectedLevelTypeOption = storedSelectedLevelTypeOption;
     }
@@ -90,31 +95,31 @@ export class CaseEntityComponent implements OnInit {
   saveFormValues(input) {
     switch (input) {
       case 1:
-        localStorage.setItem('anemia-type', this.form.get('anemia-type').value);
+        sessionStorage.setItem('anemia-type', this.form.get('anemia-type').value);
         break;
       case 2:
-        localStorage.setItem('diagnosis', this.form.get('diagnosis').value);
+        sessionStorage.setItem('diagnosis', this.form.get('diagnosis').value);
         break;
       case 3:
-        localStorage.setItem('first-min', this.form.get('first-min').value);
+        sessionStorage.setItem('first-min', this.form.get('first-min').value);
         break;
       case 4:
-        localStorage.setItem('first-max', this.form.get('first-max').value);
+        sessionStorage.setItem('first-max', this.form.get('first-max').value);
         break;
       case 5:
-        localStorage.setItem('second-min', this.form.get('second-min').value);
+        sessionStorage.setItem('second-min', this.form.get('second-min').value);
         break;
       case 6:
-        localStorage.setItem('second-max', this.form.get('second-max').value);
+        sessionStorage.setItem('second-max', this.form.get('second-max').value);
         break;
       case 7:
-        localStorage.setItem('parameter', this.parameterForm.get('parameter').value);
+        sessionStorage.setItem('parameter', this.parameterForm.get('parameter').value);
         break;
       case 8:
-        localStorage.setItem('parameter-min', this.parameterForm.get('parameter-min').value);
+        sessionStorage.setItem('parameter-min', this.parameterForm.get('parameter-min').value);
         break;
       case 9:
-        localStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
+        sessionStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
         break;
     }
   }
@@ -128,17 +133,17 @@ export class CaseEntityComponent implements OnInit {
   selectGenderOption(option: string) {
     this.selectedGenderOption = option;
     this.genderDropdownOpen = false;
-    localStorage.setItem('selectedGenderOption', option);
+    sessionStorage.setItem('selectedGenderOption', option);
   }
 
   addSecondRangeForm() {
     this.showSecondRangeForm = true;
-    localStorage.setItem('showSecondRangeForm', JSON.stringify(this.showSecondRangeForm));
+    sessionStorage.setItem('showSecondRangeForm', JSON.stringify(this.showSecondRangeForm));
   }
 
   removeSecondRangeForm() {
     this.showSecondRangeForm = false;
-    localStorage.setItem('showSecondRangeForm', JSON.stringify(this.showSecondRangeForm));
+    sessionStorage.setItem('showSecondRangeForm', JSON.stringify(this.showSecondRangeForm));
   }
 
   toggleLevelTypeDropdown() {
@@ -148,14 +153,14 @@ export class CaseEntityComponent implements OnInit {
   selectLevelTypeOption(option: string) {
     this.selectedLevelTypeOption = option;
     this.levelTypeDropdownOpen = false;
-    localStorage.setItem('selectedLevelTypeOption', option);
+    sessionStorage.setItem('selectedLevelTypeOption', option);
   }
 
   removeValue(parameter) {
     const index = this.addedValues.findIndex(item => item === parameter);
     if (index !== -1) {
       this.addedValues.splice(index, 1);
-      localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
+      sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
     }
     this.store.dispatch(removeAbnormality({ parameter }));
   }
@@ -183,11 +188,11 @@ export class CaseEntityComponent implements OnInit {
     this.addedValues.push(abnormalityData);
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
-    localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
-    localStorage.removeItem('parameter')
-    localStorage.removeItem('parameter-min')
-    localStorage.removeItem('parameter-max')
-    localStorage.removeItem('selectedLevelTypeOption')
+    sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
+    sessionStorage.removeItem('parameter')
+    sessionStorage.removeItem('parameter-min')
+    sessionStorage.removeItem('parameter-max')
+    sessionStorage.removeItem('selectedLevelTypeOption')
   }
 
   createCaseWithAbnormality() {
@@ -208,28 +213,28 @@ export class CaseEntityComponent implements OnInit {
         this.parameterForm.reset();
         this.form.reset();
         this.selectedLevelTypeOption = '';
-        localStorage.setItem('anemia-type', '');
-        localStorage.setItem('diagnosis', '');
-        localStorage.removeItem('first-min');
-        localStorage.removeItem('first-max');
-        localStorage.removeItem('second-min');
-        localStorage.removeItem('second-max');
-        localStorage.removeItem('selectedGenderOption');
-        localStorage.removeItem('showSecondRangeForm');
-        localStorage.removeItem('addedValues');
-        localStorage.setItem('parameter', '')
-        localStorage.removeItem('parameter-min')
-        localStorage.removeItem('parameter-max')
-        localStorage.removeItem('selectedLevelTypeOption')
+        sessionStorage.setItem('anemia-type', '');
+        sessionStorage.setItem('diagnosis', '');
+        sessionStorage.removeItem('first-min');
+        sessionStorage.removeItem('first-max');
+        sessionStorage.removeItem('second-min');
+        sessionStorage.removeItem('second-max');
+        sessionStorage.removeItem('selectedGenderOption');
+        sessionStorage.removeItem('showSecondRangeForm');
+        sessionStorage.removeItem('addedValues');
+        sessionStorage.setItem('parameter', '')
+        sessionStorage.removeItem('parameter-min')
+        sessionStorage.removeItem('parameter-max')
+        sessionStorage.removeItem('selectedLevelTypeOption')
         this.addedValues.splice(0, this.addedValues.length);
-        localStorage.setItem('addedValues', JSON.stringify(this.addedValues));
-        window.location.reload();
+        sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
+        this.toast.success({detail:"Operation done successfully",summary:'Case has been created',duration: 2000});
+        this.caseDataService.refreshTable();
       },
       (error: HttpErrorResponse) => {
         console.error('An error occurred during case creation:', error);
-        console.log('HTTP Status Code:', error.status); // Access the status code from the error object
-
+        console.log('HTTP Status Code:', error.status);
+        this.toast.error({detail:"Error",summary: error.message ,duration: 2000});
       })
-
   }
 }

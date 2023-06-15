@@ -50,7 +50,7 @@ export class UsersTableComponent implements OnInit {
     return Math.ceil(this.tableData.length / this.groupsPerPage);
   }
 
-  get displayedGroups(): UserDetails[] {
+  get displayedUsers(): UserDetails[] {
     const startIndex = (this.currentPage - 1) * this.groupsPerPage;
     const endIndex = startIndex + this.groupsPerPage;
     return this.tableData.slice(startIndex, endIndex);

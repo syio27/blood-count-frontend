@@ -4,6 +4,8 @@ import { AdminService } from '../../../../services/administration.service';
 import { IInviteUserRequest } from '../../../../interfaces/IInviteUserRequest';
 import { GroupService } from '../../../../services/group.service';
 import { Roles } from '../../../../enums/role.enum';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgToastService } from 'ng-angular-popup'
 
 
 @Component({
@@ -23,7 +25,8 @@ export class InviteUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private toast: NgToastService
   ) { }
 
   ngOnInit() {
@@ -54,13 +57,14 @@ export class InviteUserComponent implements OnInit {
       };
       this.adminService.invite(inviteRequest).subscribe(
         () => {
-          console.log('Invitation sent');
+          this.toast.success({detail:"Operation done successfully",summary:'User has been invited',duration: 2000});
           this.form.reset()
           this.selectedRoleOption = '';
           this.selectedGroupOption = '';
         },
         (error) => {
           console.error('Failed to send invitation:', error);
+          this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
         }
       );
     }

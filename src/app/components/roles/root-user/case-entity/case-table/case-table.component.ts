@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ICaseResponse } from 'src/app/interfaces/ICaseResponse';
 import { CaseService } from 'src/app/services/case.service';
 import { IAbnormalityResponse } from 'src/app/interfaces/IAbnormalityResponse';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgToastService } from 'ng-angular-popup'
+import { CaseDataService } from 'src/app/services/CaseDataService.service';
 
 @Component({
   selector: 'app-case-table',
@@ -15,18 +18,23 @@ export class CaseTableComponent implements OnInit {
   groupsPerPage = 10;
   openedPopup = false
   constructor(
-    private caseService: CaseService) { }
+    private caseService: CaseService,
+    private toast: NgToastService,
+    private caseDataService: CaseDataService
+  ) { }
 
-  ngOnInit():void {
-    this.fetchTableData();
+  ngOnInit(): void {
+    this.fetchTableData()
+    this.caseDataService.refreshTable$.subscribe(() => {
+      this.fetchTableData();
+    });      this.caseDataService.refreshTable();
+
   }
 
-  fetchTableData():void {
+  fetchTableData(): void {
     this.caseService.getAllCasesWithAbnormalities().subscribe(
       (data) => {
-        
         this.tableData = [data].flatMap((subArray) => subArray);
-        console.log(this.tableData)
       },
       (error: any) => {
         console.error(error);
@@ -42,12 +50,12 @@ export class CaseTableComponent implements OnInit {
     const endIndex = startIndex + this.groupsPerPage;
     return this.tableData.slice(startIndex, endIndex);
   }
-  
+
 
   get pages(): number[] {
     return Array.from({ length: this.totalPages }, (_, index) => index + 1);
   }
-  
+
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -65,19 +73,27 @@ export class CaseTableComponent implements OnInit {
       this.currentPage = page;
     }
   }
-  
 
-  openPopup(item){
-    this.abnormalityData=item.abnormalities
+
+  openPopup(item) {
+    this.abnormalityData = item.abnormalities
     this.openedPopup = true
   }
-  
-  closePopup(){
+
+  closePopup() {
     this.openedPopup = false
 
   }
-  deletCase(item){
-    this.caseService.deleteCase(item).subscribe()
-    window.location.reload();
+  deletCase(item) {
+    this.caseService.deleteCase(item).subscribe(
+      () => {
+        this.toast.success({detail:"Operation done successfully",summary:'Case has been deleted',duration: 2000});
+        this.fetchTableData()
+      },
+      (error: HttpErrorResponse) => {
+        console.error('An error occurred during case creation:', error);
+        console.log('HTTP Status Code:', error.status);
+        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+      })
   }
 }

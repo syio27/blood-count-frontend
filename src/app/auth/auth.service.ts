@@ -84,19 +84,19 @@ export class AuthService {
   logout() {
     this.removeAccess();
     this.router.navigate(['/login']);
-    localStorage.setItem('anemia-type', '');
-    localStorage.setItem('diagnosis', '');
-    localStorage.removeItem('first-min');
-    localStorage.removeItem('first-max');
-    localStorage.removeItem('second-min');
-    localStorage.removeItem('second-max');
-    localStorage.removeItem('selectedGenderOption');
-    localStorage.removeItem('showSecondRangeForm');
-    localStorage.removeItem('addedValues');
-    localStorage.setItem('parameter', '');
-    localStorage.removeItem('parameter-min');
-    localStorage.removeItem('parameter-max');
-    localStorage.removeItem('selectedLevelTypeOption');
+    sessionStorage.setItem('anemia-type', '');
+    sessionStorage.setItem('diagnosis', '');
+    sessionStorage.removeItem('first-min');
+    sessionStorage.removeItem('first-max');
+    sessionStorage.removeItem('second-min');
+    sessionStorage.removeItem('second-max');
+    sessionStorage.removeItem('selectedGenderOption');
+    sessionStorage.removeItem('showSecondRangeForm');
+    sessionStorage.removeItem('addedValues');
+    sessionStorage.setItem('parameter', '');
+    sessionStorage.removeItem('parameter-min');
+    sessionStorage.removeItem('parameter-max');
+    sessionStorage.removeItem('selectedLevelTypeOption');
   }
 
   removeAccess() {

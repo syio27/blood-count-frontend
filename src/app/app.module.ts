@@ -3,6 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { NgToastModule } from 'ng-angular-popup'
+
 
 import { abnormalitiesReducer } from './store/state/abnormalities.state';
 import { AppMaterialModule } from './app-material/app-material.module';
@@ -26,7 +28,7 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
 import { FooterComponent } from './components/footer/footer.component';
 import { WhiteBoxComponent } from './components/white-box/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { StatusButtonComponent } from './components/header/status-button/status-button.component';
+import { PanelButtonComponent } from './components/header/panel-button/panel-button.component';
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
 import { RootUserComponent } from './components/roles/root-user/root-user.component';
 import { NavigationBarComponent } from './components/roles/navigation-bar/navigation-bar.component';
@@ -52,7 +54,7 @@ import { CaseTableComponent } from './components/roles/root-user/case-entity/cas
     ErrorMessageComponent,
     FooterComponent,
     WhiteBoxComponent,
-    StatusButtonComponent,
+    PanelButtonComponent,
     CbcTableComponent,
     RootUserComponent,
     NavigationBarComponent,
@@ -70,7 +72,8 @@ import { CaseTableComponent } from './components/roles/root-user/case-entity/cas
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot({}), 
-    StoreModule.forFeature('abnormalities', abnormalitiesReducer)
+    StoreModule.forFeature('abnormalities', abnormalitiesReducer),
+    NgToastModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

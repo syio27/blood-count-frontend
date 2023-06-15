@@ -15,14 +15,14 @@
         <div class="flex flex-col md:flex-row gap-2">
           <div class="text-lg font-medium">Group number:</div>
           <div class="flex gap-5">
-            <div class="text-lg">Group number</div>
+            <div class="text-lg">{{userDetails.groupNumber}}</div>
             <div class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-1 rounded select-none
             focus:outline-none focus:shadow-outline text-center cursor-pointer">See group</div>
           </div>
         </div>
         <div class="flex flex-col md:flex-row gap-2">
           <div class="text-lg font-medium">Role:</div>
-          <div class="text-lg">Role</div>
+          <div class="text-lg">{{userDetails.role}}</div>
         </div>
         <div class="flex justify-start mt-4">
           <div (click)="onHistory()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none

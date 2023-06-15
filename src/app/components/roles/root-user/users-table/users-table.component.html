@@ -1,6 +1,6 @@
 <div>
     <div class="bg-gray-100 flex text-center select-none mb-10">
-        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)"
+        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)" 
             [class.border-b-4]="currentCategory === Roles.Student"
             [class.border-blue-500]="currentCategory === Roles.Student">
             Student
@@ -22,19 +22,26 @@
                 <tr>
                     <th class="py-2 w-3/12 border">Email</th>
                     <th class="py-2 w-3/12 border">Group</th>
-                    <th class="py-2 w-3/12 border">Role</th>
+                    <th class="py-2 w-3/12 border" *ngIf="currentCategory != Roles.Student">Role</th>
+                    <th class="py-2 w-3/12 border" *ngIf="currentCategory === Roles.Student">Student Number</th>
                     <th class="py-2 w-3/12 border">More</th>
                 </tr>
             </thead>
             <tbody id="table-body" class="items-center text-center">
-                <tr *ngFor="let item of displayedGroups">
+                <tr *ngFor="let item of displayedUsers">
                     <td class="border-b ">{{ item.email }}</td>
                     <td class="border-b">{{ item.groupNumber }}</td>
-                    <td class="border-b">{{ item.role }}</td>
+                    <td class="border-b" >{{ item.role }}</td>
                     <td class="border-b">
                         <div class="flex justify-center">
                             <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
                                 Details
+                            </div>
+                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer">
+                                Ban
+                            </div>
+                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer">
+                                Unban
                             </div>
                         </div>
                     </td>
