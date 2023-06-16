@@ -43,7 +43,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   get displayedElements2() {
     return this.tabelData.slice(8, 20);
   }
-  Console(id) {
-    console.log(id)
+  Console(id, dataid) {
+    console.log(id + " " + dataid)
   }
 }

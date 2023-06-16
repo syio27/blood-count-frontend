@@ -28,7 +28,7 @@
                         <td class="p-1 bg-gray-100" *ngFor="let answer of data.answers.reverse()">
                             <label>
                                 <input type="radio" class="cursor-pointer w-3 h-3 md:w-5 md:h-5" [name]="'radioGroup-' + data.id" [value]="answer.text"
-                                    (click)="Console(answer.text)">
+                                    (click)="Console(answer.id, data.id)">
                             </label>
                         </td>
                     </tr>
