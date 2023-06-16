@@ -1,21 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
+import { CanDeactivateGuard } from 'src/app/services/can-deactivate.guard';
 
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.css']
 })
-export class ExamComponent implements OnInit {
+export class ExamComponent implements OnInit, CanDeactivateGuard {
   tabelData = [];
   testData = [];
   age: number
   gender: string
-  constructor(private sharedGameDataService: SharedGameDataService) {}
+  constructor(private sharedGameDataService: SharedGameDataService) { }
 
   ngOnInit() {
     this.fetchData();
+  }
+
+  canDeactivate() {
+    return window.confirm('You are currently on the exam page. Are you sure you want to leave?');
   }
 
   fetchData() {
@@ -38,7 +43,7 @@ export class ExamComponent implements OnInit {
   get displayedElements2() {
     return this.tabelData.slice(8, 20);
   }
-  Console(id){
+  Console(id) {
     console.log(id)
   }
 }

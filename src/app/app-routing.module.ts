@@ -15,6 +15,7 @@ import { InviteUserComponent } from './components/roles/root-user/invite-user/in
 import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
 import { CaseEntityComponent } from './components/roles/root-user/case-entity/case-entity.component';
 import { ExamComponent } from './components/exam/exam.component';
+import { CanDeactivateGuard } from './services/can-deactivate.guard';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
       },
       {
         path: 'exam',
-        component: ExamComponent
+        component: ExamComponent,
+        canDeactivate: [CanDeactivateGuard]
       },
     ]
   },
