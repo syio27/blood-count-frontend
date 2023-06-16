@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 
 @Component({
   selector: 'app-timer',
@@ -8,34 +8,30 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TimerComponent implements OnInit {
   remainingTime: number;
-  initialTime: number = 1800;
   minutes: number;
-  seconds: any;
+  seconds: string;
   countdownInterval: any;
-  status: string;
   isTestFinished: boolean = false;
 
-  constructor(private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
-      this.status = params['status'];
-    });
-  }
+  constructor(private sharedGameDataService: SharedGameDataService) { }
 
   ngOnInit() {
-    this.fetchTimer();
+    this.initializeTimer();
+    this.startTimer();
   }
 
   initializeTimer() {
-    const savedTime = localStorage.getItem('timerCountdown');
-    if (savedTime) {
-      const savedTimestamp = parseInt(savedTime, 10);
-      const currentTime = Math.floor(Date.now() / 1000);
-      const elapsedTime = currentTime - savedTimestamp;
-      this.remainingTime = Math.max(1800 - elapsedTime, 0);
-    } else {
-      this.remainingTime = 1800;
-    }
+    const currentTime = Math.floor(Date.now() / 1000);
+    const gameData = this.sharedGameDataService.startTest$;
+    gameData.subscribe(data => {
+      const startTime = Math.floor(new Date(data.startTime).getTime() / 1000);
+      const estimatedEndTime = Math.floor(new Date(data.estimatedEndTime).getTime() / 1000);
+      const elapsedTime = currentTime - startTime;
+      this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
+    });
   }
+  
+  
 
   startTimer() {
     this.countdownInterval = setInterval(() => {
@@ -44,37 +40,15 @@ export class TimerComponent implements OnInit {
       if (this.remainingTime <= 0) {
         clearInterval(this.countdownInterval);
         this.isTestFinished = true;
-        this.saveTimer();
       }
 
       this.updateDisplayTime();
     }, 1000);
   }
 
-  fetchTimer() {
-    if (this.status === 'start') {
-      this.saveTimer();
-      clearInterval(this.countdownInterval);
-      this.initializeTimer();
-      this.startTimer();
-    } else {
-      this.initializeTimer();
-      this.startTimer();
-    }
-  }
-
   updateDisplayTime() {
     this.minutes = Math.floor(this.remainingTime / 60);
-    if (this.remainingTime % 60 >= 10) {
-      this.seconds = ':' + this.remainingTime % 60;
-    } else {
-      this.seconds = ':0' + this.remainingTime % 60;
-    }
+    const secondsValue = this.remainingTime % 60;
+    this.seconds = secondsValue < 10 ? `0${secondsValue}` : `${secondsValue}`;
   }
-
-  saveTimer() {
-    localStorage.setItem('timerCountdown', Math.floor(Date.now() / 1000).toString());
-    localStorage.setItem('isTestFinished', this.isTestFinished.toString());
-  }
-
 }

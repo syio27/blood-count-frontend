@@ -32,31 +32,31 @@
       </a> of morphology and
         <span class="font-bold">select the case</span>
       </div>
-      <div class="mt-2 relative" [class.open]="onClick">
-        <input type="text"
+      <div class="mt-2 relative" [class.open]="onClick" [class.pointer-events-none]="isTestFinished == 'IN_PROGRESS'" >
+        <input type="text" 
           class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-          placeholder="Select the case" (click)="toggleClick()" [class.rounded-t]="onClick" [class.rounded]="!onClick"
+          placeholder="Select the case" (click)="toggleClick()" [class.rounded-t]="onClick" [class.rounded]="!onClick" c
           [value]="selectedOption" readonly>
-        <span
+        <span *ngIf="isTestFinished != 'IN_PROGRESS'"
           class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
-          [class.rotate-180]="onClick" [class.rotate-0]="!onClick">
+          [class.rotate-180]="onClick" [class.rotate-0]="!onClick" >
           expand_more
         </span>
         <ul
           class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150"
           [class.scale-y-0]="!onClick" [class.scale-y-100]="onClick">
           <li *ngFor="let option of dropdownOptions" class="py-2 px-3 cursor-pointer hover:bg-gray-100"
-            (click)="selectOption(option)" [class.selected]="option === selectedOption">
-            {{ option }}
+            (click)="selectOption(option.anemiaType,option.id)" [class.selected]="option === selectedOption">
+            {{ option.anemiaType }}
           </li>
         </ul>
       </div>
     </div>
     <div class="flex justify-center lg:justify-end">
-      <div class="px-3 py-2 border bg-gray-500 text-white text-xl rounded-md select-none cursor-pointer md:text-2xl" (click)="startTest(1)" *ngIf="isTestFinished == 'true'">
+      <div class="px-3 py-2 border bg-gray-500 text-white text-xl rounded-md select-none cursor-pointer md:text-2xl" (click)="startTest()" *ngIf="isTestFinished != 'IN_PROGRESS'">
         Start test
       </div>
-      <div class="px-3 py-2 border bg-gray-500 text-white text-xl rounded-md select-none cursor-pointer md:text-2xl" (click)="startTest(2)" *ngIf="isTestFinished =='false'">
+      <div class="px-3 py-2 border bg-gray-500 text-white text-xl rounded-md select-none cursor-pointer md:text-2xl" (click)="continueTest()" *ngIf="isTestFinished=='IN_PROGRESS'">
         Continue test
       </div>
     </div>

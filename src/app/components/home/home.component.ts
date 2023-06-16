@@ -3,6 +3,10 @@ import { CaseService } from 'src/app/services/case.service';
 import { ICaseResponse } from 'src/app/interfaces/ICaseResponse';
 import { TimerComponent } from '../exam/timer/timer.component';
 import { Router, NavigationExtras } from "@angular/router";
+import { GameService } from 'src/app/services/game.service';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
+import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 
 @Component({
   selector: 'app-home',
@@ -11,14 +15,20 @@ import { Router, NavigationExtras } from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   @ViewChild(TimerComponent) timerComponent: TimerComponent;
-
+  userDetails: UserDetails;
   onClick = false;
-  dropdownOptions: string[] = [];
+  dropdownOptions: ICaseResponse[] = [];
   selectedOption = null;
-  isTestFinished = localStorage.getItem('isTestFinished')
+  selectedOptionId = null;
+  isTestFinished: string;
 
-  constructor(private caseService: CaseService,
-    private router: Router) { }
+  constructor(
+    private caseService: CaseService,
+    private router: Router,
+    private gameService: GameService,
+    private sharedUserService: SharedUserDetailsService,
+    private sharedGameDataService: SharedGameDataService
+  ) { }
 
   toggleClick() {
     this.onClick = !this.onClick;
@@ -26,35 +36,38 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.fetchCase();
+    this.sharedUserService.getUserDetails().subscribe(userDetails => {
+      this.userDetails = userDetails;
+    });
+
+    this.sharedGameDataService.startTest$.subscribe(data => {
+      if (data && data.status) {
+        this.isTestFinished = data.status;
+        this.selectedOption = data.gameCase.anemiaType;
+        console.log(data)
+      }
+    });
   }
 
   fetchCase() {
-    this.caseService.getAllCasesWithAbnormalities().subscribe((cases) => {
-      this.dropdownOptions = [cases].flatMap((subArray) => subArray).map((cases) => cases.anemiaType);
+    this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
+      this.dropdownOptions = [cases].flatMap((subArray) => subArray);
     });
-    this.isTestFinished = localStorage.getItem('isTestFinished')
   }
 
-  selectOption(option: string) {
+  selectOption(option: string, id: number) {
     this.selectedOption = option;
+    this.selectedOptionId = id;
     this.onClick = false;
   }
 
-  startTest(id) {
-    if (id == 1) {
-      var navigationExtras: NavigationExtras = {
-        queryParams: {
-          "status": "start",
-        }
-      };
-    } else if (id == 2) {
-      var navigationExtras: NavigationExtras = {
-        queryParams: {
-          "status": "continue",
-        }
-      }
-    }
-    console.log(this.isTestFinished)
-    this.router.navigate(["/exam"], navigationExtras);
+  startTest() {
+    this.gameService.start(this.selectedOptionId, this.userDetails.id).subscribe(data => {
+      this.sharedGameDataService.startTest(data);
+      this.router.navigate(['/exam']);
+    });
+  }
+  continueTest() {
+    this.router.navigate(['/exam']);
   }
 }
