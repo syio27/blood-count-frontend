@@ -1,6 +1,6 @@
 import { IBCAssessmentQuestionResponse } from "./IBCAssessmentQuestionResponse"
 import { IPatientResponse } from "./IPatientResponse"
-import { IGameCaseResponse } from "./IGameCaseResponse"
+import { IGameCaseDetailsResponse } from "./IGameCaseResponse"
 export interface IGameResponse {
     id: number
     startTime: string
@@ -9,6 +9,6 @@ export interface IGameResponse {
     testDuration: number
     status: string
     patient: IPatientResponse
-    gameCase: IGameCaseResponse
+    gameCaseDetails: IGameCaseDetailsResponse
     bcAssessmentQuestions: IBCAssessmentQuestionResponse[]
 }

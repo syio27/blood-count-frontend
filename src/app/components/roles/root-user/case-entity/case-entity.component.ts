@@ -9,7 +9,7 @@ import { addAbnormality, removeAbnormality } from 'src/app/store/actions/abnorma
 import { Store } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
-import { CaseDataService } from 'src/app/services/CaseDataService.service';
+import { CaseDataService } from 'src/app/services/caseData.service';
 
 
 @Component({

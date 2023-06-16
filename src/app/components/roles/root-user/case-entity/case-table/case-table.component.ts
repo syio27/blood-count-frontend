@@ -4,7 +4,7 @@ import { CaseService } from 'src/app/services/case.service';
 import { IAbnormalityResponse } from 'src/app/interfaces/IAbnormalityResponse';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
-import { CaseDataService } from 'src/app/services/CaseDataService.service';
+import { CaseDataService } from 'src/app/services/caseData.service';
 
 @Component({
   selector: 'app-case-table',
@@ -27,7 +27,7 @@ export class CaseTableComponent implements OnInit {
     this.fetchTableData()
     this.caseDataService.refreshTable$.subscribe(() => {
       this.fetchTableData();
-    });     
+    });
 
   }
 
@@ -87,7 +87,7 @@ export class CaseTableComponent implements OnInit {
   deletCase(item) {
     this.caseService.deleteCase(item).subscribe(
       () => {
-        this.toast.success({detail:"Operation done successfully",summary:'Case has been deleted',duration: 2000});
+        this.toast.success({ detail: "Operation done successfully", summary: 'Case has been deleted', duration: 2000 });
         this.fetchTableData()
       },
       (error: HttpErrorResponse) => {

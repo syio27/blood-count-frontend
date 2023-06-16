@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
     this.sharedGameDataService.startTest$.subscribe(data => {
       if (data && data.status) {
         this.isTestFinished = data.status;
-        this.selectedOption = data.gameCase.anemiaType;
+        this.selectedOption = data.gameCaseDetails.anemiaType;
         console.log(data)
       }
     });
