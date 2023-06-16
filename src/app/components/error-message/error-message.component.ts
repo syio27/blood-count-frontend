@@ -15,4 +15,7 @@ export class ErrorMessageComponent {
   @Input() enterEmail: boolean
   @Input() enterPassword: boolean
   @Input() invalidLogin: boolean
+  //change Password
+  @Input() invalidPassword: boolean
+
 }

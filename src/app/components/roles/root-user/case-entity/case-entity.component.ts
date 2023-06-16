@@ -49,7 +49,8 @@ export class CaseEntityComponent implements OnInit {
     this.parameterForm = this.fb.group({
       'parameter': [''],
       'parameter-min': [''],
-      'parameter-max': ['']
+      'parameter-max': [''],
+      'unit': ['']
     });
   }
 
@@ -67,6 +68,7 @@ export class CaseEntityComponent implements OnInit {
     this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
     this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
     this.parameterForm.get('parameter').setValue(sessionStorage.getItem('parameter'))
+    this.parameterForm.get('unit').setValue(sessionStorage.getItem('unit'))
 
     this.parameterForm.get('parameter-min').setValue(sessionStorage.getItem('parameter-min'));
     this.parameterForm.get('parameter-max').setValue(sessionStorage.getItem('parameter-max'));
@@ -121,6 +123,9 @@ export class CaseEntityComponent implements OnInit {
       case 9:
         sessionStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
         break;
+      case 10:
+        sessionStorage.setItem('unit', this.parameterForm.get('unit').value);
+
     }
   }
 
@@ -167,12 +172,12 @@ export class CaseEntityComponent implements OnInit {
 
   addValue() {
     const parameter = this.parameterForm.get('parameter').value;
+    const unit = this.parameterForm.get('unit').value;
     const minAge = this.parameterForm.get('parameter-min').value;
     const maxAge = this.parameterForm.get('parameter-max').value;
     const levelType = this.selectedLevelTypeOption;
-    const unit = '%';
 
-    if (!parameter || !minAge || !maxAge || !levelType) {
+    if (!parameter || !minAge || !maxAge || !levelType || !unit) {
       return;
     }
 
@@ -191,6 +196,7 @@ export class CaseEntityComponent implements OnInit {
     sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
     sessionStorage.removeItem('parameter')
     sessionStorage.removeItem('parameter-min')
+    sessionStorage.removeItem('unit')
     sessionStorage.removeItem('parameter-max')
     sessionStorage.removeItem('selectedLevelTypeOption')
   }
@@ -224,17 +230,18 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.removeItem('addedValues');
         sessionStorage.setItem('parameter', '')
         sessionStorage.removeItem('parameter-min')
+        sessionStorage.removeItem('unit')
         sessionStorage.removeItem('parameter-max')
         sessionStorage.removeItem('selectedLevelTypeOption')
         this.addedValues.splice(0, this.addedValues.length);
         sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
-        this.toast.success({detail:"Operation done successfully",summary:'Case has been created',duration: 2000});
+        this.toast.success({ detail: "Operation done successfully", summary: 'Case has been created', duration: 2000 });
         this.caseDataService.refreshTable();
       },
       (error: HttpErrorResponse) => {
         console.error('An error occurred during case creation:', error);
         console.log('HTTP Status Code:', error.status);
-        this.toast.error({detail:"Error",summary: error.message ,duration: 2000});
+        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
       })
   }
 }

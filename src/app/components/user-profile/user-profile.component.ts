@@ -29,6 +29,7 @@ export class UserProfileComponent implements OnInit {
   formSubmitAttempt = false;
   emailChange = false;
   userDetails: UserDetails;
+  invalidPassword: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -87,9 +88,17 @@ export class UserProfileComponent implements OnInit {
         newPassword: this.passwordForm.value.newPassword,
         newPasswordRepeat: this.passwordForm.value.confirmPassword
       };
-      this.profileService.updatePassword(passwordChangeRequest, userId).subscribe()
+      this.profileService.updatePassword(passwordChangeRequest, userId).subscribe(
+        result => {
+          if (result) {
+            this.invalidPassword = false;
+          } else {
+            this.invalidPassword = true;
+          }
+        }
+      )
     }
+    console.log(this.invalidPassword)
     this.formSubmitAttempt = true;
-    console.log(this.userDetails)
   }
 }

@@ -167,6 +167,7 @@ export class GroupsManageComponent implements OnInit {
       () => {
         this.toast.success({detail:"Operation done successfully",summary:'User has been deleted from the group',duration: 2000});
         this.openPopup(groupNumber)
+        this.fetchGroups()
       },
       (error: HttpErrorResponse) => {
         console.error('An error occurred during case creation:', error);
@@ -180,6 +181,7 @@ export class GroupsManageComponent implements OnInit {
       () => {
         this.toast.success({detail:"Operation done successfully",summary:'Group has been cleared',duration: 2000});
         this.openPopup(group.groupNumber)
+        this.fetchGroups()
       },
       (error: HttpErrorResponse) => {
         console.error('An error occurred during case creation:', error);
