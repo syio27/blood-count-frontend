@@ -8,6 +8,7 @@ export interface IGameResponse {
     estimatedEndTime: string
     testDuration: number
     status: string
+    score: number
     patient: IPatientResponse
     gameCaseDetails: IGameCaseDetailsResponse
     bcAssessmentQuestions: IBCAssessmentQuestionResponse[]
