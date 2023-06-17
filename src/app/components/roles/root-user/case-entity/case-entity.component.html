@@ -90,6 +90,9 @@
                             Parameter: {{ item.parameter }}
                         </div>
                         <div>
+                            Unit: {{ item.unit }}
+                        </div>
+                        <div>
                             Range: {{ item.minValue }} - {{ item.maxValue }}
                         </div>
                         <div>
@@ -106,15 +109,47 @@
         <div class="flex justify-center">
             <form [formGroup]="parameterForm" class="w-full md:w-3/4">
                 <div class="flex flex-col md:flex-row justify-center gap-2">
-                    <div>
-                        <input type="text" (input)="saveFormValues(7)"
-                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter" formControlName="parameter" placeholder="Parameter">
+                    <div class="relative" [class.open]="parameterDropdownOpen">
+                        <input type="text"
+                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            placeholder="Parameter" (click)="toggleParameterDropdown()"
+                            [class.rounded-t]="parameterDropdownOpen" [class.rounded]="!parameterDropdownOpen"
+                            [value]="selectedParameterOption" readonly>
+                        <span
+                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                            [class.rotate-180]="parameterDropdownOpen" [class.rotate-0]="!parameterDropdownOpen">
+                            expand_more
+                        </span>
+                        <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
+                            [class.scale-y-0]="!parameterDropdownOpen" [class.scale-y-100]="parameterDropdownOpen">
+                            <li *ngFor="let option of parameterDropdownOptions"
+                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                (click)="selectParameterOption(option)"
+                                [class.selected]="option === selectParameterOption">
+                                {{ option }}
+                            </li>
+                        </ul>
                     </div>
-                    <div>
-                        <input type="text" (input)="saveFormValues(10)"
-                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="unit" formControlName="unit" placeholder="Unit">
+                    <div class="relative" [class.open]="unitDropdownOpen">
+                        <input type="text"
+                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            placeholder="Unit" (click)="toggleUnitDropdown()"
+                            [class.rounded-t]="unitDropdownOpen" [class.rounded]="!unitDropdownOpen"
+                            [value]="selectedUnitOption" readonly>
+                        <span
+                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                            [class.rotate-180]="unitDropdownOpen" [class.rotate-0]="!unitDropdownOpen">
+                            expand_more
+                        </span>
+                        <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
+                            [class.scale-y-0]="!unitDropdownOpen" [class.scale-y-100]="unitDropdownOpen">
+                            <li *ngFor="let option of unitDropdownOptions"
+                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                (click)="selectUnitOption(option)"
+                                [class.selected]="option === selectedUnitOption">
+                                {{ option }}
+                            </li>
+                        </ul>
                     </div>
                     <div>
                         <input type="number" (input)="saveFormValues(8)"
@@ -155,7 +190,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center md:justify-end mt-10">
-                    <div (click)="createCaseWithAbnormality()" 
+                    <div (click)="createCaseWithAbnormality()"
                         class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
                         Create
                     </div>

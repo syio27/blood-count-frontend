@@ -19,7 +19,9 @@ export class PanelButtonComponent {
   ngOnInit() {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
+      console.log(this.userDetails)
     });
+    
   }
   onRoot() {
     this.router.navigate(['/root'])

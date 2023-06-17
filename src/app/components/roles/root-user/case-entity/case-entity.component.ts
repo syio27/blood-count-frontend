@@ -10,8 +10,9 @@ import { Store } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
 import { CaseDataService } from 'src/app/services/caseData.service';
-
-
+import { ReferenceTableService } from 'src/app/services/reference-table.service';
+import { Subscription } from 'rxjs';
+import { IReferenceTable } from 'src/app/interfaces/IReferenceTable';
 @Component({
   selector: 'app-case-entity',
   templateUrl: './case-entity.component.html',
@@ -30,12 +31,22 @@ export class CaseEntityComponent implements OnInit {
   selectedLevelTypeOption = '';
   levelTypeDropdownOpen = false;
 
+  parameterDropdownOptions: any[];
+  selectedParameterOption = '';
+  parameterDropdownOpen = false;
+  referenceTableSubscription: Subscription;
+
+  unitDropdownOptions: any[];
+  selectedUnitOption = '';
+  unitDropdownOpen = false;
+
   constructor(
     private fb: FormBuilder,
     private caseService: CaseService,
     private store: Store,
     private toast: NgToastService,
-    private caseDataService: CaseDataService
+    private caseDataService: CaseDataService,
+    private referanceTable: ReferenceTableService
 
   ) {
     this.form = this.fb.group({
@@ -47,15 +58,19 @@ export class CaseEntityComponent implements OnInit {
       'second-max': [''],
     });
     this.parameterForm = this.fb.group({
-      'parameter': [''],
       'parameter-min': [''],
       'parameter-max': [''],
-      'unit': ['']
     });
   }
 
   ngOnInit() {
     this.restoreFormValues();
+    this.referenceTableSubscription = this.referanceTable.fetchBCReferenceTable().subscribe(data => {
+      this.parameterDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.parameter).filter((value, index, self) => self.indexOf(value) === index);
+      this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
+      console.log(this.unitDropdownOptions)
+    });
+
   }
 
 
@@ -67,8 +82,6 @@ export class CaseEntityComponent implements OnInit {
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
     this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
     this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
-    this.parameterForm.get('parameter').setValue(sessionStorage.getItem('parameter'))
-    this.parameterForm.get('unit').setValue(sessionStorage.getItem('unit'))
 
     this.parameterForm.get('parameter-min').setValue(sessionStorage.getItem('parameter-min'));
     this.parameterForm.get('parameter-max').setValue(sessionStorage.getItem('parameter-max'));
@@ -92,7 +105,16 @@ export class CaseEntityComponent implements OnInit {
     if (storedSelectedLevelTypeOption) {
       this.selectedLevelTypeOption = storedSelectedLevelTypeOption;
     }
+    const storedSelectedParameterOption = sessionStorage.getItem('selectedParameterOption');
+    if (storedSelectedParameterOption) {
+      this.selectedParameterOption = storedSelectedParameterOption;
+    }
+    const storedSelectedUnitOption = sessionStorage.getItem('selectedUnitOption');
+    if (storedSelectedUnitOption) {
+      this.selectedUnitOption = storedSelectedUnitOption;
+    }
   }
+
 
   saveFormValues(input) {
     switch (input) {
@@ -114,18 +136,12 @@ export class CaseEntityComponent implements OnInit {
       case 6:
         sessionStorage.setItem('second-max', this.form.get('second-max').value);
         break;
-      case 7:
-        sessionStorage.setItem('parameter', this.parameterForm.get('parameter').value);
-        break;
       case 8:
         sessionStorage.setItem('parameter-min', this.parameterForm.get('parameter-min').value);
         break;
       case 9:
         sessionStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
         break;
-      case 10:
-        sessionStorage.setItem('unit', this.parameterForm.get('unit').value);
-
     }
   }
 
@@ -154,11 +170,27 @@ export class CaseEntityComponent implements OnInit {
   toggleLevelTypeDropdown() {
     this.levelTypeDropdownOpen = !this.levelTypeDropdownOpen;
   }
-
+  toggleParameterDropdown() {
+    this.parameterDropdownOpen = !this.parameterDropdownOpen;
+  }
+  toggleUnitDropdown() {
+    this.unitDropdownOpen = !this.unitDropdownOpen;
+  }
   selectLevelTypeOption(option: string) {
     this.selectedLevelTypeOption = option;
     this.levelTypeDropdownOpen = false;
     sessionStorage.setItem('selectedLevelTypeOption', option);
+  }
+
+  selectParameterOption(option: string) {
+    this.selectedParameterOption = option;
+    this.parameterDropdownOpen = false;
+    sessionStorage.setItem('selectedParameterOption', option);
+  }
+  selectUnitOption(option: string) {
+    this.selectedUnitOption = option;
+    this.unitDropdownOpen = false;
+    sessionStorage.setItem('selectedUnitOption', option);
   }
 
   removeValue(parameter) {
@@ -171,8 +203,8 @@ export class CaseEntityComponent implements OnInit {
   }
 
   addValue() {
-    const parameter = this.parameterForm.get('parameter').value;
-    const unit = this.parameterForm.get('unit').value;
+    const parameter = this.selectedParameterOption
+    const unit = this.selectedUnitOption
     const minAge = this.parameterForm.get('parameter-min').value;
     const maxAge = this.parameterForm.get('parameter-max').value;
     const levelType = this.selectedLevelTypeOption;
@@ -193,12 +225,15 @@ export class CaseEntityComponent implements OnInit {
     this.addedValues.push(abnormalityData);
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
+    this.selectedParameterOption = '';
+    this.selectedUnitOption = '';
     sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
-    sessionStorage.removeItem('parameter')
     sessionStorage.removeItem('parameter-min')
-    sessionStorage.removeItem('unit')
     sessionStorage.removeItem('parameter-max')
+    sessionStorage.removeItem('selectedUnitOption')
     sessionStorage.removeItem('selectedLevelTypeOption')
+    sessionStorage.removeItem('selectedParameterOption')
+
   }
 
   createCaseWithAbnormality() {
@@ -219,6 +254,8 @@ export class CaseEntityComponent implements OnInit {
         this.parameterForm.reset();
         this.form.reset();
         this.selectedLevelTypeOption = '';
+        this.selectedParameterOption = '';
+        this.selectedUnitOption = '';
         sessionStorage.setItem('anemia-type', '');
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.removeItem('first-min');
@@ -228,11 +265,12 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.removeItem('selectedGenderOption');
         sessionStorage.removeItem('showSecondRangeForm');
         sessionStorage.removeItem('addedValues');
-        sessionStorage.setItem('parameter', '')
         sessionStorage.removeItem('parameter-min')
         sessionStorage.removeItem('unit')
         sessionStorage.removeItem('parameter-max')
         sessionStorage.removeItem('selectedLevelTypeOption')
+        sessionStorage.removeItem('selectedParameterOption')
+        sessionStorage.removeItem('selectedUnitOption')
         this.addedValues.splice(0, this.addedValues.length);
         sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
         this.toast.success({ detail: "Operation done successfully", summary: 'Case has been created', duration: 2000 });

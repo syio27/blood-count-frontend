@@ -39,14 +39,20 @@ export class HomeComponent implements OnInit {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-
-    this.sharedGameDataService.startTest$.subscribe(data => {
-      if (data && data.status) {
-        this.isTestFinished = data.status;
-        this.selectedOption = data.gameCaseDetails.anemiaType;
-        console.log(data)
+    this.sharedGameDataService.startTest$.subscribe(() => {
+      const storedSubmition = localStorage.getItem('submitted');
+      if (storedSubmition) {
+        this.isTestFinished = storedSubmition;
       }
     });
+    if (this.isTestFinished == 'IN_PROGRESS') {
+      this.sharedGameDataService.startTest$.subscribe(data => {
+        if (data && data.status) {
+          this.selectedOption = data.gameCaseDetails.anemiaType;
+          console.log(data)
+        }
+      });
+    }
   }
 
   fetchCase() {
@@ -64,6 +70,7 @@ export class HomeComponent implements OnInit {
   startTest() {
     this.gameService.start(this.selectedOptionId, this.userDetails.id).subscribe(data => {
       this.sharedGameDataService.startTest(data);
+      localStorage.setItem('submitted', 'IN_PROGRESS')
       this.router.navigate(['/exam']);
     });
   }

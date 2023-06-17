@@ -1,5 +1,5 @@
 <app-timer></app-timer>
-<app-white-box>
+<app-white-box *ngIf="submitted === 'IN_PROGRESS'">
     <div class="flex flex-col">
         <div class="flex flex-col mb-6 bg-gray-100 rounded-md p-3 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
             <div class="text-sm md:text-lg font-bold">Patient Information:</div>
@@ -25,10 +25,11 @@
                         <td class=" p-1 ">{{ data.parameter }}</td>
                         <td class="p-1">{{ data.unit }}</td>
                         <td class="border-r p-1">{{ data.value }}</td>
-                        <td class="p-1 bg-gray-100" *ngFor="let answer of data.answers.reverse()">
+                        <td class="p-1 bg-gray-100" *ngFor="let answer of data.answers">
                             <label>
-                                <input type="radio" class="cursor-pointer w-3 h-3 md:w-5 md:h-5" [name]="'radioGroup-' + data.id" [value]="answer.text"
-                                    (click)="Console(answer.id, data.id)">
+                                <input type="radio" class="cursor-pointer w-3 h-3 md:w-5 md:h-5"
+                                    [name]="'radioGroup-' + data.id" [value]="answer.text"
+                                    (click)="onAnswer(answer.id, data.id)">
                             </label>
                         </td>
                     </tr>
@@ -59,5 +60,22 @@
                 </table>
             </div>
         </div>
+        <div class="flex justify-end mt-10">
+            <div (click)="submitTest()" [class.pointer-events-none]="!isTestValid"
+                class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
+                Submit
+            </div>
+        </div>
+    </div>
+</app-white-box>
+<app-white-box *ngIf="submitted === 'COMPLETED'">
+    <div>
+        <div class="text-2xl font-bold mb-2 flex text-center items-center justify-center">Score: {{ score }}</div>
+        <div class="flex justify-center">
+            <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 text-center rounded cursor-pointer" (click)="onFinish()">
+                Finish
+            </div>
+        </div>
+        
     </div>
 </app-white-box>

@@ -24,7 +24,7 @@ export class GameService {
     }
 
     complete(gameId: number, answerRequests: IAnswerRequest[], userId: string): Observable<IGameResponse> {
-        const url = `${this.baseUrl}/${gameId}/complete?userId=${userId}`;
+        const url = `${this.baseUrl}${gameId}/complete?userId=${userId}`;
         return this.http.post<IGameResponse>(url, answerRequests)
             .pipe(
                 catchError(this.handleException)

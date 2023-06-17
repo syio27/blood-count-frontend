@@ -24,13 +24,15 @@
 <app-white-box class="mt-3 flex">
   <div class="px-8 flex flex-col gap-5">
     <div class="text-xl md:text-2xl leading-7 md:leading-9">
-      Before you begin:
-      <div class="text-lg">
-        see the <a class="inline-block align-baseline font-bold text-blue-500 hover:text-blue-800"
-        routerLink="/table">
-        reference table
-      </a> of morphology and
-        <span class="font-bold">select the case</span>
+      <div *ngIf="isTestFinished != 'IN_PROGRESS'">
+        Before you begin:
+        <div class="text-lg">
+          see the <a class="inline-block align-baseline font-bold text-blue-500 hover:text-blue-800"
+          routerLink="/table">
+          reference table
+        </a> of morphology and
+          <span class="font-bold">select the case</span>
+        </div>
       </div>
       <div class="mt-2 relative" [class.open]="onClick" [class.pointer-events-none]="isTestFinished == 'IN_PROGRESS'" >
         <input type="text" 

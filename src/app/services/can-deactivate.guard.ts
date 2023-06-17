@@ -10,6 +10,10 @@ export interface CanComponentDeactivate {
 })
 export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
   canDeactivate(component: CanComponentDeactivate) {
+    let submitted = localStorage.getItem('submitted')
+    if(submitted != 'IN_PROGRESS'){
+      return true
+    }
     return component.canDeactivate ? component.canDeactivate() : true;
   }
 }
