@@ -24,7 +24,6 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   submitted = 'IN_PROGRESS';
   score: number
   isTestValid: boolean
-
   constructor(
     private sharedGameDataService: SharedGameDataService,
     private gameService: GameService,
@@ -69,6 +68,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
         this.tabelData = bloodCount;
         this.testData = bcAssessmentQuestions;
         this.gameId = gameData.id
+
       }
     });
   }
@@ -88,7 +88,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     } else {
       this.answers.push({ questionId, answerId });
     }
-    if(this.answers.length==8){
+    if(this.answers.length == this.testData.length){
       this.isTestValid = true
     }
     else{

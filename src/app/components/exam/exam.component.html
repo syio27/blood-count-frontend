@@ -43,8 +43,8 @@
                         <tr class="border-black bg-gray-200">
                             <th class="px-2 py-2 border">Parameter</th>
                             <th class="px-2 py-2 border">Unit</th>
-                            <th class="px-2 py-2 border">Range</th>
                             <th class="px-2 py-2 border">Value</th>
+                            <th class="px-2 py-2 border">Range</th>
                             <th class="px-2 py-2 border">Level Type</th>
                         </tr>
                     </thead>
@@ -52,8 +52,8 @@
                         <tr *ngFor="let data of displayedElements2">
                             <td class="border px-2 py-2">{{ data.parameter }}</td>
                             <td class="border px-2 py-2">{{ data.unit }}</td>
-                            <td class="border px-2 py-2">{{ data.referenceValueRange }}</td>
                             <td class="border px-2 py-2">{{ data.value }}</td>
+                            <td class="border px-2 py-2">{{ data.referenceValueRange }}</td>
                             <td class="border px-2 py-2">{{ data.levelType }}</td>
                         </tr>
                     </tbody>
@@ -61,8 +61,8 @@
             </div>
         </div>
         <div class="flex justify-end mt-10">
-            <div (click)="submitTest()" [class.pointer-events-none]="!isTestValid"
-                class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
+            <div (click)="submitTest()" [class.pointer-events-none]="!isTestValid" [class.bg-blue-700]="!isTestValid"
+                class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
                 Submit
             </div>
         </div>
@@ -72,10 +72,11 @@
     <div>
         <div class="text-2xl font-bold mb-10 flex text-center items-center justify-center">Your Score: {{ score }}</div>
         <div class="flex justify-center">
-            <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 text-center rounded cursor-pointer" (click)="onFinish()">
+            <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 text-center rounded cursor-pointer"
+                (click)="onFinish()">
                 Finish
             </div>
         </div>
-        
+
     </div>
 </app-white-box>
