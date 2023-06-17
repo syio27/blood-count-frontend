@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-timer',
@@ -13,7 +14,12 @@ export class TimerComponent implements OnInit {
   countdownInterval: any;
   isTestFinished: boolean = false;
 
-  constructor(private sharedGameDataService: SharedGameDataService) { }
+  @Output() timeUp: EventEmitter<any> = new EventEmitter();
+
+  constructor(
+    private sharedGameDataService: SharedGameDataService,
+    private gameService: GameService,
+  ) { }
 
   ngOnInit() {
     this.initializeTimer();
@@ -30,16 +36,15 @@ export class TimerComponent implements OnInit {
       this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
     });
   }
-  
-  
 
   startTimer() {
     this.countdownInterval = setInterval(() => {
       this.remainingTime--;
 
-      if (this.remainingTime <= 0) {
+      if (this.remainingTime <= 1) {
         clearInterval(this.countdownInterval);
         this.isTestFinished = true;
+        this.timeUp.emit(); // Emit the event when the time is up
       }
 
       this.updateDisplayTime();
