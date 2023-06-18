@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center items-center">
-    <div class="flex flex-col justify-center w-full mb-8">
+    <div class="flex flex-col justify-center w-full mb-8" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
         <div class="text-3xl flex justify-center mb-4">Add Groups</div>
         <div class="flex justify-center">
             <form [formGroup]="form" class="w-full md:w-3/4">
@@ -38,7 +38,7 @@
             </form>
         </div>
     </div>
-    <hr class="mt-4 border-black w-full mb-5">
+    <hr class="mt-4 border-black w-full mb-5" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
     <div class="w-full lg:w-1/2 h-[60vh] mb-3 relative">
         <div [class.blur]="openedPopup">
             <div class="p-2" *ngFor="let group of displayedGroups">

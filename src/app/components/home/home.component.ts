@@ -48,8 +48,7 @@ export class HomeComponent implements OnInit {
     if (this.isTestFinished == 'IN_PROGRESS') {
       this.sharedGameDataService.startTest$.subscribe(data => {
         if (data && data.status) {
-          this.selectedOption = data.gameCaseDetails.anemiaType;
-          console.log(data)
+          this.selectedOption = 'Your game is running, please press button';
         }
       });
     }
@@ -71,6 +70,7 @@ export class HomeComponent implements OnInit {
     this.gameService.start(this.selectedOptionId, this.userDetails.id).subscribe(data => {
       this.sharedGameDataService.startTest(data);
       localStorage.setItem('submitted', 'IN_PROGRESS')
+      localStorage.setItem('page', 'page1')
       this.router.navigate(['/exam']);
     });
   }

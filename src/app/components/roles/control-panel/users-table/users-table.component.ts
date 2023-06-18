@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Roles } from '../../../../enums/role.enum';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { AdminService } from 'src/app/services/administration.service';
+import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 
 @Component({
   selector: 'app-users-table',
@@ -14,8 +15,13 @@ export class UsersTableComponent implements OnInit {
   tableData: UserDetails[] = [];
   currentPage = 1;
   groupsPerPage = 10;
+  userDetails: UserDetails;
 
-  constructor(private adminService: AdminService) { }
+
+  constructor(
+    private adminService: AdminService,
+    private sharedUserService: SharedUserDetailsService,
+    ) { }
 
   changeCategory(role: Roles) {
     this.currentCategory = role;
@@ -24,6 +30,10 @@ export class UsersTableComponent implements OnInit {
 
   ngOnInit() {
     this.fetchTableData(this.currentCategory);
+    this.sharedUserService.getUserDetails().subscribe(userDetails => {
+      this.userDetails = userDetails;
+    });
+
   }
 
   private fetchTableData(role: Roles) {

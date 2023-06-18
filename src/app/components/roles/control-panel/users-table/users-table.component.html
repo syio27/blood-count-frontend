@@ -12,7 +12,8 @@
         </div>
         <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Admin)"
             [class.border-b-4]="currentCategory === Roles.Admin"
-            [class.border-blue-500]="currentCategory === Roles.Admin" >
+            [class.border-blue-500]="currentCategory === Roles.Admin" 
+            *ngIf="userDetails.role == 'ROOT'">
             Admin
         </div>
     </div>
@@ -22,8 +23,6 @@
                 <tr>
                     <th class="py-2 w-3/12 border">Email</th>
                     <th class="py-2 w-3/12 border">Group</th>
-                    <th class="py-2 w-3/12 border" *ngIf="currentCategory != Roles.Student">Role</th>
-                    <th class="py-2 w-3/12 border" *ngIf="currentCategory === Roles.Student">Student Number</th>
                     <th class="py-2 w-3/12 border">More</th>
                 </tr>
             </thead>
@@ -31,7 +30,6 @@
                 <tr *ngFor="let item of displayedUsers">
                     <td class="border-b ">{{ item.email }}</td>
                     <td class="border-b">{{ item.groupNumber }}</td>
-                    <td class="border-b" >{{ item.role }}</td>
                     <td class="border-b">
                         <div class="flex justify-center">
                             <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">

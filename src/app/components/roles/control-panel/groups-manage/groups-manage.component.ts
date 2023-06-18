@@ -5,9 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICreateGroupRequest } from 'src/app/interfaces/ICreateGroupRequest';
 import { GroupType } from 'src/app/enums/groupType.enum';
 import { AdminService } from 'src/app/services/administration.service';
-import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
+import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
 
 @Component({
   selector: 'app-groups-manage',
@@ -16,6 +17,7 @@ import { NgToastService } from 'ng-angular-popup'
 })
 export class GroupsManageComponent implements OnInit {
   groups: IGroupResponse[] = [];
+  userDetails: UserDetails;
   form: FormGroup;
   currentPage = 1;
   groupsPerPage = 4;
@@ -30,7 +32,8 @@ export class GroupsManageComponent implements OnInit {
     private groupService: GroupService,
     private fb: FormBuilder,
     private adminService: AdminService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private sharedUserService: SharedUserDetailsService,
 
   ) {
     this.form = this.fb.group({
@@ -110,6 +113,9 @@ export class GroupsManageComponent implements OnInit {
   ngOnInit(): void {
     this.fetchGroups();
     this.groupParticipants;
+    this.sharedUserService.getUserDetails().subscribe(userDetails => {
+      this.userDetails = userDetails;
+    });
   }
 
   fetchGroups(): void {

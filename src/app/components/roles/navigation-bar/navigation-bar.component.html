@@ -2,29 +2,33 @@
     <div class="p-7 px-5 lg:px-20">
         <div class="flex items-center justify-between">
             <div class="text-3xl text-center">
-                Root Panel
+                Control Panel
             </div>
             <div class="flex justify-center font-bold text-sm text-gray-500 select-none">
                 <span class="hover:text-gray-700 cursor-pointer">
-                    <a [routerLink]="['/root', 'users']" [routerLinkActiveOptions]="{exact: true}"
+                    <a [routerLink]="['/control-panel', 'users']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
                         users
                     </a>
-                </span>/
-                <span class="hover:text-gray-700 cursor-pointer">
-                    <a [routerLink]="['/root', 'invite']" [routerLinkActiveOptions]="{exact: true}"
+                </span>
+                <span>/</span>
+                <span class="hover:text-gray-700 cursor-pointer" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
+                    <a [routerLink]="['/control-panel', 'invite']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
                         invite
                     </a>
-                </span>/
+                </span>
+                <span>/</span>
+
                 <span class="hover:text-gray-700 cursor-pointer">
-                    <a [routerLink]="['/root', 'groups']" [routerLinkActiveOptions]="{exact: true}"
+                    <a [routerLink]="['/control-panel', 'groups']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
                         groups
                     </a>
-                </span>/
-                <span class="hover:text-gray-700 cursor-pointer">
-                    <a [routerLink]="['/root', 'cases']" [routerLinkActiveOptions]="{exact: true}"
+                </span>
+                <span>/</span>
+                <span class="hover:text-gray-700 cursor-pointer" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
+                    <a [routerLink]="['/control-panel', 'cases']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
                         cases
                     </a>

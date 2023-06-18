@@ -9,11 +9,11 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HistoryComponent } from './components/user-profile/history/history.component'
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
-import { RootUserComponent } from './components/roles/root-user/root-user.component';
-import { UsersTableComponent } from './components/roles/root-user/users-table/users-table.component';
-import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
-import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
-import { CaseEntityComponent } from './components/roles/root-user/case-entity/case-entity.component';
+import { ControlPanelComponent } from './components/roles/control-panel/control-panel.component';
+import { UsersTableComponent } from './components/roles/control-panel/users-table/users-table.component';
+import { InviteUserComponent } from './components/roles/control-panel/invite-user/invite-user.component';
+import { GroupsManageComponent } from './components/roles/control-panel/groups-manage/groups-manage.component';
+import { CaseEntityComponent } from './components/roles/control-panel/case-entity/case-entity.component';
 import { ExamComponent } from './components/exam/exam.component';
 import { CanDeactivateGuard } from './services/can-deactivate.guard';
 
@@ -61,8 +61,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'root',
-    component: RootUserComponent,
+    path: 'control-panel',
+    component: ControlPanelComponent,
     children: [
       {
         path: '',

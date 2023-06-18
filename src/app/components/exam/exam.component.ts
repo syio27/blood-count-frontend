@@ -24,6 +24,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   submitted = 'IN_PROGRESS';
   score: number
   isTestValid: boolean
+  page: string
   constructor(
     private sharedGameDataService: SharedGameDataService,
     private gameService: GameService,
@@ -34,6 +35,9 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
       if (event instanceof NavigationStart && event.url !== '/exam' && localStorage.getItem('submitted') === 'COMPLETED') {
         localStorage.removeItem('submitted');
         localStorage.removeItem('score');
+        localStorage.removeItem('gameData');
+        localStorage.removeItem('page')
+
       }
     });
   }
@@ -43,7 +47,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-    const storedScore = sessionStorage.getItem('score');
+    const storedScore = localStorage.getItem('score');
     if (storedScore) {
       this.score = JSON.parse(storedScore);
     }
@@ -52,6 +56,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     if (storedSubmition) {
       this.submitted = storedSubmition;
     }
+    this.page = localStorage.getItem('page')
   }
 
   canDeactivate() {
@@ -68,7 +73,6 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
         this.tabelData = bloodCount;
         this.testData = bcAssessmentQuestions;
         this.gameId = gameData.id
-
       }
     });
   }
@@ -102,6 +106,8 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     this.gameService.complete(this.gameId, this.answers, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
+        localStorage.setItem('page', 'finish')
+        this.page = localStorage.getItem('page')
         localStorage.setItem('submitted', this.submitted)
         this.score = data.score
         localStorage.setItem('score', this.score.toString())
