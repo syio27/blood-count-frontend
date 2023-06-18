@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
 
   fetchCase() {
     this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
-      this.dropdownOptions = [cases].flatMap((subArray) => subArray);
+      this.dropdownOptions = [cases].flatMap((subArray) => subArray).sort();
     });
   }
 
