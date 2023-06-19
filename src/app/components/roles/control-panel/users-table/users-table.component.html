@@ -3,18 +3,18 @@
         <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)" 
             [class.border-b-4]="currentCategory === Roles.Student"
             [class.border-blue-500]="currentCategory === Roles.Student">
-            Student
+            {{ 'student' | translate }}
         </div>
         <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Teacher)"
             [class.border-b-4]="currentCategory === Roles.Teacher"
             [class.border-blue-500]="currentCategory === Roles.Teacher">
-            Supervisor
+            {{ 'supervisor' | translate }}
         </div>
         <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Admin)"
             [class.border-b-4]="currentCategory === Roles.Admin"
             [class.border-blue-500]="currentCategory === Roles.Admin" 
             *ngIf="userDetails.role == 'ROOT'">
-            Admin
+            {{ 'admin' | translate }}
         </div>
     </div>
     <div class="overflow-x-auto h-[60vh] mb-2">
@@ -33,7 +33,7 @@
                     <td class="border-b">
                         <div class="flex justify-center">
                             <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
-                                Details
+                                {{ 'details' | translate }}
                             </div>
                             <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer" *ngIf="currentCategory === Roles.Admin">
                                 Ban
@@ -51,7 +51,7 @@
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">
-                Previous
+                {{ 'prev' | translate }}
             </div>
             <ng-container *ngFor="let page of pages">
                 <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
@@ -61,7 +61,7 @@
             </ng-container>
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
                 [class.opacity-50]="currentPage === totalPages">
-                Next
+                {{ 'next' | translate }}
             </div>
         </nav>
     </div>

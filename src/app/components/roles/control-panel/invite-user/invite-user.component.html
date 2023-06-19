@@ -1,6 +1,6 @@
 <div>
     <div class="flex justify-center text-3xl mb-6">
-        Invite User
+        {{ 'invite-user' | translate }}
     </div>
     <form [formGroup]="form" class="flex flex-col justify-center">
         <div class="flex flex-col text-center items-center justify-center">
@@ -47,7 +47,7 @@
             </div>
             <div class="mt-5 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
                  focus:outline-none focus:shadow-outline w-full lg:w-1/2  text-center cursor-pointer" (click)="inviteUser()">
-                Submit
+                {{ 'submit' | translate }}
             </div>
         </div>
     </form>

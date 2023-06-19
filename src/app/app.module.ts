@@ -39,6 +39,14 @@ import { CaseEntityComponent } from './components/roles/control-panel/case-entit
 import { CaseTableComponent } from './components/roles/control-panel/case-entity/case-table/case-table.component';
 import { ExamComponent } from './components/exam/exam.component';
 import { TimerComponent } from './components/exam/timer/timer.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -75,9 +83,16 @@ import { TimerComponent } from './components/exam/timer/timer.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({}), 
+    StoreModule.forRoot({}),
     StoreModule.forFeature('abnormalities', abnormalitiesReducer),
-    NgToastModule
+    NgToastModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

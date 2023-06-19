@@ -1,15 +1,15 @@
 <app-white-box>
     <div class="text-3xl mb-6">
-        Reference Table
+        {{ 'ref-table-Uppercase' | translate }}
     </div>
     <div class="overflow-x-auto">
         <table class="table-auto border w-full text-center">
             <thead>
                 <tr class="border-black">
-                    <th rowspan="2" class="px-2 py-2 border bg-orange-500">Value</th>
+                    <th rowspan="2" class="px-2 py-2 border bg-orange-500">{{ 'value' | translate }}</th>
                     <th rowspan="2" class="px-2 py-2 border bg-green-500">Unit</th>
-                    <th colspan="2" class="px-2 py-2 border bg-pink-500">Female</th>
-                    <th colspan="2" class="px-2 py-2 border bg-blue-500">Male</th>
+                    <th colspan="2" class="px-2 py-2 border bg-pink-500">{{ 'female' | translate }}</th>
+                    <th colspan="2" class="px-2 py-2 border bg-blue-500">{{ 'male' | translate }}</th>
                 </tr>
                 <tr class="border">
                     <th class="px-2 py-2 border bg-blue-200">Min</th>

@@ -8,14 +8,14 @@
                 <span class="hover:text-gray-700 cursor-pointer">
                     <a [routerLink]="['/control-panel', 'users']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
-                        users
+                        {{ 'users' | translate }}
                     </a>
                 </span>
                 <span>/</span>
                 <span class="hover:text-gray-700 cursor-pointer" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
                     <a [routerLink]="['/control-panel', 'invite']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
-                        invite
+                        {{ 'invite' | translate }}
                     </a>
                 </span>
                 <span>/</span>
@@ -23,14 +23,14 @@
                 <span class="hover:text-gray-700 cursor-pointer">
                     <a [routerLink]="['/control-panel', 'groups']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
-                        groups
+                        {{ 'groups' | translate }}
                     </a>
                 </span>
                 <span>/</span>
                 <span class="hover:text-gray-700 cursor-pointer" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
                     <a [routerLink]="['/control-panel', 'cases']" [routerLinkActiveOptions]="{exact: true}"
                         [routerLinkActive]="'text-gray-700'">
-                        cases
+                        {{ 'cases' | translate }}
                     </a>
                 </span>
             </div>

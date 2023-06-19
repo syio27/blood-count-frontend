@@ -39,6 +39,14 @@ export class GameService {
             );
     }
 
+    checkIfAnyInProgress(userId: string): Observable<boolean> {
+        const url = `${this.baseUrl}?userId=${userId}`;
+        return this.http.get<boolean>(url, {})
+            .pipe(
+                catchError(this.handleException)
+            );
+    }
+
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {
             console.error(`Error on client-side occured:, ${exception.error}`)

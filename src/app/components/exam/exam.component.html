@@ -2,22 +2,22 @@
 <app-white-box *ngIf="page === 'page1'">
     <div class="flex flex-col">
         <div class="flex flex-col mb-6 bg-gray-100 rounded-md p-3 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
-            <div class="text-sm md:text-lg font-bold">Patient Information:</div>
+            <div class="text-sm md:text-lg font-bold">{{ 'exam-patient-label' | translate }}</div>
             <div>
-                <div class="text-xs md:text-base">Gender: {{gender}}</div>
-                <div class="text-xs md:text-base">Age: {{age}}</div>
+                <div class="text-xs md:text-base">{{ 'exam-patient-gender' | translate }} {{gender}}</div>
+                <div class="text-xs md:text-base">{{ 'exam-patient-age' | translate }} {{age}}</div>
             </div>
         </div>
         <div>
             <table class=" border w-full text-center text-[7px] md:text-base lg:text-lg">
                 <thead>
                     <tr class="border-black">
-                        <th class="p-1 border-b bg-gray-200">Parameter</th>
+                        <th class="p-1 border-b bg-gray-200">{{ 'exam-table-th-param' | translate }}</th>
                         <th class="p-1 border-b bg-gray-200">Unit</th>
-                        <th class="p-1 border-b border-r bg-gray-200">Value</th>
-                        <th class="p-1 bg-gray-100">Decreased</th>
-                        <th class="p-1 bg-gray-100">Normal</th>
-                        <th class="p-1 bg-gray-100">Increased</th>
+                        <th class="p-1 border-b border-r bg-gray-200">{{ 'value' | translate }}</th>
+                        <th class="p-1 bg-gray-100">{{ 'exam-option-Decreased' | translate }}</th>
+                        <th class="p-1 bg-gray-100">{{ 'exam-option-Normal' | translate }}</th>
+                        <th class="p-1 bg-gray-100">{{ 'exam-option-Increased' | translate }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,11 +41,11 @@
                 <table class="border w-full text-center text-[8px] md:text-base">
                     <thead>
                         <tr class="border-black bg-gray-200">
-                            <th class="px-2 py-2 border">Parameter</th>
+                            <th class="px-2 py-2 border">{{ 'exam-table-th-param' | translate }}</th>
                             <th class="px-2 py-2 border">Unit</th>
-                            <th class="px-2 py-2 border">Value</th>
-                            <th class="px-2 py-2 border">Range</th>
-                            <th class="px-2 py-2 border">Level Type</th>
+                            <th class="px-2 py-2 border">{{ 'value' | translate }}</th>
+                            <th class="px-2 py-2 border">{{ 'range' | translate }}</th>
+                            <th class="px-2 py-2 border">{{ 'level-type' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +63,7 @@
         <div class="flex justify-end mt-10">
             <div (click)="submitTest()" [class.pointer-events-none]="!isTestValid" [class.bg-blue-700]="!isTestValid"
                 class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
-                Submit
+                {{ 'submit' | translate }}
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@
         <div class="flex justify-center">
             <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 text-center rounded cursor-pointer"
                 (click)="onFinish()">
-                Finish
+                {{ 'finish' | translate }}
             </div>
         </div>
 

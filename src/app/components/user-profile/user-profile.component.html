@@ -7,17 +7,17 @@
     <div class="my-6 md:mt-8">
       <!-- Profile Information -->
       <div class="mb-6">
-        <div class="text-xl md:text-2xl font-medium mb-2">Personal Information</div>
+        <div class="text-xl md:text-2xl font-medium mb-2">{{ 'profile-label' | translate }}</div>
         <div class="flex flex-col md:flex-row gap-2">
           <div class="text-lg font-medium">Email:</div>
           <div class="text-lg">{{userDetails.email}}</div>
         </div>
         <div class="flex flex-col md:flex-row gap-2">
-          <div class="text-lg font-medium">Group number:</div>
+          <div class="text-lg font-medium">{{ 'gr-number' | translate }}</div>
           <div class="flex gap-3">
             <div class="text-lg">{{userDetails.groupNumber}}</div>
             <div class="text-blue-500 hover:text-blue-700 font-bold py-1 px-1 rounded select-none
-            focus:outline-none focus:shadow-outline text-center cursor-pointer">See group</div>
+            focus:outline-none focus:shadow-outline text-center cursor-pointer">{{ 'see-group' | translate}}</div>
           </div>
         </div>
         <div class="flex flex-col md:flex-row gap-2">
@@ -27,24 +27,24 @@
         <div class="flex justify-start mt-4">
           <div (click)="onHistory()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
             focus:outline-none focus:shadow-outline w-full lg:w-36 text-center cursor-pointer">
-            View History
+            {{'view-history' | translate}}
           </div>
         </div>
       </div>
       <hr class="mt-4 border-black">
       <!-- Change Password Form -->
       <div class="flex flex-col gap-2 md:mt-8">
-        <div class="text-xl md:text-2xl font-medium ">Change Password</div>
+        <div class="text-xl md:text-2xl font-medium ">{{ 'change-password' | translate }}</div>
         <form class="flex flex-col gap-2" [formGroup]="passwordForm">
           <div class="flex flex-col gap-2">
-            <label for="current-password" class="w-full md:w-1/3 text-lg font-medium">Current Password:</label>
+            <label for="current-password" class="w-full md:w-1/3 text-lg font-medium">{{ 'current' | translate }}</label>
             <div>
               <input id="current-password" type="password" formControlName="currentPassword"
                 class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter current password" required>
             </div>
             <app-error-message [invalidPassword]="invalidPassword"></app-error-message>
-            <label for="new-password" class="w-full md:w-1/3 text-lg font-medium">New Password:</label>
+            <label for="new-password" class="w-full md:w-1/3 text-lg font-medium">{{ 'new-pass' | translate }}</label>
             <div>
               <div>
                 <input id="new-password" type="password" formControlName="newPassword"
@@ -54,7 +54,7 @@
               <app-error-message *ngIf="formSubmitAttempt" [isInvalidPassword]="isFieldInvalid('newPassword')">
               </app-error-message>
             </div>
-            <label for="confirm-password" class="w-full md:w-1/3 text-lg font-medium">Confirm Password:</label>
+            <label for="confirm-password" class="w-full md:w-1/3 text-lg font-medium">{{ 'confirm-pass' | translate }}</label>
             <div>
               <div>
                 <input id="confirm-password" formControlName="confirmPassword" type="password"
@@ -70,12 +70,11 @@
             </div>
           </div>
           <div class="flex flex-col mt-2">
-            <div class="text-xs text-gray-500">Make sure it's at least 8 characters including
-              a number, an uppercase letter, a lowercase letter and a symbol</div>
+            <div class="text-xs text-gray-500">{{ 'recommendation' | translate }}</div>
             <div class="flex">
               <div (click)="changePassword()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
                 focus:outline-none focus:shadow-outline w-full lg:w-52 text-center cursor-pointer">
-                Change Password
+                {{ 'change-pass' | translate }}
               </div>
             </div>
           </div>

@@ -26,6 +26,8 @@
     "@ngrx/effects": "^15.4.0",
     "@ngrx/entity": "^15.4.0",
     "@ngrx/store": "^15.4.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "angular-toastify": "^1.0.6",
     "moment": "^2.25.1",
     "ng-angular-popup": "^0.3.1",
