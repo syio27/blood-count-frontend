@@ -1,6 +1,6 @@
 <div>
     <div class="bg-gray-100 flex text-center select-none mb-10">
-        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)" 
+        <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Student)"
             [class.border-b-4]="currentCategory === Roles.Student"
             [class.border-blue-500]="currentCategory === Roles.Student">
             {{ 'student' | translate }}
@@ -12,8 +12,7 @@
         </div>
         <div class="py-2 cursor-pointer flex-1" (click)="changeCategory(Roles.Admin)"
             [class.border-b-4]="currentCategory === Roles.Admin"
-            [class.border-blue-500]="currentCategory === Roles.Admin" 
-            *ngIf="userDetails.role == 'ROOT'">
+            [class.border-blue-500]="currentCategory === Roles.Admin" *ngIf="userDetails.role == 'ROOT'">
             {{ 'admin' | translate }}
         </div>
     </div>
@@ -31,14 +30,22 @@
                     <td class="border-b ">{{ item.email }}</td>
                     <td class="border-b">{{ item.groupNumber }}</td>
                     <td class="border-b">
-                        <div class="flex justify-center">
-                            <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
+                        <div class="flex justify-center items-center">
+                            <div class="text-blue-500  hover:text-blue-700 w-3/4 font-bold cursor-pointer">
                                 {{ 'details' | translate }}
                             </div>
-                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer" *ngIf="currentCategory === Roles.Admin">
+                            <div *ngIf="userDetails.role == 'ROOT' && currentCategory === Roles.Student || userDetails.role == 'ADMIN' && currentCategory === Roles.Student"
+                                class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </div>
+                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                *ngIf="currentCategory === Roles.Admin">
                                 Ban
                             </div>
-                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer" *ngIf="currentCategory === Roles.Admin">
+                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                *ngIf="currentCategory === Roles.Admin">
                                 Unban
                             </div>
                         </div>
@@ -46,6 +53,12 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="flex">
+        <div class="mt-5 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
+        focus:outline-none focus:shadow-outline text-center cursor-pointer">
+            Export to excel
+        </div>
     </div>
     <div class="w-full mt-4 flex justify-center select-none">
         <nav class="inline-flex">

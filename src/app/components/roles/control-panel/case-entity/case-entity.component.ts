@@ -52,6 +52,7 @@ export class CaseEntityComponent implements OnInit {
     this.form = this.fb.group({
       'anemia-type': ['', Validators.required],
       'diagnosis': ['', Validators.required],
+      'details': ['', Validators.required],
       'first-min': ['', Validators.required],
       'first-max': ['', Validators.required],
       'second-min': [''],
@@ -80,6 +81,8 @@ export class CaseEntityComponent implements OnInit {
 
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
+    this.form.get('details').setValue(sessionStorage.getItem('details'));
+
     this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
     this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
 
@@ -141,6 +144,9 @@ export class CaseEntityComponent implements OnInit {
         break;
       case 9:
         sessionStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
+        break;
+      case 10:
+        sessionStorage.setItem('details', this.form.get('details').value);
         break;
     }
   }
@@ -240,6 +246,7 @@ export class CaseEntityComponent implements OnInit {
     const caseData: ICreateCaseRequest = {
       anemiaType: this.form.get('anemia-type').value,
       diagnosis: this.form.get('diagnosis').value,
+      details: this.form.get('details').value,
       firstMinAge: this.form.get('first-min').value,
       firstMaxAge: this.form.get('first-max').value,
       secondMinAge: this.form.get('second-min').value || 0,
@@ -258,6 +265,8 @@ export class CaseEntityComponent implements OnInit {
         this.selectedUnitOption = '';
         sessionStorage.setItem('anemia-type', '');
         sessionStorage.setItem('diagnosis', '');
+        sessionStorage.setItem('details', '');
+
         sessionStorage.removeItem('first-min');
         sessionStorage.removeItem('first-max');
         sessionStorage.removeItem('second-min');

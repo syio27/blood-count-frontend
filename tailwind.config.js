@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       backgroundImage: {
         polandFlag: "url('./assets/polandflag.png')",
-        englishFlag: "url('/assets/englishflag.png')"
+        englishFlag: "url('/assets/englishflag.png')",
+        account: "url('/assets/user.png')"
       },
     },
   },

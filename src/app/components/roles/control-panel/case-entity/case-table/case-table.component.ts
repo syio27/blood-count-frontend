@@ -5,6 +5,8 @@ import { IAbnormalityResponse } from 'src/app/interfaces/IAbnormalityResponse';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
 import { CaseDataService } from 'src/app/services/caseData.service';
+import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
 
 @Component({
   selector: 'app-case-table',
@@ -16,17 +18,23 @@ export class CaseTableComponent implements OnInit {
   abnormalityData: IAbnormalityResponse[] = [];
   currentPage = 1;
   groupsPerPage = 10;
-  openedPopup = false
+  openedPopup = false;
+  userDetails: UserDetails;
   constructor(
     private caseService: CaseService,
     private toast: NgToastService,
-    private caseDataService: CaseDataService
+    private caseDataService: CaseDataService,
+    private sharedUserService: SharedUserDetailsService,
+
   ) { }
 
   ngOnInit(): void {
     this.fetchTableData()
     this.caseDataService.refreshTable$.subscribe(() => {
       this.fetchTableData();
+    });
+    this.sharedUserService.getUserDetails().subscribe(userDetails => {
+      this.userDetails = userDetails;
     });
 
   }

@@ -8,4 +8,5 @@ export interface ICreateCaseRequest {
     affectedGender: AffectedGenders
     anemiaType: string
     diagnosis: string
+    details: string
 }

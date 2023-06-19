@@ -6,20 +6,21 @@
     <app-panel-button />
     <app-lang-switcher />
     <div class="relative">
-      <div id="tapper" class="text-base md:text-xl py-1 px-3  flex justify-between text-center transition duration-75 
-      items-center shadow-lg bg-white select-none cursor-pointer z-[100] hover:bg-gray-100" [class.rounded-t-md]="onClick"
-        [class.rounded-md]="!onClick" (click)="toggleClick()">
-        Student
-        <span class="material-symbols-outlined text-base md:text-xl font-bold transition duration-150 transform"
+      <div 
+        class="text-base md:text-xl w-28 h-9 flex justify-between transition duration-75 items-center shadow-lg bg-white select-none cursor-pointer z-[100] hover:bg-gray-100"
+        [class.rounded-t-md]="onClick" [class.rounded-md]="!onClick">
+        <div id="tapper"class="w-7 h-7 bg-[length:25px_25px] px-10 ml-3 bg-account bg-center bg-contain bg-auto bg-no-repeat" (click)="toggleClick()">
+          
+        </div>
+        <span class="material-symbols-outlined text-base  md:text-xl font-bold transition duration-150 transform"
           [class.rotate-180]="onClick" [class.rotate-0]="!onClick">
           expand_more
         </span>
       </div>
-      <div
-        class="absolute top-full right-0 w-full bg-white shadow-lg cursor-pointer 
-        select-none transition duration-150 transform origin-top rounded-b-md"
-        [class.scale-y-0]="!onClick" [class.scale-y-100]="onClick">
-        <app-popup/>
+      <div class="absolute top-full right-0 w-full bg-white shadow-lg cursor-pointer 
+        select-none transition duration-150 transform origin-top rounded-b-md" [class.scale-y-0]="!onClick"
+        [class.scale-y-100]="onClick">
+        <app-popup />
       </div>
     </div>
   </div>
