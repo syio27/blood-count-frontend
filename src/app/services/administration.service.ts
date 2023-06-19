@@ -4,6 +4,7 @@ import { throwError, catchError, retry, tap, Observable } from 'rxjs';
 import { IInviteUserRequest } from '../interfaces/IInviteUserRequest';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { Roles } from '../enums/role.enum';
+import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
 
 
 @Injectable({
@@ -74,6 +75,23 @@ export class AdminService {
             .pipe(
                 catchError(this.handleException)
             )
+    }
+
+    /**
+     * method used for admin/root/supervisors to see the completed games of user
+     * @param userId 
+     * @returns 
+     */
+    getCompletedGames(userId: string): Observable<ISimpleGameResponse[]> {
+        return this.http.get<ISimpleGameResponse[]>(`${this.baseUrl}${userId}/games`);
+    }
+
+    deleteUserById(userId: string): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}${userId}`);
+    }
+
+    assignUserToAnotherGroup(userId: string, groupNumber: string): Observable<void> {
+        return this.http.put<void>(this.baseUrl + 'user/group', { userId, groupNumber });
     }
 
     private handleException(exception: HttpErrorResponse) {

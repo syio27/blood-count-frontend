@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, catchError, tap } from 'rxjs';
+import { throwError, catchError, tap, Observable } from 'rxjs';
 import { PasswordChangeRequest } from '../interfaces/IPasswordChangeRequest';
 import { AuthService } from '../auth/auth.service';
 import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
+import { IUserSelectedAnswerResponse } from '../interfaces/ISelectedUserAnswers';
+import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
 
 /**
  * Service for UserProfile component to communicate with backend
@@ -35,6 +37,19 @@ export class UserProfileService {
         }),
         catchError(this.handleException)
       );
+  }
+
+  getSelectedAnswersOfStudent(userId: string, gameId: number): Observable<IUserSelectedAnswerResponse[]> {
+    return this.http.get<IUserSelectedAnswerResponse[]>(`${this.baseUrl}${userId}/games/${gameId}`);
+  }
+
+  /**
+   * method used for student user to see the completed games as history
+   * @param userId 
+   * @returns 
+   */
+  getHistory(userId: string): Observable<ISimpleGameResponse[]> {
+    return this.http.get<ISimpleGameResponse[]>(`${this.baseUrl}${userId}/games/completed`);
   }
 
   private handleException(exception: HttpErrorResponse) {
