@@ -69,6 +69,12 @@ export class AdminService {
             );
     }
 
+    ban(userId: string): Observable<void> {
+        return this.http.post<void>(this.baseUrl + `${userId}/ban`, {})
+            .pipe(
+                catchError(this.handleException)
+            )
+    }
 
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {
