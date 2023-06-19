@@ -30,13 +30,13 @@ import { WhiteBoxComponent } from './components/white-box/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PanelButtonComponent } from './components/header/panel-button/panel-button.component';
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
-import { RootUserComponent } from './components/roles/root-user/root-user.component';
+import { ControlPanelComponent } from './components/roles/control-panel/control-panel.component';
 import { NavigationBarComponent } from './components/roles/navigation-bar/navigation-bar.component';
-import { UsersTableComponent } from './components/roles/root-user/users-table/users-table.component';
-import { InviteUserComponent } from './components/roles/root-user/invite-user/invite-user.component';
-import { GroupsManageComponent } from './components/roles/root-user/groups-manage/groups-manage.component';
-import { CaseEntityComponent } from './components/roles/root-user/case-entity/case-entity.component';
-import { CaseTableComponent } from './components/roles/root-user/case-entity/case-table/case-table.component';
+import { UsersTableComponent } from './components/roles/control-panel/users-table/users-table.component';
+import { InviteUserComponent } from './components/roles/control-panel/invite-user/invite-user.component';
+import { GroupsManageComponent } from './components/roles/control-panel/groups-manage/groups-manage.component';
+import { CaseEntityComponent } from './components/roles/control-panel/case-entity/case-entity.component';
+import { CaseTableComponent } from './components/roles/control-panel/case-entity/case-table/case-table.component';
 import { ExamComponent } from './components/exam/exam.component';
 import { TimerComponent } from './components/exam/timer/timer.component';
 
@@ -58,7 +58,7 @@ import { TimerComponent } from './components/exam/timer/timer.component';
     WhiteBoxComponent,
     PanelButtonComponent,
     CbcTableComponent,
-    RootUserComponent,
+    ControlPanelComponent,
     NavigationBarComponent,
     UsersTableComponent,
     InviteUserComponent,

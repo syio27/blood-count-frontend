@@ -6,7 +6,8 @@ import { GroupService } from '../../../../services/group.service';
 import { Roles } from '../../../../enums/role.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
-
+import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
 
 @Component({
   selector: 'app-invite-user',
@@ -15,6 +16,7 @@ import { NgToastService } from 'ng-angular-popup'
 })
 export class InviteUserComponent implements OnInit {
   form: FormGroup;
+  userDetails: UserDetails;
   roleDropdownOpen = false;
   groupDropdownOpen = false;
   dropdownOptions: string[] = Object.values(Roles);
@@ -26,7 +28,8 @@ export class InviteUserComponent implements OnInit {
     private fb: FormBuilder,
     private adminService: AdminService,
     private groupService: GroupService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private sharedUserService: SharedUserDetailsService,
   ) { }
 
   ngOnInit() {
@@ -35,6 +38,12 @@ export class InviteUserComponent implements OnInit {
     });
 
     this.fetchGroupNumbers(); 
+    this.sharedUserService.getUserDetails().subscribe(userDetails => {
+      this.userDetails = userDetails;
+    });
+    if(this.userDetails.role != 'ROOT'){
+      this.dropdownOptions = ['STUDENT','SUPERVISOR']
+    }
   }
 
   fetchGroupNumbers(): void {
