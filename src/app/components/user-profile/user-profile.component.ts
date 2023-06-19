@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
 import { Router } from '@angular/router';
 import { UserDetails } from '../../interfaces/IUserDetails';
-import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileService } from 'src/app/services/user.service';
 import { PasswordChangeRequest } from 'src/app/interfaces/IPasswordChangeRequest';
 
 
