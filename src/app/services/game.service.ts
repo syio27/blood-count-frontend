@@ -31,6 +31,14 @@ export class GameService {
             );
     }
 
+    getInProgressGame(gameId: number, userId: string): Observable<IGameResponse> {
+        const url = `${this.baseUrl}${gameId}?userId=${userId}`;
+        return this.http.get<IGameResponse>(url, {})
+            .pipe(
+                catchError(this.handleException)
+            );
+    }
+
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {
             console.error(`Error on client-side occured:, ${exception.error}`)
