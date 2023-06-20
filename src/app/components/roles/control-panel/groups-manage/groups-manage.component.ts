@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
+import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
 
 @Component({
   selector: 'app-groups-manage',
@@ -27,6 +28,9 @@ export class GroupsManageComponent implements OnInit {
   groupTypeDropdownOptions = Object.values(GroupType);
   groupParticipants: UserDetails[] = []
   selectedGroup: any;
+  currentUserEmail: string
+  openedPopup2 = false
+  userHistory: ISimpleGameResponse[] = []
 
   constructor(
     private groupService: GroupService,
@@ -195,5 +199,17 @@ export class GroupsManageComponent implements OnInit {
         this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
       }
     )
+  }
+  openPopup2(id, email){
+    this.adminService.getCompletedGames(id).subscribe(
+      (data)=>{
+        this.userHistory = data
+      }
+    )
+    this.openedPopup2 = true
+    this.currentUserEmail = email
+  }
+  closePopup2(){
+    this.openedPopup2 = false
   }
 }

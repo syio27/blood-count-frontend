@@ -1,5 +1,24 @@
-<div class="w-full min-h-screen bg-white">
-    <div class="py-5 md:py-7 px-4 md:px-16 xl:px-28">
-        <p>history works!</p>
+<app-white-box>
+    <div>
+        <table class="w-full border text-xs">
+            <thead>
+                <tr>
+                    <th class="py-2 w-1/5 border">Start Time</th>
+                    <th class="py-2 w-1/5 border">End Time</th>
+                    <th class="py-2 w-1/5 border">Test Duration</th>
+                    <th class="py-2 w-1/5 border">Status</th>
+                    <th class="py-2 w-1/5 border">Score</th>
+                </tr>
+            </thead>
+            <tbody id="table-body" class="items-center text-center">
+                <tr *ngFor="let history of gameHistory">
+                    <td class="border">{{ history.startTime }}</td>
+                    <td class="border">{{ history.endTime}}</td>
+                    <td class="border">{{ history.testDuration}}</td>
+                    <td class="border">{{ history.status}}</td>
+                    <td class="border">{{ history.score}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
+</app-white-box>

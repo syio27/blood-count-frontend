@@ -16,8 +16,8 @@
             {{ 'admin' | translate }}
         </div>
     </div>
-    <div class="overflow-x-auto h-[60vh] mb-2">
-        <table class="w-full border">
+    <div class="overflow-x-auto h-[60vh] mb-2 relative">
+        <table class="w-full border" [class.blur]="openedPopup">
             <thead class="border">
                 <tr>
                     <th class="py-2 w-3/12 border">Email</th>
@@ -31,21 +31,23 @@
                     <td class="border-b">{{ item.groupNumber }}</td>
                     <td class="border-b">
                         <div class="flex justify-center items-center">
-                            <div class="text-blue-500  hover:text-blue-700 w-3/4 font-bold cursor-pointer">
+                            <div class="text-blue-500  hover:text-blue-700 w-3/4 font-bold cursor-pointer"
+                                (click)="openPopup(item.id, item.email)" [class.pointer-events-none]="openedPopup">
                                 {{ 'details' | translate }}
                             </div>
-                            <div *ngIf="userDetails.role == 'ROOT' && currentCategory === Roles.Student || userDetails.role == 'ADMIN' && currentCategory === Roles.Student"
-                                class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer">
+                            <div *ngIf="(userDetails.role == 'ROOT' || userDetails.role == 'ADMIN') && (currentCategory === Roles.Student || currentCategory === Roles.Teacher)"
+                                class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer"
+                                (click)="deleteUser(item.id)" [class.pointer-events-none]="openedPopup">
                                 <span class="material-symbols-outlined">
                                     delete
                                 </span>
                             </div>
                             <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
-                                *ngIf="currentCategory === Roles.Admin">
+                                *ngIf="currentCategory === Roles.Admin" [class.pointer-events-none]="openedPopup">
                                 Ban
                             </div>
                             <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
-                                *ngIf="currentCategory === Roles.Admin">
+                                *ngIf="currentCategory === Roles.Admin" [class.pointer-events-none]="openedPopup">
                                 Unban
                             </div>
                         </div>
@@ -53,6 +55,35 @@
                 </tr>
             </tbody>
         </table>
+        <div *ngIf="openedPopup"
+            class="absolute right-0 md:right-1/5 bottom-1/4 w-full h-80 bg-white shadow-2xl rounded-xl">
+            <div class="p-4">
+                <div class="flex justify-between mb-3">
+                    <div>{{currentUserEmail}}</div>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
+                </div>
+                <div class="w-full h-60 overflow-y-auto">
+                    <table class="w-full border text-xs">
+                        <thead>
+                            <tr>
+                                <th class="py-2 w-1/4 border">Start Time</th>
+                                <th class="py-2 w-1/4 border">End Time</th>
+                                <th class="py-2 w-1/4 border">Test Duration</th>
+                                <th class="py-2 w-1/4 border">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="items-center text-center">
+                            <tr *ngFor="let history of userHistory">
+                                <td class="border">{{ history.startTime }}</td>
+                                <td class="border">{{ history.endTime}}</td>
+                                <td class="border">{{ history.testDuration}}</td>
+                                <td class="border">{{ history.score}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="flex">
         <div class="mt-5 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
@@ -78,4 +109,5 @@
             </div>
         </nav>
     </div>
+    <lib-toastify-toast-container></lib-toastify-toast-container>
 </div>

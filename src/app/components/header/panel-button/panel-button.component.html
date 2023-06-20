@@ -1,5 +1,5 @@
 <div class="flex gap-2 text-sm md:text-xl">
-    <div class="py-1 px-1  text-center border border-black border-dashed hover:border-solid hover:bg-gray-200 select-none cursor-pointer transition duration-150 transform rounded-md" (click)="onControlPanel()" *ngIf="userDetails.role == 'SUPERVISOR'">Teacher</div>
-    <div class="py-1 px-1  text-center border border-black border-dashed hover:border-solid hover:bg-gray-200 select-none cursor-pointer transition duration-150 rounded-md" (click)="onControlPanel()" *ngIf="userDetails.role == 'ADMIN'" >Admin</div>
-    <div class="py-1 px-1  text-center border border-black border-dashed hover:border-solid hover:bg-gray-200 select-none cursor-pointer transition duration-150 rounded-md" (click)="onControlPanel()"*ngIf="userDetails.role == 'ROOT'">Root</div>
+    <div class="px-1  text-center border border-black border-dashed hover:border-solid hover:bg-gray-200 select-none cursor-pointer transition duration-150 transform rounded-md" (click)="onControlPanel()" *ngIf="userDetails.role == 'SUPERVISOR'">Teacher</div>
+    <div class="px-1  text-center border border-black border-dashed hover:border-solid hover:bg-gray-200 select-none cursor-pointer transition duration-150 rounded-md" (click)="onControlPanel()" *ngIf="userDetails.role == 'ADMIN'" >Admin</div>
+    <div class="px-1  text-center border border-black border-dashed hover:border-solid hover:bg-gray-200 select-none cursor-pointer transition duration-150 rounded-md" (click)="onControlPanel()"*ngIf="userDetails.role == 'ROOT'">Root</div>
 </div>

@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectOption(option: string, id: number) {
-    this.selectedOption = option;
+    this.selectedOption = 'Case ' + id;
     this.selectedOptionId = id;
     this.onClick = false;
   }

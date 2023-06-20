@@ -246,7 +246,7 @@ export class CaseEntityComponent implements OnInit {
     const caseData: ICreateCaseRequest = {
       anemiaType: this.form.get('anemia-type').value,
       diagnosis: this.form.get('diagnosis').value,
-      details: this.form.get('details').value,
+      //details: this.form.get('details').value,
       firstMinAge: this.form.get('first-min').value,
       firstMaxAge: this.form.get('first-max').value,
       secondMinAge: this.form.get('second-min').value || 0,

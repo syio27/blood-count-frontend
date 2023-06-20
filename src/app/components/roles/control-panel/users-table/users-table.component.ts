@@ -3,6 +3,8 @@ import { Roles } from '../../../../enums/role.enum';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { AdminService } from 'src/app/services/administration.service';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { NgToastService } from 'ng-angular-popup'
+import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
 
 @Component({
   selector: 'app-users-table',
@@ -11,16 +13,19 @@ import { SharedUserDetailsService } from 'src/app/services/shared-user-details.s
 })
 export class UsersTableComponent implements OnInit {
   Roles = Roles;
+  openedPopup = false
   currentCategory = Roles.Student;
   tableData: UserDetails[] = [];
   currentPage = 1;
   groupsPerPage = 10;
   userDetails: UserDetails;
-
-
+  userHistory: ISimpleGameResponse[] = []
+  currentUserEmail: string
   constructor(
     private adminService: AdminService,
     private sharedUserService: SharedUserDetailsService,
+    private toast: NgToastService,
+
     ) { }
 
   changeCategory(role: Roles) {
@@ -36,6 +41,7 @@ export class UsersTableComponent implements OnInit {
 
   }
 
+  
   private fetchTableData(role: Roles) {
     this.adminService.fetchUsersByRole(role).subscribe(
       (userDetails: UserDetails[]) => {
@@ -87,5 +93,31 @@ export class UsersTableComponent implements OnInit {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
+  }
+  banAdmin(){
+
+  }
+  deleteUser(id){
+    this.adminService.deleteUserById(id).subscribe(
+      ()=>{
+        this.toast.success({detail:"Operation done successfully",summary:'User has been deleted',duration: 2000});
+        this.fetchTableData(this.currentCategory);
+      },
+      (error) => {
+        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+      }
+    )
+  }
+  openPopup(id, email){
+    this.adminService.getCompletedGames(id).subscribe(
+      (data)=>{
+        this.userHistory = data
+      }
+    )
+    this.openedPopup = true
+    this.currentUserEmail = email
+  }
+  closePopup(){
+    this.openedPopup = false
   }
 }
