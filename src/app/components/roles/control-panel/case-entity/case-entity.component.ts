@@ -27,7 +27,7 @@ export class CaseEntityComponent implements OnInit {
   genderDropdownOpen = false;
   showSecondRangeForm = false;
 
-  levelTypeDropdownOptions = Object.values(LevelTypes);
+  levelTypeDropdownOptions = []
   selectedLevelTypeOption = '';
   levelTypeDropdownOpen = false;
 
@@ -39,6 +39,7 @@ export class CaseEntityComponent implements OnInit {
   unitDropdownOptions: any[];
   selectedUnitOption = '';
   unitDropdownOpen = false;
+  disabledRange: boolean
 
   constructor(
     private fb: FormBuilder,
@@ -116,6 +117,18 @@ export class CaseEntityComponent implements OnInit {
     if (storedSelectedUnitOption) {
       this.selectedUnitOption = storedSelectedUnitOption;
     }
+    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
+      this.restoreFormValues
+
+    }
+    else {
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
+      this.restoreFormValues
+
+    }
   }
 
 
@@ -186,17 +199,76 @@ export class CaseEntityComponent implements OnInit {
     this.selectedLevelTypeOption = option;
     this.levelTypeDropdownOpen = false;
     sessionStorage.setItem('selectedLevelTypeOption', option);
+    switch (this.selectedLevelTypeOption) {
+      case 'Degree 0':
+        sessionStorage.setItem('parameter-min', '11')
+        sessionStorage.setItem('parameter-max', '18')
+        this.restoreFormValues()
+        break;
+      case 'Degree I':
+        sessionStorage.setItem('parameter-min', '9.5')
+        sessionStorage.setItem('parameter-max', '10.9')
+        this.restoreFormValues()
+        break;
+      case 'Degree II':
+        sessionStorage.setItem('parameter-min', '8.0')
+        sessionStorage.setItem('parameter-max', '9.4')
+        this.restoreFormValues()
+        break;
+      case 'Degree III':
+        sessionStorage.setItem('parameter-min', '6.5')
+        sessionStorage.setItem('parameter-max', '7.9')
+        this.restoreFormValues()
+        break;
+      case 'Degree IV':
+        sessionStorage.setItem('parameter-min', '1')
+        sessionStorage.setItem('parameter-max', '6.5')
+        this.restoreFormValues()
+        break;
+    }
   }
 
   selectParameterOption(option: string) {
     this.selectedParameterOption = option;
     this.parameterDropdownOpen = false;
     sessionStorage.setItem('selectedParameterOption', option);
+    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+
+      this.restoreFormValues()  
+      }
+    else {
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+
+      this.restoreFormValues()    
+    }
   }
   selectUnitOption(option: string) {
     this.selectedUnitOption = option;
     this.unitDropdownOpen = false;
     sessionStorage.setItem('selectedUnitOption', option);
+    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else {
+      this.disabledRange = false
+      
+      this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+
+      this.restoreFormValues()
+    }
   }
 
   removeValue(parameter) {
