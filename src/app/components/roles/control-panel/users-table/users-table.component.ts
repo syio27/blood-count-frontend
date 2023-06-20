@@ -5,8 +5,8 @@ import { AdminService } from 'src/app/services/administration.service';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { NgToastService } from 'ng-angular-popup'
 import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
-
-@Component({
+import { ExportService } from 'src/app/services/export.service';
+import { saveAs } from 'file-saver';@Component({
   selector: 'app-users-table',
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css']
@@ -25,7 +25,7 @@ export class UsersTableComponent implements OnInit {
     private adminService: AdminService,
     private sharedUserService: SharedUserDetailsService,
     private toast: NgToastService,
-
+    private exportService: ExportService
     ) { }
 
   changeCategory(role: Roles) {
@@ -119,5 +119,10 @@ export class UsersTableComponent implements OnInit {
   }
   closePopup(){
     this.openedPopup = false
+  }
+  export(){
+    this.exportService.exportGameStats().subscribe(data => {
+      saveAs(data, `game statistics - ${new Date().toISOString()}.xlsx`);
+    });
   }
 }
