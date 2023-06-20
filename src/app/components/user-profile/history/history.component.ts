@@ -16,6 +16,7 @@ export class HistoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fetchHistory()
   }
   fetchHistory(){
     this.sharedUserService.getUserDetails().subscribe(
