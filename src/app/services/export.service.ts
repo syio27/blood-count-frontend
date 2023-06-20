@@ -7,7 +7,7 @@ import { throwError, catchError, retry, tap, Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class ExportService {
-    private readonly baseUrl = "http://localhost:8080/api/v1/files"
+    private readonly baseUrl = "http://localhost:8080/api/v1/files/"
 
     constructor(
         private http: HttpClient
@@ -18,6 +18,6 @@ export class ExportService {
             'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         });
 
-        return this.http.get<Blob>(this.baseUrl, { headers, responseType: 'blob' as 'json' });
+        return this.http.get<Blob>(this.baseUrl + "export", { headers, responseType: 'blob' as 'json' });
     }
 }
