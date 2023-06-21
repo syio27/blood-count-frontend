@@ -5,13 +5,14 @@ import { IInviteUserRequest } from '../interfaces/IInviteUserRequest';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { Roles } from '../enums/role.enum';
 import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class AdminService {
-    private readonly baseUrl = "http://localhost:8080/api/v1/users/"
+    private readonly baseUrl = `${environment.baseUrl}api/v1/users/`
 
     constructor(
         private http: HttpClient

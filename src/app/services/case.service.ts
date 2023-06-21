@@ -4,12 +4,14 @@ import { throwError, catchError, retry, tap, Observable, switchMap, map } from '
 import { ICreateCaseRequest } from '../interfaces/ICreateCaseRequest';
 import { ICreateAbnormalityRequest } from '../interfaces/ICreateAbnormalityRequest';
 import { ICaseResponse } from '../interfaces/ICaseResponse';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class CaseService {
-    private readonly baseUrl = "http://localhost:8080/api/v1/cases/"
+    private readonly baseUrl = `${environment.baseUrl}api/v1/cases/`
 
     constructor(
         private http: HttpClient
@@ -66,7 +68,7 @@ export class CaseService {
         } else {
             console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.error}`)
         }
-        
+
         return throwError(() => exception.error)
     }
 }

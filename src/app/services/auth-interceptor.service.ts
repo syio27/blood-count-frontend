@@ -1,6 +1,8 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor() { }
 
   private excludedUrls: string[] = [
-    'http://localhost:8080/api/v1/auth/authenticate',
-    'http://localhost:8080/api/v1/auth/register',
-    'http://localhost:8080/public/api/v1/groups'
+    `${environment.baseUrl}api/v1/auth/authenticate`,
+    `${environment.baseUrl}api/v1/auth/register`,
+    `${environment.baseUrl}public/api/v1/groups`
   ];
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

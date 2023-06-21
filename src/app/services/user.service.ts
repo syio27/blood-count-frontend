@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
 import { IUserSelectedAnswerResponse } from '../interfaces/ISelectedUserAnswers';
 import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
+import { environment } from 'src/environments/environment';
 
 /**
  * Service for UserProfile component to communicate with backend
@@ -15,7 +16,7 @@ import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
 })
 export class UserProfileService {
 
-  private readonly baseUrl = "http://localhost:8080/api/v1/users/"
+  private readonly baseUrl = `${environment.baseUrl}api/v1/users/`
 
   constructor(
     private http: HttpClient,

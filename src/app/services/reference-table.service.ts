@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { throwError, catchError, retry, tap, Observable, pipe } from 'rxjs';
 import { IReferenceTable } from '../interfaces/IReferenceTable';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class ReferenceTableService {
-    private readonly baseUrl = "http://localhost:8080/api/v1/bc-ref/"
+    private readonly baseUrl = `${environment.baseUrl}api/v1/bc-ref/`
 
     constructor(
         private http: HttpClient

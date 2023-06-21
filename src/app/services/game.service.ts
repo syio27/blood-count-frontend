@@ -3,13 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, catchError, retry, tap, Observable, switchMap, map } from 'rxjs';
 import { IGameResponse } from '../interfaces/IGameResponse';
 import { IAnswerRequest } from '../interfaces/IAnswerRequest';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameService {
-    private readonly baseUrl = "http://localhost:8080/api/v1/games/"
+    private readonly baseUrl = `${environment.baseUrl}api/v1/games/`
 
     constructor(
         private http: HttpClient

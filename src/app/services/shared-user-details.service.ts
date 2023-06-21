@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { BehaviorSubject, throwError, catchError, retry, tap, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 /**
  * Shared Service used to hold the User's Details information from `users/email/{email}` api
@@ -14,7 +15,7 @@ import { BehaviorSubject, throwError, catchError, retry, tap, Observable } from 
 })
 export class SharedUserDetailsService {
   private userDetailsSource: BehaviorSubject<UserDetails> = new BehaviorSubject<UserDetails>(this.getUserDetailsFromLocalStorage() || null);
-  private readonly baseUrl = "http://localhost:8080/api/v1/users/"
+  private readonly baseUrl = `${environment.baseUrl}api/v1/users/`
 
   getUserDetails() {
     return this.userDetailsSource.asObservable();

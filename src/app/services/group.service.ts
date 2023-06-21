@@ -3,13 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, catchError, retry, tap, Observable } from 'rxjs';
 import { IGroupResponse } from '../interfaces/IGroupResponse';
 import { ICreateGroupRequest } from '../interfaces/ICreateGroupRequest';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupService {
-    private readonly baseUrl = "http://localhost:8080/api/v1/groups/"
+    private readonly baseUrl = `${environment.baseUrl}api/v1/groups/`
 
     constructor(
         private http: HttpClient
