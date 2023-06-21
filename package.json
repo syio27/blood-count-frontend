@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "heroku-postbuild": "ng build --prod && npm install --force",
+    "postinstall": "npm install --force",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
