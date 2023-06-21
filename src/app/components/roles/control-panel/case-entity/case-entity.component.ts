@@ -5,8 +5,6 @@ import { ICreateCaseRequest } from 'src/app/interfaces/ICreateCaseRequest';
 import { ICreateAbnormalityRequest } from 'src/app/interfaces/ICreateAbnormalityRequest';
 import { AffectedGenders } from 'src/app/enums/affectedGender.enum';
 import { LevelTypes } from 'src/app/enums/levelType.enum';
-import { addAbnormality, removeAbnormality } from 'src/app/store/actions/abnormalities.action';
-import { Store } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
 import { CaseDataService } from 'src/app/services/caseData.service';
@@ -44,7 +42,6 @@ export class CaseEntityComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private caseService: CaseService,
-    private store: Store,
     private toast: NgToastService,
     private caseDataService: CaseDataService,
     private referanceTable: ReferenceTableService
@@ -238,15 +235,15 @@ export class CaseEntityComponent implements OnInit {
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
 
-      this.restoreFormValues()  
-      }
+      this.restoreFormValues()
+    }
     else {
       this.disabledRange = false
       this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
 
-      this.restoreFormValues()    
+      this.restoreFormValues()
     }
   }
   selectUnitOption(option: string) {
@@ -262,7 +259,7 @@ export class CaseEntityComponent implements OnInit {
     }
     else {
       this.disabledRange = false
-      
+
       this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
@@ -277,7 +274,6 @@ export class CaseEntityComponent implements OnInit {
       this.addedValues.splice(index, 1);
       sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
     }
-    this.store.dispatch(removeAbnormality({ parameter }));
   }
 
   addValue() {
@@ -299,7 +295,6 @@ export class CaseEntityComponent implements OnInit {
       type: levelType as LevelTypes
     };
 
-    this.store.dispatch(addAbnormality({ abnormality: abnormalityData }));
     this.addedValues.push(abnormalityData);
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
