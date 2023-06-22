@@ -10,12 +10,13 @@ import * as moment from 'moment';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
 import { ICreateAbnormalityRequest } from '../interfaces/ICreateAbnormalityRequest';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoginExpired());
 
-  private readonly baseUrl = "http://localhost:8080/api/v1/auth/"
+  private readonly baseUrl = `${environment.baseUrl}api/v1/auth/`
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
