@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static('./dist/herokuTest'));
 
 app.get("/*", (req, res) =>
-    res.sendFile('index.html', { root: 'dist/angular-heroku' }),
+    res.sendFile('index.html', { root: 'dist/herokuTest' }),
 );
 
 app.listen(process.env.PORT || 8080);
