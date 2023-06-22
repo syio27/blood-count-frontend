@@ -27,7 +27,7 @@ export class GroupService {
 
     // public api for non-authorized users
     fetchAllGroupsPublic(): Observable<IGroupResponse> {
-        return this.http.get<IGroupResponse>("http://localhost:8080/public/api/v1/groups", { observe: 'body', responseType: 'json' })
+        return this.http.get<IGroupResponse>(`${environment.baseUrl}public/api/v1/groups`, { observe: 'body', responseType: 'json' })
             .pipe(
                 retry(3),
                 catchError(this.handleException)
