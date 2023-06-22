@@ -3,10 +3,11 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static('./dist/herokuTest'));
+app.use(express.static(__dirname + '/dist/blood-count'));
 
-app.get("/*", (req, res) =>
-    res.sendFile('index.html', { root: 'dist/herokuTest' }),
-);
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname +
+        '/dist/blood-count/index.html'));
+});
 
 app.listen(process.env.PORT || 8080);
