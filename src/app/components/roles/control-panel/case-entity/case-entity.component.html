@@ -2,28 +2,19 @@
     <div class="flex text-3xl justify-center mb-8">
         {{ 'add-case' | translate }}
     </div>
-    <form [formGroup]="form">
-        <div class="flex flex-col md:flex-row justify-center gap-10">
-            <div class="w-full  md:w-4/12">
-                <div class="mb-3">
-                    <input type="text" (input)="saveFormValues(1)"
-                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="anemia-type" formControlName="anemia-type" placeholder="Anemia type">
-                </div>
-                <div class="mb-3">
-                    <input type="text" (input)="saveFormValues(2)"
-                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="diagnosis" formControlName="diagnosis" placeholder="Diagnosis">
-                </div>
-                <div>
-                    <div class="mt-2 w-full relative mb-2" [class.open]="genderDropdownOpen">
+    <div class="flex justify-center">
+        <mat-horizontal-stepper [linear]="true" [formGroup]="form">
+            <mat-step [stepControl]="form.get('step1')">
+                <ng-template matStepLabel>Step</ng-template>
+                <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
+                    <div class="relative" [class.open]="genderDropdownOpen">
                         <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Affected Gender" (click)="toggleGenderDropdown()"
                             [class.rounded-t]="genderDropdownOpen" [class.rounded]="!genderDropdownOpen"
                             [value]="selectedGenderOption" readonly>
                         <span
-                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-5 -translate-y-1/2"
                             [class.rotate-180]="genderDropdownOpen" [class.rotate-0]="!genderDropdownOpen">
                             expand_more
                         </span>
@@ -36,57 +27,111 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div>
-                    <textarea type="text" (input)="saveFormValues(10)"  style="resize: none;"
-                    class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="details" formControlName="details" placeholder="Details"></textarea>
-                </div>
-            </div>
-            <div class="w-full md:w-4/12">
-                <div class="mb-3 relative">
-                    <div class="absolute bottom-9 left-0">First Range</div>
-                    <input type="number" (input)="saveFormValues(3)"
-                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="first-min" formControlName="first-min" placeholder="Min age">
-                </div>
-                <div class="mb-3">
-                    <input type="number" (input)="saveFormValues(4)"
-                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="first-max" formControlName="first-max" placeholder="Max age">
-                </div>
-                <div class="mt-4 flex justify-center" *ngIf="!showSecondRangeForm">
-                    <div class="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full select-none cursor-pointer relative"
-                        (click)="addSecondRangeForm()">
-                        <div class="text-2xl absolute bottom-[1px]">+</div>
-                    </div>
-                </div>
-                <div class="mt-6" *ngIf="showSecondRangeForm">
-                    <div class="mb-3 relative flex items-center">
-                        <div class="absolute w-full bottom-9 left-0 flex justify-between items-center">
-                            <div>Second Range</div>
-                            <div class="w-5 h-4 flex items-center justify-center bg-red-500 hover:bg-red-700 font-bold text-white rounded-sm select-none cursor-pointer relative"
-                                (click)="removeSecondRangeForm()">
-                                <div class="text-base">-</div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-3 relative">
+                            <div class="absolute bottom-9 left-0">First Range</div>
+                            <input type="number" (input)="saveFormValues(3)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="first-min" formControlName="first-min" placeholder="Min age">
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" (input)="saveFormValues(4)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="first-max" formControlName="first-max" placeholder="Max age">
+                        </div>
+                        <div class="mt-4 flex justify-center" *ngIf="!showSecondRangeForm">
+                            <div class="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full select-none cursor-pointer relative"
+                                (click)="addSecondRangeForm()">
+                                <div class="text-2xl absolute bottom-[1px]">+</div>
                             </div>
                         </div>
-                        <input type="number" (input)="saveFormValues(5)"
-                            class="appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="second-min" formControlName="second-min" placeholder="Min age">
-                    </div>
-                    <div class="mb-3">
-                        <input type="number" (input)="saveFormValues(6)"
-                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="second-max" formControlName="second-max" placeholder="Max age">
+                        <div class="mt-6" *ngIf="showSecondRangeForm">
+                            <div class="mb-3 relative flex items-center">
+                                <div class="absolute w-full bottom-9 left-0 flex justify-between items-center">
+                                    <div>Second Range</div>
+                                    <div class="w-5 h-4 flex items-center justify-center bg-red-500 hover:bg-red-700 font-bold text-white rounded-sm select-none cursor-pointer relative"
+                                        (click)="removeSecondRangeForm()">
+                                        <div class="text-base">-</div>
+                                    </div>
+                                </div>
+                                <input type="number" (input)="saveFormValues(5)"
+                                    class="appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="second-min" formControlName="second-min" placeholder="Min age">
+                            </div>
+                            <div class="mb-3">
+                                <input type="number" (input)="saveFormValues(6)"
+                                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="second-max" formControlName="second-max" placeholder="Max age">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="flex justify-end mt-5">
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="form.get('step2')">
+                <ng-template matStepLabel>Step</ng-template>
+                <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
+                    <div>
+                        <input type="text" (input)="saveFormValues(1)"
+                            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="anemia-type" formControlName="anemia-type" placeholder="Anemia type">
+                    </div>
+                    <div class="mb-3">
+                        <textarea type="text" (input)="saveFormValues(2)" style="resize: none;" maxlength="250"
+                            class="appearance-none border rounded w-full h-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="diagnosis" formControlName="diagnosis" placeholder="Diagnosis"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-5">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="form.get('step3')">
+                <ng-template matStepLabel>Step</ng-template>
+                <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="hr" formControlName="hr" placeholder="Heart Rate"></textarea>
+                    </div>
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(11)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="rr" formControlName="rr" placeholder="Blood Pressure BP"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-5">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="form.get('step4')">
+                <ng-template matStepLabel>Step</ng-template>
+                <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="hr" formControlName="hr" placeholder="Physical Examination"></textarea>
+                    </div>
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(11)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="rr" formControlName="rr" placeholder="Information and comments"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-start mt-5">
+                    <button mat-button matStepperPrevious>Back</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+    <div class="w-full flex flex-col mb-6">
         <div class="flex justify-center mb-4">
             <hr class="mt-4 border-black w-full md:w-3/4">
         </div>
-    </form>
-    <div class="w-full flex flex-col mb-6">
         <div class="flex justify-center mb-3">
             <div class="w-full md:w-3/4 flex flex-col bg-gray-200 rounded-md">
                 <div *ngFor="let item of addedValues" class="flex flex-row my-1 justify-between items-center">
@@ -157,12 +202,14 @@
                     <div>
                         <input type="number" (input)="saveFormValues(8)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter-min" formControlName="parameter-min" placeholder="Min value" [class.pointer-events-none]="disabledRange">
+                            id="parameter-min" formControlName="parameter-min" placeholder="Min value"
+                            [class.pointer-events-none]="disabledRange">
                     </div>
                     <div>
                         <input type="number" (input)="saveFormValues(9)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter-max" formControlName="parameter-max" placeholder="Max value" [class.pointer-events-none]="disabledRange">
+                            id="parameter-max" formControlName="parameter-max" placeholder="Max value"
+                            [class.pointer-events-none]="disabledRange">
                     </div>
                     <div class="relative" [class.open]="levelTypeDropdownOpen">
                         <input type="text"

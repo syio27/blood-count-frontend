@@ -38,7 +38,7 @@ import { TimerComponent } from './components/exam/timer/timer.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-
+import { MatStepperModule  } from '@angular/material/stepper'
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -80,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     NgToastModule,
+    MatStepperModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

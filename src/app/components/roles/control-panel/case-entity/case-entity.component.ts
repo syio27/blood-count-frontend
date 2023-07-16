@@ -50,7 +50,8 @@ export class CaseEntityComponent implements OnInit {
     this.form = this.fb.group({
       'anemia-type': ['', Validators.required],
       'diagnosis': ['', Validators.required],
-      'details': ['', Validators.required],
+      'hr': ['', Validators.required],
+      'rr': ['', Validators.required],
       'first-min': ['', Validators.required],
       'first-max': ['', Validators.required],
       'second-min': [''],
@@ -79,7 +80,8 @@ export class CaseEntityComponent implements OnInit {
 
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
-    this.form.get('details').setValue(sessionStorage.getItem('details'));
+    this.form.get('hr').setValue(sessionStorage.getItem('hr'));
+    this.form.get('rr').setValue(sessionStorage.getItem('rr'));
 
     this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
     this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
@@ -156,7 +158,10 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.setItem('parameter-max', this.parameterForm.get('parameter-max').value);
         break;
       case 10:
-        sessionStorage.setItem('details', this.form.get('details').value);
+        sessionStorage.setItem('hr', this.form.get('hr').value);
+        break;
+      case 11:
+        sessionStorage.setItem('rr', this.form.get('rr').value);
         break;
     }
   }
@@ -313,12 +318,12 @@ export class CaseEntityComponent implements OnInit {
     const caseData: ICreateCaseRequest = {
       anemiaType: this.form.get('anemia-type').value,
       diagnosis: this.form.get('diagnosis').value,
-      //details: this.form.get('details').value,
       firstMinAge: this.form.get('first-min').value,
       firstMaxAge: this.form.get('first-max').value,
       secondMinAge: this.form.get('second-min').value || 0,
       secondMaxAge: this.form.get('second-max').value || 0,
-      affectedGender: this.selectedGenderOption as AffectedGenders
+      affectedGender: this.selectedGenderOption as AffectedGenders,
+
     };
     console.log(caseData, this.addedValues);
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
@@ -332,7 +337,8 @@ export class CaseEntityComponent implements OnInit {
         this.selectedUnitOption = '';
         sessionStorage.setItem('anemia-type', '');
         sessionStorage.setItem('diagnosis', '');
-        sessionStorage.setItem('details', '');
+        sessionStorage.setItem('hr', '');
+        sessionStorage.setItem('rr', '');
 
         sessionStorage.removeItem('first-min');
         sessionStorage.removeItem('first-max');
