@@ -1,4 +1,5 @@
 import { AffectedGenders } from "../enums/affectedGender.enum"
+import { AnemiaType } from "../enums/anemiaType.enum"
 
 export interface ICreateCaseRequest {
     firstMinAge: number
@@ -6,6 +7,10 @@ export interface ICreateCaseRequest {
     secondMinAge?: number
     secondMaxAge?: number
     affectedGender: AffectedGenders
-    anemiaType: string
+    anemiaType: AnemiaType
     diagnosis: string
+    hr: string
+    rr: string
+    physExam: string
+    infoCom: string
 }

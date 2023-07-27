@@ -11,12 +11,17 @@ import { CaseDataService } from 'src/app/services/caseData.service';
 import { ReferenceTableService } from 'src/app/services/reference-table.service';
 import { Subscription } from 'rxjs';
 import { IReferenceTable } from 'src/app/interfaces/IReferenceTable';
+import { AnemiaType } from 'src/app/enums/anemiaType.enum';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
+
 @Component({
   selector: 'app-case-entity',
   templateUrl: './case-entity.component.html',
   styleUrls: ['./case-entity.component.css']
 })
 export class CaseEntityComponent implements OnInit {
+  isMobile: boolean;
   form: FormGroup;
   parameterForm: FormGroup;
   addedValues: ICreateAbnormalityRequest[] = [];
@@ -24,6 +29,10 @@ export class CaseEntityComponent implements OnInit {
   selectedGenderOption = '';
   genderDropdownOpen = false;
   showSecondRangeForm = false;
+
+  selectedAnemiaOption = '';
+  anemiaDropdownOpen = false;
+  anemiaTypesOptions = Object.values(AnemiaType)
 
   levelTypeDropdownOptions = []
   selectedLevelTypeOption = '';
@@ -44,14 +53,16 @@ export class CaseEntityComponent implements OnInit {
     private caseService: CaseService,
     private toast: NgToastService,
     private caseDataService: CaseDataService,
-    private referanceTable: ReferenceTableService
+    private referanceTable: ReferenceTableService,
+    private breakpointObserver: BreakpointObserver
 
   ) {
     this.form = this.fb.group({
-      'anemia-type': ['', Validators.required],
       'diagnosis': ['', Validators.required],
       'hr': ['', Validators.required],
       'rr': ['', Validators.required],
+      'physExam': ['', Validators.required],
+      'infoCom': ['', Validators.required],
       'first-min': ['', Validators.required],
       'first-max': ['', Validators.required],
       'second-min': [''],
@@ -61,30 +72,39 @@ export class CaseEntityComponent implements OnInit {
       'parameter-min': [''],
       'parameter-max': [''],
     });
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe((result) => {
+        this.isMobile = result.matches;
+      });
   }
 
-  ngOnInit() {
-    this.restoreFormValues();
-    this.referenceTableSubscription = this.referanceTable.fetchBCReferenceTable().subscribe(data => {
-      this.parameterDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.parameter).filter((value, index, self) => self.indexOf(value) === index);
-      this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
-      console.log(this.unitDropdownOptions)
-    });
-
-  }
 
 
   restoreFormValues() {
-    this.form.get('anemia-type').setValue(sessionStorage.getItem('anemia-type'))
-    this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
+
+    const storedSelectedAnemiaOption = sessionStorage.getItem('anemia-type');
+    if (storedSelectedAnemiaOption) {
+      this.selectedAnemiaOption = storedSelectedAnemiaOption;
+    }    this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
 
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
     this.form.get('hr').setValue(sessionStorage.getItem('hr'));
     this.form.get('rr').setValue(sessionStorage.getItem('rr'));
+    this.form.get('physExam').setValue(sessionStorage.getItem('physExam'));
+    this.form.get('infoCom').setValue(sessionStorage.getItem('infoCom'));
+    const storedShowSecondRangeForm = sessionStorage.getItem('showSecondRangeForm');
+    if (storedShowSecondRangeForm) {
+      this.showSecondRangeForm = JSON.parse(storedShowSecondRangeForm);
+    }
 
-    this.showSecondRangeForm ? this.form.get('second-min').setValue(null) : this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
-    this.showSecondRangeForm ? this.form.get('second-max').setValue(null) : this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
+    if (!this.showSecondRangeForm) {
+      this.form.get('second-min').setValue(sessionStorage.setItem('second-min', ''))
+      this.form.get('second-max').setValue(sessionStorage.setItem('second-max', ''))
+    }
+    this.form.get('second-min').setValue(sessionStorage.getItem('second-min'))
+    this.form.get('second-max').setValue(sessionStorage.getItem('second-max'))
 
     this.parameterForm.get('parameter-min').setValue(sessionStorage.getItem('parameter-min'));
     this.parameterForm.get('parameter-max').setValue(sessionStorage.getItem('parameter-max'));
@@ -94,10 +114,7 @@ export class CaseEntityComponent implements OnInit {
       this.addedValues = JSON.parse(storedAddedValues);
     }
 
-    const storedShowSecondRangeForm = sessionStorage.getItem('showSecondRangeForm');
-    if (storedShowSecondRangeForm) {
-      this.showSecondRangeForm = JSON.parse(storedShowSecondRangeForm);
-    }
+
 
     const storedSelectedGenderOption = sessionStorage.getItem('selectedGenderOption');
     if (storedSelectedGenderOption) {
@@ -119,23 +136,29 @@ export class CaseEntityComponent implements OnInit {
     if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
-      this.restoreFormValues
 
+    }
+    if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl' || this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
     }
     else {
       this.disabledRange = false
       this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
-      this.restoreFormValues
-
     }
+
   }
 
+  ngOnInit() {
+    this.referenceTableSubscription = this.referanceTable.fetchBCReferenceTable().subscribe(data => {
+      this.parameterDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.parameter).filter((value, index, self) => self.indexOf(value) === index);
+      this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
+    });
+    this.restoreFormValues()
+  }
 
   saveFormValues(input) {
     switch (input) {
-      case 1:
-        sessionStorage.setItem('anemia-type', this.form.get('anemia-type').value);
-        break;
       case 2:
         sessionStorage.setItem('diagnosis', this.form.get('diagnosis').value);
         break;
@@ -163,6 +186,12 @@ export class CaseEntityComponent implements OnInit {
       case 11:
         sessionStorage.setItem('rr', this.form.get('rr').value);
         break;
+      case 12:
+        sessionStorage.setItem('physExam', this.form.get('physExam').value);
+        break;
+      case 13:
+        sessionStorage.setItem('infoCom', this.form.get('infoCom').value);
+        break;
     }
   }
 
@@ -176,16 +205,55 @@ export class CaseEntityComponent implements OnInit {
     this.selectedGenderOption = option;
     this.genderDropdownOpen = false;
     sessionStorage.setItem('selectedGenderOption', option);
+    if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
+      if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
+        sessionStorage.setItem('parameter-min', '80')
+        sessionStorage.setItem('parameter-max', '94')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
+        sessionStorage.setItem('parameter-min', '81')
+        sessionStorage.setItem('parameter-max', '99')
+        this.restoreFormValues()
+      }
+    }
+    if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+      if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
+        sessionStorage.setItem('parameter-min', '27')
+        sessionStorage.setItem('parameter-max', '31')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
+        sessionStorage.setItem('parameter-min', '27')
+        sessionStorage.setItem('parameter-max', '31')
+        this.restoreFormValues()
+      }
+    }
+
+  }
+  toggleAnemiaDropdown() {
+    this.anemiaDropdownOpen = !this.anemiaDropdownOpen;
+  }
+
+
+  selectAnemiaOption(option: string) {
+    this.selectedAnemiaOption = option;
+    this.anemiaDropdownOpen = false;
+    sessionStorage.setItem('anemia-type', option);
   }
 
   addSecondRangeForm() {
     this.showSecondRangeForm = true;
     sessionStorage.setItem('showSecondRangeForm', JSON.stringify(this.showSecondRangeForm));
+    this.restoreFormValues();
+
   }
 
   removeSecondRangeForm() {
     this.showSecondRangeForm = false;
     sessionStorage.setItem('showSecondRangeForm', JSON.stringify(this.showSecondRangeForm));
+    this.restoreFormValues();
+
   }
 
   toggleLevelTypeDropdown() {
@@ -228,6 +296,50 @@ export class CaseEntityComponent implements OnInit {
         this.restoreFormValues()
         break;
     }
+    if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
+      if (this.selectedLevelTypeOption == 'Below normal') {
+        sessionStorage.setItem('parameter-min', '65')
+        sessionStorage.setItem('parameter-max', '75')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Above normal') {
+        sessionStorage.setItem('parameter-min', '100')
+        sessionStorage.setItem('parameter-max', '105')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
+        sessionStorage.setItem('parameter-min', '80')
+        sessionStorage.setItem('parameter-max', '94')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
+        sessionStorage.setItem('parameter-min', '81')
+        sessionStorage.setItem('parameter-max', '99')
+        this.restoreFormValues()
+      }
+    }
+    if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+      if (this.selectedLevelTypeOption == 'Below normal') {
+        sessionStorage.setItem('parameter-min', '23')
+        sessionStorage.setItem('parameter-max', '26')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Above normal') {
+        sessionStorage.setItem('parameter-min', '32')
+        sessionStorage.setItem('parameter-max', '35')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
+        sessionStorage.setItem('parameter-min', '27')
+        sessionStorage.setItem('parameter-max', '31')
+        this.restoreFormValues()
+      }
+      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
+        sessionStorage.setItem('parameter-min', '27')
+        sessionStorage.setItem('parameter-max', '31')
+        this.restoreFormValues()
+      }
+    }
   }
 
   selectParameterOption(option: string) {
@@ -240,6 +352,20 @@ export class CaseEntityComponent implements OnInit {
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
 
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }
     else {
@@ -260,6 +386,22 @@ export class CaseEntityComponent implements OnInit {
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+
       this.restoreFormValues()
     }
     else {
@@ -316,13 +458,18 @@ export class CaseEntityComponent implements OnInit {
 
   createCaseWithAbnormality() {
     const caseData: ICreateCaseRequest = {
-      anemiaType: this.form.get('anemia-type').value,
+      anemiaType: this.selectedAnemiaOption as AnemiaType,
       diagnosis: this.form.get('diagnosis').value,
       firstMinAge: this.form.get('first-min').value,
       firstMaxAge: this.form.get('first-max').value,
       secondMinAge: this.form.get('second-min').value || 0,
       secondMaxAge: this.form.get('second-max').value || 0,
       affectedGender: this.selectedGenderOption as AffectedGenders,
+      hr: this.form.get('hr').value,
+      rr: this.form.get('rr').value,
+      physExam: this.form.get('physExam').value,
+      infoCom: this.form.get('infoCom').value,
+
 
     };
     console.log(caseData, this.addedValues);
@@ -335,10 +482,12 @@ export class CaseEntityComponent implements OnInit {
         this.selectedLevelTypeOption = '';
         this.selectedParameterOption = '';
         this.selectedUnitOption = '';
-        sessionStorage.setItem('anemia-type', '');
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.setItem('hr', '');
         sessionStorage.setItem('rr', '');
+        sessionStorage.setItem('physExam', '');
+        sessionStorage.setItem('infoCom', '');
+        sessionStorage.removeItem('anemia-type');
 
         sessionStorage.removeItem('first-min');
         sessionStorage.removeItem('first-max');
