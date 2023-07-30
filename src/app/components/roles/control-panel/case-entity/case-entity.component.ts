@@ -86,7 +86,7 @@ export class CaseEntityComponent implements OnInit {
     const storedSelectedAnemiaOption = sessionStorage.getItem('anemia-type');
     if (storedSelectedAnemiaOption) {
       this.selectedAnemiaOption = storedSelectedAnemiaOption;
-    }    this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
+    } this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
 
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
@@ -133,10 +133,9 @@ export class CaseEntityComponent implements OnInit {
     if (storedSelectedUnitOption) {
       this.selectedUnitOption = storedSelectedUnitOption;
     }
-    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
+    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == 'g/dl') {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
-
     }
     if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl' || this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       this.disabledRange = true
@@ -346,12 +345,12 @@ export class CaseEntityComponent implements OnInit {
     this.selectedParameterOption = option;
     this.parameterDropdownOpen = false;
     sessionStorage.setItem('selectedParameterOption', option);
-    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
+    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == 'g/dl') {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
-
+      console.log(this.levelTypeDropdownOptions)
       this.restoreFormValues()
     }
     else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
@@ -381,10 +380,11 @@ export class CaseEntityComponent implements OnInit {
     this.selectedUnitOption = option;
     this.unitDropdownOpen = false;
     sessionStorage.setItem('selectedUnitOption', option);
-    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == '10^9/L') {
+    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == 'g/dl') {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
       this.selectedLevelTypeOption = '';
+      console.log(this.levelTypeDropdownOptions)
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }

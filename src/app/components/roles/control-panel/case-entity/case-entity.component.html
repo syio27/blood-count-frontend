@@ -5,7 +5,7 @@
     <div class="flex justify-center">
         <mat-horizontal-stepper [linear]="true" [formGroup]="form" *ngIf="!isMobile">
             <mat-step [stepControl]="form.get('step1')">
-                <ng-template matStepLabel>Step</ng-template>
+                <ng-template matStepLabel>Affected Patient</ng-template>
                 <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
                     <div class="relative" [class.open]="genderDropdownOpen">
                         <input type="text"
@@ -71,7 +71,7 @@
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step2')">
-                <ng-template matStepLabel>Step</ng-template>
+                <ng-template matStepLabel>Disease Info</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <div class="relative" [class.open]="anemiaDropdownOpen">
@@ -108,7 +108,7 @@
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step3')">
-                <ng-template matStepLabel>Step</ng-template>
+                <ng-template matStepLabel>Patient Details: 1</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
@@ -127,7 +127,7 @@
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step4')">
-                <ng-template matStepLabel>Step</ng-template>
+                <ng-template matStepLabel>Patient Details: 2</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <textarea type="text" (input)="saveFormValues(12)" style="resize: none;"
