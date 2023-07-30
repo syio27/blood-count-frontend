@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CaseService } from 'src/app/services/case.service';
 import { ICreateCaseRequest } from 'src/app/interfaces/ICreateCaseRequest';
@@ -15,10 +15,12 @@ import { AnemiaType } from 'src/app/enums/anemiaType.enum';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 
+
 @Component({
   selector: 'app-case-entity',
   templateUrl: './case-entity.component.html',
-  styleUrls: ['./case-entity.component.css']
+  styleUrls: ['./case-entity.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CaseEntityComponent implements OnInit {
   isMobile: boolean;
@@ -137,9 +139,9 @@ export class CaseEntityComponent implements OnInit {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
     }
-    if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl' || this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+    else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl' || this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
     }
     else {
       this.disabledRange = false
@@ -204,31 +206,6 @@ export class CaseEntityComponent implements OnInit {
     this.selectedGenderOption = option;
     this.genderDropdownOpen = false;
     sessionStorage.setItem('selectedGenderOption', option);
-    if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
-      if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
-        sessionStorage.setItem('parameter-min', '80')
-        sessionStorage.setItem('parameter-max', '94')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
-        sessionStorage.setItem('parameter-min', '81')
-        sessionStorage.setItem('parameter-max', '99')
-        this.restoreFormValues()
-      }
-    }
-    if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
-      if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
-        sessionStorage.setItem('parameter-min', '27')
-        sessionStorage.setItem('parameter-max', '31')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
-        sessionStorage.setItem('parameter-min', '27')
-        sessionStorage.setItem('parameter-max', '31')
-        this.restoreFormValues()
-      }
-    }
-
   }
   toggleAnemiaDropdown() {
     this.anemiaDropdownOpen = !this.anemiaDropdownOpen;
@@ -306,16 +283,6 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.setItem('parameter-max', '105')
         this.restoreFormValues()
       }
-      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
-        sessionStorage.setItem('parameter-min', '80')
-        sessionStorage.setItem('parameter-max', '94')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
-        sessionStorage.setItem('parameter-min', '81')
-        sessionStorage.setItem('parameter-max', '99')
-        this.restoreFormValues()
-      }
     }
     if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       if (this.selectedLevelTypeOption == 'Below normal') {
@@ -326,16 +293,6 @@ export class CaseEntityComponent implements OnInit {
       else if (this.selectedLevelTypeOption == 'Above normal') {
         sessionStorage.setItem('parameter-min', '32')
         sessionStorage.setItem('parameter-max', '35')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'MALE') {
-        sessionStorage.setItem('parameter-min', '27')
-        sessionStorage.setItem('parameter-max', '31')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Normal' && this.selectedGenderOption == 'FEMALE') {
-        sessionStorage.setItem('parameter-min', '27')
-        sessionStorage.setItem('parameter-max', '31')
         this.restoreFormValues()
       }
     }
@@ -355,14 +312,14 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }
     else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
@@ -390,7 +347,7 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
 
@@ -398,7 +355,7 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal', 'Normal']
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
 

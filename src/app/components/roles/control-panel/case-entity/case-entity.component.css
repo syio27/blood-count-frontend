@@ -8,3 +8,7 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+.mat-step-header .mat-step-label .mat-step-text-label {
+    font-size: 12px;
+}
