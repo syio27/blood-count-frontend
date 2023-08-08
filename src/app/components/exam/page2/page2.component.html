@@ -1,4 +1,4 @@
-<div class="max-w-2xl mx-auto">
+<div class="max-w-2xl mx-auto mt-10">
     <div *ngFor="let test of msAssesmentTest; let i = index" class="bg-white border rounded p-4 mb-4 relative">
         <div class="flex items-center">
             <div class="absolute right-[680px] top-1/2 transform -translate-y-1/2 w-7 h-7 bg-black rounded-full text-center flex justify-center items-center">
@@ -6,7 +6,7 @@
                     {{ i + 1 }}
                 </div>
             </div>            
-            <div class="font-semibold mt-5">{{ test.text }}</div> <!-- Numbered question -->
+            <div class="font-semibold">{{ test.text }}</div> <!-- Numbered question -->
         </div>
         <div class="mt-2">
             <label *ngFor="let option of test.answers" class="flex items-center">
