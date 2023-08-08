@@ -39,7 +39,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { MatStepperModule  } from '@angular/material/stepper';
-import { Part2Component } from './components/exam/part2/part2.component'
+import { Page2Component } from './components/exam/page2/page2.component';
+import { Page1Component } from './components/exam/page1/page1.component'
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -72,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CaseTableComponent,
     ExamComponent,
     TimerComponent,
-    Part2Component,
+    Page2Component,
+    Page1Component,
   ],
   imports: [
     ReactiveFormsModule,

@@ -16,7 +16,6 @@ import { GroupsManageComponent } from './components/roles/control-panel/groups-m
 import { CaseEntityComponent } from './components/roles/control-panel/case-entity/case-entity.component';
 import { ExamComponent } from './components/exam/exam.component';
 import { CanDeactivateGuard } from './services/can-deactivate.guard';
-import { Part2Component } from './components/exam/part2/part2.component';
 
 const routes: Routes = [
   {
@@ -44,10 +43,6 @@ const routes: Routes = [
         path: 'exam',
         component: ExamComponent,
         canDeactivate: [CanDeactivateGuard]
-      },
-      {
-        path: 'part2',
-        component: Part2Component,
       },
     ]
   },

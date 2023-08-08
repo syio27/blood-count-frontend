@@ -85,21 +85,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     return this.tabelData.slice(8, 20);
   }
 
-  onAnswer(answerId: number, questionId: number) {
-    const existingAnswer = this.answers.find(a => a.questionId === questionId);
-    if (existingAnswer) {
-      existingAnswer.answerId = answerId;
-    } else {
-      this.answers.push({ questionId, answerId });
-    }
-    if(this.answers.length == this.testData.length){
-      this.isTestValid = true
-    }
-    else{
-      this.isTestValid = false
-
-    }
-  }
+ 
 
 
   submitTest() {
