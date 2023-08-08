@@ -1,7 +1,14 @@
 <app-timer (timeUp)="submitTest()"></app-timer>
-<app-white-box>
+<app-white-box >
     <app-page1 [displayedElements]="displayedElements" [displayedElements2]="displayedElements2" [gender]="gender"
     [age]="age" [answers]="answers" [testData]="testData" [isTestValid]="isTestValid"></app-page1>
+    <app-page2 [msAssesmentTest]="msAssesmentTest" [isTestValid]="isTestValid" [answers]="answers"></app-page2>
+    <div class="flex justify-end mt-10">
+        <div (click)="submitTest()" [class.pointer-events-none]="!isTestValid" [class.bg-blue-700]="!isTestValid"
+            class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
+            {{ 'submit' | translate }}
+        </div>
+    </div>
 </app-white-box>
 <app-white-box *ngIf="page === 'finish'">
     <div>

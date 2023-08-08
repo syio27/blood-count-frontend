@@ -1,14 +1,18 @@
-<app-timer></app-timer>
-<app-white-box>
-    <div class="max-w-2xl mx-auto">
-        <div *ngFor="let faq of faqs" class="bg-white border rounded p-4 mb-4">
-            <div class="font-semibold">{{ faq.question }}</div>
-            <div class="mt-2">
-                <label *ngFor="let option of faq.options" class="flex items-center">
-                    <input type="radio" name="faq_{{ faq.id }}" [value]="option" class="mr-2">
-                    {{ option }}
-                </label>
-            </div>
+<div class="max-w-2xl mx-auto">
+    <div *ngFor="let test of msAssesmentTest; let i = index" class="bg-white border rounded p-4 mb-4 relative">
+        <div class="flex items-center">
+            <div class="absolute right-[680px] top-1/2 transform -translate-y-1/2 w-7 h-7 bg-black rounded-full text-center flex justify-center items-center">
+                <div class="text-white">
+                    {{ i + 1 }}
+                </div>
+            </div>            
+            <div class="font-semibold mt-5">{{ test.text }}</div> <!-- Numbered question -->
+        </div>
+        <div class="mt-2">
+            <label *ngFor="let option of test.answers" class="flex items-center">
+                <input type="radio" name="{{ test.id }}" [value]="option.text" class="mr-2" (click)="onAnswer(option.id, test.id)">
+                {{ option.text }}
+            </label>
         </div>
     </div>
-</app-white-box>
+</div>

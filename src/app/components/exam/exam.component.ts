@@ -25,6 +25,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   score: number
   isTestValid: boolean
   page: string
+  msAssesmentTest = []
   constructor(
     private sharedGameDataService: SharedGameDataService,
     private gameService: GameService,
@@ -66,13 +67,14 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   fetchData() {
     this.sharedGameDataService.startTest$.subscribe((gameData: IGameResponse) => {
       if (gameData) {
-        const { patient, bcAssessmentQuestions } = gameData;
+        const { patient, bcAssessmentQuestions, msQuestions } = gameData;
         const bloodCount = patient.bloodCounts;
         this.gender = patient.gender
         this.age = patient.age
         this.tabelData = bloodCount;
         this.testData = bcAssessmentQuestions;
         this.gameId = gameData.id
+        this.msAssesmentTest = msQuestions
       }
     });
   }
