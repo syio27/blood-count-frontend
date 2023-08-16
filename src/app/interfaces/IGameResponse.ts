@@ -2,6 +2,7 @@ import { IBCAssessmentQuestionResponse } from "./IBCAssessmentQuestionResponse"
 import { IPatientResponse } from "./IPatientResponse"
 import { IGameCaseDetailsResponse } from "./IGameCaseResponse"
 import { IMSQuestionResponse } from "./IMSQuestionResponse"
+import { SavedUserAnswerResponse } from "./SavedUserAnswerResponse"
 
 export interface IGameResponse {
     id: number
@@ -12,7 +13,9 @@ export interface IGameResponse {
     status: string
     score: number
     patient: IPatientResponse
-    gameCaseDetails: IGameCaseDetailsResponse
-    bcAssessmentQuestions: IBCAssessmentQuestionResponse[]
-    msQuestions: IMSQuestionResponse[]
+    gameCaseDetails: IGameCaseDetailsResponse,
+    bcAssessmentQuestions: IBCAssessmentQuestionResponse[],
+    msQuestions: IMSQuestionResponse[],
+    savedUserAnswers: SavedUserAnswerResponse[],
+
 }

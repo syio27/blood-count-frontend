@@ -4,6 +4,7 @@ import { throwError, catchError, retry, tap, Observable, switchMap, map } from '
 import { IGameResponse } from '../interfaces/IGameResponse';
 import { IAnswerRequest } from '../interfaces/IAnswerRequest';
 import { environment } from 'src/environments/environment';
+import { IGameCurrentSessionState } from '../interfaces/IGameCurrentSessionState';
 
 
 @Injectable({
@@ -43,6 +44,22 @@ export class GameService {
     checkIfAnyInProgress(userId: string): Observable<boolean> {
         const url = `${this.baseUrl}?userId=${userId}`;
         return this.http.get<boolean>(url, {})
+            .pipe(
+                catchError(this.handleException)
+            );
+    }
+
+    autoSave(gameId: number, userId: string, answerRequests: IAnswerRequest[]){
+        const url = `${this.baseUrl}${gameId}/save?userId=${userId}`;
+        return this.http.post<void>(url, answerRequests)
+            .pipe(
+                catchError(this.handleException)
+            );
+    }
+    
+    next(gameId: number, userId: string, answerRequests: IAnswerRequest[]): Observable<IGameCurrentSessionState>{
+        const url = `${this.baseUrl}${gameId}/next?userId=${userId}`;
+        return this.http.post<IGameCurrentSessionState>(url, answerRequests)
             .pipe(
                 catchError(this.handleException)
             );

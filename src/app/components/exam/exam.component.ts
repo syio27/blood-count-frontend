@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 import { CanDeactivateGuard } from 'src/app/services/can-deactivate.guard';
@@ -7,13 +7,15 @@ import { SharedUserDetailsService } from '../../services/shared-user-details.ser
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
 import { Router, NavigationStart } from '@angular/router';
+import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
+import { Pages } from 'src/app/enums/pages';
 
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.css']
 })
-export class ExamComponent implements OnInit, CanDeactivateGuard {
+export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
   tabelData = [];
   testData = [];
   age: number
@@ -25,7 +27,10 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   score: number
   isTestValid: boolean
   page: string
+  savedAnswers: SavedUserAnswerResponse[]=[]
   msAssesmentTest = []
+  pages = Object.values(Pages);
+
   constructor(
     private sharedGameDataService: SharedGameDataService,
     private gameService: GameService,
@@ -43,6 +48,12 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     });
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
+    console.log('Ondestroy')
+  }
+
   ngOnInit() {
     this.fetchData();
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
@@ -52,12 +63,20 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     if (storedScore) {
       this.score = JSON.parse(storedScore);
     }
-
+    this.gameService.getInProgressGame(this.gameId, this.userDetails.id).subscribe(
+      (data)=>{
+        this.savedAnswers = data.savedUserAnswers
+      }
+    )
     const storedSubmition = localStorage.getItem('submitted');
     if (storedSubmition) {
       this.submitted = storedSubmition;
     }
     this.page = localStorage.getItem('page')
+  }
+  ngOnDestroy() {
+    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
+    console.log('Ondestroy')
   }
 
   canDeactivate() {
@@ -87,7 +106,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     return this.tabelData.slice(8, 20);
   }
 
- 
+
 
 
   submitTest() {
@@ -102,7 +121,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
       }
     )
   }
-  onFinish(){
+  onFinish() {
     this.router.navigate(['/'])
   }
 }
