@@ -16,7 +16,7 @@ import { Pages } from 'src/app/enums/pages';
   styleUrls: ['./exam.component.css']
 })
 export class ExamComponent implements OnInit, CanDeactivateGuard {
-  
+
   tabelData = [];
   testData = [];
   age: number
@@ -28,7 +28,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   score: number
   isTestValid: boolean
   page: string
-  savedAnswers: SavedUserAnswerResponse[]=[]
+  savedAnswers: SavedUserAnswerResponse[] = []
   msAssesmentTest = []
   currentPage: Pages
 
@@ -52,7 +52,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any): void {
-    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()    
+    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
   }
 
   ngOnInit() {
@@ -65,12 +65,12 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
       this.score = JSON.parse(storedScore);
     }
     this.gameService.getInProgressGame(this.gameId, this.userDetails.id).subscribe(
-      (data)=>{
+      (data) => {
         this.savedAnswers = data.savedUserAnswers
         this.currentPage = data.currentPage
       }
     )
-    
+
     const storedSubmition = localStorage.getItem('submitted');
     if (storedSubmition) {
       this.submitted = storedSubmition;
@@ -105,17 +105,44 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     return this.tabelData.slice(8, 20);
   }
 
-  nextPage(){
-    this.gameService.next(this.gameId, this.userDetails.id, this.answers).subscribe(
-      data => 
-      this.currentPage = data.currentPage
+  private invokeNextApi(mergedAnswers: any[]) {
+    this.gameService.next(this.gameId, this.userDetails.id, mergedAnswers).subscribe(
+      data =>
+        this.currentPage = data.currentPage
     )
+  }
+
+  nextPage() {
+    const mergedAnswers: any[] = [...this.answers, ...this.savedAnswers].filter((value, index, self) => {
+      return index === self.findIndex((v) => v.questionId === value.questionId);
+    });
+    if (this.currentPage == "ONE") {
+      if (mergedAnswers.length == this.testData.length) {
+        this.invokeNextApi(mergedAnswers);
+      }
+      else {
+        console.log("fill all questions");
+      }
+      return;
+    }
+
+    if (this.currentPage == "TWO") {
+      if (mergedAnswers.length == this.msAssesmentTest.length + this.testData.length) {
+        this.invokeNextApi(mergedAnswers);
+      }
+      else {
+        console.log("fill all questions");
+      }
+      return;
+    }
   }
 
 
   submitTest() {
-    console.log(this.answers)
-    this.gameService.complete(this.gameId, this.answers, this.userDetails.id).subscribe(
+    const mergedAnswers: any[] = [...this.answers, ...this.savedAnswers].filter((value, index, self) => {
+      return index === self.findIndex((v) => v.questionId === value.questionId);
+    });
+    this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
         localStorage.setItem('page', 'finish')
@@ -129,5 +156,5 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   onFinish() {
     this.router.navigate(['/'])
   }
-  
+
 }

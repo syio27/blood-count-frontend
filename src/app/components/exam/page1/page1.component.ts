@@ -15,9 +15,9 @@ export class Page1Component {
   @Input() displayedElements2: any[];
   @Input() gender: string;
   @Input() age: number;
-  @Input() answers: IAnswerRequest[] = []; 
-  @Input() testData: any[]; 
-  @Input() isTestValid: boolean; 
+  @Input() answers: IAnswerRequest[] = [];
+  @Input() testData: any[];
+  @Input() isTestValid: boolean;
   @Input() savedAnswers: SavedUserAnswerResponse[]
   @Input() gameId: number
   @Input() userDetails: UserDetails;
@@ -26,7 +26,7 @@ export class Page1Component {
 
   constructor(
     private gameService: GameService
-  ){
+  ) {
 
   }
   isAnswerSelected(questionId: number, answerId: number): boolean {
@@ -39,12 +39,6 @@ export class Page1Component {
       existingAnswer.answerId = answerId;
     } else {
       this.answers.push({ questionId, answerId });
-    }
-    if(this.answers.length == this.testData.length){
-      this.isTestValid = true
-    }
-    else{
-      this.isTestValid = false
     }
   }
 }

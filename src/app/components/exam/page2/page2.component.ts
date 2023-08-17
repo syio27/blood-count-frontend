@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
 import { Pages } from 'src/app/enums/pages';
@@ -12,20 +12,20 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./page2.component.css']
 })
 export class Page2Component {
-   
+
   @Input() msAssesmentTest: any[]
-  @Input() answers: IAnswerRequest[] = []; 
-  @Input() isTestValid: boolean; 
+  @Input() answers: IAnswerRequest[] = [];
+  @Input() isTestValid: boolean;
   @Input() savedAnswers: SavedUserAnswerResponse[]
   @Input() gameId: number
   @Input() userDetails: UserDetails;
   @Input() currentPage: Pages
   @Input() nextPage!: () => void
-  @Input() testData: any[]; 
+  @Input() testData: any[];
 
   constructor(
     private gameService: GameService
-  ){}
+  ) { }
 
   isAnswerSelected(questionId: number, answerId: number): boolean {
     return this.savedAnswers.some(answer => answer.questionId === questionId && answer.answerId === answerId);
@@ -33,19 +33,11 @@ export class Page2Component {
 
   onAnswer(answerId: number, questionId: number) {
     const existingAnswer = this.answers.find(a => a.questionId === questionId);
-    console.log(this.answers.length)
-    console.log(this.msAssesmentTest.length)
     if (existingAnswer) {
       existingAnswer.answerId = answerId;
     } else {
       this.answers.push({ questionId, answerId });
     }
-    if(this.answers.length != 0){
-      this.isTestValid = this.answers.length == this.msAssesmentTest.length
-    }
-    else {
-      this.isTestValid = this.savedAnswers.length == this.msAssesmentTest.length + this.testData.length
-    }
   }
-  
+
 }
