@@ -44,21 +44,21 @@ export class GameService {
     checkIfAnyInProgress(userId: string): Observable<boolean> {
         const url = `${this.baseUrl}?userId=${userId}`;
         console.log('Returned');
-        return this.http.get<{ inProgress: boolean }>(url, {}).pipe(
-          map(response => response.inProgress),
-          catchError(this.handleException)
-        );
-      }
+        return this.http.get<boolean>(url, {})
+            .pipe(
+                catchError(this.handleException)
+            );
+    }
 
-    autoSave(gameId: number, userId: string, answerRequests: IAnswerRequest[]){
+    autoSave(gameId: number, userId: string, answerRequests: IAnswerRequest[]) {
         const url = `${this.baseUrl}${gameId}/save?userId=${userId}`;
         return this.http.post<void>(url, answerRequests)
             .pipe(
                 catchError(this.handleException)
             );
     }
-    
-    next(gameId: number, userId: string, answerRequests: IAnswerRequest[]): Observable<IGameCurrentSessionState>{
+
+    next(gameId: number, userId: string, answerRequests: IAnswerRequest[]): Observable<IGameCurrentSessionState> {
         const url = `${this.baseUrl}${gameId}/next?userId=${userId}`;
         return this.http.post<IGameCurrentSessionState>(url, answerRequests)
             .pipe(

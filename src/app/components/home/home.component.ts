@@ -8,6 +8,8 @@ import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { SharedAppService } from 'src/app/services/shared-app.service';
+import { switchMap } from 'rxjs/operators';
+import { response } from 'express';
 
 @Component({
   selector: 'app-home',
@@ -29,8 +31,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private sharedGameDataService: SharedGameDataService,
-    private sharedAppService: SharedAppService
+    private sharedGameDataService: SharedGameDataService
   ) { }
 
   toggleClick() {
@@ -38,11 +39,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sharedAppService.data$.subscribe(data=>{
-        this.inProgress = data
-      }
-    )
-    console.log(this.inProgress)
+    // this.sharedUserService.getUserDetails().pipe(
+    //   switchMap(userDetails => {
+    //     return this.gameService.checkIfAnyInProgress(userDetails.id);
+    //   })
+    // ).subscribe(data => {
+    //   this.inProgress = data;
+    //   console.log(" has game in progress - " + data)
+    // });
+
     this.fetchCase();
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
@@ -60,6 +65,13 @@ export class HomeComponent implements OnInit {
         }
       });
     }
+
+    this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
+      this.inProgress = response;
+      console.log("has game in progress: " + this.inProgress);
+    })
+
+
   }
 
   fetchCase() {
