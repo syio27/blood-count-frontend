@@ -6,7 +6,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { GameService } from './services/game.service';
 import { SharedUserDetailsService } from './services/shared-user-details.service';
 import { UserDetails } from './interfaces/IUserDetails';
-
+import { SharedAppService } from './services/shared-app.service';
 
 interface AppState {
   message: string
@@ -18,24 +18,29 @@ interface AppState {
 })
 export class AppComponent implements OnInit {
   title = 'blood-count-ui';
+  inProgress: boolean
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private toast: NgToastService,
     private gameService: GameService,
-    private sharedUserService: SharedUserDetailsService
+    private sharedUserService: SharedUserDetailsService,
+    private sharedAppService: SharedAppService
   ) {
   }
 
   ngOnInit() {
-    // let userInfo: UserDetails;
-    // this.sharedUserService.getUserDetails().subscribe(userDetails => {
-    //   userInfo = userDetails;
-    // });
-    // if(this.gameService.checkIfAnyInProgress(userInfo.id)){
-    //   localStorage.setItem("");
-    // }
+    let userInfo: UserDetails;
+    this.sharedUserService.getUserDetails().subscribe(userDetails => {
+      userInfo = userDetails;
+    });
+    this.gameService.checkIfAnyInProgress(userInfo.id).subscribe(data => {
+      this.inProgress = data
+    })
+    console.log(this.inProgress)
+    this.sharedAppService.setData(this.inProgress)
+
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd)

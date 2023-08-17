@@ -1,4 +1,4 @@
-<div class="mt-10">
+<div class="mb-5" >
     <div *ngFor="let test of msAssesmentTest; let i = index">
         <div class="flex flex-row gap-4">
             <div class="flex items-center">
@@ -19,6 +19,12 @@
                     </label>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="flex justify-center mt-10">
+        <div (click)="nextPage()" [class.pointer-events-none]="!isTestValid" [class.bg-blue-700]="!isTestValid"
+            class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
+            {{ 'next' | translate }}
         </div>
     </div>
 </div>

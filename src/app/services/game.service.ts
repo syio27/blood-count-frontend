@@ -43,11 +43,12 @@ export class GameService {
 
     checkIfAnyInProgress(userId: string): Observable<boolean> {
         const url = `${this.baseUrl}?userId=${userId}`;
-        return this.http.get<boolean>(url, {})
-            .pipe(
-                catchError(this.handleException)
-            );
-    }
+        console.log('Returned');
+        return this.http.get<{ inProgress: boolean }>(url, {}).pipe(
+          map(response => response.inProgress),
+          catchError(this.handleException)
+        );
+      }
 
     autoSave(gameId: number, userId: string, answerRequests: IAnswerRequest[]){
         const url = `${this.baseUrl}${gameId}/save?userId=${userId}`;

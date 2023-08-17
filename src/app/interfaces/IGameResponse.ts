@@ -3,7 +3,7 @@ import { IPatientResponse } from "./IPatientResponse"
 import { IGameCaseDetailsResponse } from "./IGameCaseResponse"
 import { IMSQuestionResponse } from "./IMSQuestionResponse"
 import { SavedUserAnswerResponse } from "./SavedUserAnswerResponse"
-
+import { Pages } from "../enums/pages"
 export interface IGameResponse {
     id: number
     startTime: string
@@ -17,5 +17,6 @@ export interface IGameResponse {
     bcAssessmentQuestions: IBCAssessmentQuestionResponse[],
     msQuestions: IMSQuestionResponse[],
     savedUserAnswers: SavedUserAnswerResponse[],
+    currentPage: Pages
 
 }

@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
+import { GameService } from 'src/app/services/game.service';
+import { Pages } from 'src/app/enums/pages';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
+
 @Component({
   selector: 'app-page1',
   templateUrl: './page1.component.html',
@@ -15,7 +19,16 @@ export class Page1Component {
   @Input() testData: any[]; 
   @Input() isTestValid: boolean; 
   @Input() savedAnswers: SavedUserAnswerResponse[]
-  
+  @Input() gameId: number
+  @Input() userDetails: UserDetails;
+  @Input() currentPage: Pages
+  @Input() nextPage!: () => void
+
+  constructor(
+    private gameService: GameService
+  ){
+
+  }
   isAnswerSelected(questionId: number, answerId: number): boolean {
     return this.savedAnswers.some(answer => answer.questionId === questionId && answer.answerId === answerId);
   }
@@ -34,4 +47,5 @@ export class Page1Component {
       this.isTestValid = false
     }
   }
+
 }

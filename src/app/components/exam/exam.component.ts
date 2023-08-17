@@ -16,6 +16,7 @@ import { Pages } from 'src/app/enums/pages';
   styleUrls: ['./exam.component.css']
 })
 export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
+  
   tabelData = [];
   testData = [];
   age: number
@@ -29,7 +30,7 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
   page: string
   savedAnswers: SavedUserAnswerResponse[]=[]
   msAssesmentTest = []
-  pages = Object.values(Pages);
+  currentPage: Pages
 
   constructor(
     private sharedGameDataService: SharedGameDataService,
@@ -37,6 +38,7 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
     private sharedUserService: SharedUserDetailsService,
     private router: Router
   ) {
+    this.nextPage = this.nextPage.bind(this)
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart && event.url !== '/exam' && localStorage.getItem('submitted') === 'COMPLETED') {
         localStorage.removeItem('submitted');
@@ -51,7 +53,8 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any): void {
     this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
-    console.log('Ondestroy')
+    console.log(this.currentPage)
+    
   }
 
   ngOnInit() {
@@ -66,8 +69,10 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
     this.gameService.getInProgressGame(this.gameId, this.userDetails.id).subscribe(
       (data)=>{
         this.savedAnswers = data.savedUserAnswers
+        this.currentPage = data.currentPage
       }
     )
+
     const storedSubmition = localStorage.getItem('submitted');
     if (storedSubmition) {
       this.submitted = storedSubmition;
@@ -76,7 +81,6 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
   }
   ngOnDestroy() {
     this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
-    console.log('Ondestroy')
   }
 
   canDeactivate() {
@@ -106,10 +110,16 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
     return this.tabelData.slice(8, 20);
   }
 
-
+  nextPage(){
+    this.gameService.next(this.gameId, this.userDetails.id, this.answers).subscribe(
+      data => 
+      this.currentPage = data.currentPage
+    )
+  }
 
 
   submitTest() {
+    console.log(this.answers)
     this.gameService.complete(this.gameId, this.answers, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
@@ -124,4 +134,5 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
   onFinish() {
     this.router.navigate(['/'])
   }
+  
 }
