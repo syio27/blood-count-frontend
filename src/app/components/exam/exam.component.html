@@ -1,12 +1,12 @@
 <app-timer (timeUp)="submitTest()"></app-timer>
 <app-white-box >
     <app-page1  *ngIf="currentPage=='ONE'" [displayedElements]="displayedElements" [displayedElements2]="displayedElements2" [gender]="gender"
-    [age]="age" [answers1]="answers" [testData]="testData" [isTestValid]="isTestValid" [savedAnswers]='savedAnswers' [gameId]="gameId"
+    [age]="age" [answers]="answers" [testData]="testData" [isTestValid]="isTestValid" [savedAnswers]='savedAnswers' [gameId]="gameId"
     [userDetails]="userDetails" [currentPage]="currentPage" [nextPage]='nextPage' ></app-page1>
     
-    <app-page2 *ngIf="currentPage=='TWO'" [msAssesmentTest]="msAssesmentTest" [isTestValid]="isTestValid" [answers2]="answers" [savedAnswers]='savedAnswers'
-    [userDetails]="userDetails" [currentPage]="currentPage" [nextPage]='nextPage' [gameId]="gameId"></app-page2>
-    <div class="flex justify-center">
+    <app-page2 *ngIf="currentPage=='TWO'" [msAssesmentTest]="msAssesmentTest" [isTestValid]="isTestValid" [answers]="answers" [savedAnswers]='savedAnswers'
+    [userDetails]="userDetails" [currentPage]="currentPage" [nextPage]='nextPage' [testData]="testData" [gameId]="gameId"></app-page2>
+    <div class="flex justify-center mt-5">
         <div (click)="submitTest()" [class.bg-blue-700]="!isTestValid"
             class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
             {{ 'submit' | translate }}

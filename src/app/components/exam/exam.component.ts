@@ -15,7 +15,7 @@ import { Pages } from 'src/app/enums/pages';
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.css']
 })
-export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
+export class ExamComponent implements OnInit, CanDeactivateGuard {
   
   tabelData = [];
   testData = [];
@@ -52,9 +52,7 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any): void {
-    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
-    console.log(this.currentPage)
-    
+    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()    
   }
 
   ngOnInit() {
@@ -72,15 +70,12 @@ export class ExamComponent implements OnInit, OnDestroy, CanDeactivateGuard {
         this.currentPage = data.currentPage
       }
     )
-
+    
     const storedSubmition = localStorage.getItem('submitted');
     if (storedSubmition) {
       this.submitted = storedSubmition;
     }
     this.page = localStorage.getItem('page')
-  }
-  ngOnDestroy() {
-    this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
   }
 
   canDeactivate() {

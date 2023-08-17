@@ -21,7 +21,7 @@ export class Page2Component {
   @Input() userDetails: UserDetails;
   @Input() currentPage: Pages
   @Input() nextPage!: () => void
-
+  @Input() testData: any[]; 
 
   constructor(
     private gameService: GameService
@@ -40,11 +40,11 @@ export class Page2Component {
     } else {
       this.answers.push({ questionId, answerId });
     }
-    if(this.answers.length == this.msAssesmentTest.length){
-      this.isTestValid = true
+    if(this.answers.length != 0){
+      this.isTestValid = this.answers.length == this.msAssesmentTest.length
     }
-    else{
-      this.isTestValid = false
+    else {
+      this.isTestValid = this.savedAnswers.length == this.msAssesmentTest.length + this.testData.length
     }
   }
   
