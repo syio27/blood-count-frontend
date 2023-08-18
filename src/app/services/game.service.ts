@@ -5,6 +5,7 @@ import { IGameResponse } from '../interfaces/IGameResponse';
 import { IAnswerRequest } from '../interfaces/IAnswerRequest';
 import { environment } from 'src/environments/environment';
 import { IGameCurrentSessionState } from '../interfaces/IGameCurrentSessionState';
+import { IGameInProgress } from '../interfaces/IGameInProgress';
 
 
 @Injectable({
@@ -41,10 +42,10 @@ export class GameService {
             );
     }
 
-    checkIfAnyInProgress(userId: string): Observable<boolean> {
+    checkIfAnyInProgress(userId: string): Observable<IGameInProgress> {
         const url = `${this.baseUrl}?userId=${userId}`;
         console.log('Returned');
-        return this.http.get<boolean>(url, {})
+        return this.http.get<IGameInProgress>(url, {})
             .pipe(
                 catchError(this.handleException)
             );

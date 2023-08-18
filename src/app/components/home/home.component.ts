@@ -23,7 +23,8 @@ export class HomeComponent implements OnInit {
   selectedOption = null;
   selectedOptionId = null;
   isTestFinished: string;
-  inProgress: boolean
+  inProgress: boolean;
+  gameId: number
 
   constructor(
     private caseService: CaseService,
@@ -42,8 +43,9 @@ export class HomeComponent implements OnInit {
       this.userDetails = userDetails;
     });
     this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
-      this.inProgress = response;
-      if(this.inProgress == true){
+      this.inProgress = response.inProgress;
+      this.gameId = response.gameId;
+      if (this.inProgress == true) {
         this.selectedOption = 'Your game is running, please press button';
       }
     })
