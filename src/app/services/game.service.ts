@@ -6,6 +6,7 @@ import { IAnswerRequest } from '../interfaces/IAnswerRequest';
 import { environment } from 'src/environments/environment';
 import { IGameCurrentSessionState } from '../interfaces/IGameCurrentSessionState';
 import { IGameInProgress } from '../interfaces/IGameInProgress';
+import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
 
 
 @Injectable({
@@ -26,9 +27,9 @@ export class GameService {
             );
     }
 
-    complete(gameId: number, answerRequests: IAnswerRequest[], userId: string): Observable<IGameResponse> {
+    complete(gameId: number, answerRequests: IAnswerRequest[], userId: string): Observable<ISimpleGameResponse> {
         const url = `${this.baseUrl}${gameId}/complete?userId=${userId}`;
-        return this.http.post<IGameResponse>(url, answerRequests)
+        return this.http.post<ISimpleGameResponse>(url, answerRequests)
             .pipe(
                 catchError(this.handleException)
             );
