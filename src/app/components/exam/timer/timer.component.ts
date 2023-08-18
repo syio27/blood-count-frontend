@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { GameService } from 'src/app/services/game.service';
+import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 
 @Component({
   selector: 'app-timer',
@@ -14,6 +15,7 @@ export class TimerComponent implements OnInit {
   countdownInterval: any;
   isTestFinished: boolean = false;
 
+  @Input() gameData: IGameResponse
   @Output() timeUp: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -28,13 +30,8 @@ export class TimerComponent implements OnInit {
 
   initializeTimer() {
     const currentTime = Math.floor(Date.now() / 1000);
-    const gameData = this.sharedGameDataService.startTest$;
-    gameData.subscribe(data => {
-      const startTime = Math.floor(new Date(data.startTime).getTime() / 1000);
-      const estimatedEndTime = Math.floor(new Date(data.estimatedEndTime).getTime() / 1000);
-      const elapsedTime = currentTime - startTime;
-      this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
-    });
+    const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
+    this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
   }
 
   startTimer() {

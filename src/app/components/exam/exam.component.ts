@@ -8,7 +8,7 @@ import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
 import { Router, NavigationStart } from '@angular/router';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
 import { Pages } from 'src/app/enums/pages';
-
+import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
@@ -30,11 +30,13 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   savedAnswers: SavedUserAnswerResponse[] = []
   msAssesmentTest = []
   currentPage: Pages
+  gameData: IGameResponse
 
   constructor(
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private router: Router
+    private router: Router,
+    private sharedGameService: SharedGameDataService
   ) {
     this.nextPage = this.nextPage.bind(this)
   }
@@ -45,7 +47,6 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   }
 
   ngOnInit() {
-    this.fetchData();
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
@@ -53,37 +54,36 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     if (storedScore) {
       this.score = JSON.parse(storedScore);
     }
+    this.sharedGameService.gameid$.subscribe(
+      data => {
+        this.gameId = data
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
     this.gameService.getInProgressGame(this.gameId, this.userDetails.id).subscribe(
       (data) => {
         this.savedAnswers = data.savedUserAnswers
         this.currentPage = data.currentPage
+        this.gameData = data
+        const { patient, bcAssessmentQuestions, msQuestions } = this.gameData;
+        const bloodCount = patient.bloodCounts;
+        this.gender = patient.gender
+        this.age = patient.age
+        this.tabelData = bloodCount;
+        this.testData = bcAssessmentQuestions;
+        this.gameId = this.gameData.id
+        this.msAssesmentTest = msQuestions
+      },
+      (error) => {
+        console.log(error)
       }
     )
-
-    const storedSubmition = localStorage.getItem('submitted');
-    if (storedSubmition) {
-      this.submitted = storedSubmition;
-    }
-    this.page = localStorage.getItem('page')
   }
 
   canDeactivate() {
     return window.confirm('You are currently on the exam page. Are you sure you want to leave?');
-  }
-
-  fetchData() {
-    // this.sharedGameDataService.startTest$.subscribe((gameData: IGameResponse) => {
-    //   if (gameData) {
-    //     const { patient, bcAssessmentQuestions, msQuestions } = gameData;
-    //     const bloodCount = patient.bloodCounts;
-    //     this.gender = patient.gender
-    //     this.age = patient.age
-    //     this.tabelData = bloodCount;
-    //     this.testData = bcAssessmentQuestions;
-    //     this.gameId = gameData.id
-    //     this.msAssesmentTest = msQuestions
-    //   }
-    // });
   }
 
   get displayedElements() {

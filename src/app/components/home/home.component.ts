@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
       this.inProgress = response.inProgress;
       this.gameId = response.gameId;
       if (this.inProgress == true) {
-        this.selectedOption = 'Your game is running, please press button';
+        this.selectedOption = 'Your game is running, please press continue button';
       }
     })
   }
