@@ -2,13 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CaseService } from 'src/app/services/case.service';
 import { ICaseResponse } from 'src/app/interfaces/ICaseResponse';
 import { TimerComponent } from '../exam/timer/timer.component';
-import { Router, NavigationExtras } from "@angular/router";
+import { Router } from "@angular/router";
 import { GameService } from 'src/app/services/game.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
-import { SharedAppService } from 'src/app/services/shared-app.service';
-import { switchMap } from 'rxjs/operators';
-import { response } from 'express';
+import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +29,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
+    private sharedGameDataService: SharedGameDataService
   ) { }
 
   toggleClick() {
@@ -68,7 +67,9 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/exam']);
     });
   }
+
   continueTest() {
+    this.sharedGameDataService.setGameId(this.gameId);
     this.router.navigate(['/exam']);
   }
 }
