@@ -9,6 +9,8 @@ import { Router, NavigationStart } from '@angular/router';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
 import { Pages } from 'src/app/enums/pages';
 import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
+import { switchMap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
@@ -54,32 +56,36 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     if (storedScore) {
       this.score = JSON.parse(storedScore);
     }
-    this.sharedGameService.gameid$.subscribe(
-      data => {
-        this.gameId = data
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
-    this.gameService.getInProgressGame(this.gameId, this.userDetails.id).subscribe(
-      (data) => {
-        this.savedAnswers = data.savedUserAnswers
-        this.currentPage = data.currentPage
-        this.gameData = data
-        const { patient, bcAssessmentQuestions, msQuestions } = this.gameData;
-        const bloodCount = patient.bloodCounts;
-        this.gender = patient.gender
-        this.age = patient.age
-        this.tabelData = bloodCount;
-        this.testData = bcAssessmentQuestions;
-        this.gameId = this.gameData.id
-        this.msAssesmentTest = msQuestions
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
+    // this.sharedGameService.gameid$.subscribe(
+    //   data => {
+    //     this.gameId = data
+    //   },
+    //   (error) => {
+    //     console.log(error)
+    //   }
+    // )
+    this.gameService.checkIfAnyInProgress(this.userDetails.id)
+      .pipe(
+        switchMap(response => {
+          this.gameId = response.gameId;
+          return this.gameService.getInProgressGame(this.gameId, this.userDetails.id);
+        })
+      )
+      .subscribe(
+        (data) => {
+          this.savedAnswers = data.savedUserAnswers;
+          this.currentPage = data.currentPage;
+          this.gameData = data;
+          const { patient, bcAssessmentQuestions, msQuestions } = this.gameData;
+          const bloodCount = patient.bloodCounts;
+          this.gender = patient.gender;
+          this.age = patient.age;
+          this.tabelData = bloodCount;
+          this.testData = bcAssessmentQuestions;
+          this.gameId = this.gameData.id;
+          this.msAssesmentTest = msQuestions;
+        }
+      );
   }
 
   canDeactivate() {
@@ -139,8 +145,8 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
       }
     )
   }
+
   onFinish() {
     this.router.navigate(['/'])
   }
-
 }

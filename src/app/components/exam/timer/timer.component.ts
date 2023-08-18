@@ -18,10 +18,7 @@ export class TimerComponent implements OnInit {
   @Input() gameData: IGameResponse
   @Output() timeUp: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    private sharedGameDataService: SharedGameDataService,
-    private gameService: GameService,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
     this.initializeTimer();
@@ -37,21 +34,21 @@ export class TimerComponent implements OnInit {
   startTimer() {
     this.countdownInterval = setInterval(() => {
       this.remainingTime--;
-  
+
       if (this.remainingTime <= 0) {
         clearInterval(this.countdownInterval);
         this.isTestFinished = true;
         this.timeUp.emit(); // Emit the event when the time is up
       }
-      
+
       if (localStorage.getItem('submitted') === 'COMPLETED') {
         clearInterval(this.countdownInterval); // Stop the timer if the test is completed 
       }
-      
+
       this.updateDisplayTime();
     }, 1000);
   }
-  
+
 
   updateDisplayTime() {
     this.minutes = Math.floor(this.remainingTime / 60);
