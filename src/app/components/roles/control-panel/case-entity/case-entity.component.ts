@@ -426,10 +426,7 @@ export class CaseEntityComponent implements OnInit {
       rr: this.form.get('rr').value,
       physExam: this.form.get('physExam').value,
       infoCom: this.form.get('infoCom').value,
-
-
     };
-    console.log(caseData, this.addedValues);
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
         console.log('Case creation successful');
@@ -439,6 +436,8 @@ export class CaseEntityComponent implements OnInit {
         this.selectedLevelTypeOption = '';
         this.selectedParameterOption = '';
         this.selectedUnitOption = '';
+        this.selectedAnemiaOption = '' 
+        
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.setItem('hr', '');
         sessionStorage.setItem('rr', '');

@@ -25,7 +25,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   answers: IAnswerRequest[] = [];
   gameId: number
   userDetails: UserDetails;
-  submitted = 'IN_PROGRESS';
+  submitted: string
   score: number
   isTestValid: boolean
   page: string
@@ -140,8 +140,8 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
-        this.page = localStorage.getItem('page')
         this.score = data.score
+        console.log(this.submitted)
       }
     )
   }

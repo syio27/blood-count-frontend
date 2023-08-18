@@ -33,12 +33,12 @@
           <span class="font-bold">{{ 'select' | translate }}</span>
         </div>
       </div>
-      <div class="mt-2 relative" [class.open]="onClick" [class.pointer-events-none]="isTestFinished == 'IN_PROGRESS'" >
+      <div class="mt-2 relative" [class.open]="onClick" [class.pointer-events-none]="inProgress" >
         <input type="text" 
           class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-          placeholder="Select the case" (click)="toggleClick()" [class.rounded-t]="onClick" [class.rounded]="!onClick" c
+          placeholder="Select the case" (click)="toggleClick()" [class.rounded-t]="onClick" [class.rounded]="!onClick" 
           [value]="selectedOption" readonly>
-        <span *ngIf="isTestFinished != 'IN_PROGRESS'"
+        <span *ngIf="!inProgress"
           class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
           [class.rotate-180]="onClick" [class.rotate-0]="!onClick" >
           expand_more
