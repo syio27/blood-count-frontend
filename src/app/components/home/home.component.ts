@@ -6,7 +6,6 @@ import { Router } from "@angular/router";
 import { GameService } from 'src/app/services/game.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
-import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +28,6 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private sharedGameDataService: SharedGameDataService
   ) { }
 
   toggleClick() {
@@ -69,7 +67,7 @@ export class HomeComponent implements OnInit {
   }
 
   continueTest() {
-    this.sharedGameDataService.setGameId(this.gameId);
+    //this.sharedGameDataService.setGameId(this.gameId);
     this.router.navigate(['/exam']);
   }
 }

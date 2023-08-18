@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { GameService } from 'src/app/services/game.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 

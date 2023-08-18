@@ -5,18 +5,19 @@ import { GameService } from 'src/app/services/game.service';
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
-import { Router, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
 import { Pages } from 'src/app/enums/pages';
-import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { switchMap } from 'rxjs/operators';
+import { SharedGameSubmittedService } from 'src/app/services/shared-game-submitted.service';
+import { CanComponentDeactivate } from 'src/app/services/can-deactivate.guard';
 
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.css']
 })
-export class ExamComponent implements OnInit, CanDeactivateGuard {
+export class ExamComponent implements OnInit, CanComponentDeactivate {
 
   tabelData = [];
   testData = [];
@@ -25,10 +26,9 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   answers: IAnswerRequest[] = [];
   gameId: number
   userDetails: UserDetails;
-  submitted: string
+  submitted = 'IN_PROGRESS';
   score: number
   isTestValid: boolean
-  page: string
   savedAnswers: SavedUserAnswerResponse[] = []
   msAssesmentTest = []
   currentPage: Pages
@@ -38,7 +38,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
     private router: Router,
-    private sharedGameService: SharedGameDataService
+    private sharedGameSubmittedService: SharedGameSubmittedService
   ) {
     this.nextPage = this.nextPage.bind(this)
   }
@@ -56,14 +56,6 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     if (storedScore) {
       this.score = JSON.parse(storedScore);
     }
-    // this.sharedGameService.gameid$.subscribe(
-    //   data => {
-    //     this.gameId = data
-    //   },
-    //   (error) => {
-    //     console.log(error)
-    //   }
-    // )
     this.gameService.checkIfAnyInProgress(this.userDetails.id)
       .pipe(
         switchMap(response => {
@@ -140,8 +132,8 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
+        this.sharedGameSubmittedService.setStatus(data.status)
         this.score = data.score
-        console.log(this.submitted)
       }
     )
   }

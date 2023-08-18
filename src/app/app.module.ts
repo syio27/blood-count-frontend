@@ -38,9 +38,10 @@ import { TimerComponent } from './components/exam/timer/timer.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { MatStepperModule  } from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { Page2Component } from './components/exam/page2/page2.component';
 import { Page1Component } from './components/exam/page1/page1.component'
+import { CanDeactivateGuard } from './services/can-deactivate.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -96,7 +97,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [AuthService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+  providers: [AuthService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, CanDeactivateGuard],
   bootstrap: [AppComponent],
 
 })
