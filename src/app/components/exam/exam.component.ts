@@ -1,5 +1,4 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
-import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 import { CanDeactivateGuard } from 'src/app/services/can-deactivate.guard';
 import { GameService } from 'src/app/services/game.service';
@@ -33,21 +32,11 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   currentPage: Pages
 
   constructor(
-    private sharedGameDataService: SharedGameDataService,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
     private router: Router
   ) {
     this.nextPage = this.nextPage.bind(this)
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart && event.url !== '/exam' && localStorage.getItem('submitted') === 'COMPLETED') {
-        localStorage.removeItem('submitted');
-        localStorage.removeItem('score');
-        localStorage.removeItem('gameData');
-        localStorage.removeItem('page')
-
-      }
-    });
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -83,18 +72,18 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
   }
 
   fetchData() {
-    this.sharedGameDataService.startTest$.subscribe((gameData: IGameResponse) => {
-      if (gameData) {
-        const { patient, bcAssessmentQuestions, msQuestions } = gameData;
-        const bloodCount = patient.bloodCounts;
-        this.gender = patient.gender
-        this.age = patient.age
-        this.tabelData = bloodCount;
-        this.testData = bcAssessmentQuestions;
-        this.gameId = gameData.id
-        this.msAssesmentTest = msQuestions
-      }
-    });
+    // this.sharedGameDataService.startTest$.subscribe((gameData: IGameResponse) => {
+    //   if (gameData) {
+    //     const { patient, bcAssessmentQuestions, msQuestions } = gameData;
+    //     const bloodCount = patient.bloodCounts;
+    //     this.gender = patient.gender
+    //     this.age = patient.age
+    //     this.tabelData = bloodCount;
+    //     this.testData = bcAssessmentQuestions;
+    //     this.gameId = gameData.id
+    //     this.msAssesmentTest = msQuestions
+    //   }
+    // });
   }
 
   get displayedElements() {
@@ -121,7 +110,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
         this.invokeNextApi(mergedAnswers);
       }
       else {
-        console.log("fill all questions");
+        window.alert('please fullfill all the questions')
       }
       return;
     }
@@ -131,7 +120,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
         this.invokeNextApi(mergedAnswers);
       }
       else {
-        console.log("fill all questions");
+        window.alert('please fullfill all the questions')
       }
       return;
     }
@@ -145,11 +134,8 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
     this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
-        localStorage.setItem('page', 'finish')
         this.page = localStorage.getItem('page')
-        localStorage.setItem('submitted', this.submitted)
         this.score = data.score
-        localStorage.setItem('score', this.score.toString())
       }
     )
   }

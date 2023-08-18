@@ -6,7 +6,6 @@ import { Router, NavigationExtras } from "@angular/router";
 import { GameService } from 'src/app/services/game.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
-import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
 import { SharedAppService } from 'src/app/services/shared-app.service';
 import { switchMap } from 'rxjs/operators';
 import { response } from 'express';
@@ -31,7 +30,6 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private sharedGameDataService: SharedGameDataService
   ) { }
 
   toggleClick() {
@@ -39,39 +37,16 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.sharedUserService.getUserDetails().pipe(
-    //   switchMap(userDetails => {
-    //     return this.gameService.checkIfAnyInProgress(userDetails.id);
-    //   })
-    // ).subscribe(data => {
-    //   this.inProgress = data;
-    //   console.log(" has game in progress - " + data)
-    // });
-
     this.fetchCase();
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-    this.sharedGameDataService.startTest$.subscribe(() => {
-      const storedSubmition = localStorage.getItem('submitted');
-      if (storedSubmition) {
-        this.isTestFinished = storedSubmition;
-      }
-    });
-    if (this.isTestFinished == 'IN_PROGRESS') {
-      this.sharedGameDataService.startTest$.subscribe(data => {
-        if (data && data.status) {
-          this.selectedOption = 'Your game is running, please press button';
-        }
-      });
-    }
-
     this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
       this.inProgress = response;
-      console.log("has game in progress: " + this.inProgress);
+      if(this.inProgress == true){
+        this.selectedOption = 'Your game is running, please press button';
+      }
     })
-
-
   }
 
   fetchCase() {
@@ -88,9 +63,6 @@ export class HomeComponent implements OnInit {
 
   startTest() {
     this.gameService.start(this.selectedOptionId, this.userDetails.id).subscribe(data => {
-      this.sharedGameDataService.startTest(data);
-      localStorage.setItem('submitted', 'IN_PROGRESS')
-      localStorage.setItem('page', 'page1')
       this.router.navigate(['/exam']);
     });
   }
