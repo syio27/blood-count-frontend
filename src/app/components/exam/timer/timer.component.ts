@@ -15,6 +15,7 @@ export class TimerComponent implements OnInit {
   countdownInterval: any;
   isTestFinished: boolean = false;
 
+  @Input() submitted: string
   @Input() gameData: IGameResponse
   @Output() timeUp: EventEmitter<any> = new EventEmitter();
 
@@ -26,9 +27,13 @@ export class TimerComponent implements OnInit {
   }
 
   initializeTimer() {
+    console.log(this.gameData.estimatedEndTime)
+    console.log(this.gameData.estimatedEndTime)
+    console.log(this.gameData)
     const currentTime = Math.floor(Date.now() / 1000);
     const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
     this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
+    console.log(estimatedEndTime)
   }
 
   startTimer() {
@@ -41,7 +46,7 @@ export class TimerComponent implements OnInit {
         this.timeUp.emit(); // Emit the event when the time is up
       }
 
-      if (localStorage.getItem('submitted') === 'COMPLETED') {
+      if (this.submitted === 'COMPLETED') {
         clearInterval(this.countdownInterval); // Stop the timer if the test is completed 
       }
 

@@ -84,7 +84,7 @@ export class ExamComponent implements OnInit, CanDeactivateGuard {
           this.testData = bcAssessmentQuestions;
           this.gameId = this.gameData.id;
           this.msAssesmentTest = msQuestions;
-        }
+        },
       );
   }
 
