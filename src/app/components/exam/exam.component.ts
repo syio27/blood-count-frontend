@@ -76,7 +76,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           this.testData = bcAssessmentQuestions;
           this.gameId = this.gameData.id;
           this.msAssesmentTest = msQuestions;
-        }
+        },
       );
   }
 
