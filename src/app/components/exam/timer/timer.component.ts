@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 
@@ -7,7 +7,7 @@ import { IGameResponse } from 'src/app/interfaces/IGameResponse';
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.css']
 })
-export class TimerComponent implements OnInit {
+export class TimerComponent implements OnChanges {
   remainingTime: number;
   minutes: number;
   seconds: string;
@@ -20,37 +20,39 @@ export class TimerComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.initializeTimer();
-    this.startTimer();
+  ngOnChanges(changes: SimpleChanges) {
+    this.initializeTimer(changes);
+    this.startTimer(changes);
   }
 
-  initializeTimer() {
-    console.log(this.gameData.estimatedEndTime)
-    console.log(this.gameData.estimatedEndTime)
-    console.log(this.gameData)
-    const currentTime = Math.floor(Date.now() / 1000);
-    const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
-    this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
-    console.log(estimatedEndTime)
+  initializeTimer(changes: SimpleChanges) {
+    if (changes['gameData'] && changes['gameData'].currentValue) {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
+      this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
+      console.log(estimatedEndTime)
+    }
+
   }
 
-  startTimer() {
-    this.countdownInterval = setInterval(() => {
-      this.remainingTime--;
+  startTimer(changes: SimpleChanges) {
+    if (changes['gameData'] && changes['gameData'].currentValue) {
+      this.countdownInterval = setInterval(() => {
+        this.remainingTime--;
 
-      if (this.remainingTime <= 0) {
-        clearInterval(this.countdownInterval);
-        this.isTestFinished = true;
-        this.timeUp.emit(); // Emit the event when the time is up
-      }
+        if (this.remainingTime <= 0) {
+          clearInterval(this.countdownInterval);
+          this.isTestFinished = true;
+          this.timeUp.emit(); // Emit the event when the time is up
+        }
 
-      if (this.submitted === 'COMPLETED') {
-        clearInterval(this.countdownInterval); // Stop the timer if the test is completed 
-      }
+        if (this.submitted === 'COMPLETED') {
+          clearInterval(this.countdownInterval); // Stop the timer if the test is completed 
+        }
 
-      this.updateDisplayTime();
-    }, 1000);
+        this.updateDisplayTime();
+      }, 1000);
+    }
   }
 
 
