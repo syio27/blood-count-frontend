@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
+import { Pages } from 'src/app/enums/pages';
 
 @Component({
   selector: 'app-timer',
@@ -16,6 +17,7 @@ export class TimerComponent implements OnChanges {
 
   @Input() submitted: string
   @Input() gameData: IGameResponse
+  @Input() currentPage: Pages
   @Output() timeUp: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
@@ -23,6 +25,21 @@ export class TimerComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.initializeTimer(changes);
     this.startTimer(changes);
+  }
+
+  get assessmentText(): string {
+    switch (this.currentPage) {
+      case Pages.ONE:
+        return 'Blood Count Assessment';
+      case Pages.TWO:
+        return 'Diagnosis Multiple Set of Questions';
+      case Pages.THREE:
+        return 'Submition';
+      case Pages.FOUR:
+        return 'Finish';
+      default:
+        return '';
+    }
   }
 
   initializeTimer(changes: SimpleChanges) {
@@ -54,7 +71,6 @@ export class TimerComponent implements OnChanges {
       }, 1000);
     }
   }
-
 
   updateDisplayTime() {
     this.minutes = Math.floor(this.remainingTime / 60);

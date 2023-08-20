@@ -33,6 +33,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   msAssesmentTest = []
   currentPage: Pages
   gameData: IGameResponse
+  isNextClicked: boolean
 
   constructor(
     private gameService: GameService,
