@@ -145,9 +145,8 @@ export class CaseEntityComponent implements OnInit {
     }
     else {
       this.disabledRange = false
-      this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
     }
-
   }
 
   ngOnInit() {
@@ -385,7 +384,7 @@ export class CaseEntityComponent implements OnInit {
     const unit = this.selectedUnitOption
     const minAge = this.parameterForm.get('parameter-min').value;
     const maxAge = this.parameterForm.get('parameter-max').value;
-    const levelType = this.selectedLevelTypeOption;
+    const levelType = this.mapLevelTypeOption(this.selectedLevelTypeOption);
 
     if (!parameter || !minAge || !maxAge || !levelType || !unit) {
       return;
@@ -396,8 +395,11 @@ export class CaseEntityComponent implements OnInit {
       unit,
       minValue: minAge,
       maxValue: maxAge,
-      type: levelType as LevelTypes
+      type: levelType
     };
+
+    console.log(levelType);
+    console.log(abnormalityData.type);
 
     this.addedValues.push(abnormalityData);
     this.parameterForm.reset();
@@ -414,6 +416,7 @@ export class CaseEntityComponent implements OnInit {
   }
 
   createCaseWithAbnormality() {
+    console.log(this.addedValues)
     const caseData: ICreateCaseRequest = {
       anemiaType: this.selectedAnemiaOption as AnemiaType,
       diagnosis: this.form.get('diagnosis').value,
@@ -436,8 +439,8 @@ export class CaseEntityComponent implements OnInit {
         this.selectedLevelTypeOption = '';
         this.selectedParameterOption = '';
         this.selectedUnitOption = '';
-        this.selectedAnemiaOption = '' 
-        
+        this.selectedAnemiaOption = ''
+
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.setItem('hr', '');
         sessionStorage.setItem('rr', '');
@@ -469,4 +472,32 @@ export class CaseEntityComponent implements OnInit {
         this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
       })
   }
+
+  private mapLevelTypeOption(option: string): LevelTypes {
+    switch (option) {
+      case 'Degree 0':
+        return LevelTypes.DEGREE_0
+      case 'Degree I':
+        return LevelTypes.DEGREE_I
+      case 'Degree II':
+        return LevelTypes.DEGREE_II
+      case 'Degree III':
+        return LevelTypes.DEGREE_III
+      case 'Degree IV':
+        return LevelTypes.DEGREE_IV;
+      case 'Above normal':
+        return LevelTypes.ABOVE_NORMAL;
+      case 'Below normal':
+        return LevelTypes.BELOW_NORMAL;
+      case 'Normal':
+        return LevelTypes.NORMAL;
+      case 'Increased':
+        return LevelTypes.INCREASED;
+      case 'Decreased':
+        return LevelTypes.DECREASED;
+      default:
+        throw new Error('Unknown option: ' + option);
+    }
+  }
+
 }

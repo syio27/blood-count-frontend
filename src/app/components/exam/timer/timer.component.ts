@@ -1,14 +1,14 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { SharedGameDataService } from 'src/app/services/shared-game-data.service';
+import { Component, OnInit, Output, Input, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
+import { Pages } from 'src/app/enums/pages';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.css']
 })
-export class TimerComponent implements OnInit {
+export class TimerComponent implements OnChanges {
   remainingTime: number;
   minutes: number;
   seconds: string;
@@ -17,43 +17,60 @@ export class TimerComponent implements OnInit {
 
   @Input() submitted: string
   @Input() gameData: IGameResponse
+  @Input() currentPage: Pages
   @Output() timeUp: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  ngOnInit() {
-    this.initializeTimer();
-    this.startTimer();
+  ngOnChanges(changes: SimpleChanges) {
+    this.initializeTimer(changes);
+    this.startTimer(changes);
   }
 
-  initializeTimer() {
-    console.log(this.gameData.estimatedEndTime)
-    console.log(this.gameData.estimatedEndTime)
-    console.log(this.gameData)
-    const currentTime = Math.floor(Date.now() / 1000);
-    const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
-    this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
-    console.log(estimatedEndTime)
+  get assessmentText(): string {
+    switch (this.currentPage) {
+      case Pages.ONE:
+        return 'Blood Count Assessment';
+      case Pages.TWO:
+        return 'Diagnosis Multiple Set of Questions';
+      case Pages.THREE:
+        return 'Submition';
+      case Pages.FOUR:
+        return 'Finish';
+      default:
+        return '';
+    }
   }
 
-  startTimer() {
-    this.countdownInterval = setInterval(() => {
-      this.remainingTime--;
+  initializeTimer(changes: SimpleChanges) {
+    if (changes['gameData'] && changes['gameData'].currentValue) {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
+      this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
+      console.log(estimatedEndTime)
+    }
 
-      if (this.remainingTime <= 0) {
-        clearInterval(this.countdownInterval);
-        this.isTestFinished = true;
-        this.timeUp.emit(); // Emit the event when the time is up
-      }
-
-      if (this.submitted === 'COMPLETED') {
-        clearInterval(this.countdownInterval); // Stop the timer if the test is completed 
-      }
-
-      this.updateDisplayTime();
-    }, 1000);
   }
 
+  startTimer(changes: SimpleChanges) {
+    if (changes['gameData'] && changes['gameData'].currentValue) {
+      this.countdownInterval = setInterval(() => {
+        this.remainingTime--;
+
+        if (this.remainingTime <= 0) {
+          clearInterval(this.countdownInterval);
+          this.isTestFinished = true;
+          this.timeUp.emit(); // Emit the event when the time is up
+        }
+
+        if (this.submitted === 'COMPLETED') {
+          clearInterval(this.countdownInterval); // Stop the timer if the test is completed 
+        }
+
+        this.updateDisplayTime();
+      }, 1000);
+    }
+  }
 
   updateDisplayTime() {
     this.minutes = Math.floor(this.remainingTime / 60);
