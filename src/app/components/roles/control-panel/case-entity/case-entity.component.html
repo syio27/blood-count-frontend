@@ -319,7 +319,7 @@
         <div class="flex justify-center">
             <form [formGroup]="parameterForm" class="w-full md:w-3/4">
                 <div class="flex flex-col md:flex-row justify-center gap-2">
-                    <div class="relative w-1/4" [class.open]="parameterDropdownOpen">
+                    <div class="relative w-full md:w-1/4" [class.open]="parameterDropdownOpen">
                         <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Parameter" (click)="toggleParameterDropdown()"
@@ -340,7 +340,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="relative w-1/4" [class.open]="unitDropdownOpen">
+                    <div class="relative w-full md:w-1/4" [class.open]="unitDropdownOpen">
                         <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Unit" (click)="toggleUnitDropdown()" [class.rounded-t]="unitDropdownOpen"
@@ -359,13 +359,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="w-1/5">
+                    <div class="w-full md:w-1/5">
                         <input type="number" (input)="saveFormValues(8)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter-min" formControlName="parameter-min" placeholder="Min value"
                             [class.pointer-events-none]="disabledRange">
                     </div>
-                    <div class="w-1/5">
+                    <div class="w-full md:w-1/5">
                         <input type="number" (input)="saveFormValues(9)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter-max" formControlName="parameter-max" placeholder="Max value"

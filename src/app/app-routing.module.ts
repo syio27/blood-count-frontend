@@ -44,6 +44,33 @@ const routes: Routes = [
         component: ExamComponent,
         canDeactivate: [CanDeactivateGuard]
       },
+      {
+        path: 'control-panel',
+        component: ControlPanelComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'users'
+          },
+          {
+            path: 'users',
+            component: UsersTableComponent
+          },
+          {
+            path: 'invite',
+            component: InviteUserComponent
+          },
+          {
+            path: 'groups',
+            component: GroupsManageComponent
+          },
+          {
+            path: 'cases',
+            component: CaseEntityComponent
+          },
+        ]
+      },
     ]
   },
   {
@@ -57,33 +84,6 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegistrationComponent
-      },
-    ]
-  },
-  {
-    path: 'control-panel',
-    component: ControlPanelComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'users'
-      },
-      {
-        path: 'users',
-        component: UsersTableComponent
-      },
-      {
-        path: 'invite',
-        component: InviteUserComponent
-      },
-      {
-        path: 'groups',
-        component: GroupsManageComponent
-      },
-      {
-        path: 'cases',
-        component: CaseEntityComponent
       },
     ]
   },
