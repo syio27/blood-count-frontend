@@ -1,16 +1,17 @@
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 import { CanDeactivateGuard } from 'src/app/services/can-deactivate.guard';
 import { GameService } from 'src/app/services/game.service';
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
 import { Pages } from 'src/app/enums/pages';
 import { switchMap } from 'rxjs/operators';
 import { SharedGameSubmittedService } from 'src/app/services/shared-game-submitted.service';
 import { CanComponentDeactivate } from 'src/app/services/can-deactivate.guard';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-exam',
@@ -42,10 +43,23 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     private sharedGameSubmittedService: SharedGameSubmittedService
   ) {
     this.nextPage = this.nextPage.bind(this)
+    // auto save the selected answers when user normally navigates in the app within the router
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart)
+    ).subscribe((event: NavigationStart) => {
+      if (this.gameId) {
+        this.autoSave();
+      }
+    });
   }
 
+  // auto save the selected answers when user refreshes app/closes tab
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any): void {
+    this.autoSave();
+  }
+
+  private autoSave() {
     this.gameService.autoSave(this.gameId, this.userDetails.id, this.answers).subscribe()
   }
 
