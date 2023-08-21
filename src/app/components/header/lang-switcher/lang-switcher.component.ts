@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 @Component({
@@ -8,10 +9,21 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./lang-switcher.component.css']
 })
 export class LangSwitcherComponent {
-  constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
+  currentLang: string
+  isExamPage: boolean
+   
+  constructor(private translate: TranslateService,
+    private router: Router) {
+    this.currentLang = 'en'
+    translate.setDefaultLang(this.currentLang);
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Check if the current route is /exam
+        this.isExamPage = event.url === '/exam';
+      }
+    });
+
   }
-  currentLang = 'en';
 
   switchLang(lang: string) {
     this.currentLang = lang;
