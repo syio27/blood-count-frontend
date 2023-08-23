@@ -1,17 +1,17 @@
 <div class='flex flex-col'>
     <div class='fles flex-col'>
-        <div class='justify-start text-base md:text-2xl'>
+        <div class='justify-start text-base md:text-2xl mb-1'>
             Clinical case
         </div>
-        <div class='h-20 py-2 px-5 border border-black text-base'>
+        <div class='h-20 py-2 px-5 bg-gray-100 rounded-md text-base'>
             {{gameCaseDetails.infoCom}}
         </div>
     </div>
     <div class='fles flex-col mt-5'>
-        <div class='justify-start text-base md:text-2xl'>
+        <div class='justify-start text-base md:text-2xl mb-1'>
             Patient Information
         </div>
-        <div class='py-2 px-5 border border-black flex flex-col text-base'>
+        <div class='py-2 px-5 bg-gray-100 rounded-md flex flex-col text-base'>
             <div>Age: {{age}}</div>
             <div>Gender: {{gender}}</div>
             <div>Heart Rate: {{gameCaseDetails.hr}}</div>
@@ -20,7 +20,10 @@
         </div>
     </div>
         <div class="mt-14">
-            <div>
+            <div> 
+                <div class="text-base md:text-2xl mb-2">
+                    Patient morphology table
+                </div>
                 <table class="border w-full text-center text-[8px] md:text-base">
                     <thead>
                         <tr class="border-black bg-gray-200">
