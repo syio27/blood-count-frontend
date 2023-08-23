@@ -3,6 +3,7 @@ import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { IAnswerRequest } from 'src/app/interfaces/IAnswerRequest';
 import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerResponse';
 import { GameService } from 'src/app/services/game.service';
+import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
 
 @Component({
   selector: 'app-page3',
@@ -17,11 +18,12 @@ export class Page3Component {
   @Input() submitTest!: () => void
   @Input() savedAnswers: SavedUserAnswerResponse[]
   @Input() answers: IAnswerRequest[] = [];
+  @Input() gameCaseDetails: IGameCaseDetailsResponse
 
   constructor(
     private gameService: GameService
   ) {
-
+    
   }
 
 }

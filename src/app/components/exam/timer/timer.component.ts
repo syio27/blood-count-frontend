@@ -47,7 +47,6 @@ export class TimerComponent implements OnChanges {
       const currentTime = Math.floor(Date.now() / 1000);
       const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
       this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
-      console.log(estimatedEndTime)
     }
 
   }

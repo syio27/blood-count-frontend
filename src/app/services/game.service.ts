@@ -45,7 +45,6 @@ export class GameService {
 
     checkIfAnyInProgress(userId: string): Observable<IGameInProgress> {
         const url = `${this.baseUrl}?userId=${userId}`;
-        console.log('Returned');
         return this.http.get<IGameInProgress>(url, {})
             .pipe(
                 catchError(this.handleException)

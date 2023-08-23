@@ -1,23 +1,12 @@
 <app-timer (timeUp)="submitTest()" [gameData]="gameData" [submitted]='submitted' [currentPage]='currentPage'></app-timer>
 <app-white-box >
-    <app-page1  *ngIf="currentPage=='ONE'" [displayedElements]="displayedElements" [displayedElements2]="displayedElements2" [gender]="gender"
+    <app-page1  *ngIf="currentPage=='ONE' && submitted=='IN_PROGRESS'" [displayedElements]="displayedElements" [displayedElements2]="displayedElements2" [gender]="gender"
     [age]="age" [answers]="answers" [testData]="testData" [savedAnswers]='savedAnswers' [gameId]="gameId"
     [userDetails]="userDetails" [currentPage]="currentPage" [nextPage]='nextPage' ></app-page1>
     
-    <app-page2 *ngIf="currentPage=='TWO'" [msAssesmentTest]="msAssesmentTest" [answers]="answers" [savedAnswers]='savedAnswers'
+    <app-page2 *ngIf="currentPage=='TWO' && submitted=='IN_PROGRESS'" [msAssesmentTest]="msAssesmentTest" [answers]="answers" [savedAnswers]='savedAnswers'
     [userDetails]="userDetails" [currentPage]="currentPage" [nextPage]='nextPage' [testData]="testData" [gameId]="gameId"></app-page2>
-    <app-page3 *ngIf="currentPage=='THREE'" [userDetails]='userDetails' [gender]="gender"
-    [age]="age" [tableData]='tableData' [submitTest]='submitTest'[answers]="answers" [savedAnswers]='savedAnswers'></app-page3>
-    <app-page4 *ngIf="currentPage=='FOUR'"></app-page4>
-</app-white-box>
-<app-white-box *ngIf="submitted=='COMPLETED'">
-    <div>
-        <div class="text-2xl font-bold mb-10 flex text-center items-center justify-center">Your Score: {{ score }}</div>
-        <div class="flex justify-center">
-            <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 text-center rounded cursor-pointer"
-                (click)="onFinish()">
-                {{ 'finish' | translate }}
-            </div>
-        </div>
-    </div>
+    <app-page3 *ngIf="currentPage=='THREE'&& submitted=='IN_PROGRESS'"  [userDetails]='userDetails' [gender]="gender"
+    [age]="age" [tableData]='tableData' [submitTest]='submitTest'[answers]="answers" [savedAnswers]='savedAnswers' [gameCaseDetails]="gameCaseDetails"></app-page3>
+    <app-page4 *ngIf="submitted=='COMPLETED'" [score]="score" [age]="age" [gender]="gender" [gameCaseDetails]="gameCaseDetails"></app-page4>
 </app-white-box>

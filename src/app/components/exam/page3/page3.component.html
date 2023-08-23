@@ -3,8 +3,8 @@
         <div class='justify-start text-base md:text-2xl'>
             Clinical case
         </div>
-        <div class='h-20 py-2 px-5 border border-black'>
-            
+        <div class='h-20 py-2 px-5 border border-black text-base'>
+            {{gameCaseDetails.infoCom}}
         </div>
     </div>
     <div class='fles flex-col mt-5'>
@@ -14,8 +14,9 @@
         <div class='py-2 px-5 border border-black flex flex-col text-base'>
             <div>Age: {{age}}</div>
             <div>Gender: {{gender}}</div>
-            <div>Heart Rate:</div>
-            <div>Blood Presure:</div>
+            <div>Heart Rate: {{gameCaseDetails.hr}}</div>
+            <div>Blood Presure: {{gameCaseDetails.rr}}</div>
+            <div>{{gameCaseDetails.physExam}}</div>
         </div>
     </div>
         <div class="mt-14">

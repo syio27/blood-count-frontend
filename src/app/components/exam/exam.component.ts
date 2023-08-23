@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs/operators';
 import { SharedGameSubmittedService } from 'src/app/services/shared-game-submitted.service';
 import { CanComponentDeactivate } from 'src/app/services/can-deactivate.guard';
 import { filter } from 'rxjs/operators';
+import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
 
 @Component({
   selector: 'app-exam',
@@ -35,6 +36,8 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   currentPage: Pages
   gameData: IGameResponse
   isNextClicked: boolean
+  gameCaseDetails: IGameCaseDetailsResponse
+  percentScore: number
 
   constructor(
     private gameService: GameService,
@@ -88,6 +91,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           this.testData = bcAssessmentQuestions;
           this.gameId = this.gameData.id;
           this.msAssesmentTest = msQuestions;
+          this.gameCaseDetails = data.gameCaseDetails
         },
       );
   }
@@ -117,6 +121,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
         this.submitted = data.status
         this.sharedGameSubmittedService.setStatus(data.status)
         this.score = data.score
+        this.percentScore = this.score*100/(this.testData.length + this.msAssesmentTest.length)
       }
     )
   }
@@ -151,11 +156,6 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     const mergedAnswers: any[] = [...this.answers, ...this.savedAnswers].filter((value, index, self) => {
       return index === self.findIndex((v) => v.questionId === value.questionId);
     });
-    this.invokeCompleteApi(mergedAnswers)
-    this.invokeNextApi(mergedAnswers);
-  }
-
-  onFinish() {
-    this.router.navigate(['/'])
+    this.invokeCompleteApi(mergedAnswers);
   }
 }
