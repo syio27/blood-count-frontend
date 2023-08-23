@@ -6,12 +6,9 @@
     
     <app-page2 *ngIf="currentPage=='TWO'" [msAssesmentTest]="msAssesmentTest" [answers]="answers" [savedAnswers]='savedAnswers'
     [userDetails]="userDetails" [currentPage]="currentPage" [nextPage]='nextPage' [testData]="testData" [gameId]="gameId"></app-page2>
-    <div class="flex justify-center mt-5">
-        <div (click)="submitTest()" [class.bg-blue-700]="!isTestValid"
-            class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
-            {{ 'submit' | translate }}
-        </div>
-    </div>
+    <app-page3 *ngIf="currentPage=='THREE'" [userDetails]='userDetails' [gender]="gender"
+    [age]="age" [tableData]='tableData' [submitTest]='submitTest'[answers]="answers" [savedAnswers]='savedAnswers'></app-page3>
+    <app-page4 *ngIf="currentPage=='FOUR'"></app-page4>
 </app-white-box>
 <app-white-box *ngIf="submitted=='COMPLETED'">
     <div>

@@ -42,6 +42,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { Page2Component } from './components/exam/page2/page2.component';
 import { Page1Component } from './components/exam/page1/page1.component'
 import { CanDeactivateGuard } from './services/can-deactivate.guard';
+import { Page3Component } from './components/exam/page3/page3.component';
+import { Page4Component } from './components/exam/page4/page4.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -76,6 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimerComponent,
     Page2Component,
     Page1Component,
+    Page3Component,
+    Page4Component,
   ],
   imports: [
     ReactiveFormsModule,

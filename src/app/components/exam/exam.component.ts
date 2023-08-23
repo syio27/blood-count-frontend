@@ -19,7 +19,7 @@ import { CanComponentDeactivate } from 'src/app/services/can-deactivate.guard';
 })
 export class ExamComponent implements OnInit, CanComponentDeactivate {
 
-  tabelData = [];
+  tableData = [];
   testData = [];
   age: number
   gender: string
@@ -42,6 +42,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     private sharedGameSubmittedService: SharedGameSubmittedService
   ) {
     this.nextPage = this.nextPage.bind(this)
+    this.submitTest = this.submitTest.bind(this)
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -53,10 +54,6 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-    const storedScore = localStorage.getItem('score');
-    if (storedScore) {
-      this.score = JSON.parse(storedScore);
-    }
     this.gameService.checkIfAnyInProgress(this.userDetails.id)
       .pipe(
         switchMap(response => {
@@ -73,7 +70,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           const bloodCount = patient.bloodCounts;
           this.gender = patient.gender;
           this.age = patient.age;
-          this.tabelData = bloodCount;
+          this.tableData = bloodCount;
           this.testData = bcAssessmentQuestions;
           this.gameId = this.gameData.id;
           this.msAssesmentTest = msQuestions;
@@ -90,13 +87,23 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   }
 
   get displayedElements2() {
-    return this.tabelData.slice(8, 20);
+    return this.tableData.slice(8, 20);
   }
 
   private invokeNextApi(mergedAnswers: any[]) {
     this.gameService.next(this.gameId, this.userDetails.id, mergedAnswers).subscribe(
       data =>
         this.currentPage = data.currentPage
+    )
+  }
+
+  private invokeCompleteApi(mergedAnswers: any[]) {
+    this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
+      (data) => {
+        this.submitted = data.status
+        this.sharedGameSubmittedService.setStatus(data.status)
+        this.score = data.score
+      }
     )
   }
 
@@ -130,13 +137,8 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     const mergedAnswers: any[] = [...this.answers, ...this.savedAnswers].filter((value, index, self) => {
       return index === self.findIndex((v) => v.questionId === value.questionId);
     });
-    this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
-      (data) => {
-        this.submitted = data.status
-        this.sharedGameSubmittedService.setStatus(data.status)
-        this.score = data.score
-      }
-    )
+    this.invokeCompleteApi(mergedAnswers)
+    this.invokeNextApi(mergedAnswers);
   }
 
   onFinish() {
