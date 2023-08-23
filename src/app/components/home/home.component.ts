@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CaseService } from 'src/app/services/case.service';
 import { ICaseResponse } from 'src/app/interfaces/ICaseResponse';
 import { TimerComponent } from '../exam/timer/timer.component';
@@ -67,7 +67,6 @@ export class HomeComponent implements OnInit {
   }
 
   continueTest() {
-    //this.sharedGameDataService.setGameId(this.gameId);
     this.router.navigate(['/exam']);
   }
 }
