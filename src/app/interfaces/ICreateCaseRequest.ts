@@ -13,4 +13,5 @@ export interface ICreateCaseRequest {
     rr: string
     physExam: string
     infoCom: string
+    vitalSigns: string
 }
