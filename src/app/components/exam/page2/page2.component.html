@@ -12,7 +12,7 @@
             <div class="w-full bg-white border  rounded p-4 mb-4 text-xs md:text-base">
                 <div class="font-semibold">{{ test.text }}</div>
                 <div class="mt-2">
-                    <label *ngFor="let option of test.answers" class="flex items-center py-1">
+                    <label *ngFor="let option of test.answers" class="flex items-center py-2 md:py-1">
                         <input type="radio" name="{{ test.id }}" [value]="option.text" class="mr-2"
                         [checked]="isAnswerSelected(test.id, option.id)" (click)="onAnswer(option.id, test.id)">
                         {{ option.text }}
