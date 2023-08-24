@@ -10,4 +10,5 @@ export interface ICaseResponse {
     anemiaType: string
     diagnosis: string
     abnormalities: IAbnormalityResponse[]
+    vitalSigns: string
 }

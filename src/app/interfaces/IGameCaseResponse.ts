@@ -7,4 +7,5 @@ export interface IGameCaseDetailsResponse {
     rr: string
     physExam: string
     infoCom: string
+    vitalSigns: string
 }
