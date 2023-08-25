@@ -1,18 +1,18 @@
 <div class="overflow-x-auto">
     <div class="flex justify-center text-3xl mb-3">
-        Cases
+        {{ 'cases' | translate }}
     </div>
     <div class="relative h-[75vh] mb-8">
         <table class="w-full border">
             <thead class="border">
                 <tr>
-                    <th class="py-2 w-1/5 border">Anemia Type</th>
-                    <th class="py-2 w-1/5  border">Diagnosis</th>
-                    <th class="py-2 w-1/5 border">First Range</th>
-                    <th class="py-2 w-1/5 border">Second Range</th>
+                    <th class="py-2 w-1/5 border">{{ 'anemia-type' | translate }}</th>
+                    <th class="py-2 w-1/5  border">{{ 'diagnosis' | translate }}</th>
+                    <th class="py-2 w-1/5 border">{{ 'first-range' | translate }}</th>
+                    <th class="py-2 w-1/5 border">{{ 'second-range' | translate }}</th>
                     <th class="w-1/5">
                         <div class="flex items-center">
-                            <div class="w-3/4 border-r">Abnormalities</div>
+                            <div class="w-3/4 border-r">{{ 'abnormalities' | translate }}</div>
                             <div class="w-1/4">
                             </div>
                         </div>
@@ -29,13 +29,13 @@
                         <div class="flex justify-center items-center">
                             <div (click)="openPopup(item)" [class.pointer-events-none]="openedPopup"
                                 class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
-                                Details
+                                {{ 'details' | translate }}
                             </div>
                             <div class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2  rounded cursor-pointer"
                                 (click)="deletCase(item.id)" [class.pointer-events-none]="openedPopup"
                                 *ngIf="userDetails.role == 'ROOT'">
                                 <span class="material-symbols-outlined">
-                                    delete
+                                    Delete
                                 </span>
                             </div>
                         </div>
@@ -52,10 +52,10 @@
                 <table class="w-full border">
                     <thead>
                         <tr>
-                            <th class="py-2 w-1/5 border">Parameter</th>
-                            <th class="py-2 w-1/5 border">Unit</th>
-                            <th class="py-2 w-1/5 border">Range</th>
-                            <th class="py-2 w-1/5 border">Level Type</th>
+                            <th class="py-2 w-1/5 border">{{ 'exam-table-th-param' | translate }}</th>
+                            <th class="py-2 w-1/5 border">{{ 'unit' | translate }}</th>
+                            <th class="py-2 w-1/5 border">{{ 'range' | translate }}</th>
+                            <th class="py-2 w-1/5 border">{{ 'level-type' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody id="table-body" class="items-center text-center">
@@ -76,7 +76,7 @@
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">
-                Previous
+                {{ 'prev' | translate }}
             </div>
             <ng-container *ngFor="let page of pages">
                 <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
@@ -86,7 +86,7 @@
             </ng-container>
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
                 [class.opacity-50]="currentPage === totalPages">
-                Next
+                {{ 'next' | translate }}
             </div>
         </nav>
     </div>

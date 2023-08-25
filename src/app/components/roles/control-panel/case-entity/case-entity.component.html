@@ -5,7 +5,7 @@
     <div class="flex justify-center">
         <mat-horizontal-stepper [linear]="true" [formGroup]="form" *ngIf="!isMobile">
             <mat-step [stepControl]="form.get('step1')">
-                <ng-template matStepLabel class="custom-step-label">Affected Patient</ng-template>
+                <ng-template matStepLabel class="custom-step-label"> {{ 'affected-patient' | translate }}</ng-template>
                 <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
                     <div class="relative" [class.open]="genderDropdownOpen">
                         <input type="text"
@@ -29,7 +29,7 @@
                     </div>
                     <div class="w-full md:w-1/2">
                         <div class="mb-3 relative">
-                            <div class="absolute bottom-9 left-0">First Range</div>
+                            <div class="absolute bottom-9 left-0">{{ 'first-range' | translate }}</div>
                             <input type="number" (input)="saveFormValues(3)"
                                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="first-min" formControlName="first-min" placeholder="Min age">
@@ -48,7 +48,7 @@
                         <div class="mt-6" *ngIf="showSecondRangeForm">
                             <div class="mb-3 relative flex items-center">
                                 <div class="absolute w-full bottom-9 left-0 flex justify-between items-center">
-                                    <div>Second Range</div>
+                                    <div>{{ 'second-range' | translate }}</div>
                                     <div class="w-5 h-4 flex items-center justify-center bg-red-500 hover:bg-red-700 font-bold text-white rounded-sm select-none cursor-pointer relative"
                                         (click)="removeSecondRangeForm()">
                                         <div class="text-base">-</div>
@@ -67,11 +67,11 @@
                     </div>
                 </div>
                 <div class="flex justify-end mt-5">
-                    <button mat-stroked-button matStepperNext>Next</button>
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step2')">
-                <ng-template matStepLabel>Disease Info</ng-template>
+                <ng-template matStepLabel>{{ 'disease-info' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <div class="relative" [class.open]="anemiaDropdownOpen">
@@ -103,12 +103,12 @@
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
-                    <button mat-stroked-button matStepperPrevious>Back</button>
-                    <button mat-stroked-button matStepperNext>Next</button>
+                    <button mat-stroked-button matStepperPrevious>{{ 'back' | translate }}</button>
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step3')">
-                <ng-template matStepLabel>Patient Details: 1</ng-template>
+                <ng-template matStepLabel>{{ 'patient-details-1' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div class="flex">
                         <textarea type="text" (input)="saveFormValues(1)" style="resize: none;"
@@ -129,12 +129,12 @@
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
-                    <button mat-stroked-button matStepperPrevious>Back</button>
-                    <button mat-stroked-button matStepperNext>Next</button>
+                    <button mat-stroked-button matStepperPrevious>{{ 'back' | translate }}</button>
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step4')">
-                <ng-template matStepLabel>Patient Details: 2</ng-template>
+                <ng-template matStepLabel>{{ 'patient-details-2' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <textarea type="text" (input)="saveFormValues(12)" style="resize: none;"
@@ -148,13 +148,13 @@
                     </div>
                 </div>
                 <div class="flex justify-start mt-5">
-                    <button mat-stroked-button matStepperPrevious>Back</button>
+                    <button mat-stroked-button matStepperPrevious>{{ 'back' | translate }}</button>
                 </div>
             </mat-step>
         </mat-horizontal-stepper>
         <mat-vertical-stepper [linear]="true" [formGroup]="form" *ngIf="isMobile">
             <mat-step [stepControl]="form.get('step1')">
-                <ng-template matStepLabel>Affected Patient</ng-template>
+                <ng-template matStepLabel>{{ 'affected-patient' | translate }}</ng-template>
                 <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
                     <div class="relative" [class.open]="genderDropdownOpen">
                         <input type="text"
@@ -178,7 +178,7 @@
                     </div>
                     <div class="w-full mt-2 md:w-1/2">
                         <div class="mb-3 relative">
-                            <div class="absolute bottom-9 left-0">First Range</div>
+                            <div class="absolute bottom-9 left-0">{{ 'first-range' | translate }}</div>
                             <input type="number" (input)="saveFormValues(3)"
                                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="first-min" formControlName="first-min" placeholder="Min age">
@@ -197,7 +197,7 @@
                         <div class="mt-8" *ngIf="showSecondRangeForm">
                             <div class="mb-3 relative flex items-center">
                                 <div class="absolute w-full bottom-9 left-0 flex justify-between items-center">
-                                    <div>Second Range</div>
+                                    <div>{{ 'second-range' | translate }}</div>
                                     <div class="w-5 h-4 flex items-center justify-center bg-red-500 hover:bg-red-700 font-bold text-white rounded-sm select-none cursor-pointer relative"
                                         (click)="removeSecondRangeForm()">
                                         <div class="text-base">-</div>
@@ -205,7 +205,7 @@
                                 </div>
                                 <input type="number" (input)="saveFormValues(5)"
                                     class="appearance-none border rounded w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="second-min" formControlName="second-min" placeholder="Min age">
+                                    id="second-min" formControlName="second-min" placeholder="Min age"> 
                             </div>
                             <div class="mb-3">
                                 <input type="number" (input)="saveFormValues(6)"
@@ -216,11 +216,11 @@
                     </div>
                 </div>
                 <div class="flex justify-end mt-5">
-                    <button mat-stroked-button matStepperNext>Next</button>
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step2')">
-                <ng-template matStepLabel>Disease Info</ng-template>
+                <ng-template matStepLabel>{{ 'disease-info' | translate }} </ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <div class="relative" [class.open]="anemiaDropdownOpen">
@@ -252,12 +252,12 @@
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
-                    <button mat-stroked-button matStepperPrevious>Back</button>
-                    <button mat-stroked-button matStepperNext>Next</button>
+                    <button mat-stroked-button matStepperPrevious>{{ 'back' | translate }}</button>
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step3')">
-                <ng-template matStepLabel>Patient Details: 1</ng-template>
+                <ng-template matStepLabel>{{ 'patient-details-1' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div class="flex">
                         <textarea type="text" (input)="saveFormValues(1)" style="resize: none;"
@@ -278,12 +278,12 @@
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
-                    <button mat-stroked-button matStepperPrevious>Back</button>
-                    <button mat-stroked-button matStepperNext>Next</button>
+                    <button mat-stroked-button matStepperPrevious>{{ 'back' | translate }}</button>
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="form.get('step4')">
-                <ng-template matStepLabel>Patient Details: 2</ng-template>
+                <ng-template matStepLabel>{{ 'patient-details-2' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
                         <textarea type="text" (input)="saveFormValues(12)" style="resize: none;"
@@ -297,7 +297,7 @@
                     </div>
                 </div>
                 <div class="flex justify-start mt-5">
-                    <button mat-stroked-button matStepperPrevious>Back</button>
+                    <button mat-stroked-button matStepperPrevious>{{ 'back' | translate }}</button>
                 </div>
             </mat-step>
         </mat-vertical-stepper>
@@ -409,14 +409,14 @@
                     <div>
                         <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded cursor-pointer text-center"
                             (click)="addValue()">
-                            Add
+                            {{ 'add' | translate }}
                         </div>
                     </div>
                 </div>
                 <div class="flex justify-center md:justify-end mt-10">
                     <div (click)="createCaseWithAbnormality()"
                         class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
-                        Create
+                        {{ 'create' | translate }}
                     </div>
                 </div>
             </form>

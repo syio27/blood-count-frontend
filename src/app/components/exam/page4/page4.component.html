@@ -1,12 +1,12 @@
 <div>
     <div class='py-2 px-5 bg-gray-100 rounded-md flex flex-col text-base'>
-        <div>Case Number: {{gameCaseDetails.id}}</div>
-        <div>Age: {{age}}</div>
-        <div>Gender: {{gender}}</div>
-        <div>Type of anemia: {{gameCaseDetails.anemiaType}}</div>
-        <div>Diagnosis: {{gameCaseDetails.diagnosis}}</div>
+        <div>{{ 'case-number' | translate }}{{gameCaseDetails.id}}</div>
+        <div>{{ 'exam-patient-age' | translate }} {{age}}</div>
+        <div>{{ 'exam-patient-gender' | translate }} {{gender}}</div>
+        <div>{{ 'type-of-anemia' | translate }} {{gameCaseDetails.anemiaType}}</div>
+        <div>{{ 'exam-patient-diagnosis' | translate }} {{gameCaseDetails.diagnosis}}</div>
     </div>
-    <div class="text-2xl font-bold mb-10 flex text-center items-center justify-center mt-6">Your Score: {{ score * 5 }}%</div>
+    <div class="text-2xl font-bold mb-10 flex text-center items-center justify-center mt-6">{{ 'your-score' | translate }} {{ score * 5 }}%</div>
     <div class="flex justify-center">
         <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 text-center rounded cursor-pointer"
             (click)="onFinish()">
