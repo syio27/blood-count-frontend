@@ -6,7 +6,11 @@ import { SharedUserDetailsService } from 'src/app/services/shared-user-details.s
 import { NgToastService } from 'ng-angular-popup'
 import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
 import { ExportService } from 'src/app/services/export.service';
-import { saveAs } from 'file-saver';@Component({
+import { saveAs } from 'file-saver';
+import { NotifierService } from 'angular-notifier';
+import { HttpErrorResponse } from '@angular/common/http';
+
+@Component({
   selector: 'app-users-table',
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css']
@@ -21,12 +25,17 @@ export class UsersTableComponent implements OnInit {
   userDetails: UserDetails;
   userHistory: ISimpleGameResponse[] = []
   currentUserEmail: string
+  private readonly notifier: NotifierService;
+
   constructor(
     private adminService: AdminService,
     private sharedUserService: SharedUserDetailsService,
     private toast: NgToastService,
-    private exportService: ExportService
-    ) { }
+    private exportService: ExportService,
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   changeCategory(role: Roles) {
     this.currentCategory = role;
@@ -41,7 +50,7 @@ export class UsersTableComponent implements OnInit {
 
   }
 
-  
+
   private fetchTableData(role: Roles) {
     this.adminService.fetchUsersByRole(role).subscribe(
       (userDetails: UserDetails[]) => {
@@ -93,33 +102,33 @@ export class UsersTableComponent implements OnInit {
       this.currentPage = page;
     }
   }
-  banAdmin(){
+  banAdmin() {
 
   }
-  deleteUser(id){
+  deleteUser(id) {
     this.adminService.deleteUserById(id).subscribe(
-      ()=>{
-        this.toast.success({detail:"Operation done successfully",summary:'User has been deleted',duration: 2000});
+      () => {
+        this.notifier.notify('success', 'User has been deleted');
         this.fetchTableData(this.currentCategory);
       },
       (error) => {
-        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+        this.notifier.notify('error', error.message);
       }
     )
   }
-  openPopup(id, email){
+  openPopup(id, email) {
     this.adminService.getCompletedGames(id).subscribe(
-      (data)=>{
+      (data) => {
         this.userHistory = data
       }
     )
     this.openedPopup = true
     this.currentUserEmail = email
   }
-  closePopup(){
+  closePopup() {
     this.openedPopup = false
   }
-  export(){
+  export() {
     this.exportService.exportGameStats().subscribe(data => {
       saveAs(data, `game statistics - ${new Date().toISOString()}.xlsx`);
     });

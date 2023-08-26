@@ -10,11 +10,9 @@ import { NgToastService } from 'ng-angular-popup'
 import { CaseDataService } from 'src/app/services/caseData.service';
 import { ReferenceTableService } from 'src/app/services/reference-table.service';
 import { Subscription } from 'rxjs';
-import { IReferenceTable } from 'src/app/interfaces/IReferenceTable';
 import { AnemiaType } from 'src/app/enums/anemiaType.enum';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
-
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-case-entity',
@@ -49,6 +47,7 @@ export class CaseEntityComponent implements OnInit {
   selectedUnitOption = '';
   unitDropdownOpen = false;
   disabledRange: boolean
+  private readonly notifier: NotifierService;
 
   constructor(
     private fb: FormBuilder,
@@ -56,9 +55,10 @@ export class CaseEntityComponent implements OnInit {
     private toast: NgToastService,
     private caseDataService: CaseDataService,
     private referanceTable: ReferenceTableService,
-    private breakpointObserver: BreakpointObserver
-
+    private breakpointObserver: BreakpointObserver,
+    notifierService: NotifierService
   ) {
+    this.notifier = notifierService;
     this.form = this.fb.group({
       'diagnosis': ['', Validators.required],
       'hr': ['', Validators.required],
@@ -80,8 +80,6 @@ export class CaseEntityComponent implements OnInit {
         this.isMobile = result.matches;
       });
   }
-
-
 
   restoreFormValues() {
 
@@ -457,13 +455,11 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.removeItem('selectedUnitOption')
         this.addedValues.splice(0, this.addedValues.length);
         sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
-        this.toast.success({ detail: "Operation done successfully", summary: 'Case has been created', duration: 2000 });
+        this.notifier.notify('success', 'Case has been created');
         this.caseDataService.refreshTable();
       },
       (error: HttpErrorResponse) => {
-        console.error('An error occurred during case creation:', error);
-        console.log('HTTP Status Code:', error.status);
-        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+        this.notifier.notify('error', error.message);
       })
   }
 

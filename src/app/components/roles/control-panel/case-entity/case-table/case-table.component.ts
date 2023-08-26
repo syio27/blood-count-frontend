@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ICaseResponse } from 'src/app/interfaces/ICaseResponse';
 import { CaseService } from 'src/app/services/case.service';
 import { IAbnormalityResponse } from 'src/app/interfaces/IAbnormalityResponse';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgToastService } from 'ng-angular-popup'
 import { CaseDataService } from 'src/app/services/caseData.service';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
+import { NotifierService } from 'angular-notifier';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-case-table',
@@ -21,14 +21,16 @@ export class CaseTableComponent implements OnInit {
   openedPopup = false;
   userDetails: UserDetails;
   caseDetails: ICaseResponse;
+  private readonly notifier: NotifierService;
 
   constructor(
     private caseService: CaseService,
-    private toast: NgToastService,
     private caseDataService: CaseDataService,
     private sharedUserService: SharedUserDetailsService,
-
-  ) { }
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit(): void {
     this.fetchTableData()
@@ -98,13 +100,11 @@ export class CaseTableComponent implements OnInit {
   deletCase(item) {
     this.caseService.deleteCase(item).subscribe(
       () => {
-        this.toast.success({ detail: "Operation done successfully", summary: 'Case has been deleted', duration: 2000 });
+        this.notifier.notify('success', 'Case has been deleted');
         this.fetchTableData()
       },
       (error: HttpErrorResponse) => {
-        console.error('An error occurred during case creation:', error);
-        console.log('HTTP Status Code:', error.status);
-        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+        this.notifier.notify('error', error.message);
       })
   }
 }

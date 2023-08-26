@@ -10,6 +10,7 @@ import { NgToastService } from 'ng-angular-popup'
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-groups-manage',
@@ -31,6 +32,7 @@ export class GroupsManageComponent implements OnInit {
   currentUserEmail: string
   openedPopup2 = false
   userHistory: ISimpleGameResponse[] = []
+  private readonly notifier: NotifierService;
 
   constructor(
     private groupService: GroupService,
@@ -38,11 +40,12 @@ export class GroupsManageComponent implements OnInit {
     private adminService: AdminService,
     private toast: NgToastService,
     private sharedUserService: SharedUserDetailsService,
-
+    notifierService: NotifierService
   ) {
     this.form = this.fb.group({
       'groupName': ['', Validators.required],
     });
+    this.notifier = notifierService;
   }
 
   createGroup(): void {
@@ -56,18 +59,13 @@ export class GroupsManageComponent implements OnInit {
 
       this.groupService.createNewGroup(groupRequest).subscribe(
         (response) => {
-          console.log('New group created:', response);
-
           this.form.reset();
           this.selectedGroupTypeOption = null;
-          this.toast.success({detail:"Operation done successfully",summary:'Group has been created',duration: 2000});
-
+          this.notifier.notify('success', 'Group has been created');
           this.fetchGroups();
         },
-        (error) => {
-          console.error('Failed to create group:', error);
-          this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
-
+        (error: HttpErrorResponse) => {
+          this.notifier.notify('error', error.message);
         }
       );
     }
@@ -138,78 +136,70 @@ export class GroupsManageComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to fetch groups:', error);
-        this.toast.error({detail:"Error",summary: error.message ,duration: 1000});
-
       }
     );
   }
 
-  openPopup(item){
+  openPopup(item) {
     this.adminService.fetchGroupParticipants(item).subscribe(
-      (data)=>{
+      (data) => {
         this.groupParticipants = data
       }
     )
     this.openedPopup = true
   }
-  
-  closePopup(){
+
+  closePopup() {
     this.openedPopup = false
   }
 
-  deleteGroup(group){
+  deleteGroup(group) {
     console.log(group.groupNumber)
     this.groupService.deleteGroup(group.groupNumber).subscribe(
       () => {
-        this.toast.success({detail:"Operation done successfully",summary:'Group has been created',duration: 2000});
+        this.notifier.notify('success', 'Group has been deleted');
         this.openedPopup = false
         this.fetchGroups()
       },
       (error: HttpErrorResponse) => {
-        console.error('An error occurred during case creation:', error);
-        console.log('HTTP Status Code:', error.status);
-        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+        this.notifier.notify('error', error.message);
       }
     )
   }
-  deleteUserFromGroup(groupNumber, id){
+  deleteUserFromGroup(groupNumber, id) {
     this.groupService.deleteUserFromGroup(groupNumber, id).subscribe(
       () => {
-        this.toast.success({detail:"Operation done successfully",summary:'User has been deleted from the group',duration: 2000});
+        this.notifier.notify('success', 'User has been deleted from Group');
         this.openPopup(groupNumber)
         this.fetchGroups()
       },
       (error: HttpErrorResponse) => {
-        console.error('An error occurred during case creation:', error);
-        console.log('HTTP Status Code:', error.status);
-        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+        this.notifier.notify('error', error.message);
       }
     )
   }
-  clearGroup(group){
+  clearGroup(group) {
     this.groupService.clearGroup(group.groupNumber).subscribe(
       () => {
-        this.toast.success({detail:"Operation done successfully",summary:'Group has been cleared',duration: 2000});
+        this.notifier.notify('success', 'Group has been cleared');
         this.openPopup(group.groupNumber)
         this.fetchGroups()
       },
       (error: HttpErrorResponse) => {
-        console.error('An error occurred during case creation:', error);
-        console.log('HTTP Status Code:', error.status);
-        this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+        this.notifier.notify('error', error.message);
       }
     )
   }
-  openPopup2(id, email){
+  openPopup2(id, email) {
     this.adminService.getCompletedGames(id).subscribe(
-      (data)=>{
+      (data) => {
         this.userHistory = data
       }
     )
     this.openedPopup2 = true
     this.currentUserEmail = email
   }
-  closePopup2(){
+  closePopup2() {
     this.openedPopup2 = false
   }
 }

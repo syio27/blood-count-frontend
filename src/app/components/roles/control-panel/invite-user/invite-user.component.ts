@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-invite-user',
@@ -20,9 +21,10 @@ export class InviteUserComponent implements OnInit {
   roleDropdownOpen = false;
   groupDropdownOpen = false;
   dropdownOptions: string[] = Object.values(Roles);
-  groupDropdownOptions: string[] = []; 
+  groupDropdownOptions: string[] = [];
   selectedRoleOption = '';
   selectedGroupOption = '';
+  private readonly notifier: NotifierService;
 
   constructor(
     private fb: FormBuilder,
@@ -30,19 +32,22 @@ export class InviteUserComponent implements OnInit {
     private groupService: GroupService,
     private toast: NgToastService,
     private sharedUserService: SharedUserDetailsService,
-  ) { }
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
       email: ['', Validators.required],
     });
 
-    this.fetchGroupNumbers(); 
+    this.fetchGroupNumbers();
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-    if(this.userDetails.role != 'ROOT'){
-      this.dropdownOptions = ['STUDENT','SUPERVISOR']
+    if (this.userDetails.role != 'ROOT') {
+      this.dropdownOptions = ['STUDENT', 'SUPERVISOR']
     }
   }
 
@@ -66,14 +71,13 @@ export class InviteUserComponent implements OnInit {
       };
       this.adminService.invite(inviteRequest).subscribe(
         () => {
-          this.toast.success({detail:"Operation done successfully",summary:'User has been invited',duration: 2000});
+          this.notifier.notify('success', 'Invate email has been sent');
           this.form.reset()
           this.selectedRoleOption = '';
           this.selectedGroupOption = '';
         },
         (error) => {
-          console.error('Failed to send invitation:', error);
-          this.toast.error({ detail: "Error", summary: error.message, duration: 2000 });
+          this.notifier.notify('error', error.message);
         }
       );
     }

@@ -45,7 +45,11 @@
                 <div>
                     <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
                 </div>
+                <span class="flex font-bold text-base md:text-1xl">Case #{{caseDetails.id}}</span>
                 <div class="flex flex-col p-2 rounded-md bg-gray-100">
+                    <div>
+                        Type of anemia: {{caseDetails.anemiaType}}
+                    </div>
                     <div>
                         Diagnosis: {{caseDetails.diagnosis}}
                     </div>
@@ -68,7 +72,7 @@
                         Physical Examination: {{caseDetails.physExam}}
                     </div>
                 </div>
-                <div class="mt-8 flex justify-center text-center text-base md:text-2xl">Abnormalities</div>
+                <div class="mt-8 font-bold flex justify-center text-center text-base md:text-1xl">Abnormalities</div>
                 <table class="w-full border">
                     <thead>
                         <tr>
@@ -108,5 +112,5 @@
             </div>
         </nav>
     </div>
-    <lib-toastify-toast-container></lib-toastify-toast-container>
+    <notifier-container></notifier-container>
 </div>
