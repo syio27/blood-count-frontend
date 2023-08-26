@@ -1,7 +1,7 @@
 <div class='flex flex-col'>
     <div class='fles flex-col'>
         <div class='justify-start text-base md:text-2xl mb-1'>
-            Clinical case
+            {{ 'clinical-case' | translate }}
         </div>
         <div class='h-20 py-2 px-5 bg-gray-100 rounded-md text-base'>
             {{gameCaseDetails.infoCom}}
@@ -9,27 +9,27 @@
     </div>
     <div class='fles flex-col mt-5'>
         <div class='justify-start text-base md:text-2xl mb-1'>
-            Patient Information
+            {{ 'exam-patient-label' | translate }}
         </div>
         <div class='py-2 px-5 bg-gray-100 rounded-md flex flex-col text-base'>
-            <div>Age: {{age}}</div>
-            <div>Gender: {{gender}}</div>
-            <div>Vital Signs: {{gameCaseDetails.vitalSigns}}</div>
-            <div>Heart Rate: {{gameCaseDetails.hr}}</div>
-            <div>Blood Presure: {{gameCaseDetails.rr}}</div>
-            <div>Physical examination: {{gameCaseDetails.physExam}}</div>
+            <div>{{ 'exam-patient-age' | translate }} {{age}}</div>
+            <div>{{ 'exam-patient-gender' | translate }} {{gender}}</div>
+            <div>{{ 'vital-signs' | translate }} {{gameCaseDetails.vitalSigns}}</div>
+            <div>{{ 'heart-rate' | translate }} {{gameCaseDetails.hr}}</div>
+            <div>{{ 'blood-presure' | translate }} {{gameCaseDetails.rr}}</div>
+            <div>{{ 'physical-examination' | translate }} {{gameCaseDetails.physExam}}</div>
         </div>
     </div>
         <div class="mt-14">
             <div> 
                 <div class="text-base md:text-2xl mb-2">
-                    Patient morphology table
+                    {{ 'patient-morphology-table' | translate }}
                 </div>
                 <table class="border w-full text-center text-[8px] md:text-base">
                     <thead>
                         <tr class="border-black bg-gray-200">
                             <th class="px-2 py-2 border">{{ 'exam-table-th-param' | translate }}</th>
-                            <th class="px-2 py-2 border">Unit</th>
+                            <th class="px-2 py-2 border">{{ 'unit' | translate }}</th>
                             <th class="px-2 py-2 border">{{ 'value' | translate }}</th>
                             <th class="px-2 py-2 border">{{ 'range' | translate }}</th>
                             <th class="px-2 py-2 border">{{ 'level-type' | translate }}</th>

@@ -2,38 +2,39 @@
     <div class="p-7 px-5 lg:px-20">
         <div class="flex md:flex-row flex-col items-center justify-between">
             <div class="text-3xl text-center">
-                Control Panel
+                {{ 'control-panel' | translate }}
             </div>
-            <div class="flex justify-center font-bold text-sm text-gray-500 select-none">
+            <div class="flex justify-center text-sm text-gray-500 select-none">
                 <span class="hover:text-gray-700 cursor-pointer">
                     <a [routerLink]="['/control-panel', 'users']" [routerLinkActiveOptions]="{exact: true}"
-                        [routerLinkActive]="'text-gray-700'">
+                        [routerLinkActive]="'text-gray-700'" class="font-bold">
                         {{ 'users' | translate }}
                     </a>
                 </span>
-                <span  *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">/</span>
-                <span class="hover:text-gray-700 cursor-pointer" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
+                <span class="px-1"> | </span>
+                <span class="hover:text-gray-700 cursor-pointer">
                     <a [routerLink]="['/control-panel', 'invite']" [routerLinkActiveOptions]="{exact: true}"
-                        [routerLinkActive]="'text-gray-700'">
+                        [routerLinkActive]="'text-gray-700'" class="font-bold">
                         {{ 'invite' | translate }}
                     </a>
                 </span>
-                <span>/</span>
-
+                <span class="px-1"> | </span>
+            
                 <span class="hover:text-gray-700 cursor-pointer">
                     <a [routerLink]="['/control-panel', 'groups']" [routerLinkActiveOptions]="{exact: true}"
-                        [routerLinkActive]="'text-gray-700'">
+                        [routerLinkActive]="'text-gray-700'" class="font-bold">
                         {{ 'groups' | translate }}
                     </a>
                 </span>
-                <span  *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">/</span>
-                <span class="hover:text-gray-700 cursor-pointer" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
+                <span class="px-1"> | </span>
+                <span class="hover:text-gray-700 cursor-pointer">
                     <a [routerLink]="['/control-panel', 'cases']" [routerLinkActiveOptions]="{exact: true}"
-                        [routerLinkActive]="'text-gray-700'">
+                        [routerLinkActive]="'text-gray-700'" class="font-bold">
                         {{ 'cases' | translate }}
                     </a>
                 </span>
             </div>
+            
         </div>
     </div>
 </div>

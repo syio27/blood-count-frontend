@@ -32,7 +32,7 @@
                     </div>
                     <div (click)="createGroup()"
                         class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
-                        Create
+                        {{ 'create' | translate }}
                     </div>
                 </div>
             </form>
@@ -51,7 +51,7 @@
                         <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer select-none"
                             [class.pointer-events-none]="openedPopup" (click)="openPopup(group.groupNumber)"
                             (click)="selectedGroup = group">
-                            Details
+                            {{ 'details' | translate }}
                         </div>
                     </div>
                 </div>
@@ -63,19 +63,19 @@
                 <div class="flex justify-between">
                     <div>
                         <button class="float-right text-red-500 hover:text-red-700"
-                            (click)="deleteGroup(this.selectedGroup)" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">Delete Group</button>
+                            (click)="deleteGroup(this.selectedGroup)" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">{{ 'delete-group' | translate }}</button>
                     </div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' | translate }}</button>
                 </div>
                 <div class="w-full h-60 overflow-y-auto">
                     <table class="w-full border text-xs">
                         <thead>
                             <tr>
                                 <th class="py-2 w-2/5 border">Email</th>
-                                <th class="py-2 w-1/5 border">Role</th>
+                                <th class="py-2 w-1/5 border">{{ 'role' | translate }}</th>
                                 <th class="py-2 w-2/5 border">
                                     <div class="flex items-center">
-                                        <div class="w-3/4 border-r">More</div>
+                                        <div class="w-3/4 border-r">{{ 'more' | translate }}</div>
                                         <div class="w-1/4">
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                 <td class="border">
                                     <div class="flex justify-center items-center">
                                         <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer" (click)="openPopup2(user.id, user.email)">
-                                            Details
+                                            {{ 'details' | translate }}
                                         </div>
                                         <div (click)="deleteUserFromGroup(user.groupNumber, user.id)"  *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'"
                                             class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="flex justify-end">
                     <div (click)="clearGroup(this.selectedGroup)"  *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'" class="text-red-500 hover:text-red-700 font-bold py-1 px-2 mt-1 text-xs cursor-pointer">
-                        Clear Group 
+                        {{ 'clear-group' | translate }}
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
             <div class="p-4">
                 <div class="flex justify-between mb-3">
                     <div>{{currentUserEmail}}</div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup2()">Close</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup2()">{{ 'close' | translate }}</button>
                 </div>
                 <div class="w-full h-60 overflow-y-auto">
                     <table class="w-full border text-xs">
