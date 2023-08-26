@@ -45,6 +45,7 @@ import { CanDeactivateGuard } from './services/can-deactivate.guard';
 import { Page3Component } from './components/exam/page3/page3.component';
 import { Page4Component } from './components/exam/page4/page4.component';
 import { NotifierModule } from 'angular-notifier';
+import { SkeletonElementsModule } from 'skeleton-elements/angular';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -92,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     NgToastModule,
     MatStepperModule,
+    SkeletonElementsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -110,7 +112,7 @@ export function HttpLoaderFactory(http: HttpClient) {
           distance: 20
         }
       },
-      behaviour:{
+      behaviour: {
         autoHide: 2000
       }
     })

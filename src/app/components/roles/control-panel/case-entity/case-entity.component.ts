@@ -306,7 +306,6 @@ export class CaseEntityComponent implements OnInit {
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
-      console.log(this.levelTypeDropdownOptions)
       this.restoreFormValues()
     }
     else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
@@ -340,7 +339,6 @@ export class CaseEntityComponent implements OnInit {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
       this.selectedLevelTypeOption = '';
-      console.log(this.levelTypeDropdownOptions)
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }
@@ -398,8 +396,6 @@ export class CaseEntityComponent implements OnInit {
       type: levelType
     };
 
-    console.log(levelType);
-    console.log(abnormalityData.type);
 
     this.addedValues.push(abnormalityData);
     this.parameterForm.reset();
@@ -416,7 +412,6 @@ export class CaseEntityComponent implements OnInit {
   }
 
   createCaseWithAbnormality() {
-    console.log(this.addedValues)
     const caseData: ICreateCaseRequest = {
       anemiaType: this.selectedAnemiaOption as AnemiaType,
       diagnosis: this.form.get('diagnosis').value,
@@ -432,7 +427,6 @@ export class CaseEntityComponent implements OnInit {
     };
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
-        console.log('Case creation successful');
         this.selectedGenderOption = '';
         this.parameterForm.reset();
         this.form.reset();
