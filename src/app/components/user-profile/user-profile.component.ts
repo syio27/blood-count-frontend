@@ -6,7 +6,6 @@ import { UserDetails } from '../../interfaces/IUserDetails';
 import { UserProfileService } from 'src/app/services/user.service';
 import { PasswordChangeRequest } from 'src/app/interfaces/IPasswordChangeRequest';
 import { NotifierService } from 'angular-notifier';
-import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
 
 
 function passwordMatchValidator(passwordForm: FormGroup) {
@@ -23,7 +22,7 @@ function passwordMatchValidator(passwordForm: FormGroup) {
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
+  styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
   passwordForm: FormGroup;
@@ -32,10 +31,6 @@ export class UserProfileComponent implements OnInit {
   emailChange = false;
   userDetails: UserDetails;
   invalidPassword: boolean;
-  userID: string
-  lastGame: ISimpleGameResponse[]
-
-
 
   private readonly notifier: NotifierService;
 
@@ -68,7 +63,6 @@ export class UserProfileComponent implements OnInit {
       }),
       this.sharedUserService.getUserDetails().subscribe(userDetails => {
         this.userDetails = userDetails;
-          this.fetchLastGameHistory()
       });
   }
 
@@ -85,18 +79,6 @@ export class UserProfileComponent implements OnInit {
           (this.passwordForm.get(field).untouched && this.formSubmitAttempt)
         );
     }
-  }
-  fetchLastGameHistory() {
-    this.sharedUserService.getUserDetails().subscribe(
-      (data) => {
-        this.userID = data.id
-      }
-    )
-    this.profileService.getHistory(this.userID).subscribe(
-      (data) => {
-          this.lastGame = data;
-      }
-    )
   }
 
 
@@ -118,7 +100,7 @@ export class UserProfileComponent implements OnInit {
             this.invalidPassword = false;
             this.notifier.notify('success', 'Your password has been successfully updated.');
             this.passwordForm.reset()
-          }
+          } 
         },
         (error) => {
           this.invalidPassword = true;

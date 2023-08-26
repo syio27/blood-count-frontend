@@ -15,7 +15,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^16.2.2",
+    "@angular/animations": "^16.1.2",
     "@angular/cdk": "^16.1.1",
     "@angular/cli": "~16.1.0",
     "@angular/common": "^16.1.2",
@@ -41,7 +41,6 @@
     "ng-angular-popup": "^0.3.1",
     "path": "^0.12.7",
     "rxjs": "~7.8.0",
-    "skeleton-elements": "^4.0.1",
     "tslib": "^2.3.0",
     "typescript": "~4.9.4",
     "zone.js": "~0.13.1"
