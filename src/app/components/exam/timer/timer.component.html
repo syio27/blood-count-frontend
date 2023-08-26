@@ -4,7 +4,7 @@
         <div class="text-base md:text-2xl">
           {{ assessmentText }}
         </div>
-        <div class="font-bold text-xs md:text-lg p-1 bg-gray-100 rounded-lg">
+        <div *ngIf="!noTimer" class="font-bold text-xs md:text-lg p-1 bg-gray-100 rounded-lg">
           <span class="minutes">{{ minutes }}</span>
           <span>:</span>
           <span class="seconds">{{ seconds }}</span>

@@ -18,6 +18,7 @@ export class TimerComponent implements OnChanges {
   @Input() submitted: string
   @Input() gameData: IGameResponse
   @Input() currentPage: Pages
+  @Input() noTimer: boolean
   @Output() timeUp: EventEmitter<any> = new EventEmitter();
 
   constructor() { }

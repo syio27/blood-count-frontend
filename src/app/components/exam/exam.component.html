@@ -1,4 +1,4 @@
-<app-timer (timeUp)="submitTest()" [gameData]="gameData" [submitted]='submitted' [currentPage]='currentPage'></app-timer>
+<app-timer (timeUp)="submitTest()" [gameData]="gameData" [submitted]='submitted' [currentPage]='currentPage' [noTimer]="noTimer"></app-timer>
 <app-white-box >
     <app-page1  *ngIf="currentPage=='ONE' && submitted=='IN_PROGRESS'" [displayedElements]="displayedElements" [displayedElements2]="displayedElements2" [gender]="gender"
     [age]="age" [answers]="answers" [testData]="testData" [savedAnswers]='savedAnswers' [gameId]="gameId"

@@ -40,6 +40,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   isNextClicked: boolean
   gameCaseDetails: IGameCaseDetailsResponse
   percentScore: number
+  noTimer: boolean
   private readonly notifier: NotifierService;
 
 
@@ -50,7 +51,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     private sharedGameSubmittedService: SharedGameSubmittedService,
     notifierService: NotifierService
   ) {
-    
+
     this.notifier = notifierService;
     this.nextPage = this.nextPage.bind(this)
     // auto save the selected answers when user normally navigates in the app within the router
@@ -165,5 +166,6 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
       return index === self.findIndex((v) => v.questionId === value.questionId);
     });
     this.invokeCompleteApi(mergedAnswers);
+    this.noTimer = true
   }
 }
