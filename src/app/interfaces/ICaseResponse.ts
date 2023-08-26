@@ -11,4 +11,7 @@ export interface ICaseResponse {
     diagnosis: string
     abnormalities: IAbnormalityResponse[]
     vitalSigns: string
+    hr: string
+    rr: string
+    physExam: string
 }

@@ -2,18 +2,16 @@
     <div class="flex justify-center text-3xl mb-3">
         {{ 'cases' | translate }}
     </div>
-    <div class="relative h-[75vh] mb-8">
+    <div class="relative h-[75vh] mb-8 text-xs md:text-base">
         <table class="w-full border">
             <thead class="border">
                 <tr>
-                    <th class="py-2 w-1/5 border">{{ 'anemia-type' | translate }}</th>
-                    <th class="py-2 w-1/5  border">{{ 'diagnosis' | translate }}</th>
-                    <th class="py-2 w-1/5 border">{{ 'first-range' | translate }}</th>
-                    <th class="py-2 w-1/5 border">{{ 'second-range' | translate }}</th>
-                    <th class="w-1/5">
+                    <th class="py-2 w-2/12  border">Case number</th>
+                    <th class="py-2 w-5/12 border">{{ 'anemia-type' | translate }}</th>
+                    <th class="w-5/12">
                         <div class="flex items-center">
-                            <div class="w-3/4 border-r">{{ 'abnormalities' | translate }}</div>
-                            <div class="w-1/4">
+                            <div class="w-3/5 border-r">Full</div>
+                            <div class="w-2/5">
                             </div>
                         </div>
                     </th>
@@ -21,17 +19,15 @@
             </thead>
             <tbody id="table-body" class="items-center text-center" [class.blur]="openedPopup">
                 <tr *ngFor="let item of displayedGroups">
+                    <td class="border-b">{{ item.id }}</td>
                     <td class="border-b">{{ item.anemiaType }}</td>
-                    <td class="border-b">{{ item.diagnosis }}</td>
-                    <td class="border-b">{{ item.firstMinAge }} - {{ item.firstMaxAge }}</td>
-                    <td class="border-b">{{ item.secondMinAge }} - {{ item.secondMaxAge }}</td>
                     <td class="border-b">
                         <div class="flex justify-center items-center">
                             <div (click)="openPopup(item)" [class.pointer-events-none]="openedPopup"
-                                class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
+                                class="text-blue-500 hover:text-blue-700 w-3/5 font-bold cursor-pointer">
                                 {{ 'details' | translate }}
                             </div>
-                            <div class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2  rounded cursor-pointer"
+                            <div class="text-red-500 hover:text-red-700 w-2/5 font-bold py-1 px-2  rounded cursor-pointer"
                                 (click)="deletCase(item.id)" [class.pointer-events-none]="openedPopup"
                                 *ngIf="userDetails.role == 'ROOT'">
                                 <span class="material-symbols-outlined">
@@ -44,11 +40,35 @@
             </tbody>
         </table>
         <div *ngIf="openedPopup"
-            class="absolute right-0 md:right-20 overflow-y-auto bottom-1/3 w-full md:w-3/4 h-72 border bg-white shadow-2xl rounded-xl">
-            <div class="p-4">
+            class="absolute overflow-y-auto top-0 w-full pb-1 min-h-[288px] border bg-white shadow-2xl rounded-xl">
+            <div class="p-4 flex flex-col">
                 <div>
                     <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
                 </div>
+                <div class="flex flex-col p-2 rounded-md bg-gray-100">
+                    <div>
+                        Diagnosis: {{caseDetails.diagnosis}}
+                    </div>
+                    <div>
+                        Affected Gender: {{caseDetails.affectedGender}}
+                    </div>
+                    <div>
+                        First Range: {{ caseDetails.firstMinAge }} - {{ caseDetails.firstMaxAge }}
+                    </div>
+                    <div>
+                        Second Range: {{ caseDetails.secondMinAge }} - {{ caseDetails.secondMaxAge }}
+                    </div>
+                    <div>
+                        Heart Rate: {{ caseDetails.hr }}
+                    </div>
+                    <div>
+                        Blood Presure: {{caseDetails.rr}}
+                    </div>
+                    <div>
+                        Physical Examination: {{caseDetails.physExam}}
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-center text-center text-base md:text-2xl">Abnormalities</div>
                 <table class="w-full border">
                     <thead>
                         <tr>
@@ -63,9 +83,7 @@
                             <td class="border">{{ abnormality.parameter }}</td>
                             <td class="border">{{ abnormality.unit }}</td>
                             <td class="border">{{ abnormality.minValue }} - {{ abnormality.maxValue }}</td>
-                            <td class="border">
-                                {{ abnormality.type }}
-                            </td>
+                            <td class="border">{{ abnormality.type }}</td>
                         </tr>
                     </tbody>
                 </table>

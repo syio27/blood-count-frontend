@@ -20,6 +20,8 @@ export class CaseTableComponent implements OnInit {
   groupsPerPage = 10;
   openedPopup = false;
   userDetails: UserDetails;
+  caseDetails: ICaseResponse;
+
   constructor(
     private caseService: CaseService,
     private toast: NgToastService,
@@ -86,6 +88,7 @@ export class CaseTableComponent implements OnInit {
   openPopup(item) {
     this.abnormalityData = item.abnormalities
     this.openedPopup = true
+    this.caseDetails = item
   }
 
   closePopup() {
