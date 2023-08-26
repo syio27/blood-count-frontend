@@ -64,7 +64,8 @@
     "anemia-type": "Typ anemii",
     "diagnosis": "Diagnoza",
     "abnormalities": "Nieprawidłowości",
-    "create": "Utworzyć",
+    "create": "Tworzyć",
+    "create-case": "Utwórz przypadek z nieprawidłowościami",
     "add": "Dodać",
     "close": "Zamknąć",
     "role": "Rola",
@@ -85,5 +86,4 @@
     "heart-rate": "Tętno:",
     "blood-presure": "Ciśnienie krwi:",
     "physical-examination": "Badanie lekarskie:"
-    
 }

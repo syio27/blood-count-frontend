@@ -292,6 +292,7 @@
         <div class="flex justify-center mb-4">
             <hr class="mt-4 border-black w-full md:w-3/4">
         </div>
+        <span class="flex justify-center text-xl mb-2">Add Abnormalities</span>
         <div class="flex justify-center mb-3">
             <div class="w-full md:w-3/4 flex flex-col bg-gray-200 rounded-md">
                 <div *ngFor="let item of addedValues" class="flex flex-row my-1 justify-between items-center">
@@ -401,8 +402,8 @@
                 </div>
                 <div class="flex justify-center md:justify-end mt-10">
                     <div (click)="createCaseWithAbnormality()"
-                        class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
-                        {{ 'create' | translate }}
+                        class="w-full md:w-40 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer">
+                        {{ 'create-case' | translate }}
                     </div>
                 </div>
             </form>

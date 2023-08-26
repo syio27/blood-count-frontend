@@ -65,6 +65,7 @@
     "diagnosis": "Diagnosis",
     "abnormalities": "Abnormalities",
     "create": "Create",
+    "create-case": "Create case with abnormalities",
     "add": "Add",
     "close": "Close",
     "role": "Role",
