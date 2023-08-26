@@ -54,6 +54,7 @@ export class UsersTableComponent implements OnInit {
           }
           return 0;
         });
+        console.log(this.tableData);
       },
       (error: any) => {
         console.error(error);
