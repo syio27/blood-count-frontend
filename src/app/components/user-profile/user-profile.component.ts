@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserDetails } from '../../interfaces/IUserDetails';
 import { UserProfileService } from 'src/app/services/user.service';
 import { PasswordChangeRequest } from 'src/app/interfaces/IPasswordChangeRequest';
+import { NotifierService } from 'angular-notifier';
 
 
 function passwordMatchValidator(passwordForm: FormGroup) {
@@ -31,17 +32,22 @@ export class UserProfileComponent implements OnInit {
   userDetails: UserDetails;
   invalidPassword: boolean;
 
+  private readonly notifier: NotifierService;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private sharedUserService: SharedUserDetailsService,
-    private profileService: UserProfileService
-  ) { }
+    private profileService: UserProfileService,
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit() {
     this.passwordForm = this.fb.group({
       currentPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
       confirmPassword: ['', Validators.required]
     }, {
       validator: passwordMatchValidator
@@ -92,9 +98,14 @@ export class UserProfileComponent implements OnInit {
         result => {
           if (result) {
             this.invalidPassword = false;
-          } else {
-            this.invalidPassword = true;
-          }
+            this.notifier.notify('success', 'Your password has been successfully updated.');
+            this.passwordForm.reset()
+          } 
+        },
+        (error) => {
+          this.invalidPassword = true;
+          this.notifier.notify('error', error);
+
         }
       )
     }

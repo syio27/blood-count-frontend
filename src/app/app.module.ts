@@ -44,6 +44,8 @@ import { Page1Component } from './components/exam/page1/page1.component'
 import { CanDeactivateGuard } from './services/can-deactivate.guard';
 import { Page3Component } from './components/exam/page3/page3.component';
 import { Page4Component } from './components/exam/page4/page4.component';
+import { NotifierModule } from 'angular-notifier';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -95,6 +97,21 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
+      }
+    }),
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'right',
+          distance: 12
+        },
+        vertical: {
+          position: 'top',
+          distance: 20
+        }
+      },
+      behaviour:{
+        autoHide: 1000
       }
     })
   ],

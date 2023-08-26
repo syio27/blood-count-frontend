@@ -33,6 +33,7 @@
     "@ng-icons/iconoir": "^24.0.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "angular-notifier": "^14.0.0",
     "angular-toastify": "^1.0.6",
     "express": "^4.18.2",
     "file-saver": "^2.0.5",

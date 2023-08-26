@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
 import { NgToastService } from 'ng-angular-popup';
 
+
 interface AppState {
   message: string
 }
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,6 +25,7 @@ export class AppComponent implements OnInit {
   ) {
   }
 
+  
   ngOnInit() {
     this.router.events
       .pipe(
