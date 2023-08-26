@@ -111,7 +111,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         }
       },
       behaviour:{
-        autoHide: 1000
+        autoHide: 2000
       }
     })
   ],

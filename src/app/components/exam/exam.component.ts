@@ -13,6 +13,8 @@ import { SharedGameSubmittedService } from 'src/app/services/shared-game-submitt
 import { CanComponentDeactivate } from 'src/app/services/can-deactivate.guard';
 import { filter } from 'rxjs/operators';
 import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
+import { NotifierService } from 'angular-notifier';
+
 
 @Component({
   selector: 'app-exam',
@@ -38,13 +40,18 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   isNextClicked: boolean
   gameCaseDetails: IGameCaseDetailsResponse
   percentScore: number
+  private readonly notifier: NotifierService;
+
 
   constructor(
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
     private router: Router,
-    private sharedGameSubmittedService: SharedGameSubmittedService
+    private sharedGameSubmittedService: SharedGameSubmittedService,
+    notifierService: NotifierService
   ) {
+    
+    this.notifier = notifierService;
     this.nextPage = this.nextPage.bind(this)
     // auto save the selected answers when user normally navigates in the app within the router
     this.router.events.pipe(
@@ -135,7 +142,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
         this.invokeNextApi(mergedAnswers);
       }
       else {
-        window.alert('please fullfill all the questions')
+        this.notifier.notify('default', 'You need to fulfill all the questions');
       }
       return;
     }
@@ -145,7 +152,8 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
         this.invokeNextApi(mergedAnswers);
       }
       else {
-        window.alert('please fullfill all the questions')
+        this.notifier.notify('default', 'You need to fulfill all the questions');
+
       }
       return;
     }
