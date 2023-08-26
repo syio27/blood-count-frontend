@@ -13,7 +13,7 @@
                             placeholder="Affected Gender" (click)="toggleGenderDropdown()"
                             [class.rounded-t]="genderDropdownOpen" [class.rounded]="!genderDropdownOpen"
                             [value]="selectedGenderOption" readonly>
-                        <span
+                        <span 
                             class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-5 -translate-y-1/2"
                             [class.rotate-180]="genderDropdownOpen" [class.rotate-0]="!genderDropdownOpen">
                             expand_more
@@ -110,22 +110,15 @@
             <mat-step [stepControl]="form.get('step3')">
                 <ng-template matStepLabel>{{ 'patient-details-1' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
-                    <div class="flex">
-                        <textarea type="text" (input)="saveFormValues(1)" style="resize: none;"
-                        class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="vitalSigns" formControlName="vitalSigns" placeholder="Vital signs"></textarea>
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="hr" formControlName="hr" placeholder="Heart Rate"></textarea>
                     </div>
-                    <div class="flex flex-row gap-1">
-                        <div class="w-full">
-                            <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
-                                class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="hr" formControlName="hr" placeholder="Heart Rate"></textarea>
-                        </div>
-                        <div class="w-full">
-                            <textarea type="text" (input)="saveFormValues(11)" style="resize: none;"
-                                class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="rr" formControlName="rr" placeholder="Blood Pressure"></textarea>
-                        </div>
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(11)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="rr" formControlName="rr" placeholder="Blood Pressure BP"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
@@ -259,22 +252,15 @@
             <mat-step [stepControl]="form.get('step3')">
                 <ng-template matStepLabel>{{ 'patient-details-1' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
-                    <div class="flex">
-                        <textarea type="text" (input)="saveFormValues(1)" style="resize: none;"
-                        class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="vitalSigns" formControlName="vitalSigns" placeholder="Vital signs"></textarea>
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="hr" formControlName="hr" placeholder="Heart Rate"></textarea>
                     </div>
-                    <div class="flex flex-row gap-1">
-                        <div>
-                            <textarea type="text" (input)="saveFormValues(10)" style="resize: none;"
-                                class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="hr" formControlName="hr" placeholder="Heart Rate"></textarea>
-                        </div>
-                        <div>
-                            <textarea type="text" (input)="saveFormValues(11)" style="resize: none;"
-                                class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="rr" formControlName="rr" placeholder="Blood Pressure"></textarea>
-                        </div>
+                    <div>
+                        <textarea type="text" (input)="saveFormValues(11)" style="resize: none;"
+                            class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="rr" formControlName="rr" placeholder="Blood Pressure BP"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">

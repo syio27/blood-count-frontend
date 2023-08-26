@@ -62,7 +62,6 @@ export class CaseEntityComponent implements OnInit {
     this.form = this.fb.group({
       'diagnosis': ['', Validators.required],
       'hr': ['', Validators.required],
-      'vitalSigns': ['', Validators.required],
       'rr': ['', Validators.required],
       'physExam': ['', Validators.required],
       'infoCom': ['', Validators.required],
@@ -94,7 +93,6 @@ export class CaseEntityComponent implements OnInit {
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
     this.form.get('hr').setValue(sessionStorage.getItem('hr'));
-    this.form.get('vitalSigns').setValue(sessionStorage.getItem('vitalSigns'));
     this.form.get('rr').setValue(sessionStorage.getItem('rr'));
     this.form.get('physExam').setValue(sessionStorage.getItem('physExam'));
     this.form.get('infoCom').setValue(sessionStorage.getItem('infoCom'));
@@ -161,9 +159,6 @@ export class CaseEntityComponent implements OnInit {
 
   saveFormValues(input) {
     switch (input) {
-      case 1:
-        sessionStorage.setItem('vitalSigns', this.form.get('vitalSigns').value);
-        break;
       case 2:
         sessionStorage.setItem('diagnosis', this.form.get('diagnosis').value);
         break;
@@ -431,7 +426,6 @@ export class CaseEntityComponent implements OnInit {
       secondMaxAge: this.form.get('second-max').value || 0,
       affectedGender: this.selectedGenderOption as AffectedGenders,
       hr: this.form.get('hr').value,
-      vitalSigns: this.form.get('vitalSigns').value,
       rr: this.form.get('rr').value,
       physExam: this.form.get('physExam').value,
       infoCom: this.form.get('infoCom').value,
@@ -449,7 +443,6 @@ export class CaseEntityComponent implements OnInit {
 
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.setItem('hr', '');
-        sessionStorage.setItem('vitalSigns', '');
         sessionStorage.setItem('rr', '');
         sessionStorage.setItem('physExam', '');
         sessionStorage.setItem('infoCom', '');
