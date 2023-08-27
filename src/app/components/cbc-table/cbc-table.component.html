@@ -6,26 +6,18 @@
         <table class="table-auto border w-full text-center">
             <thead>
                 <tr class="border-black">
-                    <th rowspan="2" class="px-2 py-2 border bg-orange-500">{{ 'value' | translate }}</th>
-                    <th rowspan="2" class="px-2 py-2 border bg-green-500">Unit</th>
-                    <th colspan="2" class="px-2 py-2 border bg-pink-500">{{ 'female' | translate }}</th>
-                    <th colspan="2" class="px-2 py-2 border bg-blue-500">{{ 'male' | translate }}</th>
-                </tr>
-                <tr class="border">
-                    <th class="px-2 py-2 border bg-blue-200">Min</th>
-                    <th class="px-2 py-2 border bg-red-500">Max</th>
-                    <th class="px-2 py-2 border bg-blue-200">Min</th>
-                    <th class="px-2 py-2 border bg-red-500">Max</th>
+                    <th  class="px-2 py-2 border bg-gray-200">{{ 'value' | translate }}</th>
+                    <th  class="px-2 py-2 border bg-gray-200">Unit</th>
+                    <th colspan="2" class="px-2 py-2 border bg-gray-200">{{ 'female' | translate }}</th>
+                    <th colspan="2" class="px-2 py-2 border bg-gray-200">{{ 'male' | translate }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of cbcData">
                     <td class="border px-2 py-2">{{ data.parameter }}</td>
                     <td class="border px-2 py-2">{{ data.unit }}</td>
-                    <td class="border px-2 py-2">{{ data.minFemale }}</td>
-                    <td class="border px-2 py-2">{{ data.maxFemale }}</td>
-                    <td class="border px-2 py-2">{{ data.minMale }}</td>
-                    <td class="border px-2 py-2">{{ data.maxMale }}</td>
+                    <td colspan="2" class="border px-2 py-2">{{ data.minFemale }} - {{ data.maxFemale }}</td>
+                    <td colspan="2" class="border px-2 py-2">{{ data.minMale }} - {{ data.maxMale }}</td>
                 </tr>
             </tbody>
         </table>
