@@ -25,6 +25,7 @@ export class InviteUserComponent implements OnInit {
   selectedRoleOption = '';
   selectedGroupOption = '';
   private readonly notifier: NotifierService;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -64,6 +65,7 @@ export class InviteUserComponent implements OnInit {
 
   inviteUser(): void {
     if (this.form.valid) {
+      this.isLoading = true;
       const inviteRequest: IInviteUserRequest = {
         email: this.form.get('email').value,
         role: this.selectedRoleOption,
@@ -75,9 +77,11 @@ export class InviteUserComponent implements OnInit {
           this.form.reset()
           this.selectedRoleOption = '';
           this.selectedGroupOption = '';
+          this.isLoading = false;
         },
         (error) => {
           this.notifier.notify('error', error.message);
+          this.isLoading = false;
         }
       );
     }
