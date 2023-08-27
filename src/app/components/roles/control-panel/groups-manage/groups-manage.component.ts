@@ -132,7 +132,6 @@ export class GroupsManageComponent implements OnInit {
             return 0;
           }
         });
-        console.log(this.groups)
       },
       (error) => {
         console.error('Failed to fetch groups:', error);
@@ -154,7 +153,6 @@ export class GroupsManageComponent implements OnInit {
   }
 
   deleteGroup(group) {
-    console.log(group.groupNumber)
     this.groupService.deleteGroup(group.groupNumber).subscribe(
       () => {
         this.notifier.notify('success', 'Group has been deleted');

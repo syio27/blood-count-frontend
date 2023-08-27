@@ -1,22 +1,75 @@
 <app-white-box>
-    <div>
-        <table class="w-full border text-xs">
-            <thead>
-                <tr>
-                    <th class="py-2 w-1/5 border">Start Time</th>
-                    <th class="py-2 w-1/5 border">End Time</th>
-                    <th class="py-2 w-1/5 border">Test Duration</th>
-                    <th class="py-2 w-1/5 border">Score</th>
-                </tr>
-            </thead>
-            <tbody id="table-body" class="items-center text-center">
-                <tr *ngFor="let history of gameHistory">
-                    <td class="border">{{ history.startTime }}</td>
-                    <td class="border">{{ history.endTime}}</td>
-                    <td class="border">{{ history.testDuration}}</td>
-                    <td class="border">{{ history.score}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="flex flex-col justify-center">
+        <div class="flex justify-center">
+            <div class="w-full md:w-1/2 h-[60vh] mb-3 relative flex justify-center">
+                <div [class.blur]="openedPopup" class="flex flex-col">
+                    <div class="p-2" *ngFor="let games of gameHistory">
+                        <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
+                            <div class="flex flex-col pr-5">
+                                <div class="text-gray-700 font-bold text-xl mb-2">Game {{ games.id }}</div>
+                                <div class="text-gray-600 mb-2 text-sm">
+                                    Start Date: {{ (games.startTime | date:'dd/MM/yyyy') }}
+                                </div>
+                                <div class="text-gray-600 mb-2 text-sm">
+                                    Start Time: {{ (games.startTime | date:'HH:mm:ss') }}
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer select-none"
+                                    [class.pointer-events-none]="openedPopup" (click)="openPopup(games.id)"
+                                    (click)="selectedGame = games">
+                                    {{ 'details' | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div *ngIf="openedPopup"
+                        class="absolute left-0 top-0 w-full h-80 bg-white border shadow-2xl rounded-xl">
+                        <div class="p-4">
+                            <div class="flex justify-between">
+                                <div>Game {{caseInfo.id}}</div>
+                                <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{
+                                    'close'
+                                    | translate }}</button>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-md p-4 overflow-y-auto text-base">
+                                <div>Played Case {{caseInfo.caseId}}</div>
+                                <div>Start Time: {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
+                                <div>End Time: {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
+                                <div>Test Duration:{{caseInfo.testDuration}} </div>
+                            </div>
+                            <div class="flex justify-center mt-7">
+                                <div class="flex flex-col">
+                                    <div class="text-3xl">Your Score </div>
+                                    <div class="text-2xl flex justify-center mt-2">{{caseInfo.score * 5}}% |
+                                        {{caseInfo.score}}/20</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full mt-4 flex justify-center select-none">
+            <nav class="inline-flex">
+                <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                    (click)="previousPage()" [class.opacity-50]="currentPage === 1">
+                    {{ 'prev' | translate }}
+                </div>
+                <ng-container *ngFor="let page of pages">
+                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                        [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                        {{ page }}
+                    </div>
+                </ng-container>
+                <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+                    (click)="nextPage()" [class.opacity-50]="currentPage === totalPages">
+                    {{ 'next' | translate }}
+                </div>
+            </nav>
+        </div>
     </div>
 </app-white-box>
