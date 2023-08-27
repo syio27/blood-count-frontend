@@ -13,7 +13,7 @@ export class HistoryComponent implements OnInit {
   userID: string
   openedPopup = false
   currentPage = 1;
-  gamesPerPage = 5;
+  gamesPerPage = 3;
   selectedGame: any
   caseInfo: ISimpleGameResponse
 

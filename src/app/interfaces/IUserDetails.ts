@@ -3,5 +3,5 @@ export interface UserDetails {
     email: string
     role: string
     groupNumber: string
-    isActive: boolean
+    active: boolean
 }

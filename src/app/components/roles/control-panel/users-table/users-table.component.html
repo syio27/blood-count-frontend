@@ -42,14 +42,15 @@
                                     delete
                                 </span>
                             </div>
-                            <div (click)="banAdmin(item.id)" class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
-                                *ngIf="currentCategory === Roles.Admin" [class.pointer-events-none]="openedPopup">
-                                Ban
+                            <div (click)="banAdmin(item.id)" class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                *ngIf="currentCategory === Roles.Admin && item.active" [class.pointer-events-none]="openedPopup">
+                                Ban 
                             </div>
-                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
-                                *ngIf="currentCategory === Roles.Admin" [class.pointer-events-none]="openedPopup">
+                            <div (click)="banAdmin(item.id)" class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                *ngIf="currentCategory === Roles.Admin && !item.active" [class.pointer-events-none]="openedPopup">
                                 Unban
                             </div>
+    
                         </div>
                     </td>
                 </tr>

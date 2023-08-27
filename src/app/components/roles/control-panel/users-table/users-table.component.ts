@@ -26,6 +26,7 @@ export class UsersTableComponent implements OnInit {
   userHistory: ISimpleGameResponse[] = []
   currentUserEmail: string
   private readonly notifier: NotifierService;
+  isBanned: boolean
 
   constructor(
     private adminService: AdminService,
@@ -104,8 +105,11 @@ export class UsersTableComponent implements OnInit {
   }
 
   banAdmin(id) {
-    this.adminService.ban(id).subscribe()
-    this.fetchTableData(this.currentCategory);
+    this.adminService.ban(id).subscribe(
+      ()=>{
+        this.fetchTableData(this.currentCategory);
+      }
+    )
   }
 
   
