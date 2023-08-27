@@ -6,4 +6,5 @@ export interface ISimpleGameResponse {
     testDuration: number;
     status: string;
     score: number;
+    caseId: number;
 }

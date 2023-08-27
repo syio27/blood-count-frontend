@@ -1,5 +1,6 @@
 export interface IGameCaseDetailsResponse {
     id: number
+    anActualCaseId: number
     anemiaType: string
     diagnosis: string
     details: string

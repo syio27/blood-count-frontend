@@ -53,6 +53,10 @@ export class UserProfileService {
     return this.http.get<ISimpleGameResponse[]>(`${this.baseUrl}${userId}/games/completed`);
   }
 
+  getCompletedGameById(userId: string, gameId: number): Observable<ISimpleGameResponse> {
+    return this.http.get<ISimpleGameResponse>(`${this.baseUrl}${userId}?gameId=${gameId}`);
+  }
+
   private handleException(exception: HttpErrorResponse) {
     if (exception.status === 0) {
       console.error(`Error on client-side occured:, ${exception.error}`)
