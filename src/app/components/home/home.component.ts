@@ -6,6 +6,9 @@ import { Router } from "@angular/router";
 import { GameService } from 'src/app/services/game.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { IStartGameRequest } from 'src/app/interfaces/IStartGameRequest';
+import { TranslateService } from '@ngx-translate/core';
+import { Language } from 'src/app/enums/language.enum';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +31,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
+    private languageService: TranslateService
   ) { }
 
   toggleClick() {
@@ -61,7 +65,17 @@ export class HomeComponent implements OnInit {
   }
 
   startTest() {
-    this.gameService.start(this.selectedOptionId, this.userDetails.id).subscribe(data => {
+    let selectedLanguage = this.languageService.currentLang;
+    if (!selectedLanguage) {
+      selectedLanguage = 'EN'
+    }
+    console.log(selectedLanguage);
+    let startRequest: IStartGameRequest = {
+      userId: this.userDetails.id,
+      caseId: this.selectedOptionId,
+      language: Language[selectedLanguage.toUpperCase() as keyof typeof Language]
+    }
+    this.gameService.start(startRequest).subscribe(data => {
       this.router.navigate(['/exam']);
     });
   }
