@@ -17,6 +17,7 @@ import { CaseEntityComponent } from './components/roles/control-panel/case-entit
 import { ExamComponent } from './components/exam/exam.component';
 import { CanDeactivateGuard } from './services/can-deactivate.guard';
 import { GameGuard } from './services/game.guard';
+import { RoleGuard } from './services/role.guard';
 
 const routes: Routes = [
   {
@@ -58,19 +59,27 @@ const routes: Routes = [
           },
           {
             path: 'users',
-            component: UsersTableComponent
+            component: UsersTableComponent,
+            canActivate: [RoleGuard],
+            data: { expectedRoles: ['ROOT', 'SUPERVISOR', 'ADMIN'] },
           },
           {
             path: 'invite',
-            component: InviteUserComponent
+            component: InviteUserComponent,
+            canActivate: [RoleGuard],
+            data: { expectedRoles: ['ROOT', 'ADMIN'] },
           },
           {
             path: 'groups',
-            component: GroupsManageComponent
+            component: GroupsManageComponent,
+            canActivate: [RoleGuard],
+            data: { expectedRoles: ['ROOT', 'ADMIN'] },
           },
           {
             path: 'cases',
-            component: CaseEntityComponent
+            component: CaseEntityComponent,
+            canActivate: [RoleGuard],
+            data: { expectedRoles: ['ROOT', 'ADMIN'] },
           },
         ]
       },
