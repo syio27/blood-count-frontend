@@ -42,7 +42,7 @@
                                     delete
                                 </span>
                             </div>
-                            <div class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                            <div (click)="banAdmin(item.id)" class="text-red-500 hover:text-red-700 w-3/4 font-bold cursor-pointer"
                                 *ngIf="currentCategory === Roles.Admin" [class.pointer-events-none]="openedPopup">
                                 Ban
                             </div>

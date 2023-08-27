@@ -102,9 +102,13 @@ export class UsersTableComponent implements OnInit {
       this.currentPage = page;
     }
   }
-  banAdmin() {
 
+  banAdmin(id) {
+    this.adminService.ban(id).subscribe()
+    this.fetchTableData(this.currentCategory);
   }
+
+  
   deleteUser(id) {
     this.adminService.deleteUserById(id).subscribe(
       () => {
