@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { IGameCurrentSessionState } from '../interfaces/IGameCurrentSessionState';
 import { IGameInProgress } from '../interfaces/IGameInProgress';
 import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
+import { IStartGameRequest } from '../interfaces/IStartGameRequest';
 
 
 @Injectable({
@@ -19,9 +20,9 @@ export class GameService {
         private http: HttpClient
     ) { }
 
-    start(caseId: number, userId: string): Observable<IGameResponse> {
-        const url = `${this.baseUrl}case/${caseId}?userId=${userId}`;
-        return this.http.get<IGameResponse>(url, {})
+    start(startRequest: IStartGameRequest): Observable<IGameResponse> {
+        const url = `${this.baseUrl}`;
+        return this.http.post<IGameResponse>(url, startRequest)
             .pipe(
                 catchError(this.handleException)
             );
@@ -69,11 +70,11 @@ export class GameService {
 
     private handleException(exception: HttpErrorResponse) {
         if (exception.status === 0) {
-            console.error(`Error on client-side occured:, ${exception.error}`)
+            console.error(`Error on client-side occured:, ${exception.message}`)
         } else {
-            console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.error}`)
+            console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.message}`)
         }
 
-        return throwError(() => exception.error)
+        return throwError(() => exception.message)
     }
 }
