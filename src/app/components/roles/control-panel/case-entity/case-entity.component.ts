@@ -424,6 +424,7 @@ export class CaseEntityComponent implements OnInit {
     else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
       || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
       this.unitDropdownOptions = ['10^9/L', '%']
+      this.selectedUnitOption = ''
       this.restoreFormValues()
     }
     else {
