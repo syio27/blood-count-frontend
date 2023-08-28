@@ -47,6 +47,7 @@ export class CaseEntityComponent implements OnInit {
   selectedUnitOption = '';
   unitDropdownOpen = false;
   disabledRange: boolean
+  disabledUnit: boolean
   private readonly notifier: NotifierService;
 
   constructor(
@@ -133,15 +134,71 @@ export class CaseEntityComponent implements OnInit {
     if (storedSelectedUnitOption) {
       this.selectedUnitOption = storedSelectedUnitOption;
     }
-    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == 'g/dl') {
+    if (this.selectedParameterOption == 'HGB') {
+      this.selectedUnitOption = 'g/dl'
+      this.disabledUnit = true
       this.disabledRange = true
+      this.unitDropdownOpen = false
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
     }
-    else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl' || this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+    else if (this.selectedParameterOption == 'WBC' || this.selectedParameterOption == 'PLT') {
+      this.selectedUnitOption = '10^9/L'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
+    }
+    else if (this.selectedParameterOption == 'RBC') {
+      this.selectedUnitOption = '10^12/L'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
+    }
+    else if (this.selectedParameterOption == 'HCT' || this.selectedParameterOption == 'RDW_CV') {
+      this.selectedUnitOption = '%'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
+    }
+    else if (this.selectedParameterOption == 'MCV') {
+      this.selectedUnitOption = 'fl'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
     }
+    else if (this.selectedParameterOption == 'MCH') {
+      this.selectedUnitOption = 'pg'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.disabledRange = true
+      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+    }
+    else if (this.selectedParameterOption == 'MCHC') {
+      this.selectedUnitOption = 'g/dl'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
+    }
+    else if (this.selectedParameterOption == 'RDW_SD') {
+      this.selectedUnitOption = 'fl'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
+    }
+    else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
+      || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
+      this.unitDropdownOptions = ['10^9/L', '%']
+      this.disabledUnit = false
+      this.disabledRange = false
+      this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
+    }
     else {
+      this.disabledUnit = false
       this.disabledRange = false
       this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
     }
@@ -150,7 +207,13 @@ export class CaseEntityComponent implements OnInit {
   ngOnInit() {
     this.referenceTableSubscription = this.referanceTable.fetchBCReferenceTable().subscribe(data => {
       this.parameterDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.parameter).filter((value, index, self) => self.indexOf(value) === index);
-      this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
+      if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
+        || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
+        this.unitDropdownOptions = ['10^9/L', '%']
+      }
+      else {
+        this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
+      }
     });
     this.restoreFormValues()
   }
@@ -238,6 +301,7 @@ export class CaseEntityComponent implements OnInit {
   toggleUnitDropdown() {
     this.unitDropdownOpen = !this.unitDropdownOpen;
   }
+
   selectLevelTypeOption(option: string) {
     this.selectedLevelTypeOption = option;
     this.levelTypeDropdownOpen = false;
@@ -298,54 +362,87 @@ export class CaseEntityComponent implements OnInit {
   selectParameterOption(option: string) {
     this.selectedParameterOption = option;
     this.parameterDropdownOpen = false;
+    sessionStorage.setItem('parameter-min', '')
+    sessionStorage.setItem('parameter-max', '')
     sessionStorage.setItem('selectedParameterOption', option);
-    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == 'g/dl') {
+    if (this.selectedParameterOption == 'HGB') {
+      this.selectedUnitOption = 'g/dl'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }
-    else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
-      this.disabledRange = true
+    else if (this.selectedParameterOption == 'WBC' || this.selectedParameterOption == 'PLT') {
+      this.selectedUnitOption = '10^9/L'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'RBC') {
+      this.selectedUnitOption = '10^12/L'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'HCT') {
+      this.selectedUnitOption = '%'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'MCH') {
+      this.selectedUnitOption = 'pg'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
       this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }
-    else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
-      this.disabledRange = true
+    else if (this.selectedParameterOption == 'MCV') {
+      this.selectedUnitOption = 'fl'
+      this.disabledUnit = true
+      this.unitDropdownOpen = false
       this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
+    }
+    else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
+      || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
+      this.unitDropdownOptions = ['10^9/L', '%']
       this.restoreFormValues()
     }
     else {
+      this.disabledUnit = false
       this.disabledRange = false
       this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
-
       this.restoreFormValues()
     }
   }
+
   selectUnitOption(option: string) {
     this.selectedUnitOption = option;
     this.unitDropdownOpen = false;
+    sessionStorage.setItem('parameter-min', '')
+    sessionStorage.setItem('parameter-max', '')
     sessionStorage.setItem('selectedUnitOption', option);
-    if (this.selectedParameterOption == 'HGB' && this.selectedUnitOption == 'g/dl') {
-      this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Degree 0', 'Degree I', 'Degree II', 'Degree III', 'Degree IV']
-      this.selectedLevelTypeOption = '';
-      sessionStorage.setItem('selectedLevelTypeOption', '');
-      this.restoreFormValues()
-    }
-    else if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
+    if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       this.disabledRange = true
       this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
-
       this.restoreFormValues()
     }
     else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
@@ -353,16 +450,14 @@ export class CaseEntityComponent implements OnInit {
       this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
-
       this.restoreFormValues()
     }
     else {
       this.disabledRange = false
-
+      this.disabledUnit = false
       this.levelTypeDropdownOptions = ['INCREASED', 'NORMAL', 'DECREASED']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
-
       this.restoreFormValues()
     }
   }

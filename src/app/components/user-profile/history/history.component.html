@@ -12,7 +12,7 @@
                 <div [class.blur]="openedPopup" class="flex flex-col">
                     <div class="p-2" *ngFor="let games of displayedGames">
                         <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
-                            <div class="flex flex-col pr-5">
+                            <div class="flex flex-col pr-20">
                                 <div class="text-gray-700 font-bold text-xl mb-2">Game {{ games.id }}</div>
                                 <div class="text-gray-600 mb-2 text-sm">
                                     Start Date: {{ (games.startTime | date:'dd/MM/yyyy') }}

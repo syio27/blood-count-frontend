@@ -14,7 +14,7 @@
                             [class.rounded-t]="genderDropdownOpen" [class.rounded]="!genderDropdownOpen"
                             [value]="selectedGenderOption" readonly>
                         <span 
-                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-5 -translate-y-1/2"
+                            class="material-symbols-outlined select-none text-xl font-bold transition duration-150 transform absolute right-3 top-5 md:top-[18px] -translate-y-1/2"
                             [class.rotate-180]="genderDropdownOpen" [class.rotate-0]="!genderDropdownOpen">
                             expand_more
                         </span>
@@ -341,12 +341,12 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="relative w-full md:w-1/4" [class.open]="unitDropdownOpen">
+                    <div class="relative w-full md:w-1/4" [class.open]="unitDropdownOpen" [class.pointer-events-none]="disabledUnit">
                         <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Unit" (click)="toggleUnitDropdown()" [class.rounded-t]="unitDropdownOpen"
                             [class.rounded]="!unitDropdownOpen" [value]="selectedUnitOption" readonly>
-                        <span
+                        <span [class.hidden]="disabledUnit"
                             class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
                             [class.rotate-180]="unitDropdownOpen" [class.rotate-0]="!unitDropdownOpen">
                             expand_more
@@ -373,7 +373,7 @@
                             [class.pointer-events-none]="disabledRange">
                     </div>
                     <div class="relative" [class.open]="levelTypeDropdownOpen">
-                        <input type="text"
+                        <input type="text" 
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Level Type" (click)="toggleLevelTypeDropdown()"
                             [class.rounded-t]="levelTypeDropdownOpen" [class.rounded]="!levelTypeDropdownOpen"
