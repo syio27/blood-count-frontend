@@ -5,6 +5,36 @@
     <div class="flex justify-center">
         <mat-horizontal-stepper [linear]="true" [formGroup]="form" *ngIf="!isMobile">
             <mat-step [stepControl]="form.get('step1')">
+                <ng-template matStepLabel class="custom-step-label">Save as</ng-template>
+                <div class="flex justify-center gap-5 mt-10">
+                    <div class="flex flex-col w-1/2">
+                        <div class="w-full">
+                            <input type="text" (input)="saveFormValues(1)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="case-name" formControlName="case-name" placeholder="Case name">
+                        </div>
+                        <div class="flex justify-center mt-5">
+                            <div class="flex flex-col">
+                                <div>Choose language for case creation</div>
+                                <div class="flex justify-center mt-2"> 
+                                    <div class="cursor-pointer py-1 px-3 border-y border-l border-black"
+                                    [class.bg-blue-500]="selectedLanguage === 'EN'" (click)="selectedLanguage = 'EN'">
+                                    EN
+                                </div>
+                                <div class="cursor-pointer py-1 px-3 border border-black"
+                                    [class.bg-blue-500]="selectedLanguage === 'PL'" (click)="selectedLanguage = 'PL'">
+                                    PL
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-5">
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="form.get('step2')">
                 <ng-template matStepLabel class="custom-step-label"> {{ 'affected-patient' | translate }}</ng-template>
                 <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
                     <div class="relative" [class.open]="genderDropdownOpen">
@@ -13,7 +43,7 @@
                             placeholder="Affected Gender" (click)="toggleGenderDropdown()"
                             [class.rounded-t]="genderDropdownOpen" [class.rounded]="!genderDropdownOpen"
                             [value]="selectedGenderOption" readonly>
-                        <span 
+                        <span
                             class="material-symbols-outlined select-none text-xl font-bold transition duration-150 transform absolute right-3 top-5 md:top-[18px] -translate-y-1/2"
                             [class.rotate-180]="genderDropdownOpen" [class.rotate-0]="!genderDropdownOpen">
                             expand_more
@@ -70,7 +100,7 @@
                     <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="form.get('step2')">
+            <mat-step [stepControl]="form.get('step3')">
                 <ng-template matStepLabel>{{ 'disease-info' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
@@ -107,7 +137,7 @@
                     <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="form.get('step3')">
+            <mat-step [stepControl]="form.get('step4')">
                 <ng-template matStepLabel>{{ 'patient-details-1' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
@@ -126,7 +156,7 @@
                     <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="form.get('step4')">
+            <mat-step [stepControl]="form.get('step5')">
                 <ng-template matStepLabel>{{ 'patient-details-2' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
@@ -147,6 +177,36 @@
         </mat-horizontal-stepper>
         <mat-vertical-stepper [linear]="true" [formGroup]="form" *ngIf="isMobile">
             <mat-step [stepControl]="form.get('step1')">
+                <ng-template matStepLabel class="custom-step-label">Save as</ng-template>
+                <div class="flex justify-center gap-5 mt-10">
+                    <div class="flex flex-col w-full">
+                        <div class="w-full">
+                            <input type="text" (input)="saveFormValues(1)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="case-name" formControlName="case-name" placeholder="Case name">
+                        </div>
+                        <div class="flex justify-center mt-5">
+                            <div class="flex flex-col">
+                                <div>Choose language for case creation</div>
+                                <div class="flex justify-center mt-2"> 
+                                    <div class="cursor-pointer py-1 px-3 border-y border-l border-black"
+                                    [class.bg-blue-500]="selectedLanguage === 'EN'" (click)="selectedLanguage = 'EN'">
+                                    EN
+                                </div>
+                                <div class="cursor-pointer py-1 px-3 border border-black"
+                                    [class.bg-blue-500]="selectedLanguage === 'PL'" (click)="selectedLanguage = 'PL'">
+                                    PL
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-5">
+                    <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="form.get('step2')">
                 <ng-template matStepLabel>{{ 'affected-patient' | translate }}</ng-template>
                 <div class="flex flex-col md:flex-row justify-center gap-5 mt-10">
                     <div class="relative" [class.open]="genderDropdownOpen">
@@ -163,8 +223,8 @@
                         <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
                             [class.scale-y-0]="!genderDropdownOpen" [class.scale-y-100]="genderDropdownOpen">
                             <li *ngFor="let option of genderDropdownOptions"
-                                class="py-2 px-3 cursor-pointer text-xs hover:bg-gray-100" (click)="selectGenderOption(option)"
-                                [class.selected]="option === selectedGenderOption">
+                                class="py-2 px-3 cursor-pointer text-xs hover:bg-gray-100"
+                                (click)="selectGenderOption(option)" [class.selected]="option === selectedGenderOption">
                                 {{ option }}
                             </li>
                         </ul>
@@ -198,7 +258,7 @@
                                 </div>
                                 <input type="number" (input)="saveFormValues(5)"
                                     class="appearance-none border rounded w-full text-xs py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="second-min" formControlName="second-min" placeholder="Min age"> 
+                                    id="second-min" formControlName="second-min" placeholder="Min age">
                             </div>
                             <div class="mb-3">
                                 <input type="number" (input)="saveFormValues(6)"
@@ -212,7 +272,7 @@
                     <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="form.get('step2')">
+            <mat-step [stepControl]="form.get('step3')">
                 <ng-template matStepLabel>{{ 'disease-info' | translate }} </ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
@@ -249,7 +309,7 @@
                     <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="form.get('step3')">
+            <mat-step [stepControl]="form.get('step4')">
                 <ng-template matStepLabel>{{ 'patient-details-1' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
@@ -268,7 +328,7 @@
                     <button mat-stroked-button matStepperNext>{{ 'next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="form.get('step4')">
+            <mat-step [stepControl]="form.get('step5')">
                 <ng-template matStepLabel>{{ 'patient-details-2' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
                     <div>
@@ -341,7 +401,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="relative w-full md:w-1/4" [class.open]="unitDropdownOpen" [class.pointer-events-none]="disabledUnit">
+                    <div class="relative w-full md:w-1/4" [class.open]="unitDropdownOpen"
+                        [class.pointer-events-none]="disabledUnit">
                         <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Unit" (click)="toggleUnitDropdown()" [class.rounded-t]="unitDropdownOpen"
@@ -373,7 +434,7 @@
                             [class.pointer-events-none]="disabledRange">
                     </div>
                     <div class="relative" [class.open]="levelTypeDropdownOpen">
-                        <input type="text" 
+                        <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             placeholder="Level Type" (click)="toggleLevelTypeDropdown()"
                             [class.rounded-t]="levelTypeDropdownOpen" [class.rounded]="!levelTypeDropdownOpen"

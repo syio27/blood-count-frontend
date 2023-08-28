@@ -29,6 +29,8 @@ export class CaseEntityComponent implements OnInit {
   selectedGenderOption = '';
   genderDropdownOpen = false;
   showSecondRangeForm = false;
+  selectedLanguage: string;
+  caseName: string
 
   selectedAnemiaOption = '';
   anemiaDropdownOpen = false;
@@ -62,6 +64,7 @@ export class CaseEntityComponent implements OnInit {
     this.notifier = notifierService;
     this.form = this.fb.group({
       'diagnosis': ['', Validators.required],
+      'case-name': ['', Validators.required],
       'hr': ['', Validators.required],
       'rr': ['', Validators.required],
       'physExam': ['', Validators.required],
@@ -87,8 +90,9 @@ export class CaseEntityComponent implements OnInit {
     const storedSelectedAnemiaOption = sessionStorage.getItem('anemia-type');
     if (storedSelectedAnemiaOption) {
       this.selectedAnemiaOption = storedSelectedAnemiaOption;
-    } this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
-
+    } 
+    this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
+    this.form.get('case-name').setValue(sessionStorage.getItem('case-name'))
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
     this.form.get('hr').setValue(sessionStorage.getItem('hr'));
@@ -114,9 +118,6 @@ export class CaseEntityComponent implements OnInit {
     if (storedAddedValues) {
       this.addedValues = JSON.parse(storedAddedValues);
     }
-
-
-
     const storedSelectedGenderOption = sessionStorage.getItem('selectedGenderOption');
     if (storedSelectedGenderOption) {
       this.selectedGenderOption = storedSelectedGenderOption;
@@ -220,6 +221,9 @@ export class CaseEntityComponent implements OnInit {
 
   saveFormValues(input) {
     switch (input) {
+      case 1:
+        sessionStorage.setItem('case-name', this.form.get('case-name').value);
+        break;
       case 2:
         sessionStorage.setItem('diagnosis', this.form.get('diagnosis').value);
         break;
@@ -508,6 +512,7 @@ export class CaseEntityComponent implements OnInit {
     const caseData: ICreateCaseRequest = {
       anemiaType: this.selectedAnemiaOption as AnemiaType,
       diagnosis: this.form.get('diagnosis').value,
+      caseName: this.form.get('case-name').value,
       firstMinAge: this.form.get('first-min').value,
       firstMaxAge: this.form.get('first-max').value,
       secondMinAge: this.form.get('second-min').value || 0,
@@ -517,6 +522,7 @@ export class CaseEntityComponent implements OnInit {
       rr: this.form.get('rr').value,
       physExam: this.form.get('physExam').value,
       infoCom: this.form.get('infoCom').value,
+      language: this.selectedLanguage
     };
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
@@ -528,6 +534,7 @@ export class CaseEntityComponent implements OnInit {
         this.selectedUnitOption = '';
         this.selectedAnemiaOption = ''
 
+        sessionStorage.setItem('case-name', '');
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.setItem('hr', '');
         sessionStorage.setItem('rr', '');

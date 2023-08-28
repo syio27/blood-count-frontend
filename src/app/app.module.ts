@@ -44,6 +44,7 @@ import { CanDeactivateGuard } from './services/can-deactivate.guard';
 import { Page3Component } from './components/exam/page3/page3.component';
 import { Page4Component } from './components/exam/page4/page4.component';
 import { NotifierModule } from 'angular-notifier';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -90,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     MatStepperModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

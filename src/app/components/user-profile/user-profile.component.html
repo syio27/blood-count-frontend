@@ -42,7 +42,7 @@
           <div  class="flex  font-medium text-base md:text-sm lg:text-base" >Start Time: {{ (lastGame[lastGame.length - 1].startTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
           <div class="flex  font-medium text-base md:text-sm lg:text-base" >End Time: {{ (lastGame[lastGame.length-1].endTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
           <div class="flex  font-medium text-base md:text-sm lg:text-base" >Test Duration: {{ lastGame[lastGame.length-1].testDuration }}min</div>
-          <div class="flex font-medium text-base md:text-sm lg:text-base">Your Score: {{ lastGame[lastGame.length-1].score}}/20 | {{ lastGame[lastGame.length-1].score * 5 }}%</div>
+          <div class="flex font-medium text-base md:text-sm lg:text-base p-2 rounded-md border">Your Score: {{ lastGame[lastGame.length-1].score}}/20 | {{ lastGame[lastGame.length-1].score * 5 }}%</div>
         </div>
       </div>
     </div>
