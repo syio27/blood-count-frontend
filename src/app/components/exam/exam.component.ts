@@ -119,8 +119,8 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
 
   // SORT BY ID BEFORE SLICE
   get displayedElements2() {
-    this.sortArrayById(this.tableData);
-    return this.tableData.slice(8, 20);
+    let sortedTableDate = this.sortArrayById(this.tableData);
+    return sortedTableDate.slice(8, 20);
   }
 
   sortArrayById(arr: IBloodCountResponse[]): IBloodCountResponse[] {
