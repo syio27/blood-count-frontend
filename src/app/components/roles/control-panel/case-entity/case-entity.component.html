@@ -5,7 +5,7 @@
     <div class="flex justify-center">
         <mat-horizontal-stepper [linear]="true" [formGroup]="form" *ngIf="!isMobile">
             <mat-step [stepControl]="form.get('step1')">
-                <ng-template matStepLabel class="custom-step-label">Save as</ng-template>
+                <ng-template matStepLabel class="custom-step-label">{{ 'save-as' | translate }}</ng-template>
                 <div class="flex justify-center gap-5 mt-10">
                     <div class="flex flex-col w-1/2">
                         <div class="w-full">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="flex justify-center mt-5">
                             <div class="flex flex-col">
-                                <div>Choose language for case creation</div>
+                                <div>{{ 'choose-language' | translate }}</div>
                                 <div class="flex justify-center mt-2"> 
                                     <div class="cursor-pointer py-1 px-3 border-y border-l border-black"
                                     [class.bg-blue-500]="selectedLanguage === 'EN'" (click)="selectedLanguage = 'EN'">
@@ -177,7 +177,7 @@
         </mat-horizontal-stepper>
         <mat-vertical-stepper [linear]="true" [formGroup]="form" *ngIf="isMobile">
             <mat-step [stepControl]="form.get('step1')">
-                <ng-template matStepLabel class="custom-step-label">Save as</ng-template>
+                <ng-template matStepLabel class="custom-step-label">{{ 'save-as' | translate }}</ng-template>
                 <div class="flex justify-center gap-5 mt-10">
                     <div class="flex flex-col w-full">
                         <div class="w-full">
@@ -187,7 +187,7 @@
                         </div>
                         <div class="flex justify-center mt-5">
                             <div class="flex flex-col">
-                                <div>Choose language for case creation</div>
+                                <div>{{ 'choose-language' | translate }}</div>
                                 <div class="flex justify-center mt-2"> 
                                     <div class="cursor-pointer py-1 px-3 border-y border-l border-black"
                                     [class.bg-blue-500]="selectedLanguage === 'EN'" (click)="selectedLanguage = 'EN'">
@@ -352,7 +352,7 @@
         <div class="flex justify-center mb-4">
             <hr class="mt-4 border-black w-full md:w-3/4">
         </div>
-        <span class="flex justify-center text-xl mb-2">Add Abnormalities</span>
+        <span class="flex justify-center text-xl mb-2">{{ 'add-abnormalities' | translate }}</span>
         <div class="flex justify-center mb-3">
             <div class="w-full md:w-3/4 flex flex-col bg-gray-200 rounded-md">
                 <div *ngFor="let item of addedValues" class="flex flex-row my-1 justify-between items-center">
