@@ -124,8 +124,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   }
 
   sortArrayById(arr: IBloodCountResponse[]): IBloodCountResponse[] {
-    const copy = [...arr];
-    return copy.sort((a, b) => a.id - b.id);
+    return arr.sort((a, b) => a.id - b.id);
   }
 
   private invokeNextApi(mergedAnswers: any[]) {
