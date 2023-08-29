@@ -102,6 +102,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           this.gameCaseDetails = data.gameCaseDetails
           console.log(this.testData);
           console.log(this.msAssesmentTest)
+          console.log(this.tableData)
         },
       );
   }
