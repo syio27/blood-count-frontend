@@ -51,7 +51,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.passwordForm = this.fb.group({
       currentPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+-=])[0-9a-zA-Z!@#$%^&*()_+-=]{8,}$/)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+?.-=])[0-9a-zA-Z!@#$%^&*()_+?.-=]{8,}$/)]],
       confirmPassword: ['', Validators.required]
     }, {
       validator: passwordMatchValidator
@@ -67,7 +67,7 @@ export class UserProfileComponent implements OnInit {
       }),
       this.sharedUserService.getUserDetails().subscribe(userDetails => {
         this.userDetails = userDetails;
-          this.fetchLastGameHistory()
+        this.fetchLastGameHistory()
       });
   }
 
@@ -93,7 +93,7 @@ export class UserProfileComponent implements OnInit {
     )
     this.profileService.getHistory(this.userID).subscribe(
       (data) => {
-          this.lastGame = data;
+        this.lastGame = data;
       }
     )
   }
