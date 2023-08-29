@@ -61,16 +61,16 @@
             <div class="p-4">
                 <div class="flex justify-between mb-3">
                     <div>{{currentUserEmail}}</div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' | translate }}</button>
                 </div>
                 <div class="w-full h-60 overflow-y-auto">
                     <table class="w-full border text-xs">
                         <thead>
                             <tr>
-                                <th class="py-2 w-1/4 border">Start Time</th>
-                                <th class="py-2 w-1/4 border">End Time</th>
-                                <th class="py-2 w-1/4 border">Test Duration</th>
-                                <th class="py-2 w-1/4 border">Score</th>
+                                <th class="py-2 w-1/4 border">{{ 'start-time' | translate }}</th>
+                                <th class="py-2 w-1/4 border">{{ 'end-time' | translate }}</th>
+                                <th class="py-2 w-1/4 border">{{ 'test-duration' | translate }}</th>
+                                <th class="py-2 w-1/4 border">{{ 'score' | translate }}</th>
                             </tr>
                         </thead>
                         <tbody id="table-body" class="items-center text-center">
