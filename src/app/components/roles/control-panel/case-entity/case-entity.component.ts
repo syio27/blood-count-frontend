@@ -90,7 +90,7 @@ export class CaseEntityComponent implements OnInit {
     const storedSelectedAnemiaOption = sessionStorage.getItem('anemia-type');
     if (storedSelectedAnemiaOption) {
       this.selectedAnemiaOption = storedSelectedAnemiaOption;
-    } 
+    }
     this.form.get('diagnosis').setValue(sessionStorage.getItem('diagnosis'))
     this.form.get('case-name').setValue(sessionStorage.getItem('case-name'))
     this.form.get('first-min').setValue(sessionStorage.getItem('first-min'));
@@ -332,7 +332,7 @@ export class CaseEntityComponent implements OnInit {
         this.restoreFormValues()
         break;
       case 'Degree IV':
-        sessionStorage.setItem('parameter-min', '1')
+        sessionStorage.setItem('parameter-min', '4.8')
         sessionStorage.setItem('parameter-max', '6.5')
         this.restoreFormValues()
         break;
