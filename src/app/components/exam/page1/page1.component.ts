@@ -34,6 +34,7 @@ export class Page1Component {
   }
 
   onAnswer(answerId: number, questionId: number) {
+    console.log(this.displayedElements2)
     const existingAnswer = this.answers.find(a => a.questionId === questionId);
     if (existingAnswer) {
       existingAnswer.answerId = answerId;
