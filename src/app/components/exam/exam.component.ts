@@ -14,6 +14,7 @@ import { CanComponentDeactivate } from 'src/app/services/can-deactivate.guard';
 import { filter } from 'rxjs/operators';
 import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
 import { NotifierService } from 'angular-notifier';
+import { IBloodCountResponse } from 'src/app/interfaces/IBloodCountResponse';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { NotifierService } from 'angular-notifier';
 })
 export class ExamComponent implements OnInit, CanComponentDeactivate {
 
-  tableData = [];
+  tableData: IBloodCountResponse[] = [];
   testData = [];
   age: number
   gender: string
@@ -111,12 +112,20 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     return window.confirm('You are currently on the exam page. Are you sure you want to leave?');
   }
 
+  // SORT BY ID BEFORE SLICE
   get displayedElements() {
     return this.testData.slice(0, 8);
   }
 
+  // SORT BY ID BEFORE SLICE
   get displayedElements2() {
+    this.sortArrayById(this.tableData);
     return this.tableData.slice(8, 20);
+  }
+
+  sortArrayById(arr: IBloodCountResponse[]): IBloodCountResponse[] {
+    const copy = [...arr];
+    return copy.sort((a, b) => a.id - b.id);
   }
 
   private invokeNextApi(mergedAnswers: any[]) {
