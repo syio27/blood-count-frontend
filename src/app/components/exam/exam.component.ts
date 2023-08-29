@@ -100,6 +100,8 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           this.gameId = this.gameData.id;
           this.msAssesmentTest = msQuestions;
           this.gameCaseDetails = data.gameCaseDetails
+          console.log(this.testData);
+          console.log(this.msAssesmentTest)
         },
       );
   }
@@ -129,7 +131,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
         this.submitted = data.status
         this.sharedGameSubmittedService.setStatus(data.status)
         this.score = data.score
-        this.percentScore = this.score*100/(this.testData.length + this.msAssesmentTest.length)
+        this.percentScore = this.score * 100 / (this.testData.length + this.msAssesmentTest.length)
       }
     )
   }
