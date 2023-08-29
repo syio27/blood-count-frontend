@@ -2,7 +2,6 @@ import { Component, OnInit, Output, Input, EventEmitter, OnChanges, SimpleChange
 import { GameService } from 'src/app/services/game.service';
 import { IGameResponse } from 'src/app/interfaces/IGameResponse';
 import { Pages } from 'src/app/enums/pages';
-import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-timer',
@@ -46,13 +45,10 @@ export class TimerComponent implements OnChanges {
 
   initializeTimer(changes: SimpleChanges) {
     if (changes['gameData'] && changes['gameData'].currentValue) {
-      const currentTime = moment.utc().unix();
-      const estimatedEndTime = moment.tz(this.gameData.estimatedEndTime, "Europe/Warsaw");  // Replace "America/New_York" with the actual time zone
-      const estimatedEndTimeUTC = estimatedEndTime.clone().utc();
-      const estimatedEndTimeInSeconds = estimatedEndTimeUTC.unix();  // Unix timestamp in seconds
-      this.remainingTime = Math.max(estimatedEndTimeInSeconds - currentTime, 0);
+      const currentTime = Math.floor(new Date(this.gameData.currentServerTime).getTime() / 1000);
+      const estimatedEndTime = Math.floor(new Date(this.gameData.estimatedEndTime).getTime() / 1000);
+      this.remainingTime = Math.max(estimatedEndTime - currentTime, 0);
     }
-
   }
 
   startTimer(changes: SimpleChanges) {

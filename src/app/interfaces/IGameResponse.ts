@@ -9,6 +9,7 @@ export interface IGameResponse {
     startTime: string
     endTime: any
     estimatedEndTime: string
+    currentServerTime: string
     testDuration: number
     status: string
     score: number
@@ -18,5 +19,4 @@ export interface IGameResponse {
     msQuestions: IMSQuestionResponse[],
     savedUserAnswers: SavedUserAnswerResponse[],
     currentPage: Pages
-
 }
