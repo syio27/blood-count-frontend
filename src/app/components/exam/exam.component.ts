@@ -15,6 +15,7 @@ import { filter } from 'rxjs/operators';
 import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
 import { NotifierService } from 'angular-notifier';
 import { IBloodCountResponse } from 'src/app/interfaces/IBloodCountResponse';
+import { IMSQuestionResponse } from 'src/app/interfaces/IMSQuestionResponse';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   score: number
   isTestValid: boolean
   savedAnswers: SavedUserAnswerResponse[] = []
-  msAssesmentTest = []
+  msAssesmentTest: IMSQuestionResponse[] = []
   currentPage: Pages
   gameData: IGameResponse
   isNextClicked: boolean
@@ -99,7 +100,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           this.tableData = bloodCount;
           this.testData = bcAssessmentQuestions;
           this.gameId = this.gameData.id;
-          this.msAssesmentTest = msQuestions;
+          this.msAssesmentTest = this.sortMsArrayById(msQuestions);
           this.gameCaseDetails = data.gameCaseDetails
           console.log(this.testData);
           console.log(this.msAssesmentTest)
@@ -114,16 +115,21 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
 
   // SORT BY ID BEFORE SLICE
   get displayedElements() {
-    return this.testData.slice(0, 8);
+    let sortedTableDate = this.sortBcArrayById(this.testData);
+    return sortedTableDate.slice(0, 8);
   }
 
   // SORT BY ID BEFORE SLICE
   get displayedElements2() {
-    let sortedTableDate = this.sortArrayById(this.tableData);
+    let sortedTableDate = this.sortBcArrayById(this.tableData);
     return sortedTableDate.slice(8, 20);
   }
 
-  sortArrayById(arr: IBloodCountResponse[]): IBloodCountResponse[] {
+  sortBcArrayById(arr: IBloodCountResponse[]): IBloodCountResponse[] {
+    return arr.sort((a, b) => a.id - b.id);
+  }
+
+  sortMsArrayById(arr: IMSQuestionResponse[]): IMSQuestionResponse[] {
     return arr.sort((a, b) => a.id - b.id);
   }
 
