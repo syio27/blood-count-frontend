@@ -33,7 +33,7 @@ export class UserProfileComponent implements OnInit {
   userDetails: UserDetails;
   invalidPassword: boolean;
   userID: string
-  lastGame: ISimpleGameResponse[]
+  allPlayedGames: ISimpleGameResponse[]
 
 
   private readonly notifier: NotifierService;
@@ -85,6 +85,7 @@ export class UserProfileComponent implements OnInit {
         );
     }
   }
+
   fetchLastGameHistory() {
     this.sharedUserService.getUserDetails().subscribe(
       (data) => {
@@ -93,11 +94,10 @@ export class UserProfileComponent implements OnInit {
     )
     this.profileService.getHistory(this.userID).subscribe(
       (data) => {
-        this.lastGame = data;
+        this.allPlayedGames = this.sortByDateField(data, 'endTime');
       }
     )
   }
-
 
   onHistory() {
     this.router.navigate(['/history'])
@@ -122,11 +122,16 @@ export class UserProfileComponent implements OnInit {
         (error) => {
           this.invalidPassword = true;
           this.notifier.notify('error', error);
-
         }
       )
     }
     console.log(this.invalidPassword)
     this.formSubmitAttempt = true;
+  }
+
+  sortByDateField<T>(array: T[], fieldName: string): T[] {
+    return array.sort((a: any, b: any) => {
+      return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime();
+    });
   }
 }

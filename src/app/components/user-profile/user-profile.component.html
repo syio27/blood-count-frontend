@@ -33,16 +33,21 @@
         </div>
       </div>
     </div>
-    <div class="flex md:flex-col justify-center mt-5 md:mt-0" *ngIf="lastGame && lastGame.length>=1">
-      <div class="flex flex-col p-2 w-full md:w-52 lg:w-72 rounded-lg bg-gray-100 border" >
+    <div class="flex md:flex-col justify-center mt-5 md:mt-0" *ngIf="allPlayedGames && allPlayedGames.length>=1">
+      <div class="flex flex-col p-2 w-full md:w-52 lg:w-72 rounded-lg bg-gray-100 border">
         <div class="flex justify-center font-bold text-xl md:text-lg lg:text-xl ">
           Recent Game Result
         </div>
         <div class="flex flex-col rounded-md">
-          <div  class="flex  font-medium text-base md:text-sm lg:text-base" >Start Time: {{ (lastGame[lastGame.length - 1].startTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
-          <div class="flex  font-medium text-base md:text-sm lg:text-base" >End Time: {{ (lastGame[lastGame.length-1].endTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
-          <div class="flex  font-medium text-base md:text-sm lg:text-base" >Test Duration: {{ lastGame[lastGame.length-1].testDuration }}min</div>
-          <div class="flex font-medium text-base md:text-sm lg:text-base p-2 rounded-md border">Your Score: {{ lastGame[lastGame.length-1].score}}/20 | {{ lastGame[lastGame.length-1].score * 5 }}%</div>
+          <div class="flex  font-medium text-base md:text-sm lg:text-base">Start Time: {{
+            (allPlayedGames[allPlayedGames.length - 1].startTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
+          <div class="flex  font-medium text-base md:text-sm lg:text-base">End Time: {{
+            (allPlayedGames[allPlayedGames.length-1].endTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
+          <div class="flex  font-medium text-base md:text-sm lg:text-base">Test Duration: {{
+            allPlayedGames[allPlayedGames.length-1].testDuration }}min</div>
+          <div class="flex font-medium text-base md:text-sm lg:text-base p-2 rounded-md border">Your Score: {{
+            allPlayedGames[allPlayedGames.length-1].score}}/20 | {{ allPlayedGames[allPlayedGames.length-1].score * 5
+            }}%</div>
         </div>
       </div>
     </div>
