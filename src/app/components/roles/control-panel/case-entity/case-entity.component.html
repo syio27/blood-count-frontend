@@ -18,11 +18,17 @@
                                 <div>{{ 'choose-language' | translate }}</div>
                                 <div class="flex justify-center mt-2">
                                     <div class="relative w-1/2" [class.open]="langDropdownOpen">
-                                        <input type="text"
-                                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                                            placeholder="Language" (click)="toggleLangDropdown()"
-                                            [class.rounded-t]="langDropdownOpen" [class.rounded]="!langDropdownOpen"
-                                            [value]="selectedLanguageOption" readonly>
+                                        <div class="flex items-center w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                                            (click)="toggleLangDropdown()" [class.rounded-t]="langDropdownOpen"
+                                            [class.rounded]="!langDropdownOpen">
+                                            <div class="w-4 h-4 rounded bg-no-repeat bg-center bg-cover mr-2"
+                                                [class.bg-polandFlag]="selectedLanguageOption === 'PL'"
+                                                [class.bg-englishFlag]="selectedLanguageOption === 'EN'">
+                                            </div>
+                                            <div class="flex-grow">
+                                                {{ selectedLanguageOption }}
+                                            </div>
+                                        </div>
                                         <span
                                             class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
                                             [class.rotate-180]="langDropdownOpen" [class.rotate-0]="!langDropdownOpen">
@@ -32,9 +38,13 @@
                                             [class.scale-y-0]="!langDropdownOpen"
                                             [class.scale-y-100]="langDropdownOpen">
                                             <li *ngFor="let option of languageDropdownOptions"
-                                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                                class="py-2 px-3 cursor-pointer hover:bg-gray-100 flex items-center"
                                                 (click)="selectLangOption(option)"
                                                 [class.selected]="option === selectedLanguageOption">
+                                                <div class="w-4 h-4 rounded bg-no-repeat bg-center bg-cover mr-2"
+                                                    [class.bg-polandFlag]="option === 'PL'"
+                                                    [class.bg-englishFlag]="option === 'EN'">
+                                                </div>
                                                 {{ option }}
                                             </li>
                                         </ul>
@@ -204,11 +214,17 @@
                                 <div>{{ 'choose-language' | translate }}</div>
                                 <div class="flex justify-center mt-2">
                                     <div class="relative w-1/2" [class.open]="langDropdownOpen">
-                                        <input type="text"
-                                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                                            placeholder="Language" (click)="toggleLangDropdown()"
-                                            [class.rounded-t]="langDropdownOpen" [class.rounded]="!langDropdownOpen"
-                                            [value]="selectedLanguageOption" readonly>
+                                        <div class="flex items-center w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                                            (click)="toggleLangDropdown()" [class.rounded-t]="langDropdownOpen"
+                                            [class.rounded]="!langDropdownOpen">
+                                            <div class="w-4 h-4 rounded bg-no-repeat bg-center bg-cover mr-2"
+                                                [class.bg-polandFlag]="selectedLanguageOption === 'PL'"
+                                                [class.bg-englishFlag]="selectedLanguageOption === 'EN'">
+                                            </div>
+                                            <div class="flex-grow">
+                                                {{ selectedLanguageOption }}
+                                            </div>
+                                        </div>
                                         <span
                                             class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
                                             [class.rotate-180]="langDropdownOpen" [class.rotate-0]="!langDropdownOpen">
@@ -218,9 +234,13 @@
                                             [class.scale-y-0]="!langDropdownOpen"
                                             [class.scale-y-100]="langDropdownOpen">
                                             <li *ngFor="let option of languageDropdownOptions"
-                                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                                class="py-2 px-3 cursor-pointer hover:bg-gray-100 flex items-center"
                                                 (click)="selectLangOption(option)"
                                                 [class.selected]="option === selectedLanguageOption">
+                                                <div class="w-4 h-4 rounded bg-no-repeat bg-center bg-cover mr-2"
+                                                    [class.bg-polandFlag]="option === 'PL'"
+                                                    [class.bg-englishFlag]="option === 'EN'">
+                                                </div>
                                                 {{ option }}
                                             </li>
                                         </ul>
