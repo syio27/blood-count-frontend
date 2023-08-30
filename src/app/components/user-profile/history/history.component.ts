@@ -90,4 +90,26 @@ export class HistoryComponent implements OnInit {
       this.currentPage = page;
     }
   }
+  
+  get visiblePages(): number[] {
+    const totalPages = this.totalPages;
+    const currentPage = this.currentPage;
+    
+    if (totalPages <= 5) {
+      return this.pages;
+    }
+  
+    const visiblePageCount = 3; // Number of visible pages around the current page
+    let startPage = Math.max(currentPage - visiblePageCount, 1);
+    let endPage = Math.min(currentPage + visiblePageCount, totalPages);
+  
+    if (startPage === 1) {
+      endPage = startPage + visiblePageCount * 2;
+    } else if (endPage === totalPages) {
+      startPage = endPage - visiblePageCount * 2;
+    }
+  
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+  }
+  
 }
