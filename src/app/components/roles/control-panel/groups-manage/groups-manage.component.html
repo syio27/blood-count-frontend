@@ -1,5 +1,6 @@
 <div class="flex flex-col justify-center items-center">
-    <div class="flex flex-col justify-center w-full mb-8" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
+    <div class="flex flex-col justify-center w-full mb-8"
+        *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
         <div class="text-3xl flex justify-center mb-4">{{ 'add-groups' | translate }}</div>
         <div class="flex justify-center">
             <form [formGroup]="form" class="w-full md:w-3/4">
@@ -63,9 +64,12 @@
                 <div class="flex justify-between">
                     <div>
                         <button class="float-right text-red-500 hover:text-red-700"
-                            (click)="deleteGroup(this.selectedGroup)" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">{{ 'delete-group' | translate }}</button>
+                            (click)="deleteGroup(this.selectedGroup)"
+                            *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">{{ 'delete-group' |
+                            translate }}</button>
                     </div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' | translate }}</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' |
+                        translate }}</button>
                 </div>
                 <div class="w-full h-60 overflow-y-auto">
                     <table class="w-full border text-xs">
@@ -88,10 +92,12 @@
                                 <td class="border">{{ user.role }}</td>
                                 <td class="border">
                                     <div class="flex justify-center items-center">
-                                        <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer" (click)="openPopup2(user.id, user.email)">
+                                        <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer"
+                                            (click)="openPopup2(user.id, user.email)">
                                             {{ 'details' | translate }}
                                         </div>
-                                        <div (click)="deleteUserFromGroup(user.groupNumber, user.id)"  *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'"
+                                        <div (click)="deleteUserFromGroup(user.groupNumber, user.id)"
+                                            *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'"
                                             class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer">
                                             <span class="material-symbols-outlined">
                                                 delete
@@ -104,7 +110,9 @@
                     </table>
                 </div>
                 <div class="flex justify-end">
-                    <div (click)="clearGroup(this.selectedGroup)"  *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'" class="text-red-500 hover:text-red-700 font-bold py-1 px-2 mt-1 text-xs cursor-pointer">
+                    <div (click)="clearGroup(this.selectedGroup)"
+                        *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'"
+                        class="text-red-500 hover:text-red-700 font-bold py-1 px-2 mt-1 text-xs cursor-pointer">
                         {{ 'clear-group' | translate }}
                     </div>
                 </div>
@@ -115,7 +123,8 @@
             <div class="p-4">
                 <div class="flex justify-between mb-3">
                     <div>{{currentUserEmail}}</div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup2()">{{ 'close' | translate }}</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup2()">{{ 'close' |
+                        translate }}</button>
                 </div>
                 <div class="w-full h-60 overflow-y-auto">
                     <table class="w-full border text-xs">
@@ -144,7 +153,8 @@
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">
-                {{ 'prev' | translate }}
+                <span>
+                    < </span>
             </div>
             <ng-container *ngFor="let page of pages">
                 <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
@@ -154,7 +164,7 @@
             </ng-container>
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
                 [class.opacity-50]="currentPage === totalPages">
-                {{ 'next' | translate }}
+                <span> > </span>
             </div>
         </nav>
     </div>
