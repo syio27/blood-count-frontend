@@ -96,5 +96,6 @@
     "full": "Full",
     "choose-language": "Choose language for case creation",
     "save-as": "Save as",
-    "add-abnormalities": "Add Abnormalities"
+    "add-abnormalities": "Add Abnormalities",
+    "ref-table-tooltip-info": "Sample Value Ranges for Gender-Specific Blood Count Tables"
 }

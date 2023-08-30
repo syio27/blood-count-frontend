@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ReferenceTableService } from '../../services/reference-table.service';
 import { IReferenceTable } from '../../interfaces/IReferenceTable';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cbc-table',
@@ -9,8 +11,22 @@ import { IReferenceTable } from '../../interfaces/IReferenceTable';
 })
 export class CbcTableComponent implements OnInit {
   cbcData: IReferenceTable[] = [];
+  private resizeSubject = new Subject<Event>();
+  showTooltip = window.innerWidth > 450;
+  showTooltipInfo: boolean = false;
 
-  constructor(private referenceTableService: ReferenceTableService) { }
+  constructor(private referenceTableService: ReferenceTableService) {
+    this.resizeSubject.pipe(
+      debounceTime(200)  // Adjust debounce time as needed
+    ).subscribe(event => {
+      this.showTooltip = window.innerWidth > 450;
+    });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.resizeSubject.next(event);
+  }
 
   ngOnInit() {
     this.fetchData();
@@ -19,7 +35,7 @@ export class CbcTableComponent implements OnInit {
   fetchData() {
     this.referenceTableService.fetchBCReferenceTable().subscribe(
       (data) => {
-        this.cbcData = [data].flatMap((subArray) => subArray); 
+        this.cbcData = [data].flatMap((subArray) => subArray);
       },
       (error) => {
         console.error('Failed to fetch data:', error);

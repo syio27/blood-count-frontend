@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ElementRef } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
@@ -10,7 +10,7 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   onClick = false;
   userDetails: UserDetails;
   private resizeSubject = new Subject<Event>();
