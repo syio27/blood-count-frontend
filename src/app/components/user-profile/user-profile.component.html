@@ -45,7 +45,10 @@
             (allPlayedGames[allPlayedGames.length-1].endTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
           <div class="flex  font-medium text-base md:text-sm lg:text-base">Test Duration: {{
             allPlayedGames[allPlayedGames.length-1].testDuration }}min</div>
-          <div class="flex font-medium text-base md:text-sm lg:text-base p-2 rounded-md border">Your Score: {{
+          <div
+            class="flex font-medium text-base md:text-sm lg:text-base p-2 rounded-md bg-gray-200 border max-w-sm animate-pulse">
+            Your Score:
+            {{
             allPlayedGames[allPlayedGames.length-1].score}}/20 | {{ allPlayedGames[allPlayedGames.length-1].score * 5
             }}%</div>
         </div>
