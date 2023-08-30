@@ -2,6 +2,9 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -9,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   private excludedUrls: string[] = [
     `${environment.baseUrl}api/v1/auth/authenticate`,
@@ -31,7 +34,25 @@ export class AuthInterceptorService implements HttpInterceptor {
       headers: req.headers.set('Authorization', `Bearer ${authToken}`)
     });
 
-    return next.handle(authReq);
+    return next.handle(authReq).pipe(
+      tap(
+        event => {
+          // Success case, continue with the flow.
+          if (event instanceof HttpResponse) {
+            // Do nothing for now
+          }
+        },
+        error => {
+          // Error case, check for 403 error code.
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 403) {
+              // Redirect to login page
+              this.router.navigate(['/login']);
+            }
+          }
+        }
+      )
+    );
   }
 
   getjwtToken() {

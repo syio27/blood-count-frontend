@@ -69,7 +69,8 @@ export class InviteUserComponent implements OnInit {
       const inviteRequest: IInviteUserRequest = {
         email: this.form.get('email').value,
         role: this.selectedRoleOption,
-        groupNumber: this.selectedGroupOption
+        groupNumber: this.selectedGroupOption,
+        inviterUserId: this.userDetails.id
       };
       this.adminService.invite(inviteRequest).subscribe(
         () => {
