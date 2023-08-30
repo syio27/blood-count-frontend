@@ -15,6 +15,23 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NotifierService } from 'angular-notifier';
 import { Language } from 'src/app/enums/language.enum';
 
+const AnemiaTypePL = {
+  [AnemiaType.NormochromicNormocytic]: 'Normochromiczna, normocytarna',
+  [AnemiaType.NormochromicMacrocytic]: 'Normochromiczna, makrocytarna',
+  [AnemiaType.NormochromicMicrocytic]: 'Normochromiczna, mikrocytarna',
+  [AnemiaType.HypochromicMicrocytic]: 'Hipochromiczna, mikrocytarna',
+  [AnemiaType.HypochromicNormocytic]: 'Hipochromiczna, normocytarna',
+  [AnemiaType.HypochromicMacrocytic]: 'Hipochromiczna, makrocytarna',
+  [AnemiaType.HyperchromicMacrocytic]: 'Hiperchromiczna, makrocytarna',
+  [AnemiaType.NotAnemic]: 'Pacjent nie ma niedokrwistości'
+};
+
+const AffectedGendersPL = {
+  [AffectedGenders.FEMALE]: 'KOBIETA',
+  [AffectedGenders.MALE]: 'MĘŻCZYZNA',
+  [AffectedGenders.BOTH]: 'OBIE'
+};
+
 @Component({
   selector: 'app-case-entity',
   templateUrl: './case-entity.component.html',
@@ -26,7 +43,7 @@ export class CaseEntityComponent implements OnInit {
   form: FormGroup;
   parameterForm: FormGroup;
   addedValues: ICreateAbnormalityRequest[] = [];
-  genderDropdownOptions = Object.values(AffectedGenders);
+  genderDropdownOptions: any = Object.values(AffectedGenders);
   selectedGenderOption = '';
   genderDropdownOpen = false;
   showSecondRangeForm = false;
@@ -38,7 +55,7 @@ export class CaseEntityComponent implements OnInit {
 
   selectedAnemiaOption = '';
   anemiaDropdownOpen = false;
-  anemiaTypesOptions = Object.values(AnemiaType)
+  anemiaTypesOptions: any = Object.values(AnemiaType)
 
   levelTypeDropdownOptions = []
   selectedLevelTypeOption = '';
@@ -89,8 +106,23 @@ export class CaseEntityComponent implements OnInit {
       });
   }
 
-  restoreFormValues() {
+  updateAnemiaTypes(lang: string) {
+    if (lang === 'EN') {
+      this.anemiaTypesOptions = Object.values(AnemiaType);
+    } else {
+      this.anemiaTypesOptions = Object.values(AnemiaType).map(type => AnemiaTypePL[type]);
+    }
+  }
 
+  updateAffectedGenders(lang: string) {
+    if (lang === 'EN') {
+      this.genderDropdownOptions = Object.values(AffectedGenders);
+    } else {
+      this.genderDropdownOptions = Object.values(AffectedGenders).map(type => AffectedGendersPL[type]);
+    }
+  }
+
+  restoreFormValues() {
     const storedSelectedAnemiaOption = sessionStorage.getItem('anemia-type');
     if (storedSelectedAnemiaOption) {
       this.selectedAnemiaOption = storedSelectedAnemiaOption;
@@ -283,13 +315,14 @@ export class CaseEntityComponent implements OnInit {
   selectLangOption(option: string) {
     this.selectedLanguageOption = option;
     this.langDropdownOpen = false;
+    this.updateAnemiaTypes(option);
+    this.updateAffectedGenders(option);
     sessionStorage.setItem('selectedLanguageOption', option);
   }
 
   toggleAnemiaDropdown() {
     this.anemiaDropdownOpen = !this.anemiaDropdownOpen;
   }
-
 
   selectAnemiaOption(option: string) {
     this.selectedAnemiaOption = option;
@@ -544,7 +577,7 @@ export class CaseEntityComponent implements OnInit {
       rr: this.form.get('rr').value,
       physExam: this.form.get('physExam').value,
       infoCom: this.form.get('infoCom').value,
-      language: this.selectedLanguageOption 
+      language: this.selectedLanguageOption
     };
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
