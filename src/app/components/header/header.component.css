@@ -26,3 +26,10 @@
         top: 4px;
     }
 }
+
+@media only screen and (max-width: 660px) {
+    .position {
+        left: 133.5px;
+        top: 11px;
+    }
+}
