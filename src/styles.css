@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Tinos', serif;
 }
 
 html,
@@ -29,5 +29,17 @@ body::-webkit-scrollbar {
     display: none;
     /* for Chrome, Safari, and Opera */
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.text-font {
+    font-family: 'Noto Serif TC', serif;
+}
