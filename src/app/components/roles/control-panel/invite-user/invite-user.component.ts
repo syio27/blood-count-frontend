@@ -9,6 +9,7 @@ import { NgToastService } from 'ng-angular-popup'
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { NotifierService } from 'angular-notifier';
+import { IGroupResponse } from 'src/app/interfaces/IGroupResponse';
 
 @Component({
   selector: 'app-invite-user',
@@ -26,6 +27,7 @@ export class InviteUserComponent implements OnInit {
   selectedGroupOption = '';
   private readonly notifier: NotifierService;
   isLoading: boolean = false;
+  allGroups: IGroupResponse[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +57,7 @@ export class InviteUserComponent implements OnInit {
   fetchGroupNumbers(): void {
     this.groupService.fetchAllGroups().subscribe(
       (groups) => {
+        this.allGroups = groups;
         this.groupDropdownOptions = [groups].flatMap((subArray) => subArray).map(group => group.groupNumber);
       },
       (error) => {
@@ -88,6 +91,16 @@ export class InviteUserComponent implements OnInit {
     }
   }
 
+  updateGroupDropdownOptions(selectedRole: string): void {
+    if (selectedRole === 'SUPERVISOR' || selectedRole === 'ADMIN') {
+      this.groupDropdownOptions = this.allGroups.filter(group => group.groupType === 'ADMIN_GROUP').map(group => group.groupNumber);
+    } else if (selectedRole === 'STUDENT') {
+      this.groupDropdownOptions = this.allGroups.filter(group => group.groupType === 'STUDENT_GROUP').map(group => group.groupNumber);
+    } else {
+      this.groupDropdownOptions = [];
+    }
+  }
+
   toggleRoleDropdown() {
     this.roleDropdownOpen = !this.roleDropdownOpen;
   }
@@ -99,7 +112,7 @@ export class InviteUserComponent implements OnInit {
   selectRoleOption(option: string) {
     this.selectedRoleOption = option;
     this.roleDropdownOpen = false;
-    console.log(this.selectedRoleOption)
+    this.updateGroupDropdownOptions(this.selectedRoleOption);
   }
 
   selectGroupOption(option: string) {

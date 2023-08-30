@@ -17,8 +17,8 @@ export class GroupService {
     ) { }
 
     // only authorized users
-    fetchAllGroups(): Observable<IGroupResponse> {
-        return this.http.get<IGroupResponse>(this.baseUrl, { observe: 'body', responseType: 'json' })
+    fetchAllGroups(): Observable<IGroupResponse[]> {
+        return this.http.get<IGroupResponse[]>(this.baseUrl, { observe: 'body', responseType: 'json' })
             .pipe(
                 retry(3),
                 catchError(this.handleException)
