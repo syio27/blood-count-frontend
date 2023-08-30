@@ -20,7 +20,14 @@
     top: 4px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 641px) and (max-width: 770px) {
+    .position {
+        left: 133.5px;
+        top: 11px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
     .position {
         left: 109px;
         top: 4px;
