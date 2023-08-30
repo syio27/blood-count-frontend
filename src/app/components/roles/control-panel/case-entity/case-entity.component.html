@@ -16,15 +16,29 @@
                         <div class="flex justify-center mt-5">
                             <div class="flex flex-col">
                                 <div>{{ 'choose-language' | translate }}</div>
-                                <div class="flex justify-center mt-2"> 
-                                    <div class="cursor-pointer py-1 px-3 border-y border-l border-black"
-                                    [class.bg-blue-500]="selectedLanguage === 'EN'" (click)="selectedLanguage = 'EN'">
-                                    EN
-                                </div>
-                                <div class="cursor-pointer py-1 px-3 border border-black"
-                                    [class.bg-blue-500]="selectedLanguage === 'PL'" (click)="selectedLanguage = 'PL'">
-                                    PL
-                                </div>
+                                <div class="flex justify-center mt-2">
+                                    <div class="relative w-1/2" [class.open]="langDropdownOpen">
+                                        <input type="text"
+                                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                                            placeholder="Language" (click)="toggleLangDropdown()"
+                                            [class.rounded-t]="langDropdownOpen" [class.rounded]="!langDropdownOpen"
+                                            [value]="selectedLanguageOption" readonly>
+                                        <span
+                                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                                            [class.rotate-180]="langDropdownOpen" [class.rotate-0]="!langDropdownOpen">
+                                            expand_more
+                                        </span>
+                                        <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
+                                            [class.scale-y-0]="!langDropdownOpen"
+                                            [class.scale-y-100]="langDropdownOpen">
+                                            <li *ngFor="let option of languageDropdownOptions"
+                                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                                (click)="selectLangOption(option)"
+                                                [class.selected]="option === selectedLanguageOption">
+                                                {{ option }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -188,15 +202,29 @@
                         <div class="flex justify-center mt-5">
                             <div class="flex flex-col">
                                 <div>{{ 'choose-language' | translate }}</div>
-                                <div class="flex justify-center mt-2"> 
-                                    <div class="cursor-pointer py-1 px-3 border-y border-l border-black"
-                                    [class.bg-blue-500]="selectedLanguage === 'EN'" (click)="selectedLanguage = 'EN'">
-                                    EN
-                                </div>
-                                <div class="cursor-pointer py-1 px-3 border border-black"
-                                    [class.bg-blue-500]="selectedLanguage === 'PL'" (click)="selectedLanguage = 'PL'">
-                                    PL
-                                </div>
+                                <div class="flex justify-center mt-2">
+                                    <div class="relative w-1/2" [class.open]="langDropdownOpen">
+                                        <input type="text"
+                                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                                            placeholder="Language" (click)="toggleLangDropdown()"
+                                            [class.rounded-t]="langDropdownOpen" [class.rounded]="!langDropdownOpen"
+                                            [value]="selectedLanguageOption" readonly>
+                                        <span
+                                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                                            [class.rotate-180]="langDropdownOpen" [class.rotate-0]="!langDropdownOpen">
+                                            expand_more
+                                        </span>
+                                        <ul class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150 z-20"
+                                            [class.scale-y-0]="!langDropdownOpen"
+                                            [class.scale-y-100]="langDropdownOpen">
+                                            <li *ngFor="let option of languageDropdownOptions"
+                                                class="py-2 px-3 cursor-pointer hover:bg-gray-100"
+                                                (click)="selectLangOption(option)"
+                                                [class.selected]="option === selectedLanguageOption">
+                                                {{ option }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

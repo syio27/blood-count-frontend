@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { AnemiaType } from 'src/app/enums/anemiaType.enum';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NotifierService } from 'angular-notifier';
+import { Language } from 'src/app/enums/language.enum';
 
 @Component({
   selector: 'app-case-entity',
@@ -29,8 +30,11 @@ export class CaseEntityComponent implements OnInit {
   selectedGenderOption = '';
   genderDropdownOpen = false;
   showSecondRangeForm = false;
-  selectedLanguage: string;
+
+  languageDropdownOptions = Object.values(Language)
+  selectedLanguageOption = '';
   caseName: string
+  langDropdownOpen = false
 
   selectedAnemiaOption = '';
   anemiaDropdownOpen = false;
@@ -121,6 +125,10 @@ export class CaseEntityComponent implements OnInit {
     const storedSelectedGenderOption = sessionStorage.getItem('selectedGenderOption');
     if (storedSelectedGenderOption) {
       this.selectedGenderOption = storedSelectedGenderOption;
+    }
+    const storedLangGenderOption = sessionStorage.getItem('selectedLanguageOption');
+    if (storedLangGenderOption) {
+      this.selectedLanguageOption = storedLangGenderOption;
     }
 
     const storedSelectedLevelTypeOption = sessionStorage.getItem('selectedLevelTypeOption');
@@ -271,6 +279,13 @@ export class CaseEntityComponent implements OnInit {
     this.genderDropdownOpen = false;
     sessionStorage.setItem('selectedGenderOption', option);
   }
+
+  selectLangOption(option: string) {
+    this.selectedLanguageOption = option;
+    this.langDropdownOpen = false;
+    sessionStorage.setItem('selectedLanguageOption', option);
+  }
+
   toggleAnemiaDropdown() {
     this.anemiaDropdownOpen = !this.anemiaDropdownOpen;
   }
@@ -299,9 +314,15 @@ export class CaseEntityComponent implements OnInit {
   toggleLevelTypeDropdown() {
     this.levelTypeDropdownOpen = !this.levelTypeDropdownOpen;
   }
+
   toggleParameterDropdown() {
     this.parameterDropdownOpen = !this.parameterDropdownOpen;
   }
+
+  toggleLangDropdown() {
+    this.langDropdownOpen = !this.langDropdownOpen;
+  }
+
   toggleUnitDropdown() {
     this.unitDropdownOpen = !this.unitDropdownOpen;
   }
@@ -523,7 +544,7 @@ export class CaseEntityComponent implements OnInit {
       rr: this.form.get('rr').value,
       physExam: this.form.get('physExam').value,
       infoCom: this.form.get('infoCom').value,
-      language: this.selectedLanguage
+      language: this.selectedLanguageOption 
     };
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
@@ -534,6 +555,7 @@ export class CaseEntityComponent implements OnInit {
         this.selectedParameterOption = '';
         this.selectedUnitOption = '';
         this.selectedAnemiaOption = ''
+        this.selectedLanguageOption = '';
 
         sessionStorage.setItem('case-name', '');
         sessionStorage.setItem('diagnosis', '');
@@ -548,6 +570,7 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.removeItem('second-min');
         sessionStorage.removeItem('second-max');
         sessionStorage.removeItem('selectedGenderOption');
+        sessionStorage.removeItem('selectedLanguageOption');
         sessionStorage.removeItem('showSecondRangeForm');
         sessionStorage.removeItem('addedValues');
         sessionStorage.removeItem('parameter-min')
