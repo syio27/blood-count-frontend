@@ -8,7 +8,7 @@
 <app-white-box>
     <div class="flex flex-col justify-center">
         <div class="flex justify-center">
-            <div class="md:w-1/2 h-[60vh] mb-3 relative flex justify-center">
+            <div class="md:w-1/2 h-[70vh] mb-3 relative flex justify-center">
                 <div [class.blur]="openedPopup" class="flex flex-col">
                     <div class="p-2" *ngFor="let games of displayedGames">
                         <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
@@ -63,20 +63,39 @@
         <div class="w-full mt-4 flex justify-center select-none">
             <nav class="inline-flex">
                 <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-                    (click)="previousPage()" [class.opacity-50]="currentPage === 1">
-                    {{ 'prev' | translate }}
+                     (click)="previousPage()" [class.opacity-50]="currentPage === 1">
+                  {{ 'prev' | translate }}
                 </div>
-                <ng-container *ngFor="let page of pages">
+              
+                <ng-container *ngIf="totalPages <= 5; else ellipsisSection">
+                  <ng-container *ngFor="let page of pages">
                     <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
-                        [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
-                        {{ page }}
+                         [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                      {{ page }}
                     </div>
+                  </ng-container>
                 </ng-container>
+              
+                <ng-template #ellipsisSection>
+                  <ng-container *ngFor="let page of visiblePages">
+                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                         [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                      {{ page }}
+                    </div>
+                  </ng-container>
+                  <div class="bg-gray-200 text-gray-800 font-bold py-2 px-4">...</div>
+                  <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                       (click)="goToPage(totalPages)">
+                    {{ totalPages }}
+                  </div>
+                </ng-template>
+              
                 <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
-                    (click)="nextPage()" [class.opacity-50]="currentPage === totalPages">
-                    {{ 'next' | translate }}
+                     (click)="nextPage()" [class.opacity-50]="currentPage === totalPages">
+                  {{ 'next' | translate }}
                 </div>
-            </nav>
+              </nav>
+=              
         </div>
     </div>
 </app-white-box>
