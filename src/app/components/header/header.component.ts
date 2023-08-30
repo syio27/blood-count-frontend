@@ -23,7 +23,7 @@ export class HeaderComponent {
     this.resizeSubject.pipe(
       debounceTime(200)  // Adjust debounce time as needed
     ).subscribe(event => {
-      this.showPcLogo = window.innerWidth > 400;
+      this.showPcLogo = window.innerWidth > 450;
     });
   }
 
