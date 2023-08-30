@@ -1,12 +1,10 @@
-<div class="flex cursor-pointer select-none"  *ngIf="!isExamPage">
-    <div class="w-7 h-7 md:w-8 md:h-8 flex justify-center items-center text-lg md:text-4xl rounded-full border border-black bg-polandFlag bg-center bg-cover"
-    *ngIf="currentLang === 'pl'"
-    (click)="switchLang('en')">
+<div class="flex cursor-pointer select-none" *ngIf="!isExamPage">
+    <div class="w-8 h-6 md:w-10 md:h-7 flex justify-center items-center text-lg md:text-4xl rounded-lg border border-black bg-polandFlag bg-center bg-cover"
+        *ngIf="currentLang === 'pl'" (click)="switchLang('en')">
         <!--PL-->
     </div>
-    <div class="w-7 h-7 md:w-8 md:h-8 flex justify-center items-center text-lg md:text-4xl rounded-full border border-black bg-englishFlag bg-center bg-cover"
-        *ngIf="currentLang === 'en'"
-        (click)="switchLang('pl')">
+    <div class="w-8 h-6 md:w-10 md:h-7 flex justify-center items-center text-lg md:text-4xl rounded-lg border border-black bg-englishFlag bg-center bg-cover"
+        *ngIf="currentLang === 'en'" (click)="switchLang('pl')">
         <!--EN-->
     </div>
 </div>
