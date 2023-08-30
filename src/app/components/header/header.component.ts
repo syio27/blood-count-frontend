@@ -11,12 +11,18 @@ import { SharedUserDetailsService } from '../../services/shared-user-details.ser
 export class HeaderComponent {
   onClick = false;
   userDetails: UserDetails;
+  showPcLogo = true;
 
   constructor(
     private router: Router,
     private sharedUserService: SharedUserDetailsService,
     private elementRef: ElementRef
   ) { }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.showPcLogo = window.innerWidth > 400; // adjust the value as per your requirements
+  }
 
   ngOnInit() {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
