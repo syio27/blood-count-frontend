@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user.service';
 import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-history',
@@ -13,14 +16,45 @@ export class HistoryComponent implements OnInit {
   userID: string
   openedPopup = false
   currentPage = 1;
-  gamesPerPage = 3;
+  changeGamesPerPage = window.innerHeight > 750;
+  gamesPerPage = this.gamesPerPageBasedOnView;
+  private resizeSubject = new Subject<Event>();
   selectedGame: any
   caseInfo: ISimpleGameResponse
 
   constructor(
     private userService: UserProfileService,
     private sharedUserService: SharedUserDetailsService
-  ) { }
+  ) {
+    this.resizeSubject.pipe(
+      debounceTime(200)  // Adjust debounce time as needed
+    ).subscribe(() => {
+      this.gamesPerPage = this.gamesPerPageBasedOnView; // Update games per page
+    });
+  }
+
+  get gamesPerPageBasedOnView(): number {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    // Desktop viewport
+    if (w > 768 && h > 450) {
+      return 3;
+    }
+
+    // Mobile in portrait orientation
+    if (h > w) {
+      return 3;
+    }
+
+    // Mobile in landscape orientation
+    return 1;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.resizeSubject.next(event);
+  }
 
   ngOnInit() {
     this.fetchHistory()
