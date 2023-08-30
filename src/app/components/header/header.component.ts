@@ -14,7 +14,7 @@ export class HeaderComponent {
   onClick = false;
   userDetails: UserDetails;
   private resizeSubject = new Subject<Event>();
-  showPcLogo = window.innerWidth > 400;
+  showPcLogo = window.innerWidth > 450;
 
   constructor(
     private router: Router,
