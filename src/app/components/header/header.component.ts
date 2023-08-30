@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../../services/shared-user-details.service'
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -11,17 +13,23 @@ import { SharedUserDetailsService } from '../../services/shared-user-details.ser
 export class HeaderComponent {
   onClick = false;
   userDetails: UserDetails;
-  showPcLogo = true;
+  private resizeSubject = new Subject<Event>();
+  showPcLogo = window.innerWidth > 400;
 
   constructor(
     private router: Router,
     private sharedUserService: SharedUserDetailsService,
-    private elementRef: ElementRef
-  ) { }
+  ) {
+    this.resizeSubject.pipe(
+      debounceTime(200)  // Adjust debounce time as needed
+    ).subscribe(event => {
+      this.showPcLogo = window.innerWidth > 400;
+    });
+  }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event): void {
-    this.showPcLogo = window.innerWidth > 400; // adjust the value as per your requirements
+  onResize(event: Event): void {
+    this.resizeSubject.next(event);
   }
 
   ngOnInit() {
