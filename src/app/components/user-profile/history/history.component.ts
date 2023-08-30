@@ -68,7 +68,7 @@ export class HistoryComponent implements OnInit {
     )
     this.userService.getHistory(this.userID).subscribe(
       (data) => {
-        this.gameHistory = data
+        this.gameHistory = this.sortByDateField(data, 'endTime').reverse()
       }
     )
   }
@@ -95,12 +95,6 @@ export class HistoryComponent implements OnInit {
 
   get totalPages(): number {
     return Math.ceil(this.gameHistory.length / this.gamesPerPage);
-  }
-
-  get displayedGroups(): ISimpleGameResponse[] {
-    const startIndex = (this.currentPage - 1) * this.gamesPerPage;
-    const endIndex = startIndex + this.gamesPerPage;
-    return this.gameHistory.slice(startIndex, endIndex);
   }
 
   get pages(): number[] {
@@ -146,4 +140,9 @@ export class HistoryComponent implements OnInit {
     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }
 
+  sortByDateField<T>(array: T[], fieldName: string): T[] {
+    return array.sort((a: any, b: any) => {
+      return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime();
+    });
+  }
 }
