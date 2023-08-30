@@ -1,0 +1,30 @@
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.position {
+    position: absolute;
+    left: 164px;
+    top: 18px;
+}
+
+.red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+    .position {
+        left: 109px;
+        top: 4px;
+    }
+}
+
+/* Example: When the viewport height is less than 400px */
+@media only screen and (max-height: 400px) {
+    .position {
+        left: 80px;
+        top: 5px;
+    }
+}
