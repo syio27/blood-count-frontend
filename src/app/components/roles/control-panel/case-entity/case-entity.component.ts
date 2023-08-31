@@ -99,7 +99,10 @@ export class CaseEntityComponent implements OnInit {
       'case-name': ['', Validators.required],
       'hr': ['', Validators.required],
       'rr': ['', Validators.required],
-      'physExam': ['', Validators.required],
+      'description': ['', Validators.required],
+      'bodyMass': ['', Validators.required],
+      'height': ['', Validators.required],
+      'bmi': ['', Validators.required],
       'infoCom': ['', Validators.required],
       'first-min': ['', Validators.required],
       'first-max': ['', Validators.required],
@@ -130,7 +133,7 @@ export class CaseEntityComponent implements OnInit {
         .map(data => data.parameter)
         .filter((value, index, self) => self.indexOf(value) === index)
         .filter(value => parameterList.includes(value));
-        this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
+      this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
     });
     this.restoreFormValues()
   }
@@ -167,7 +170,10 @@ export class CaseEntityComponent implements OnInit {
     this.form.get('first-max').setValue(sessionStorage.getItem('first-max'));
     this.form.get('hr').setValue(sessionStorage.getItem('hr'));
     this.form.get('rr').setValue(sessionStorage.getItem('rr'));
-    this.form.get('physExam').setValue(sessionStorage.getItem('physExam'));
+    this.form.get('description').setValue(sessionStorage.getItem('description'));
+    this.form.get('bodyMass').setValue(sessionStorage.getItem('bodyMass'));
+    this.form.get('height').setValue(sessionStorage.getItem('height'));
+    this.form.get('bmi').setValue(sessionStorage.getItem('bmi'));
     this.form.get('infoCom').setValue(sessionStorage.getItem('infoCom'));
     const storedShowSecondRangeForm = sessionStorage.getItem('showSecondRangeForm');
     if (storedShowSecondRangeForm) {
@@ -267,10 +273,10 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
       || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
-        this.selectedUnitOption = '10^9/L'
-        this.unitDropdownOpen = false
-        this.disabledUnit = true
-        this.disabledRange = false
+      this.selectedUnitOption = '10^9/L'
+      this.unitDropdownOpen = false
+      this.disabledUnit = true
+      this.disabledRange = false
       this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
     }
     else {
@@ -315,10 +321,19 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.setItem('rr', this.form.get('rr').value);
         break;
       case 12:
-        sessionStorage.setItem('physExam', this.form.get('physExam').value);
+        sessionStorage.setItem('description', this.form.get('description').value);
         break;
       case 13:
         sessionStorage.setItem('infoCom', this.form.get('infoCom').value);
+        break;
+      case 14:
+        sessionStorage.setItem('bodyMass', this.form.get('bodyMass').value);
+        break;
+      case 15:
+        sessionStorage.setItem('height', this.form.get('height').value);
+        break;
+      case 16:
+        sessionStorage.setItem('bmi', this.form.get('bmi').value);
         break;
     }
   }
@@ -500,11 +515,11 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
       || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
-        this.selectedUnitOption = '10^9/L'
-        this.unitDropdownOpen = false
-        this.selectedLevelTypeOption = '';
-        sessionStorage.setItem('selectedLevelTypeOption', '');
-        this.restoreFormValues()
+      this.selectedUnitOption = '10^9/L'
+      this.unitDropdownOpen = false
+      this.selectedLevelTypeOption = '';
+      sessionStorage.setItem('selectedLevelTypeOption', '');
+      this.restoreFormValues()
     }
     else {
       this.disabledUnit = false
@@ -600,7 +615,10 @@ export class CaseEntityComponent implements OnInit {
       affectedGender: this.selectedGenderOption as AffectedGenders,
       hr: this.form.get('hr').value,
       rr: this.form.get('rr').value,
-      physExam: this.form.get('physExam').value,
+      description: this.form.get('description').value,
+      bodyMass: this.form.get('bodyMass').value,
+      height: this.form.get('height').value,
+      bmi: this.form.get('bmi').value,
       infoCom: this.form.get('infoCom').value,
       language: this.selectedLanguageOption
     };
@@ -619,7 +637,11 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.setItem('diagnosis', '');
         sessionStorage.setItem('hr', '');
         sessionStorage.setItem('rr', '');
-        sessionStorage.setItem('physExam', '');
+        sessionStorage.setItem('description', '');
+        sessionStorage.setItem('bodyMass', '');
+        sessionStorage.setItem('height', '');
+        sessionStorage.setItem('bmi', '');
+
         sessionStorage.setItem('infoCom', '');
         sessionStorage.removeItem('anemia-type');
 

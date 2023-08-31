@@ -11,8 +11,11 @@ export interface ICreateCaseRequest {
     diagnosis: string
     hr: string
     rr: string
-    physExam: string
+    description: string
     infoCom: string
     caseName: string,
-    language: string
+    language: string,
+    bodyMass: number,
+    height: number,
+    bmi: number
 }
