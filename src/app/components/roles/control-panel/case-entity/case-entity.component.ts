@@ -34,6 +34,11 @@ const AffectedGendersPL = {
   [AffectedGenders.BOTH]: 'OBIE'
 };
 
+const parameterList = [
+  'HGB', 'MCV', 'MCH', 'RDW_CV', 'RDW_SD', 'PLT', 'WBC',
+  'NEU', 'LYM', 'MONO', 'EOS', 'BASO'
+];
+
 @Component({
   selector: 'app-case-entity',
   templateUrl: './case-entity.component.html',
@@ -116,6 +121,18 @@ export class CaseEntityComponent implements OnInit {
     ).subscribe(event => {
       this.showTooltip = window.innerWidth > 450;
     });
+  }
+
+  ngOnInit() {
+    this.referenceTableSubscription = this.referanceTable.fetchBCReferenceTable().subscribe(data => {
+      this.parameterDropdownOptions = [data]
+        .flatMap((subArray) => subArray)
+        .map(data => data.parameter)
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .filter(value => parameterList.includes(value));
+        this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
+    });
+    this.restoreFormValues()
   }
 
   @HostListener('window:resize', ['$event'])
@@ -250,9 +267,10 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
       || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
-      this.unitDropdownOptions = ['10^9/L', '%']
-      this.disabledUnit = false
-      this.disabledRange = false
+        this.selectedUnitOption = '10^9/L'
+        this.unitDropdownOpen = false
+        this.disabledUnit = true
+        this.disabledRange = false
       this.levelTypeDropdownOptions = ['Increased', 'Normal', 'Decreased']
     }
     else {
@@ -262,19 +280,7 @@ export class CaseEntityComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.referenceTableSubscription = this.referanceTable.fetchBCReferenceTable().subscribe(data => {
-      this.parameterDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.parameter).filter((value, index, self) => self.indexOf(value) === index);
-      if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
-        || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
-        this.unitDropdownOptions = ['10^9/L', '%']
-      }
-      else {
-        this.unitDropdownOptions = [data].flatMap((subArray) => subArray).map(data => data.unit).filter((value, index, self) => self.indexOf(value) === index);
-      }
-    });
-    this.restoreFormValues()
-  }
+
 
   saveFormValues(input) {
     switch (input) {
@@ -494,9 +500,11 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
       || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
-      this.unitDropdownOptions = ['10^9/L', '%']
-      this.selectedUnitOption = ''
-      this.restoreFormValues()
+        this.selectedUnitOption = '10^9/L'
+        this.unitDropdownOpen = false
+        this.selectedLevelTypeOption = '';
+        sessionStorage.setItem('selectedLevelTypeOption', '');
+        this.restoreFormValues()
     }
     else {
       this.disabledUnit = false
