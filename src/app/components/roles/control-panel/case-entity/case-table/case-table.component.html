@@ -98,10 +98,12 @@
                 </table>
             </div>
         </div>
-        <div class="flex justify-center items-center border w-full h-[68vh]" *ngIf="tableData.length==0">
+        <div class="flex justify-center items-center border w-full h-[48vh]" *ngIf="tableData.length==0">
             <div class="flex flex-col">
-                <div class="w-48 h-48 bg-noData"></div>
-                <div class="flex justify-center text-3xl font-bold select-none">No Data Found :(</div>
+                <div class="flex justify-center">
+                    <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
+                </div>
+                <div class="flex justify-center text-xl md:text-3xl font-bold select-none">No Data Found :(</div>
             </div>
         </div>
     </div>
