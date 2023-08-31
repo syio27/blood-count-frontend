@@ -13,5 +13,6 @@ export interface ICaseResponse {
     vitalSigns: string
     hr: string
     rr: string
-    physExam: string
+    physExam: string,
+    language: string
 }

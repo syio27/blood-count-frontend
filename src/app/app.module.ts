@@ -45,7 +45,7 @@ import { Page3Component } from './components/exam/page3/page3.component';
 import { Page4Component } from './components/exam/page4/page4.component';
 import { NotifierModule } from 'angular-notifier';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
-
+import {MatChipsModule} from '@angular/material/chips';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -113,8 +113,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       behaviour: {
         autoHide: 2000
       }
-    })
+    }),
+    MatChipsModule
   ],
+  
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],

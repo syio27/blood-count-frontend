@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './case-table.component.html',
   styleUrls: ['./case-table.component.css'],
 })
+
 export class CaseTableComponent implements OnInit {
   tableData: ICaseResponse[] = [];
   abnormalityData: IAbnormalityResponse[] = [];
@@ -21,7 +22,14 @@ export class CaseTableComponent implements OnInit {
   openedPopup = false;
   userDetails: UserDetails;
   caseDetails: ICaseResponse;
+  selectedLanguage: string = 'EN';
+
   private readonly notifier: NotifierService;
+
+  onLanguageChange(language: string) {
+    this.selectedLanguage = language;
+    this.fetchTableData(); 
+  }
 
   constructor(
     private caseService: CaseService,
@@ -46,13 +54,16 @@ export class CaseTableComponent implements OnInit {
   fetchTableData(): void {
     this.caseService.getAllCasesWithAbnormalities().subscribe(
       (data) => {
-        this.tableData = [data].flatMap((subArray) => subArray);
+        // Filter data based on selected language
+        this.tableData = [data].flatMap((subArray) => subArray)
+          .filter(item => item.language === this.selectedLanguage);
       },
       (error: any) => {
         console.error(error);
       }
     );
   }
+
   get totalPages(): number {
     return Math.ceil(this.tableData.length / this.groupsPerPage);
   }
@@ -97,6 +108,7 @@ export class CaseTableComponent implements OnInit {
     this.openedPopup = false
 
   }
+
   deletCase(item) {
     this.caseService.deleteCase(item).subscribe(
       () => {
