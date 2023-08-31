@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CaseService } from 'src/app/services/case.service';
 import { ICreateCaseRequest } from 'src/app/interfaces/ICreateCaseRequest';
@@ -14,6 +14,8 @@ import { AnemiaType } from 'src/app/enums/anemiaType.enum';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NotifierService } from 'angular-notifier';
 import { Language } from 'src/app/enums/language.enum';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 const AnemiaTypePL = {
   [AnemiaType.NormochromicNormocytic]: 'Normochromiczna, normocytarna',
@@ -49,7 +51,7 @@ export class CaseEntityComponent implements OnInit {
   showSecondRangeForm = false;
 
   languageDropdownOptions = Object.values(Language)
-  selectedLanguageOption = '';
+  selectedLanguageOption = 'EN';
   caseName: string
   langDropdownOpen = false
 
@@ -72,6 +74,10 @@ export class CaseEntityComponent implements OnInit {
   disabledRange: boolean
   disabledUnit: boolean
   private readonly notifier: NotifierService;
+  private resizeSubject = new Subject<Event>();
+  showTooltip = window.innerWidth > 450;
+  showCaseTooltipInfo: boolean = false;
+  showAbnormalTooltipInfo: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -104,6 +110,17 @@ export class CaseEntityComponent implements OnInit {
       .subscribe((result) => {
         this.isMobile = result.matches;
       });
+
+    this.resizeSubject.pipe(
+      debounceTime(200)  // Adjust debounce time as needed
+    ).subscribe(event => {
+      this.showTooltip = window.innerWidth > 450;
+    });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.resizeSubject.next(event);
   }
 
   updateAnemiaTypes(lang: string) {

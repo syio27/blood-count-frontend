@@ -97,5 +97,7 @@
     "choose-language": "Wybierz język tworzenia spraw",
     "save-as": "Zapisz jako",
     "add-abnormalities": "Dodaj nieprawidłowości",
-    "ref-table-tooltip-info": "Przykładowe Zakresy Wartości dla Tabel Krwi Zróżnicowanych Ze Względu na Płeć"
+    "ref-table-tooltip-info": "Przykładowe Zakresy Wartości dla Tabel Krwi Zróżnicowanych Ze Względu na Płeć",
+    "add-case-tooltip-info": "Utwórz przypadek, który identyfikuje konkretne schorzenie dotykające pacjenta",
+    "add-abnormalities-tooltip-info": "Dodaj informacje o nieprawidłowościach w krwi do istniejącego przypadku, aby zidentyfikować podstawową przyczynę choroby"
 }
