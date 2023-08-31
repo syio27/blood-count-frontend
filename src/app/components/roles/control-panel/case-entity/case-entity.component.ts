@@ -39,6 +39,12 @@ const parameterList = [
   'NEU', 'LYM', 'MONO', 'EOS', 'BASO'
 ];
 
+const polishToEnglishMap: { [key: string]: AffectedGenders } = {
+  'KOBIETA': AffectedGenders.FEMALE,
+  'MĘŻCZYZNA': AffectedGenders.MALE,
+  'OBIE': AffectedGenders.BOTH,
+};
+
 @Component({
   selector: 'app-case-entity',
   templateUrl: './case-entity.component.html',
@@ -604,6 +610,14 @@ export class CaseEntityComponent implements OnInit {
   }
 
   createCaseWithAbnormality() {
+    let mappedGenderOption: AffectedGenders;
+    if (this.selectedLanguageOption === 'PL') {
+      console.log("check 1")
+      mappedGenderOption = this.toEnglishGender(this.selectedGenderOption)
+    } else {
+      mappedGenderOption = this.selectedGenderOption as AffectedGenders;
+    }
+
     const caseData: ICreateCaseRequest = {
       anemiaType: this.selectedAnemiaOption as AnemiaType,
       diagnosis: this.form.get('diagnosis').value,
@@ -612,7 +626,7 @@ export class CaseEntityComponent implements OnInit {
       firstMaxAge: this.form.get('first-max').value,
       secondMinAge: this.form.get('second-min').value || 0,
       secondMaxAge: this.form.get('second-max').value || 0,
-      affectedGender: this.selectedGenderOption as AffectedGenders,
+      affectedGender: mappedGenderOption,
       hr: this.form.get('hr').value,
       rr: this.form.get('rr').value,
       description: this.form.get('description').value,
@@ -620,8 +634,9 @@ export class CaseEntityComponent implements OnInit {
       height: this.form.get('height').value,
       bmi: this.form.get('bmi').value,
       infoCom: this.form.get('infoCom').value,
-      language: this.selectedLanguageOption
+      language: this.selectedLanguageOption as Language
     };
+    console.log(caseData)
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
         this.selectedGenderOption = '';
@@ -696,4 +711,7 @@ export class CaseEntityComponent implements OnInit {
     }
   }
 
+  toEnglishGender(polishGender: string): AffectedGenders {
+    return polishToEnglishMap[polishGender];
+  }
 }
