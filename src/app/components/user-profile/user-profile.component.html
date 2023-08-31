@@ -46,11 +46,46 @@
           <div class="flex  font-medium text-base md:text-sm lg:text-base">Test Duration: {{
             allPlayedGames[allPlayedGames.length-1].testDuration }}min</div>
           <div
-            class="flex font-medium mt-3 text-base md:text-sm lg:text-base p-2 rounded-md bg-gray-200 border max-w-sm animate-pulse">
-            Your Score:
-            {{
-            allPlayedGames[allPlayedGames.length-1].score}}/20 | {{ allPlayedGames[allPlayedGames.length-1].score * 5
-            }}%</div>
+            class="flex justify-between items-center font-medium mt-3 text-base md:text-sm lg:text-base p-1 rounded-md bg-gray-200 border">
+            <span class="ml-1">Your Score:</span>
+            <span class="mr-11">{{
+              allPlayedGames[allPlayedGames.length-1].score}}/20 | {{ allPlayedGames[allPlayedGames.length-1].score * 5
+              }}%</span>
+            <span *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 85"
+              class="mr-2 text-4xl material-symbols-outlined">
+              sentiment_excited
+            </span>
+            <span
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 75 && allPlayedGames[allPlayedGames.length-1].score * 5 < 85"
+              class="mr-2 text-4xl material-symbols-outlined">
+              mood
+            </span>
+            <span
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 65 && allPlayedGames[allPlayedGames.length-1].score * 5 < 80"
+              class="mr-2 text-4xl material-symbols-outlined">
+              sentiment_satisfied
+            </span>
+            <span
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 50 && allPlayedGames[allPlayedGames.length-1].score * 5 < 65"
+              class="mr-2 text-4xl material-symbols-outlined">
+              sentiment_neutral
+            </span>
+            <span
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 40 && allPlayedGames[allPlayedGames.length-1].score * 5 < 50"
+              class="mr-2 text-4xl material-symbols-outlined">
+              sentiment_dissatisfied
+            </span>
+            <span
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 20 && allPlayedGames[allPlayedGames.length-1].score * 5 < 40"
+              class="mr-2 text-4xl material-symbols-outlined">
+              mood_bad
+            </span>
+            <span
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 0 && allPlayedGames[allPlayedGames.length-1].score * 5 < 20"
+              class="mr-2 text-4xl material-symbols-outlined">
+              sentiment_stressed
+            </span>
+          </div>
         </div>
       </div>
     </div>
