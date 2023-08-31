@@ -13,12 +13,12 @@
                     <div class="p-2" *ngFor="let games of displayedGames">
                         <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
                             <div class="flex flex-col pr-20">
-                                <div class="text-gray-700 font-bold text-xl mb-2">Game {{ games.id }}</div>
+                                <div class="text-gray-700 font-bold text-xl mb-2">{{ 'game' | translate }} {{ games.id }}</div>
                                 <div class="text-gray-600 mb-2 text-sm">
-                                    Start Date: {{ (games.startTime | date:'dd/MM/yyyy') }}
+                                    {{ 'start-date' | translate }} {{ (games.startTime | date:'dd/MM/yyyy') }}
                                 </div>
                                 <div class="text-gray-600 mb-2 text-sm">
-                                    Start Time: {{ (games.startTime | date:'HH:mm:ss') }}
+                                    {{ 'start-time1' | translate }} {{ (games.startTime | date:'HH:mm:ss') }}
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -36,20 +36,20 @@
                         class="absolute left-0 top-0 w-full h-80 bg-white border shadow-2xl rounded-xl">
                         <div class="p-4">
                             <div class="flex justify-between">
-                                <div>Game {{caseInfo.id}}</div>
-                                <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{
-                                    'close'
-                                    | translate }}</button>
+                                <div>{{ 'game' | translate }} {{caseInfo.id}}</div>
+                                <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">
+                                    {{'close'| translate }}
+                                </button>
                             </div>
                             <div class="w-full bg-gray-100 rounded-md p-4 overflow-y-auto text-base">
-                                <div>Played Case {{caseInfo.caseId}}</div>
-                                <div>Start Time: {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
-                                <div>End Time: {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
-                                <div>Test Duration:{{caseInfo.testDuration}} </div>
+                                <div>{{ 'played-case' | translate }} {{caseInfo.caseId}}</div>
+                                <div>{{ 'start-time1' | translate }} {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
+                                <div>{{ 'end-time1' | translate }} {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
+                                <div>{{ 'test-duration1' | translate }}{{caseInfo.testDuration}} </div>
                             </div>
                             <div class="flex justify-center mt-7">
                                 <div class="flex flex-col">
-                                    <div class="text-3xl">Your Score </div>
+                                    <div class="text-3xl">{{ 'your-score1' | translate }} </div>
                                     <div class="text-2xl flex justify-center mt-2">{{caseInfo.score * 5}}% |
                                         {{caseInfo.score}}/20</div>
                                 </div>

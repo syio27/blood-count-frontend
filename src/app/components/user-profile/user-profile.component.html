@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="flex flex-row gap-2">
-          <div class="text-base md:text-lg font-medium">Role:</div>
+          <div class="text-base md:text-lg font-medium">{{ 'role1' | translate }}</div>
           <div class="text-base md:text-lg">{{userDetails.role}}</div>
         </div>
       </div>
@@ -36,18 +36,18 @@
     <div class="flex md:flex-col justify-center mt-5 md:mt-0" *ngIf="allPlayedGames && allPlayedGames.length>=1">
       <div class="flex flex-col p-2 w-full md:w-52 lg:w-72 rounded-lg bg-gray-100 border">
         <div class="flex justify-center font-bold text-xl md:text-lg lg:text-xl ">
-          Recent Game Result
+          {{'recent-game-result' | translate}}
         </div>
         <div class="flex flex-col rounded-md">
-          <div class="flex  font-medium text-base md:text-sm lg:text-base">Start Time: {{
+          <div class="flex  font-medium text-base md:text-sm lg:text-base">{{'start-time1' | translate}} {{
             (allPlayedGames[allPlayedGames.length - 1].startTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
-          <div class="flex  font-medium text-base md:text-sm lg:text-base">End Time: {{
+          <div class="flex  font-medium text-base md:text-sm lg:text-base">{{'end-time1' | translate}} {{
             (allPlayedGames[allPlayedGames.length-1].endTime | date:'dd/MM/yyyy HH:mm:ss') }}</div>
-          <div class="flex  font-medium text-base md:text-sm lg:text-base">Test Duration: {{
+          <div class="flex  font-medium text-base md:text-sm lg:text-base">{{'test-duration1' | translate}} {{
             allPlayedGames[allPlayedGames.length-1].testDuration }}min</div>
           <div
             class="flex justify-between items-center font-medium mt-3 text-base md:text-sm lg:text-base p-1 rounded-md bg-gray-200 border">
-            <span class="ml-1">Your Score:</span>
+            <span class="ml-1">{{'your-score' | translate}}</span>
             <span class="mr-11">{{
               allPlayedGames[allPlayedGames.length-1].score}}/20 | {{ allPlayedGames[allPlayedGames.length-1].score * 5
               }}%</span>
@@ -102,7 +102,7 @@
         <div>
           <input id="current-password" type="password" formControlName="currentPassword"
             class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter current password" required>
+            placeholder="{{ 'enter-current-password' | translate }}" required>
         </div>
         <app-error-message [invalidPassword]="invalidPassword"></app-error-message>
         <label for="new-password" class="w-full md:w-1/3 text-lg font-medium">{{ 'new-pass' | translate }}</label>
@@ -110,7 +110,7 @@
           <div>
             <input id="new-password" type="password" formControlName="newPassword"
               class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Enter new password" required>
+              placeholder="{{ 'enter-new-password' | translate }}" required>
           </div>
           <app-error-message *ngIf="formSubmitAttempt" [isInvalidPassword]="isFieldInvalid('newPassword')">
           </app-error-message>
@@ -121,7 +121,7 @@
           <div>
             <input id="confirm-password" formControlName="confirmPassword" type="password"
               class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Confirm new password" required>
+              placeholder="{{ 'confirm-new-password' | translate }}" required>
           </div>
           <div *ngIf="passwordForm.hasError('passwordMismatch') && passwordForm.get('confirmPassword').value !== ''">
             <app-error-message *ngIf="formSubmitAttempt" [passwordMissMatch]="true"></app-error-message>

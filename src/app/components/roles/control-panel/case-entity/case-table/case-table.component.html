@@ -48,36 +48,36 @@
             class="absolute overflow-y-auto top-0 w-full pb-1 min-h-[288px] border bg-white shadow-2xl rounded-xl">
             <div class="p-4 flex flex-col">
                 <div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">Close</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' | translate }}</button>
                 </div>
-                <span class="flex font-bold text-base md:text-1xl">Case #{{caseDetails.id}}</span>
+                <span class="flex font-bold text-base md:text-1xl">{{ 'case' | translate }} #{{caseDetails.id}}</span>
                 <div class="flex flex-col p-2 rounded-md bg-gray-100">
                     <div>
-                        Type of anemia: {{caseDetails.anemiaType}}
+                        {{ 'type-of-anemia' | translate }} {{caseDetails.anemiaType}}
                     </div>
                     <div>
-                        Diagnosis: {{caseDetails.diagnosis}}
+                        {{ 'exam-patient-diagnosis' | translate }} {{caseDetails.diagnosis}}
                     </div>
                     <div>
-                        Affected Gender: {{caseDetails.affectedGender}}
+                        {{ 'exam-patient-gender' | translate }} {{caseDetails.affectedGender}}
                     </div>
                     <div>
-                        First Range: {{ caseDetails.firstMinAge }} - {{ caseDetails.firstMaxAge }}
+                        {{ 'first-range' | translate }} {{ caseDetails.firstMinAge }} - {{ caseDetails.firstMaxAge }}
                     </div>
                     <div>
-                        Second Range: {{ caseDetails.secondMinAge }} - {{ caseDetails.secondMaxAge }}
+                        {{ 'second-range' | translate }} {{ caseDetails.secondMinAge }} - {{ caseDetails.secondMaxAge }}
                     </div>
                     <div>
-                        Heart Rate: {{ caseDetails.hr }}
+                        HR: {{ caseDetails.hr }}
                     </div>
                     <div>
-                        Blood Presure: {{caseDetails.rr}}
+                        RR: {{caseDetails.rr}}
                     </div>
                     <div>
-                        Physical Examination: {{caseDetails.physExam}}
+                        {{ 'physical-examination' | translate }} {{caseDetails.physExam}}
                     </div>
                 </div>
-                <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">Abnormalities</div>
+                <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' | translate }}</div>
                 <table class="w-full border">
                     <thead>
                         <tr>
