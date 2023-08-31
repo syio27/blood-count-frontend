@@ -9,6 +9,7 @@ import { SharedUserDetailsService } from 'src/app/services/shared-user-details.s
 import { IStartGameRequest } from 'src/app/interfaces/IStartGameRequest';
 import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/enums/language.enum';
+import { SharedLanguageService } from 'src/app/services/shared-lang.service';
 
 @Component({
   selector: 'app-home',
@@ -25,13 +26,16 @@ export class HomeComponent implements OnInit {
   isTestFinished: string;
   inProgress: boolean;
   gameId: number
+  currentLang: string
 
   constructor(
     private caseService: CaseService,
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private languageService: TranslateService
+    private languageService: TranslateService,
+    private langService: SharedLanguageService
+
   ) { }
 
   toggleClick() {
@@ -53,9 +57,16 @@ export class HomeComponent implements OnInit {
   }
 
   fetchCase() {
-    this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
-      this.dropdownOptions = [cases].flatMap((subArray) => subArray).sort();
-    });
+    this.langService.language$.subscribe(data => {
+      this.currentLang = data;
+    
+      this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
+        this.dropdownOptions = [cases]
+          .flatMap((subArray) => subArray)
+          .filter(caseItem => caseItem.language === this.currentLang)
+          .sort();
+      });
+    });    
   }
 
   selectOption(option: string, id: number) {
