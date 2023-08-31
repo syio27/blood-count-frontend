@@ -2,7 +2,7 @@
     <div class="flex justify-center text-3xl mb-3">
         {{ 'cases' | translate }}
     </div>
-    <div class="flex justify-end mb-1" *ngIf="tableData.length!=0">
+    <div class="flex justify-end mb-1">
         <mat-chip-listbox aria-label="Select language" class="w-32">
             <mat-chip-option value="EN" (selectionChange)="onLanguageChange('EN')" selected>EN</mat-chip-option>
             <mat-chip-option value="PL" (selectionChange)="onLanguageChange('PL')">PL</mat-chip-option>
