@@ -6,7 +6,8 @@ module.exports = {
       backgroundImage: {
         polandFlag: "url('./assets/polandflag.png')",
         englishFlag: "url('/assets/englishflag.png')",
-        account: "url('/assets/user.png')"
+        account: "url('/assets/user.png')",
+        noData: "url('/assets/noData.png')",
       },
     },
   },
