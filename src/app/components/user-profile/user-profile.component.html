@@ -51,12 +51,12 @@
             <span class="mr-11">{{
               allPlayedGames[allPlayedGames.length-1].score}}/20 | {{ allPlayedGames[allPlayedGames.length-1].score * 5
               }}%</span>
-            <span *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 85"
+            <span *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 90"
               class="mr-2 text-4xl material-symbols-outlined">
               sentiment_excited
             </span>
             <span
-              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 75 && allPlayedGames[allPlayedGames.length-1].score * 5 < 85"
+              *ngIf="allPlayedGames[allPlayedGames.length-1].score * 5 >= 80 && allPlayedGames[allPlayedGames.length-1].score * 5 < 85"
               class="mr-2 text-4xl material-symbols-outlined">
               mood
             </span>
