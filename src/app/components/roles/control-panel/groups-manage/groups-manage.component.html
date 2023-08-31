@@ -40,7 +40,7 @@
         </div>
     </div>
     <hr class="mt-4 border-black w-full mb-5" *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">
-    <div class="w-full lg:w-1/2 h-[60vh] mb-3 relative">
+    <div class="w-full lg:w-1/2 h-[71vh] md:h-[60vh] mb-3 relative" *ngIf="groups.length!=0">
         <div [class.blur]="openedPopup">
             <div class="p-2" *ngFor="let group of displayedGroups">
                 <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
@@ -149,7 +149,15 @@
             </div>
         </div>
     </div>
-    <div class="w-full mt-4 flex justify-center select-none">
+    <div class="flex justify-center items-center border w-full h-[48vh]" *ngIf="groups.length==0">
+        <div class="flex flex-col">
+            <div class="flex justify-center">
+                <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
+            </div>
+            <div class="flex justify-center text-xl md:text-3xl font-bold select-none">No Data Found :(</div>
+        </div>
+    </div>
+    <div class="w-full mt-4 flex justify-center select-none" *ngIf="groups.length!=0">
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">

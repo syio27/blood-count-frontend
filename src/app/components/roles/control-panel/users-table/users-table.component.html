@@ -85,20 +85,22 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center border w-full h-[50vh]" *ngIf="displayedUsers.length==0">
+        <div class="flex justify-center items-center border w-full h-[48vh]" *ngIf="displayedUsers.length==0">
             <div class="flex flex-col">
-                <div class="w-48 h-48 bg-noData"></div>
-                <div class="flex justify-center text-3xl font-bold select-none">No Data Found :(</div>
+                <div class="flex justify-center">
+                    <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
+                </div>
+                <div class="flex justify-center text-xl md:text-3xl font-bold select-none">No Data Found :(</div>
             </div>
         </div>
     </div>
-    <div class="flex">
+    <div class="flex" *ngIf="displayedUsers.length!=0">
         <div class="mt-5 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
         focus:outline-none focus:shadow-outline text-center cursor-pointer" (click)="export()">
         {{ 'export-to-excel' | translate }}
         </div>
     </div>
-    <div class="w-full mt-4 flex justify-center select-none">
+    <div class="w-full mt-4 flex justify-center select-none"  *ngIf="displayedUsers.length!=0">
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">
