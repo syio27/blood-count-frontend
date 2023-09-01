@@ -157,6 +157,7 @@ export class GroupsManageComponent implements OnInit {
   }
 
   deleteGroup(group) {
+    console.log(group)
     this.groupService.deleteGroup(group.groupNumber).subscribe(
       () => {
         this.notifier.notify('success', 'Group has been deleted');

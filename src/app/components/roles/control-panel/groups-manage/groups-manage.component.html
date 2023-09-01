@@ -66,7 +66,8 @@
                     <div>
                         <button class="float-right text-red-500 hover:text-red-700"
                             (click)="deleteGroup(this.selectedGroup)"
-                            *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'">{{ 'delete-group' |
+                            *ngIf="(userDetails.role == 'ROOT' || userDetails.role == 'ADMIN') && this.selectedGroup.groupNumber != 'NO_GR'">{{
+                            'delete-group' |
                             translate }}</button>
                     </div>
                     <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' |
@@ -88,17 +89,23 @@
                             </tr>
                         </thead>
                         <tbody id="table-body" class="items-center text-center">
-                            <tr *ngFor="let user of groupParticipants">
+                            <tr *ngFor="let user of groupParticipants" class="leading-6">
                                 <td class="border">{{ user.email }}</td>
                                 <td class="border">{{ user.role }}</td>
                                 <td class="border">
                                     <div class="flex justify-center items-center">
-                                        <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer"
+                                        <div *ngIf="user.id != userDetails.id"
+                                            class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer"
+                                            (click)="openPopup2(user.id, user.email)">
+                                            {{ 'details' | translate }}
+                                        </div>
+                                        <div *ngIf="user.id == userDetails.id"
+                                            class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer mr-9"
                                             (click)="openPopup2(user.id, user.email)">
                                             {{ 'details' | translate }}
                                         </div>
                                         <div (click)="deleteUserFromGroup(user.groupNumber, user.id)"
-                                            *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'"
+                                            *ngIf="(userDetails.role == 'ROOT' || userDetails.role == 'ADMIN') && user.id != userDetails.id"
                                             class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer">
                                             <span class="material-symbols-outlined">
                                                 delete
