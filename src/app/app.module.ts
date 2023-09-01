@@ -46,6 +46,8 @@ import { Page4Component } from './components/exam/page4/page4.component';
 import { NotifierModule } from 'angular-notifier';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import {MatChipsModule} from '@angular/material/chips';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -114,7 +116,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         autoHide: 2000
       }
     }),
-    MatChipsModule
+    MatChipsModule,
+    MatProgressBarModule
   ],
   
   schemas: [

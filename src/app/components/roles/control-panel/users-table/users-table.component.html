@@ -25,7 +25,7 @@
                     <th class="py-2 w-3/12 border">{{ 'more' | translate }}</th>
                 </tr>
             </thead>
-            <tbody id="table-body" class="items-center text-center">
+            <tbody id="table-body" class="items-center text-center" *ngIf="!isLoading">
                 <tr *ngFor="let item of displayedUsers">
                     <td class="border-b ">{{ item.email }}</td>
                     <td class="border-b">{{ item.groupNumber }}</td>
@@ -42,15 +42,19 @@
                                     delete
                                 </span>
                             </div>
-                            <div (click)="banAdmin(item.id)" class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
-                                *ngIf="currentCategory === Roles.Admin && item.active" [class.pointer-events-none]="openedPopup">
-                                Ban 
+                            <div (click)="banAdmin(item.id)"
+                                class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                *ngIf="currentCategory === Roles.Admin && item.active"
+                                [class.pointer-events-none]="openedPopup">
+                                Ban
                             </div>
-                            <div (click)="banAdmin(item.id)" class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
-                                *ngIf="currentCategory === Roles.Admin && !item.active" [class.pointer-events-none]="openedPopup">
+                            <div (click)="banAdmin(item.id)"
+                                class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                *ngIf="currentCategory === Roles.Admin && !item.active"
+                                [class.pointer-events-none]="openedPopup">
                                 Unban
                             </div>
-    
+
                         </div>
                     </td>
                 </tr>
@@ -61,7 +65,8 @@
             <div class="p-4">
                 <div class="flex justify-between mb-3">
                     <div>{{currentUserEmail}}</div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' | translate }}</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' |
+                        translate }}</button>
                 </div>
                 <div class="w-full h-60 overflow-y-auto">
                     <table class="w-full border text-xs">
@@ -85,7 +90,8 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center border w-full h-[48vh]" *ngIf="displayedUsers.length==0">
+        <div class="flex justify-center items-center border w-full h-[48vh]"
+            *ngIf="displayedUsers.length==0 && !isLoading">
             <div class="flex flex-col">
                 <div class="flex justify-center">
                     <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
@@ -93,14 +99,26 @@
                 <div class="flex justify-center text-xl md:text-3xl font-bold select-none">No Data Found :(</div>
             </div>
         </div>
+        <div class="px-8 py-3 flex justify-center mt-5" *ngIf="isLoading">
+            <div class="select-none cursor-pointer flex flex-col">
+                <div class="flex">
+                    <span class="text-2xl md:text-3xl font-normal logo">BLOODCOUNT</span>
+                    <div>
+                        <div class=" rounded-full border bg-red-500 w-[10px] h-[10px]"></div>
+                        <span class="logo text-1xl">| app</span>
+                    </div>
+                </div>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+        </div>
     </div>
     <div class="flex" *ngIf="displayedUsers.length!=0">
         <div class="mt-5 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
         focus:outline-none focus:shadow-outline text-center cursor-pointer" (click)="export()">
-        {{ 'export-to-excel' | translate }}
+            {{ 'export-to-excel' | translate }}
         </div>
     </div>
-    <div class="w-full mt-4 flex justify-center select-none"  *ngIf="displayedUsers.length!=0">
+    <div class="w-full mt-4 flex justify-center select-none" *ngIf="displayedUsers.length!=0">
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">

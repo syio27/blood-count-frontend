@@ -27,6 +27,7 @@ export class UsersTableComponent implements OnInit {
   currentUserEmail: string
   private readonly notifier: NotifierService;
   isBanned: boolean
+  isLoading: boolean
 
   constructor(
     private adminService: AdminService,
@@ -53,6 +54,7 @@ export class UsersTableComponent implements OnInit {
 
 
   private fetchTableData(role: Roles) {
+    this.isLoading = true
     this.adminService.fetchUsersByRole(role).subscribe(
       (userDetails: UserDetails[]) => {
         this.tableData = userDetails.sort((a, b) => {
@@ -64,6 +66,7 @@ export class UsersTableComponent implements OnInit {
           }
           return 0;
         });
+        this.isLoading = false
       },
       (error: any) => {
         console.error(error);
