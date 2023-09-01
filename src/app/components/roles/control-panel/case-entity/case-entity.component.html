@@ -410,6 +410,23 @@
             <mat-step [stepControl]="form.get('step5')">
                 <ng-template matStepLabel>{{ 'patient-details-2' | translate }}</ng-template>
                 <div class="flex flex-col justify-center gap-5 mt-10">
+                    <div class="flex flex-col gap-2">
+                        <div>
+                            <input type="number" (input)="saveFormValues(14)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="bodyMass" formControlName="bodyMass" placeholder="{{ 'body-mass' | translate }}">
+                        </div>
+                        <div>
+                            <input type="number" (input)="saveFormValues(15)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="height" formControlName="height" placeholder="{{ 'height' | translate }}">
+                        </div>
+                        <div>
+                            <input type="number" (input)="saveFormValues(16)"
+                                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="bmi" formControlName="bmi" placeholder="BMI[kg/m^2]">
+                        </div>
+                    </div>
                     <div>
                         <textarea type="text" (input)="saveFormValues(12)" style="resize: none;"
                             class="appearance-none border text-xs rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -432,7 +449,7 @@
             <hr class="mt-4 border-black w-full md:w-3/4">
         </div>
         <div class="flex items-center justify-center">
-            <span class="flex mb-3 text-xl mb-2">{{ 'add-abnormalities' | translate }}</span>
+            <span class="flex mb-3 text-xl">{{ 'add-abnormalities' | translate }}</span>
             <div *ngIf="showTooltip" class="group relative w-max">
                 <button (mouseenter)="showAbnormalTooltipInfo = true" (mouseleave)="showAbnormalTooltipInfo = false"
                     class="w-4 h-4 rounded-full bg-red-400 text-white flex items-center justify-center hover:bg-red-800 cursor-pointer ml-2 mb-3">
