@@ -678,6 +678,7 @@ export class CaseEntityComponent implements OnInit {
         sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
         this.notifier.notify('success', 'Case has been created');
         this.caseDataService.refreshTable();
+        this.selectedLanguageOption = 'EN';
       },
       (error: HttpErrorResponse) => {
         this.notifier.notify('error', error.message);
