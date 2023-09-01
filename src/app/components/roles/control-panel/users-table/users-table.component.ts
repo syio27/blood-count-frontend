@@ -40,6 +40,7 @@ export class UsersTableComponent implements OnInit {
   }
 
   changeCategory(role: Roles) {
+    this.tableData = []
     this.currentCategory = role;
     this.fetchTableData(role);
   }

@@ -32,6 +32,8 @@ export class GroupsManageComponent implements OnInit {
   currentUserEmail: string
   openedPopup2 = false
   userHistory: ISimpleGameResponse[] = []
+  isLoading: boolean
+
   private readonly notifier: NotifierService;
 
   constructor(
@@ -121,6 +123,7 @@ export class GroupsManageComponent implements OnInit {
   }
 
   fetchGroups(): void {
+    this.isLoading = true
     this.groupService.fetchAllGroups().subscribe(
       (data) => {
         this.groups = [data].flatMap((subArray) => subArray).sort((a, b) => {
@@ -132,6 +135,7 @@ export class GroupsManageComponent implements OnInit {
             return 0;
           }
         });
+        this.isLoading = false
       },
       (error) => {
         console.error('Failed to fetch groups:', error);

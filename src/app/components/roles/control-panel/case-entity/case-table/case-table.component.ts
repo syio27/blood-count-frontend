@@ -23,12 +23,13 @@ export class CaseTableComponent implements OnInit {
   userDetails: UserDetails;
   caseDetails: ICaseResponse;
   selectedLanguage: string = 'EN';
+  isLoading: boolean
 
   private readonly notifier: NotifierService;
 
   onLanguageChange(language: string) {
     this.selectedLanguage = language;
-    this.fetchTableData(); 
+    this.fetchTableData();
   }
 
   constructor(
@@ -52,11 +53,14 @@ export class CaseTableComponent implements OnInit {
   }
 
   fetchTableData(): void {
+    this.isLoading = true
     this.caseService.getAllCasesWithAbnormalities().subscribe(
       (data) => {
         // Filter data based on selected language
         this.tableData = [data].flatMap((subArray) => subArray)
           .filter(item => item.language === this.selectedLanguage);
+        this.isLoading = false
+
       },
       (error: any) => {
         console.error(error);
