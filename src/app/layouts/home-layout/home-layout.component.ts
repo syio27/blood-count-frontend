@@ -8,7 +8,7 @@ import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 export class HomeLayoutComponent implements OnInit, AfterViewInit {
   isLoading: boolean;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -16,8 +16,8 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1000);
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1090);
   }
 }
