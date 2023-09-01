@@ -102,9 +102,6 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
           this.gameId = this.gameData.id;
           this.msAssesmentTest = this.sortMsArrayById(msQuestions);
           this.gameCaseDetails = data.gameCaseDetails
-          console.log(this.testData);
-          console.log(this.msAssesmentTest)
-          console.log(this.tableData)
         },
       );
   }

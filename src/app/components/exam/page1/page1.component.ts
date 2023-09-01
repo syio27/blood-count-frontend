@@ -33,8 +33,15 @@ export class Page1Component {
     return this.savedAnswers.some(answer => answer.questionId === questionId && answer.answerId === answerId);
   }
 
+  get sortedDisplayedElements() {
+    this.displayedElements.forEach(item => {
+      item.answers.sort((a, b) => a.id - b.id);
+      item.answers.reverse();
+    });
+    return this.displayedElements;
+  }
+
   onAnswer(answerId: number, questionId: number) {
-    console.log(this.displayedElements2)
     const existingAnswer = this.answers.find(a => a.questionId === questionId);
     if (existingAnswer) {
       existingAnswer.answerId = answerId;
