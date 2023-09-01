@@ -129,5 +129,9 @@
     "recent-game-result": "Recent Game Result",
     "enter-current-password": "Enter current password",
     "enter-new-password": "Enter new password",
-    "confirm-new-password": "Confirm new password"
+    "confirm-new-password": "Confirm new password",
+    "cases-no-data": "You dont have any cases yet",
+    "users-no-data": "You dont have any users yet",
+    "groups-no-data": "You dont have any groups yet",
+    "games-no-data": "You dont have any played games yet"
 }

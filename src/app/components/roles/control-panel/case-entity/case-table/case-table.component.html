@@ -6,7 +6,7 @@
         <mat-chip-listbox aria-label="Select language" class="w-32">
             <mat-chip-option value="EN" (selectionChange)="onLanguageChange('EN')" selected>EN</mat-chip-option>
             <mat-chip-option value="PL" (selectionChange)="onLanguageChange('PL')">PL</mat-chip-option>
-          </mat-chip-listbox>
+        </mat-chip-listbox>
     </div>
     <div class="relative h-[75vh] mb-8 text-xs md:text-base">
         <table class="w-full border">
@@ -22,7 +22,8 @@
                     </th>
                 </tr>
             </thead>
-            <tbody id="table-body" class="items-center text-center" [class.blur]="openedPopup" *ngIf="tableData.length!=0">
+            <tbody id="table-body" class="items-center text-center" [class.blur]="openedPopup"
+                *ngIf="tableData.length!=0">
                 <tr *ngFor="let item of displayedGroups">
                     <td class="border-b">{{ item.id }}</td>
                     <td class="border-b">{{ item.anemiaType }}</td>
@@ -48,7 +49,8 @@
             class="absolute overflow-y-auto top-0 w-full pb-1 min-h-[288px] border bg-white shadow-2xl rounded-xl">
             <div class="p-4 flex flex-col">
                 <div>
-                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' | translate }}</button>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">{{ 'close' |
+                        translate }}</button>
                 </div>
                 <span class="flex font-bold text-base md:text-1xl">{{ 'case' | translate }} #{{caseDetails.id}}</span>
                 <div class="flex flex-col p-2 rounded-md bg-gray-100">
@@ -77,7 +79,8 @@
                         {{ 'physical-examination' | translate }} {{caseDetails.physExam}}
                     </div>
                 </div>
-                <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' | translate }}</div>
+                <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' |
+                    translate }}</div>
                 <table class="w-full border">
                     <thead>
                         <tr>
@@ -103,7 +106,9 @@
                 <div class="flex justify-center">
                     <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
                 </div>
-                <div class="flex justify-center text-xl md:text-3xl font-bold select-none">No Data Found :(</div>
+                <div class="flex justify-center text-xl md:text-3xl font-bold select-none">{{ 'cases-no-data' |
+                    translate }}
+                </div>
             </div>
         </div>
         <div class="flex justify-center items-center border w-full h-[48vh]" *ngIf="tableData.length==0 && isLoading">
@@ -123,18 +128,17 @@
         <nav class="inline-flex">
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                 (click)="previousPage()" [class.opacity-50]="currentPage === 1">
-                <
-            </div>
-            <ng-container *ngFor="let page of pages">
-                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
-                    [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
-                    {{ page }}
-                </div>
-            </ng-container>
-            <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
-                [class.opacity-50]="currentPage === totalPages">
-                >
-            </div>
+                < </div>
+                    <ng-container *ngFor="let page of pages">
+                        <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                            [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                            {{ page }}
+                        </div>
+                    </ng-container>
+                    <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+                        (click)="nextPage()" [class.opacity-50]="currentPage === totalPages">
+                        >
+                    </div>
         </nav>
     </div>
     <notifier-container></notifier-container>

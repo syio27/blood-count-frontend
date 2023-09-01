@@ -129,5 +129,9 @@
     "recent-game-result": "Wynik ostatniego meczu",
     "enter-current-password": "Wprowadź bieżące hasło",
     "enter-new-password": "Wprowadź nowe hasło",
-    "confirm-new-password": "Potwierdź nowe hasło"
+    "confirm-new-password": "Potwierdź nowe hasło",
+    "cases-no-data": "Nie masz jeszcze żadnych przypadek",
+    "users-no-data": "Nie masz jeszcze żadnych użytkowników",
+    "groups-no-data": "Nie masz jeszcze żadnych grup",
+    "games-no-data": "Nie masz jeszcze żadnych rozegranych gier"
 }
