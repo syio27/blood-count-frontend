@@ -141,7 +141,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   }
 
   private invokeCompleteApi(mergedAnswers: any[]) {
-    this.gameService.complete(this.gameId, mergedAnswers, this.userDetails.id).subscribe(
+    this.gameService.complete(this.gameId, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
         this.sharedGameSubmittedService.setStatus(data.status)
