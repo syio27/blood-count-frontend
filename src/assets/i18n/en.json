@@ -126,5 +126,8 @@
     "total": "Total:",
     "group-name": "Group Name",
     "group-type": "Group Type",
-    "recent-game-result": "Recent Game Result"
+    "recent-game-result": "Recent Game Result",
+    "enter-current-password": "Enter current password",
+    "enter-new-password": "Enter new password",
+    "confirm-new-password": "Confirm new password"
 }
