@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-home-layout',
   templateUrl: './home-layout.component.html',
   styleUrls: ['./home-layout.component.css']
 })
-export class HomeLayoutComponent implements OnInit {
-  isLoading: boolean = true
+export class HomeLayoutComponent implements OnInit, AfterViewInit {
+  isLoading: boolean;
 
-  constructor() { }
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
-    window.onload = () => {
+    this.isLoading = true;
+
+  }
+
+  ngAfterViewInit() {
       setTimeout(() => {
-        this.isLoading = false
-      }, 2000); // 2000 milliseconds = 2 seconds
-    }
-  };
+        this.isLoading = false;
+      }, 1000);
+  }
 }

@@ -21,6 +21,7 @@ export class HistoryComponent implements OnInit {
   private resizeSubject = new Subject<Event>();
   selectedGame: any
   caseInfo: ISimpleGameResponse
+  isLoading: boolean
 
   constructor(
     private userService: UserProfileService,
@@ -61,6 +62,7 @@ export class HistoryComponent implements OnInit {
   }
 
   fetchHistory() {
+    this.isLoading = true
     this.sharedUserService.getUserDetails().subscribe(
       (data) => {
         this.userID = data.id
@@ -69,6 +71,7 @@ export class HistoryComponent implements OnInit {
     this.userService.getHistory(this.userID).subscribe(
       (data) => {
         this.gameHistory = this.sortByDateField(data, 'endTime').reverse()
+        this.isLoading = false
       }
     )
   }
