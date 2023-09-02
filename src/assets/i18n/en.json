@@ -109,7 +109,7 @@
     "choose-language": "Choose language for case creation",
     "save-as": "Save as",
     "add-abnormalities": "Add Abnormalities",
-    "ref-table-tooltip-info": "Sample Value Ranges for Gender-Specific Blood Count Tables",
+    "ref-table-tooltip-info": "Reference ranges used in the application (age 18+)",
     "add-case-tooltip-info": "Create a case that identifies the specific disease affecting the patient",
     "add-abnormalities-tooltip-info": "Append information about blood abnormalities to the existing case in order to identify the underlying cause of the disease",
     "game": "Game",

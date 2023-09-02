@@ -15,7 +15,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NotifierService } from 'angular-notifier';
 import { Language } from 'src/app/enums/language.enum';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { ParamStatus } from 'src/app/enums/paramStatus.enum';
 
 const AnemiaTypePL = {
@@ -91,6 +91,7 @@ export class CaseEntityComponent implements OnInit {
   showCaseTooltipInfo: boolean = false;
   showAbnormalTooltipInfo: boolean = false;
   isSum100: boolean = true;
+  doesContainWhiteBloodCells: boolean = false;
   paramStatus: ParamStatus = ParamStatus.INITIAL;
 
   constructor(
@@ -257,14 +258,14 @@ export class CaseEntityComponent implements OnInit {
       this.disabledUnit = true
       this.unitDropdownOpen = false
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+      this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
     }
     else if (this.selectedParameterOption == 'MCH') {
       this.selectedUnitOption = 'pg'
       this.disabledUnit = true
       this.unitDropdownOpen = false
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+      this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
     }
     else if (this.selectedParameterOption == 'MCHC') {
       this.selectedUnitOption = 'g/dl'
@@ -439,27 +440,61 @@ export class CaseEntityComponent implements OnInit {
         break;
     }
     if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
-      if (this.selectedLevelTypeOption == 'Below normal') {
-        sessionStorage.setItem('parameter-min', '65')
-        sessionStorage.setItem('parameter-max', '75')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Above normal') {
-        sessionStorage.setItem('parameter-min', '100')
-        sessionStorage.setItem('parameter-max', '105')
-        this.restoreFormValues()
+      switch (this.selectedLevelTypeOption) {
+        case 'Below normal 1':
+          sessionStorage.setItem('parameter-min', '65')
+          sessionStorage.setItem('parameter-max', '75')
+          this.restoreFormValues()
+          break;
+        case 'Below normal 2':
+          sessionStorage.setItem('parameter-min', '76')
+          sessionStorage.setItem('parameter-max', '80')
+          this.restoreFormValues()
+          break;
+        case 'Normal':
+          sessionStorage.setItem('parameter-min', '81')
+          sessionStorage.setItem('parameter-max', '94')
+          this.restoreFormValues()
+          break;
+        case 'Above normal 1':
+          sessionStorage.setItem('parameter-min', '100')
+          sessionStorage.setItem('parameter-max', '105')
+          this.restoreFormValues()
+          break;
+        case 'Above normal 2':
+          sessionStorage.setItem('parameter-min', '106')
+          sessionStorage.setItem('parameter-max', '112')
+          this.restoreFormValues()
+          break;
       }
     }
     if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
-      if (this.selectedLevelTypeOption == 'Below normal') {
-        sessionStorage.setItem('parameter-min', '23')
-        sessionStorage.setItem('parameter-max', '26')
-        this.restoreFormValues()
-      }
-      else if (this.selectedLevelTypeOption == 'Above normal') {
-        sessionStorage.setItem('parameter-min', '32')
-        sessionStorage.setItem('parameter-max', '35')
-        this.restoreFormValues()
+      switch (this.selectedLevelTypeOption) {
+        case 'Below normal 1':
+          sessionStorage.setItem('parameter-min', '23')
+          sessionStorage.setItem('parameter-max', '26')
+          this.restoreFormValues()
+          break;
+        case 'Below normal 2':
+          sessionStorage.setItem('parameter-min', '15')
+          sessionStorage.setItem('parameter-max', '22')
+          this.restoreFormValues()
+          break;
+        case 'Normal':
+          sessionStorage.setItem('parameter-min', '27')
+          sessionStorage.setItem('parameter-max', '31')
+          this.restoreFormValues()
+          break;
+        case 'Above normal 1':
+          sessionStorage.setItem('parameter-min', '32')
+          sessionStorage.setItem('parameter-max', '35')
+          this.restoreFormValues()
+          break;
+        case 'Above normal 2':
+          sessionStorage.setItem('parameter-min', '36')
+          sessionStorage.setItem('parameter-max', '40')
+          this.restoreFormValues()
+          break;
       }
     }
   }
@@ -508,7 +543,7 @@ export class CaseEntityComponent implements OnInit {
       this.selectedUnitOption = 'pg'
       this.disabledUnit = true
       this.unitDropdownOpen = false
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+      this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
@@ -517,7 +552,7 @@ export class CaseEntityComponent implements OnInit {
       this.selectedUnitOption = 'fl'
       this.disabledUnit = true
       this.unitDropdownOpen = false
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+      this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
@@ -548,14 +583,14 @@ export class CaseEntityComponent implements OnInit {
     sessionStorage.setItem('selectedUnitOption', option);
     if (this.selectedParameterOption == 'MCH' && this.selectedUnitOption == 'pg') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+      this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
     }
     else if (this.selectedParameterOption == 'MCV' && this.selectedUnitOption == 'fl') {
       this.disabledRange = true
-      this.levelTypeDropdownOptions = ['Below normal', 'Above normal']
+      this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
       this.selectedLevelTypeOption = '';
       sessionStorage.setItem('selectedLevelTypeOption', '');
       this.restoreFormValues()
@@ -576,7 +611,6 @@ export class CaseEntityComponent implements OnInit {
       this.addedValues.splice(index, 1);
       sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
     }
-    this.calculateSumOfParams();
 
     const allowedParameters = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
     let allDeleted = true;
@@ -593,14 +627,13 @@ export class CaseEntityComponent implements OnInit {
 
 
   addValue() {
-    const allowedParametersForSumCalculation = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
     const parameter = this.selectedParameterOption
     const unit = this.selectedUnitOption
     let enteredMinValue = this.parameterForm.get('parameter-min').value;
     let enteredMaxValue = this.parameterForm.get('parameter-max').value;
     const levelType = this.mapLevelTypeOption(this.selectedLevelTypeOption);
 
-    if (!parameter || !enteredMinValue || !enteredMaxValue || !levelType || !unit) {
+    if (!parameter || enteredMinValue === null || enteredMinValue === undefined || enteredMaxValue === null || enteredMaxValue === undefined || !levelType || !unit) {
       return;
     }
 
@@ -621,11 +654,6 @@ export class CaseEntityComponent implements OnInit {
 
     this.addedValues.push(abnormalityData);
 
-    if (allowedParametersForSumCalculation.includes(parameter)) {
-      this.paramStatus = ParamStatus.CONTAINS_ALLOWED;
-      this.calculateSumOfParams();
-    }
-
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
     this.selectedParameterOption = '';
@@ -638,20 +666,77 @@ export class CaseEntityComponent implements OnInit {
     sessionStorage.removeItem('selectedParameterOption')
   }
 
-  calculateSumOfParams() {
+  randomizeAllowedBloodCounts(addedValues: ICreateAbnormalityRequest[]): Map<string, number> {
+    console.log(addedValues)
     const allowedParameters = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
-    let sum = this.addedValues
-      .filter(item => item.unit === '%' && allowedParameters.includes(item.parameter))
-      .reduce((acc, item) => acc + item.maxValue, 0);
-    console.log(sum);
-    this.isSum100 = sum == 100;
+    console.log("being called!")
+
+    let filteredBloodCounts = addedValues.filter(bc => allowedParameters.includes(bc.parameter));
+
+    if (filteredBloodCounts.length != 0) {
+      this.doesContainWhiteBloodCells = true;
+    } else {
+      this.doesContainWhiteBloodCells = false;
+    }
+
+    console.log(filteredBloodCounts);
+
+    let remainingPercentage = 100;
+    const randomizedValuesMap = new Map<string, number>();
+    this.isSum100 = true; // Initialize to true
+
+    // Calculate the minimum and maximum possible sum of all the percentages
+    let minPossibleSum = filteredBloodCounts.reduce((acc, cur) => acc + cur.minValue, 0);
+    let maxPossibleSum = filteredBloodCounts.reduce((acc, cur) => acc + cur.maxValue, 0);
+
+    // Check if it's possible for the sum to be 100
+    if (minPossibleSum > 100 || maxPossibleSum < 100) {
+      this.isSum100 = false;
+      console.log("Impossible to sum to 100.");
+      return randomizedValuesMap; // return empty map
+    }
+
+    if (this.isSum100) {
+      for (let i = 0; i < filteredBloodCounts.length - 1; i++) {
+        let { parameter, minValue: min, maxValue: max } = filteredBloodCounts[i];
+        let adjustedMax = Math.min(max, remainingPercentage - (filteredBloodCounts.length - i - 1));
+        let randomizedValue = Math.floor(Math.random() * (adjustedMax - min + 1) + min);
+
+        randomizedValuesMap.set(parameter, randomizedValue);
+        remainingPercentage -= randomizedValue;
+      }
+
+      // Add the remaining percentage for the last parameter
+      if (filteredBloodCounts.length > 0) {
+        randomizedValuesMap.set(filteredBloodCounts[filteredBloodCounts.length - 1].parameter, remainingPercentage);
+      }
+    }
+    console.log("map inside the func ->")
+    console.log(randomizedValuesMap)
+
+    return randomizedValuesMap;
   }
 
+
   createCaseWithAbnormality() {
-    if (!this.isSum100 && this.paramStatus === 'CONTAINS_ALLOWED') {
-      this.notifier.notify('error', 'Sum of White blood cells max values doesnt equal to 100%');
+    const randomizedValuesMap = this.randomizeAllowedBloodCounts(this.addedValues);
+    console.log(randomizedValuesMap);
+    this.addedValues = this.addedValues.map((abnormality) => {
+      const randomValue = randomizedValuesMap.get(abnormality.parameter);
+      if (randomValue !== undefined) {
+        abnormality.minValue = randomValue;
+        abnormality.maxValue = randomValue;
+      }
+      return abnormality;
+    });
+
+    console.log(this.addedValues);
+
+    if (!this.isSum100 && this.doesContainWhiteBloodCells) {
+      console.log("did not pass check")
       return;
     }
+
     let mappedGenderOption: AffectedGenders;
     if (this.selectedLanguageOption === 'PL') {
       mappedGenderOption = this.toEnglishGender(this.selectedGenderOption)
@@ -720,6 +805,7 @@ export class CaseEntityComponent implements OnInit {
         this.notifier.notify('success', 'Case has been created');
         this.caseDataService.refreshTable();
         this.selectedLanguageOption = 'EN';
+        this.isSum100 = true;
       },
       (error: HttpErrorResponse) => {
         this.notifier.notify('error', error.message);
@@ -738,10 +824,14 @@ export class CaseEntityComponent implements OnInit {
         return LevelTypes.DEGREE_III
       case 'Degree IV':
         return LevelTypes.DEGREE_IV;
-      case 'Above normal':
-        return LevelTypes.ABOVE_NORMAL;
-      case 'Below normal':
-        return LevelTypes.BELOW_NORMAL;
+      case 'Above normal 1':
+        return LevelTypes.ABOVE_NORMAL_1;
+      case 'Below normal 1':
+        return LevelTypes.BELOW_NORMAL_1;
+      case 'Above normal 2':
+        return LevelTypes.ABOVE_NORMAL_2;
+      case 'Below normal 2':
+        return LevelTypes.BELOW_NORMAL_2;
       case 'Normal':
         return LevelTypes.NORMAL;
       case 'Increased':
