@@ -479,11 +479,7 @@
                         </div>
                         <div class="ml-3">
                             {{ 'range1' | translate }}
-                            {{
-                            item.unit === '%'
-                            ? (item.minValue * 100) + '%' + ' - ' + (item.maxValue * 100) + '%'
-                            : item.minValue + ' - ' + item.maxValue
-                            }}
+                            {{ item.minValue + ' - ' + item.maxValue }}
                         </div>
                         <div class="ml-3">
                             {{ 'level-type1' | translate }} {{ item.type }}

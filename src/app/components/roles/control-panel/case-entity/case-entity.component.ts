@@ -611,11 +611,6 @@ export class CaseEntityComponent implements OnInit {
       return;
     }
 
-    if (unit === '%') {
-      enteredMinValue /= 100;
-      enteredMaxValue /= 100;
-    }
-
     const abnormalityData: ICreateAbnormalityRequest = {
       parameter,
       unit,
@@ -647,7 +642,7 @@ export class CaseEntityComponent implements OnInit {
     const allowedParameters = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
     let sum = this.addedValues
       .filter(item => item.unit === '%' && allowedParameters.includes(item.parameter))
-      .reduce((acc, item) => acc + item.maxValue * 100, 0);
+      .reduce((acc, item) => acc + item.maxValue, 0);
     console.log(sum);
     this.isSum100 = sum == 100;
   }
@@ -659,7 +654,6 @@ export class CaseEntityComponent implements OnInit {
     }
     let mappedGenderOption: AffectedGenders;
     if (this.selectedLanguageOption === 'PL') {
-      console.log("check 1")
       mappedGenderOption = this.toEnglishGender(this.selectedGenderOption)
     } else {
       mappedGenderOption = this.selectedGenderOption as AffectedGenders;
