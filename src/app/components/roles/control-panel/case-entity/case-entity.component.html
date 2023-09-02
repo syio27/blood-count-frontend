@@ -166,7 +166,8 @@
                     <div class="mb-3 mt-5">
                         <textarea type="text" (input)="saveFormValues(2)" style="resize: none;" maxlength="250"
                             class="appearance-none border rounded w-full h-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="diagnosis" formControlName="diagnosis" placeholder="{{ 'diagnosis' | translate }}"></textarea>
+                            id="diagnosis" formControlName="diagnosis"
+                            placeholder="{{ 'diagnosis' | translate }}"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
@@ -216,12 +217,14 @@
                     <div>
                         <textarea type="text" (input)="saveFormValues(12)" style="resize: none;"
                             class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="description" formControlName="description" placeholder="{{ 'description' | translate }}"></textarea>
+                            id="description" formControlName="description"
+                            placeholder="{{ 'description' | translate }}"></textarea>
                     </div>
                     <div>
                         <textarea type="text" (input)="saveFormValues(13)" style="resize: none;"
                             class="appearance-none border rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="infoCom" formControlName="infoCom" placeholder="{{ 'information-and-comments' | translate }}"></textarea>
+                            id="infoCom" formControlName="infoCom"
+                            placeholder="{{ 'information-and-comments' | translate }}"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-start mt-5">
@@ -380,7 +383,8 @@
                     <div class="mb-3 mt-1">
                         <textarea type="text" (input)="saveFormValues(2)" style="resize: none;" maxlength="250"
                             class="appearance-none border rounded text-xs w-full h-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="diagnosis" formControlName="diagnosis" placeholder="{{ 'diagnosis' | translate }}"></textarea>
+                            id="diagnosis" formControlName="diagnosis"
+                            placeholder="{{ 'diagnosis' | translate }}"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-between mt-5">
@@ -430,12 +434,14 @@
                     <div>
                         <textarea type="text" (input)="saveFormValues(12)" style="resize: none;"
                             class="appearance-none border text-xs rounded w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="description" formControlName="description" placeholder="{{ 'description' | translate }}"></textarea>
+                            id="description" formControlName="description"
+                            placeholder="{{ 'description' | translate }}"></textarea>
                     </div>
                     <div>
                         <textarea type="text" (input)="saveFormValues(13)" style="resize: none;"
                             class="appearance-none border rounded text-xs w-full py-2 h-28 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="infoCom" formControlName="infoCom" placeholder="{{ 'information-and-comments' | translate }}"></textarea>
+                            id="infoCom" formControlName="infoCom"
+                            placeholder="{{ 'information-and-comments' | translate }}"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-start mt-5">
@@ -465,24 +471,38 @@
             <div class="w-full md:w-3/4 flex flex-col bg-gray-200 rounded-md">
                 <div *ngFor="let item of addedValues" class="flex flex-row my-1 justify-between items-center">
                     <div class="flex flex-col md:flex-row justify-between w-3/4">
-                        <div>
+                        <div class="ml-3">
                             {{ 'parameter' | translate }} {{ item.parameter }}
                         </div>
-                        <div>
+                        <div class="ml-3">
                             {{ 'unit1' | translate }} {{ item.unit }}
                         </div>
-                        <div>
-                            {{ 'range1' | translate }} {{ item.minValue }} - {{ item.maxValue }}
+                        <div class="ml-3">
+                            {{ 'range1' | translate }}
+                            {{
+                            item.unit === '%'
+                            ? (item.minValue * 100) + '%' + ' - ' + (item.maxValue * 100) + '%'
+                            : item.minValue + ' - ' + item.maxValue
+                            }}
                         </div>
-                        <div>
+                        <div class="ml-3">
                             {{ 'level-type1' | translate }} {{ item.type }}
                         </div>
                     </div>
-                    <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer text-center mr-1"
+                    <div class="bg-red-500 hover:bg-red-700 text-white font-bold p-1 px-3 rounded cursor-pointer text-center mr-2"
                         (click)="removeValue(item)">
                         -
                     </div>
                 </div>
+            </div>
+        </div>
+        <div *ngIf="!isSum100 && paramStatus === 'CONTAINS_ALLOWED'" class="flex justify-center">
+            <div class='py-2 px-5 bg-gray-100 rounded-md flex flex-row mb-5 items-center'>
+                <div
+                    class="w-4 h-4 rounded-full bg-red-400 text-white text-xs flex items-center justify-center hover:bg-red-800 cursor-pointer mr-2">
+                    !
+                </div>
+                <span class="text-xs">Sum of White blood cells max values doesnt equal to 100%</span>
             </div>
         </div>
         <div class="flex justify-center">
@@ -513,8 +533,9 @@
                         [class.pointer-events-none]="disabledUnit">
                         <input type="text"
                             class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                            placeholder="{{ 'unit' | translate }}" (click)="toggleUnitDropdown()" [class.rounded-t]="unitDropdownOpen"
-                            [class.rounded]="!unitDropdownOpen" [value]="selectedUnitOption" readonly>
+                            placeholder="{{ 'unit' | translate }}" (click)="toggleUnitDropdown()"
+                            [class.rounded-t]="unitDropdownOpen" [class.rounded]="!unitDropdownOpen"
+                            [value]="selectedUnitOption" readonly>
                         <span [class.hidden]="disabledUnit"
                             class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
                             [class.rotate-180]="unitDropdownOpen" [class.rotate-0]="!unitDropdownOpen">
@@ -532,14 +553,14 @@
                     <div class="w-full lg:w-1/5">
                         <input type="number" (input)="saveFormValues(8)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter-min" formControlName="parameter-min" placeholder="{{ 'min-value' | translate }}"
-                            [class.pointer-events-none]="disabledRange">
+                            id="parameter-min" formControlName="parameter-min"
+                            placeholder="{{ 'min-value' | translate }}" [class.pointer-events-none]="disabledRange">
                     </div>
                     <div class="w-full lg:w-1/5">
                         <input type="number" (input)="saveFormValues(9)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="parameter-max" formControlName="parameter-max" placeholder="{{ 'max-value' | translate }}"
-                            [class.pointer-events-none]="disabledRange">
+                            id="parameter-max" formControlName="parameter-max"
+                            placeholder="{{ 'max-value' | translate }}" [class.pointer-events-none]="disabledRange">
                     </div>
                     <div class="relative" [class.open]="levelTypeDropdownOpen">
                         <input type="text"

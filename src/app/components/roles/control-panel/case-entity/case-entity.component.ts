@@ -16,6 +16,7 @@ import { NotifierService } from 'angular-notifier';
 import { Language } from 'src/app/enums/language.enum';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ParamStatus } from 'src/app/enums/paramStatus.enum';
 
 const AnemiaTypePL = {
   [AnemiaType.NormochromicNormocytic]: 'Normochromiczna, normocytarna',
@@ -89,6 +90,8 @@ export class CaseEntityComponent implements OnInit {
   showTooltip = window.innerWidth > 450;
   showCaseTooltipInfo: boolean = false;
   showAbnormalTooltipInfo: boolean = false;
+  isSum100: boolean = true;
+  paramStatus: ParamStatus = ParamStatus.INITIAL;
 
   constructor(
     private fb: FormBuilder,
@@ -279,7 +282,7 @@ export class CaseEntityComponent implements OnInit {
     }
     else if (this.selectedParameterOption == 'NEU' || this.selectedParameterOption == 'LYM'
       || this.selectedParameterOption == 'MONO' || this.selectedParameterOption == 'EOS' || this.selectedParameterOption == 'BASO') {
-      this.selectedUnitOption = '10^9/L'
+      this.selectedUnitOption = '%'
       this.unitDropdownOpen = false
       this.disabledUnit = true
       this.disabledRange = false
@@ -573,29 +576,61 @@ export class CaseEntityComponent implements OnInit {
       this.addedValues.splice(index, 1);
       sessionStorage.setItem('addedValues', JSON.stringify(this.addedValues));
     }
+    this.calculateSumOfParams();
+
+    const allowedParameters = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
+    let allDeleted = true;
+    for (let allowedParam of allowedParameters) {
+      if (this.addedValues.some(item => item.parameter === allowedParam)) {
+        allDeleted = false;
+        break;
+      }
+    }
+    if (allDeleted) {
+      this.paramStatus = ParamStatus.ALL_ALLOWED_DELETED;
+    }
   }
 
+
   addValue() {
+    const allowedParametersForSumCalculation = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
     const parameter = this.selectedParameterOption
     const unit = this.selectedUnitOption
-    const minAge = this.parameterForm.get('parameter-min').value;
-    const maxAge = this.parameterForm.get('parameter-max').value;
+    let enteredMinValue = this.parameterForm.get('parameter-min').value;
+    let enteredMaxValue = this.parameterForm.get('parameter-max').value;
     const levelType = this.mapLevelTypeOption(this.selectedLevelTypeOption);
 
-    if (!parameter || !minAge || !maxAge || !levelType || !unit) {
+    if (!parameter || !enteredMinValue || !enteredMaxValue || !levelType || !unit) {
       return;
+    }
+
+    const parameterExists = this.addedValues.some(item => item.parameter === parameter);
+
+    if (parameterExists) {
+      this.notifier.notify('default', 'This parameter already exists.');
+      return;
+    }
+
+    if (unit === '%') {
+      enteredMinValue /= 100;
+      enteredMaxValue /= 100;
     }
 
     const abnormalityData: ICreateAbnormalityRequest = {
       parameter,
       unit,
-      minValue: minAge,
-      maxValue: maxAge,
+      minValue: enteredMinValue,
+      maxValue: enteredMaxValue,
       type: levelType
     };
 
-
     this.addedValues.push(abnormalityData);
+
+    if (allowedParametersForSumCalculation.includes(parameter)) {
+      this.paramStatus = ParamStatus.CONTAINS_ALLOWED;
+      this.calculateSumOfParams();
+    }
+
     this.parameterForm.reset();
     this.selectedLevelTypeOption = '';
     this.selectedParameterOption = '';
@@ -606,10 +641,22 @@ export class CaseEntityComponent implements OnInit {
     sessionStorage.removeItem('selectedUnitOption')
     sessionStorage.removeItem('selectedLevelTypeOption')
     sessionStorage.removeItem('selectedParameterOption')
+  }
 
+  calculateSumOfParams() {
+    const allowedParameters = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
+    let sum = this.addedValues
+      .filter(item => item.unit === '%' && allowedParameters.includes(item.parameter))
+      .reduce((acc, item) => acc + item.maxValue * 100, 0);
+    console.log(sum);
+    this.isSum100 = sum == 100;
   }
 
   createCaseWithAbnormality() {
+    if (!this.isSum100 && this.paramStatus === 'CONTAINS_ALLOWED') {
+      this.notifier.notify('error', 'Sum of White blood cells max values doesnt equal to 100%');
+      return;
+    }
     let mappedGenderOption: AffectedGenders;
     if (this.selectedLanguageOption === 'PL') {
       console.log("check 1")

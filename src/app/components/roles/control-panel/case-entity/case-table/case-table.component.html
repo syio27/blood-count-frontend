@@ -94,7 +94,11 @@
                         <tr *ngFor="let abnormality of abnormalityData">
                             <td class="border">{{ abnormality.parameter }}</td>
                             <td class="border">{{ abnormality.unit }}</td>
-                            <td class="border">{{ abnormality.minValue }} - {{ abnormality.maxValue }}</td>
+                            <td class="border">{{
+                                abnormality.unit === '%'
+                                ? (abnormality.minValue * 100) + ' - ' + (abnormality.maxValue * 100)
+                                : abnormality.minValue + ' - ' + abnormality.maxValue
+                                }}</td>
                             <td class="border">{{ abnormality.type }}</td>
                         </tr>
                     </tbody>
