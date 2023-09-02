@@ -185,12 +185,30 @@
                 <span>
                     < </span>
             </div>
-            <ng-container *ngFor="let page of pages">
-                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
-                    [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
-                    {{ page }}
-                </div>
+            <ng-container *ngIf="totalPages <= 5; else ellipsisSection">
+                <ng-container *ngFor="let page of pages">
+                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                        [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                        {{ page }}
+                    </div>
+                </ng-container>
             </ng-container>
+
+            <ng-template #ellipsisSection>
+                <ng-container *ngFor="let page of visiblePages">
+                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+                        [class.opacity-50]="currentPage === page" (click)="goToPage(page)">
+                        {{ page }}
+                    </div>
+                </ng-container>
+                <div *ngIf="currentPage!=totalPages && currentPage!=(totalPages-1) && currentPage!=(totalPages-2)"
+                    class="bg-gray-200 text-gray-800 font-bold py-2 px-4">...</div>
+                <div *ngIf="currentPage!=totalPages && currentPage!=(totalPages-1)"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" (click)="goToPage(totalPages)">
+                    {{ totalPages }}
+                </div>
+            </ng-template>
+
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
                 [class.opacity-50]="currentPage === totalPages">
                 <span> > </span>

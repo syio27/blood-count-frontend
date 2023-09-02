@@ -169,6 +169,7 @@ export class GroupsManageComponent implements OnInit {
       }
     )
   }
+
   deleteUserFromGroup(groupNumber, id) {
     this.groupService.deleteUserFromGroup(groupNumber, id).subscribe(
       () => {
@@ -181,6 +182,7 @@ export class GroupsManageComponent implements OnInit {
       }
     )
   }
+
   clearGroup(group) {
     this.groupService.clearGroup(group.groupNumber).subscribe(
       () => {
@@ -193,6 +195,7 @@ export class GroupsManageComponent implements OnInit {
       }
     )
   }
+
   openPopup2(id, email) {
     this.adminService.getCompletedGames(id).subscribe(
       (data) => {
@@ -202,7 +205,29 @@ export class GroupsManageComponent implements OnInit {
     this.openedPopup2 = true
     this.currentUserEmail = email
   }
+
   closePopup2() {
     this.openedPopup2 = false
+  }
+
+  get visiblePages(): number[] {
+    const totalPages = this.totalPages;
+    const currentPage = this.currentPage;
+
+    if (totalPages <= 3) {
+      return this.pages;
+    }
+
+    const visiblePageCount = 1; // Number of visible pages around the current page
+    let startPage = Math.max(currentPage - visiblePageCount, 1);
+    let endPage = Math.min(currentPage + visiblePageCount, totalPages);
+
+    if (startPage === 1) {
+      endPage = startPage + visiblePageCount * 2;
+    } else if (endPage === totalPages) {
+      startPage = endPage - visiblePageCount * 2;
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }
 }
