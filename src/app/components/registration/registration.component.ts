@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthService } from '../../auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
 import { RegisterRequest } from 'src/app/interfaces/IRegisterRequest';
+import { NotifierService } from 'angular-notifier';
+import { HttpErrorResponse } from '@angular/common/http';
 
 function passwordMatchValidator(form: FormGroup) {
   const password = form.get('password').value;
@@ -27,11 +29,16 @@ export class RegistrationComponent implements OnInit {
   form: FormGroup;
   formSubmitAttempt = false;
 
+  private readonly notifier: NotifierService;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private groupService: GroupService
-  ) { }
+    private groupService: GroupService,
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -67,7 +74,6 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-
   onSubmit() {
     const registerData: RegisterRequest = {
       groupNumber: this.selectedOption,
@@ -76,7 +82,16 @@ export class RegistrationComponent implements OnInit {
       timezoneOffset: 0
     }
     if (this.form.valid) {
-      this.authService.register(registerData).subscribe();
+      this.authService.register(registerData).subscribe(
+        result => {
+          if (result) {
+            this.notifier.notify('success', 'You are Successfully registered');
+          }
+        },
+        (error: HttpErrorResponse) => {
+          this.notifier.notify('error', error.message);
+        }
+      );
     }
     this.formSubmitAttempt = true;
   }

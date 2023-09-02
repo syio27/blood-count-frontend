@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AuthenticationRequest } from '../interfaces/IAuthenticationRequest';
 import { RegisterRequest } from '../interfaces/IRegisterRequest';
 import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { tap, shareReplay, catchError, of, switchMap, throwError } from 'rxjs';
 import * as moment from 'moment';
 import { UserDetails } from '../interfaces/IUserDetails';
@@ -72,7 +72,7 @@ export class AuthService {
           this.userDetailsService.setUserDetails(userDetails);
           this.router.navigate(['/']);
         }),
-        catchError(() => []),
+        catchError(this.handleException),
         shareReplay()
       )
   }
@@ -125,5 +125,15 @@ export class AuthService {
   getTimezoneoffset() {
     //return new Date().getTimezoneOffset() * -1;
     return 0;
+  }
+
+  private handleException(exception: HttpErrorResponse) {
+    if (exception.status === 0) {
+      console.error(`Error on client-side occured:, ${exception.error}`)
+    } else {
+      console.error(`Error on server-side occured with status code: ${exception.status} and message: ${JSON.stringify(exception.error)}`)
+    }
+
+    return throwError(() => exception.error)
   }
 }
