@@ -57,9 +57,13 @@
         </div>
     </div>
     <div class="flex justify-center mt-10">
-        <div (click)="nextPage()"
-            class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
+        <div (click)="handleNextPage()" [class.bg-blue-300]="isButtonClicked"
+            [class.cursor-not-allowed]="isButtonClicked" [class.bg-blue-500]="!isButtonClicked"
+            [class.hover:bg-blue-700]="!isButtonClicked"
+            class="w-full md:w-20 text-white font-bold py-2 text-center rounded cursor-pointer select-none"
+            [attr.disabled]="isButtonClicked ? true : null">
             {{ 'next' | translate }}
         </div>
     </div>
+
 </div>

@@ -22,13 +22,16 @@ export class Page1Component {
   @Input() gameId: number
   @Input() userDetails: UserDetails;
   @Input() currentPage: Pages
-  @Input() nextPage!: () => void
+  @Input() nextPage!: (callback?: () => void) => void
+
+  isButtonClicked = false;
 
   constructor(
     private gameService: GameService
   ) {
 
   }
+
   isAnswerSelected(questionId: number, answerId: number): boolean {
     return this.savedAnswers.some(answer => answer.questionId === questionId && answer.answerId === answerId);
   }
@@ -49,4 +52,13 @@ export class Page1Component {
       this.answers.push({ questionId, answerId });
     }
   }
+
+  handleNextPage() {
+    if (!this.isButtonClicked) {
+      this.nextPage(() => {
+        this.isButtonClicked = true;
+      });
+    }
+  }
+
 }

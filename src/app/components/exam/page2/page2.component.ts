@@ -21,8 +21,10 @@ export class Page2Component {
   @Input() gameId: number
   @Input() userDetails: UserDetails;
   @Input() currentPage: Pages
-  @Input() nextPage!: () => void
   @Input() testData: any[];
+  @Input() nextPage!: (callback?: () => void) => void
+
+  isButtonClicked = false;
 
   constructor(
     private gameService: GameService
@@ -41,4 +43,11 @@ export class Page2Component {
     }
   }
 
+  handleNextPage() {
+    if (!this.isButtonClicked) {
+      this.nextPage(() => {
+        this.isButtonClicked = true;
+      });
+    }
+  }
 }

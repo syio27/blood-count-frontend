@@ -19,37 +19,40 @@
             <div>{{ 'physical-examination' | translate }} {{gameCaseDetails.physExam}}</div>
         </div>
     </div>
-        <div class="mt-14">
-            <div> 
-                <div class="text-base md:text-2xl mb-2">
-                    {{ 'patient-morphology-table' | translate }}
-                </div>
-                <table class="border w-full text-center text-[8px] md:text-base">
-                    <thead>
-                        <tr class="border-black bg-gray-200">
-                            <th class="px-2 py-2 border">{{ 'exam-table-th-param' | translate }}</th>
-                            <th class="px-2 py-2 border">{{ 'unit' | translate }}</th>
-                            <th class="px-2 py-2 border">{{ 'value' | translate }}</th>
-                            <th class="px-2 py-2 border">{{ 'range' | translate }}</th>
-                            <th class="px-2 py-2 border">{{ 'level-type' | translate }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of tableData">
-                            <td class="border px-2 py-2">{{ data.parameter }}</td>
-                            <td class="border px-2 py-2">{{ data.unit }}</td>
-                            <td class="border px-2 py-2">{{ data.value }}</td>
-                            <td class="border px-2 py-2">{{ data.referenceValueRange }}</td>
-                            <td class="border px-2 py-2">{{ data.levelType }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="mt-14">
+        <div>
+            <div class="text-base md:text-2xl mb-2">
+                {{ 'patient-morphology-table' | translate }}
             </div>
+            <table class="border w-full text-center text-[8px] md:text-base">
+                <thead>
+                    <tr class="border-black bg-gray-200">
+                        <th class="px-2 py-2 border">{{ 'exam-table-th-param' | translate }}</th>
+                        <th class="px-2 py-2 border">{{ 'unit' | translate }}</th>
+                        <th class="px-2 py-2 border">{{ 'value' | translate }}</th>
+                        <th class="px-2 py-2 border">{{ 'range' | translate }}</th>
+                        <th class="px-2 py-2 border">{{ 'level-type' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of tableData">
+                        <td class="border px-2 py-2">{{ data.parameter }}</td>
+                        <td class="border px-2 py-2">{{ data.unit }}</td>
+                        <td class="border px-2 py-2">{{ data.value }}</td>
+                        <td class="border px-2 py-2">{{ data.referenceValueRange }}</td>
+                        <td class="border px-2 py-2">{{ data.levelType }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="flex justify-center mt-5">
-            <div (click)="submitTest()" 
-                class="w-full md:w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 text-center rounded cursor-pointer select-none">
-                {{ 'submit' | translate }}
-            </div>
+    </div>
+    <div class="flex justify-center mt-10">
+        <div (click)="handleSubmitGame()" [class.bg-blue-300]="isButtonClicked"
+            [class.cursor-not-allowed]="isButtonClicked" [class.bg-blue-500]="!isButtonClicked"
+            [class.hover:bg-blue-700]="!isButtonClicked"
+            class="w-full md:w-20 text-white font-bold py-2 text-center rounded cursor-pointer select-none"
+            [attr.disabled]="isButtonClicked ? true : null">
+            {{ 'submit' | translate }}
         </div>
+    </div>
 </div>

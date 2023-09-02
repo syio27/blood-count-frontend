@@ -64,7 +64,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
         this.autoSave();
       }
     });
-    this.submitTest = this.submitTest.bind(this)
+    this.submitGame = this.submitGame.bind(this)
   }
 
   // auto save the selected answers when user refreshes app/closes tab
@@ -137,7 +137,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     )
   }
 
-  private invokeCompleteApi(mergedAnswers: any[]) {
+  private invokeCompleteApi() {
     this.gameService.complete(this.gameId, this.userDetails.id).subscribe(
       (data) => {
         this.submitted = data.status
@@ -148,13 +148,14 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     )
   }
 
-  nextPage() {
+  nextPage(callback?: () => void) {
     const mergedAnswers: any[] = [...this.answers, ...this.savedAnswers].filter((value, index, self) => {
       return index === self.findIndex((v) => v.questionId === value.questionId);
     });
     if (this.currentPage == "ONE") {
       if (mergedAnswers.length == this.testData.length) {
         this.invokeNextApi(mergedAnswers);
+        if (callback) callback();
       }
       else {
         this.notifier.notify('default', 'You need to fulfill all the questions');
@@ -165,6 +166,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     if (this.currentPage == "TWO") {
       if (mergedAnswers.length == this.msAssesmentTest.length + this.testData.length) {
         this.invokeNextApi(mergedAnswers);
+        if (callback) callback();
       }
       else {
         this.notifier.notify('default', 'You need to fulfill all the questions');
@@ -174,12 +176,9 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-
-  submitTest() {
-    const mergedAnswers: any[] = [...this.answers, ...this.savedAnswers].filter((value, index, self) => {
-      return index === self.findIndex((v) => v.questionId === value.questionId);
-    });
-    this.invokeCompleteApi(mergedAnswers);
+  submitGame(callback?: () => void) {
+    this.invokeCompleteApi();
+    if (callback) callback();
     this.noTimer = true
   }
 }
