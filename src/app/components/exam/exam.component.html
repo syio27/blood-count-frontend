@@ -4,7 +4,7 @@
     <app-page1 *ngIf="currentPage=='ONE' && submitted=='IN_PROGRESS'" [displayedElements]="displayedElements"
         [displayedElements2]="displayedElements2" [gender]="gender" [age]="age" [answers]="answers"
         [testData]="testData" [savedAnswers]='savedAnswers' [gameId]="gameId" [userDetails]="userDetails"
-        [currentPage]="currentPage" [nextPage]='nextPage'></app-page1>
+        [currentPage]="currentPage" [nextPage]='nextPage' [gameCaseDetails]='gameCaseDetails'></app-page1>
 
     <app-page2 *ngIf="currentPage=='TWO' && submitted=='IN_PROGRESS'" [msAssesmentTest]="msAssesmentTest"
         [answers]="answers" [savedAnswers]='savedAnswers' [userDetails]="userDetails" [currentPage]="currentPage"

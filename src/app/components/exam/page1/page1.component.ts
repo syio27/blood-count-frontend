@@ -4,6 +4,7 @@ import { SavedUserAnswerResponse } from 'src/app/interfaces/SavedUserAnswerRespo
 import { GameService } from 'src/app/services/game.service';
 import { Pages } from 'src/app/enums/pages';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
+import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
 
 @Component({
   selector: 'app-page1',
@@ -22,6 +23,7 @@ export class Page1Component {
   @Input() gameId: number
   @Input() userDetails: UserDetails;
   @Input() currentPage: Pages
+  @Input() gameCaseDetails: IGameCaseDetailsResponse
   @Input() nextPage!: (callback?: () => void) => void
 
   isButtonClicked = false;

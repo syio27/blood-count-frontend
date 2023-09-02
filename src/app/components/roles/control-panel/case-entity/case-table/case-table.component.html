@@ -55,28 +55,46 @@
                 <span class="flex font-bold text-base md:text-1xl">{{ 'case' | translate }} #{{caseDetails.id}}</span>
                 <div class="flex flex-col p-2 rounded-md bg-gray-100">
                     <div>
-                        {{ 'type-of-anemia' | translate }} {{caseDetails.anemiaType}}
+                        <span class="font-bold">{{ 'type-of-anemia' | translate }}</span> {{caseDetails.anemiaType}}
                     </div>
                     <div>
-                        {{ 'exam-patient-diagnosis' | translate }} {{caseDetails.diagnosis}}
+                        <span class="font-bold">{{ 'exam-patient-diagnosis' | translate }}</span>
+                        {{caseDetails.diagnosis}}
                     </div>
                     <div>
-                        {{ 'exam-patient-gender' | translate }} {{caseDetails.affectedGender}}
+                        <span class="font-bold">{{ 'exam-patient-gender' | translate }}</span>
+                        {{caseDetails.affectedGender}}
                     </div>
                     <div>
-                        {{ 'first-range' | translate }} {{ caseDetails.firstMinAge }} - {{ caseDetails.firstMaxAge }}
+                        <span class="font-bold">{{ 'first-range' | translate }}</span> {{ caseDetails.firstMinAge }} -
+                        {{ caseDetails.firstMaxAge }}
                     </div>
                     <div>
-                        {{ 'second-range' | translate }} {{ caseDetails.secondMinAge }} - {{ caseDetails.secondMaxAge }}
+                        <span class="font-bold">{{ 'second-range' | translate }}</span>
+                        <ng-container
+                            *ngIf="caseDetails.secondMinAge === 0 && caseDetails.secondMaxAge === 0; else rangeTemplate">
+                            - no range
+                        </ng-container>
+                        <ng-template #rangeTemplate>
+                            {{ caseDetails.secondMinAge }} - {{ caseDetails.secondMaxAge }}
+                        </ng-template>
                     </div>
                     <div>
-                        HR: {{ caseDetails.hr }}
+                        <span class="font-bold"> {{ 'vital-signs' | translate }} </span>
+                        <br>
+                        <span class="ml-2">• HR:</span> {{ caseDetails.hr }}
+                        <br>
+                        <span class="ml-2">• RR:</span> {{caseDetails.rr}}
                     </div>
                     <div>
-                        RR: {{caseDetails.rr}}
-                    </div>
-                    <div>
-                        {{ 'physical-examination' | translate }} {{caseDetails.physExam}}
+                        <span class="font-bold">{{ 'physical-examination' | translate }}</span>
+                        <br>
+                        <span class="ml-2">
+                            • {{ 'body-mass' | translate }}: {{ caseDetails.bodyMass }}; {{ 'height' | translate }}: {{
+                            caseDetails.height
+                            }}; BMI
+                            [kg/m2]: {{ caseDetails.bmi }}
+                        </span>
                     </div>
                 </div>
                 <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' |

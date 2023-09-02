@@ -1,3 +1,4 @@
+import { Language } from "../enums/language.enum"
 import { IAbnormalityResponse } from "./IAbnormalityResponse"
 
 export interface ICaseResponse {
@@ -13,6 +14,10 @@ export interface ICaseResponse {
     vitalSigns: string
     hr: string
     rr: string
-    physExam: string,
-    language: string
+    description: string
+    caseName: string
+    language: Language
+    bodyMass: string
+    height: string
+    bmi: string
 }

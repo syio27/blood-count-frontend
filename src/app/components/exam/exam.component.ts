@@ -29,6 +29,8 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   testData = [];
   age: number
   gender: string
+  hr: string
+  rr: string
   answers: IAnswerRequest[] = [];
   gameId: number
   userDetails: UserDetails;

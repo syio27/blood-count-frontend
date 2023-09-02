@@ -1,3 +1,5 @@
+import { Language } from "../enums/language.enum"
+
 export interface IGameCaseDetailsResponse {
     id: number
     anActualCaseId: number
@@ -6,6 +8,11 @@ export interface IGameCaseDetailsResponse {
     details: string
     hr: string
     rr: string
-    physExam: string
+    description: string
     infoCom: string
+    caseName: string
+    language: Language
+    bodyMass: string
+    height: string
+    bmi: string
 }
