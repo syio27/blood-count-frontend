@@ -14,6 +14,7 @@ export class CbcTableComponent implements OnInit {
   private resizeSubject = new Subject<Event>();
   showTooltip = window.innerWidth > 450;
   showTooltipInfo: boolean = false;
+  isLoading: boolean
 
   constructor(private referenceTableService: ReferenceTableService) {
     this.resizeSubject.pipe(
@@ -33,9 +34,11 @@ export class CbcTableComponent implements OnInit {
   }
 
   fetchData() {
+    this.isLoading = true
     this.referenceTableService.fetchBCReferenceTable().subscribe(
       (data) => {
         this.cbcData = [data].flatMap((subArray) => subArray);
+        this.isLoading = false
       },
       (error) => {
         console.error('Failed to fetch data:', error);
