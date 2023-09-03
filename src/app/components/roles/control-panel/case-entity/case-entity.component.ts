@@ -667,9 +667,7 @@ export class CaseEntityComponent implements OnInit {
   }
 
   randomizeAllowedBloodCounts(addedValues: ICreateAbnormalityRequest[]): Map<string, number> {
-    console.log(addedValues)
     const allowedParameters = ['NEU', 'LYM', 'MONO', 'EOS', 'BASO'];
-    console.log("being called!")
 
     let filteredBloodCounts = addedValues.filter(bc => allowedParameters.includes(bc.parameter));
 
@@ -679,7 +677,6 @@ export class CaseEntityComponent implements OnInit {
       this.doesContainWhiteBloodCells = false;
     }
 
-    console.log(filteredBloodCounts);
 
     let remainingPercentage = 100;
     const randomizedValuesMap = new Map<string, number>();
@@ -692,7 +689,6 @@ export class CaseEntityComponent implements OnInit {
     // Check if it's possible for the sum to be 100
     if (minPossibleSum > 100 || maxPossibleSum < 100) {
       this.isSum100 = false;
-      console.log("Impossible to sum to 100.");
       return randomizedValuesMap; // return empty map
     }
 
@@ -711,8 +707,6 @@ export class CaseEntityComponent implements OnInit {
         randomizedValuesMap.set(filteredBloodCounts[filteredBloodCounts.length - 1].parameter, remainingPercentage);
       }
     }
-    console.log("map inside the func ->")
-    console.log(randomizedValuesMap)
 
     return randomizedValuesMap;
   }
@@ -720,7 +714,6 @@ export class CaseEntityComponent implements OnInit {
 
   createCaseWithAbnormality() {
     const randomizedValuesMap = this.randomizeAllowedBloodCounts(this.addedValues);
-    console.log(randomizedValuesMap);
     this.addedValues = this.addedValues.map((abnormality) => {
       const randomValue = randomizedValuesMap.get(abnormality.parameter);
       if (randomValue !== undefined) {
@@ -730,10 +723,8 @@ export class CaseEntityComponent implements OnInit {
       return abnormality;
     });
 
-    console.log(this.addedValues);
 
     if (!this.isSum100 && this.doesContainWhiteBloodCells) {
-      console.log("did not pass check")
       return;
     }
 
@@ -762,7 +753,6 @@ export class CaseEntityComponent implements OnInit {
       infoCom: this.form.get('infoCom').value,
       language: this.selectedLanguageOption as Language
     };
-    console.log(caseData)
     this.caseService.createCaseWithAbnormality(caseData, this.addedValues).subscribe(
       () => {
         this.selectedGenderOption = '';

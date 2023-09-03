@@ -19,6 +19,7 @@ import { CanDeactivateGuard } from './services/can-deactivate.guard';
 import { GameGuard } from './services/game.guard';
 import { RoleGuard } from './services/role.guard';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -101,6 +102,10 @@ const routes: Routes = [
       {
         path: 'forgot-password',
         component: ForgotPasswordComponent
+      },
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent
       },
     ]
   },
