@@ -1,25 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserProfileService } from 'src/app/services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit {
 
   form: FormGroup;
   formSubmitAttempt = false;
   invalidLogin: boolean;
+  token: string;
+  email: string;
+  isLoading: boolean = false;
 
+  private readonly notifier: NotifierService;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
-  ) { }
+    private route: ActivatedRoute,
+    private userService: UserProfileService,
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit() {
+    this.token = this.route.snapshot.paramMap.get('token');
+
+    // Capture the email from the query parameters
+    this.route.queryParams.subscribe(params => {
+      this.email = params['email'];
+    });
     this.form = this.fb.group({
       newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+?.-=])[0-9a-zA-Z!@#$%^&*()_+?.-=]{8,}$/)]],
       confirmPassword: ['', Validators.required]
@@ -38,20 +56,22 @@ export class ResetPasswordComponent {
   }
 
   onSubmit() {
+    this.isLoading = true;
     if (this.form.valid) {
-      this.authService.login(this.form.value).subscribe(
-        result => {
-          if (result) {
-            this.invalidLogin = false;
-          } else {
-            this.invalidLogin = true;
-          }
-        }
-      );
+      this.userService.resetPassword(this.token, this.email, this.form.value).subscribe(
+        () => {
+          this.notifier.notify('success', 'Reset has been reset');
+          this.isLoading = false;
+        },
+        (error: HttpErrorResponse) => {
+          this.notifier.notify('error', error.message);
+          this.isLoading = false;
+        });
     }
     this.formSubmitAttempt = true;
   }
-  changePassword(){
-    
+
+  changePassword() {
+    this.onSubmit();
   }
 }

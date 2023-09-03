@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../auth/auth.service';
+import { UserProfileService } from 'src/app/services/user.service';
+import { NotifierService } from 'angular-notifier';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,12 +13,18 @@ export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
   formSubmitAttempt = false;
   invalidLogin: boolean;
+  isLoading: boolean = false;
+  isFi
 
+  private readonly notifier: NotifierService;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
-  ) { }
+    private userService: UserProfileService,
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -24,11 +32,11 @@ export class ForgotPasswordComponent implements OnInit {
     });
     this.form.valueChanges.subscribe(() => {
       this.formSubmitAttempt = false;
-      this.invalidLogin = false;
     });
   }
 
   isFieldInvalid(field: string) {
+
     return (
       (!this.form.get(field).valid && this.form.get(field).touched) ||
       (this.form.get(field).untouched && this.formSubmitAttempt)
@@ -37,15 +45,15 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.authService.login(this.form.value).subscribe(
-        result => {
-          if (result) {
-            this.invalidLogin = false;
-          } else {
-            this.invalidLogin = true;
-          }
-        }
-      );
+      this.isLoading = true;
+      this.userService.forgotPassword(this.form.value).subscribe(() => {
+        this.isLoading = false;
+        this.notifier.notify('success', 'Reset password link sent');
+      },
+        (error: HttpErrorResponse) => {
+          this.notifier.notify('error', error.message);
+          this.isLoading = false;
+        });
     }
     this.formSubmitAttempt = true;
   }

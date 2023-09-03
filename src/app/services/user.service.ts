@@ -57,6 +57,29 @@ export class UserProfileService {
     return this.http.get<ISimpleGameResponse>(`${this.baseUrl}${userId}?gameId=${gameId}`);
   }
 
+  forgotPassword(email) {
+    return this.http.post(`${environment.baseUrl}public/api/v1/forgot-password`, email)
+      .pipe(
+        catchError(this.handleException)
+      )
+  }
+
+
+  resetPassword(token: string, email: string, form) {
+    console.log(form)
+    const payload = {
+      token: token,
+      email: email,
+      newPassword: form.newPassword,
+      newPasswordRepeat: form.confirmPassword
+    }
+    console.log(payload)
+    return this.http.post(`${environment.baseUrl}public/api/v1/reset-password`, payload)
+      .pipe(
+        catchError(this.handleException)
+      )
+  }
+
   private handleException(exception: HttpErrorResponse) {
     if (exception.status === 0) {
       console.error(`Error on client-side occured:, ${exception.error}`)
@@ -64,6 +87,6 @@ export class UserProfileService {
       console.error(`Error on server-side occured with status code: ${exception.status} and message: ${JSON.stringify(exception.error)}`)
     }
 
-    return throwError(() => new Error("Error happened; Try again"))
+    return throwError(() => exception.error)
   }
 }

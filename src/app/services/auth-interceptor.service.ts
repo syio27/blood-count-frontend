@@ -17,7 +17,9 @@ export class AuthInterceptorService implements HttpInterceptor {
   private excludedUrls: string[] = [
     `${environment.baseUrl}api/v1/auth/authenticate`,
     `${environment.baseUrl}api/v1/auth/register`,
-    `${environment.baseUrl}public/api/v1/groups`
+    `${environment.baseUrl}public/api/v1/groups`,
+    `${environment.baseUrl}public/api/v1/reset-password`,
+    `${environment.baseUrl}public/api/v1/forgot-password`
   ];
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
