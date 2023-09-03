@@ -134,5 +134,7 @@
     "users-no-data": "You dont have any users yet",
     "groups-no-data": "You dont have any groups yet",
     "games-no-data": "You dont have any played games yet",
-    "select-lang": "Select the language for case:"
+    "select-lang": "Select the language for case:",
+    "footer-description": "© 2023 BloodCount Test App, Developed in Warsaw, Poland in PJATK University Building. Repositories: Backend &Frontend. More Information about the application",
+    "footer-here-link": "HERE"
 }
