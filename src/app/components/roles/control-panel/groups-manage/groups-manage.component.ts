@@ -28,11 +28,17 @@ export class GroupsManageComponent implements OnInit {
   selectedGroupTypeOption = null;
   groupTypeDropdownOptions = Object.values(GroupType);
   groupParticipants: UserDetails[] = []
-  selectedGroup: any;
+  selectedGroup: IGroupResponse;
   currentUserEmail: string
+  currentUserID: string
+  currentGroup: string
   openedPopup2 = false
   userHistory: ISimpleGameResponse[] = []
   isLoading: boolean
+  openedPopup3: boolean
+  onClick: boolean;
+  selectedOption = '';
+  groupDropdownOptions: string[] = [];
 
   private readonly notifier: NotifierService;
 
@@ -60,7 +66,7 @@ export class GroupsManageComponent implements OnInit {
       };
 
       this.groupService.createNewGroup(groupRequest).subscribe(
-        (response) => {
+        () => {
           this.form.reset();
           this.selectedGroupTypeOption = null;
           this.notifier.notify('success', 'Group has been created');
@@ -135,6 +141,7 @@ export class GroupsManageComponent implements OnInit {
             return 0;
           }
         });
+        this.groupDropdownOptions = [data].flatMap((subArray) => subArray).map(group => group.groupNumber);
         this.isLoading = false
       },
       (error) => {
@@ -150,6 +157,7 @@ export class GroupsManageComponent implements OnInit {
       }
     )
     this.openedPopup = true
+    this.currentGroup = item
   }
 
   closePopup() {
@@ -208,6 +216,42 @@ export class GroupsManageComponent implements OnInit {
 
   closePopup2() {
     this.openedPopup2 = false
+  }
+
+
+  openPopup3(id,email) {
+    this.openedPopup3 = true
+    this.currentUserEmail = email
+    this.currentUserID = id
+    console.log(this.currentUserID)
+  }
+
+  closePopup3() {
+    this.openedPopup3 = false
+  }
+
+  toggleClick() {
+    this.onClick = !this.onClick;
+  }
+
+  selectOption(option: string) {
+    this.selectedOption = option;
+    this.onClick = false;
+  }
+
+  onSubmit(){
+    this.adminService.changeUserGroup(this.currentUserID, this.selectedOption).subscribe(
+      ()=>{
+        this.notifier.notify('success', 'User assigned to the selected group');
+        this.closePopup3()
+        this.openPopup(this.currentGroup)
+        this.fetchGroups()
+      },
+      (error: HttpErrorResponse) => {
+        this.notifier.notify('error', error.message);
+      }
+    )
+ 
   }
 
   get visiblePages(): number[] {

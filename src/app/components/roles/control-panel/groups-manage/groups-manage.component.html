@@ -94,15 +94,17 @@
                                 <td class="border">{{ user.role }}</td>
                                 <td class="border">
                                     <div class="flex justify-center items-center">
-                                        <div *ngIf="user.id != userDetails.id"
-                                            class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer"
-                                            (click)="openPopup2(user.id, user.email)">
-                                            {{ 'details' | translate }}
-                                        </div>
-                                        <div *ngIf="user.id == userDetails.id"
-                                            class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer mr-9"
-                                            (click)="openPopup2(user.id, user.email)">
-                                            {{ 'details' | translate }}
+                                        <div class="flex w-3/4" [class.mr-9]="user.id == userDetails.id">
+                                            <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer"
+                                                (click)="openPopup2(user.id, user.email)">
+                                                {{ 'details' | translate }}
+                                            </div>
+                                            <div (click)="openPopup3(user.id, user.email)"
+                                                class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer">
+                                                <a>
+                                                    >>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div (click)="deleteUserFromGroup(user.groupNumber, user.id)"
                                             *ngIf="(userDetails.role == 'ROOT' || userDetails.role == 'ADMIN') && user.id != userDetails.id"
@@ -146,13 +148,52 @@
                         </thead>
                         <tbody id="table-body" class="items-center text-center">
                             <tr *ngFor="let history of userHistory">
-                                <td class="border">{{ history.startTime }}</td>
-                                <td class="border">{{ history.endTime}}</td>
+                                <td class="border">{{ history.startTime | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                                <td class="border">{{ history.endTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                                 <td class="border">{{ history.testDuration}}</td>
                                 <td class="border">{{ history.score}}</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="openedPopup3"
+            class="absolute right-0 md:right-1/5 bottom-1/4 w-full h-80 bg-white border shadow-2xl rounded-xl">
+            <div class="p-4">
+                <div class="flex justify-between mb-3">
+                    <div>{{currentUserEmail}}</div>
+                    <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup3()">{{ 'close' |
+                        translate }}</button>
+                </div>
+                <div class="w-full h-60 overflow-y-auto">
+                    <div class="flex justify-center text-xl font-bold">
+                        Assign user to another group
+                    </div>
+                    <div class="mt-2 relative mb-3" [class.open]="onClick">
+                        <input type="text"
+                            class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            placeholder="Group" (click)="toggleClick()" [class.rounded-t]="onClick"
+                            [class.rounded]="!onClick" [value]="selectedOption" readonly>
+                        <span
+                            class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+                            [class.rotate-180]="onClick" [class.rotate-0]="!onClick">
+                            expand_more
+                        </span>
+                        <ul class="w-full absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150"
+                            [class.scale-y-0]="!onClick" [class.scale-y-100]="onClick">
+                            <li *ngFor="let option of groupDropdownOptions"
+                                class="py-2 px-3 cursor-pointer hover:bg-gray-100" (click)="selectOption(option)"
+                                [class.selected]="option === selectedOption">
+                                {{ option }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-32 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
+                    focus:outline-none focus:shadow-outline w-full lg:w-auto text-center cursor-pointer"
+                        (click)="onSubmit()">
+                        Assign
+                    </div>
                 </div>
             </div>
         </div>
@@ -162,7 +203,8 @@
             <div class="flex justify-center">
                 <div class="bg-noData bg-center bg-cover w-32 h-32"></div>
             </div>
-            <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{ 'groups-no-data' |
+            <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{ 'groups-no-data'
+                |
                 translate }}
             </div>
         </div>
@@ -208,7 +250,6 @@
                     {{ totalPages }}
                 </div>
             </ng-template>
-
             <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" (click)="nextPage()"
                 [class.opacity-50]="currentPage === totalPages">
                 <span> > </span>
