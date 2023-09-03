@@ -77,16 +77,18 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isLoading = true;
     if (this.form.valid) {
+      this.isLoading = true;
       this.userService.resetPassword(this.token, this.email, this.form.value).subscribe(
         () => {
           this.notifier.notify('success', 'Reset has been reset');
           this.isLoading = false;
+          this.form.reset();
         },
         (error: HttpErrorResponse) => {
           this.notifier.notify('error', error.message);
           this.isLoading = false;
+          this.form.reset();
         });
     }
     this.formSubmitAttempt = true;

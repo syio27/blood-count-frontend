@@ -49,10 +49,12 @@ export class ForgotPasswordComponent implements OnInit {
       this.userService.forgotPassword(this.form.value).subscribe(() => {
         this.isLoading = false;
         this.notifier.notify('success', 'Reset password link sent');
+        this.form.reset();
       },
         (error: HttpErrorResponse) => {
           this.notifier.notify('error', error.message);
           this.isLoading = false;
+          this.form.reset();
         });
     }
     this.formSubmitAttempt = true;
