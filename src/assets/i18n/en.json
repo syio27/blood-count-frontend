@@ -133,5 +133,6 @@
     "cases-no-data": "You dont have any cases yet",
     "users-no-data": "You dont have any users yet",
     "groups-no-data": "You dont have any groups yet",
-    "games-no-data": "You dont have any played games yet"
+    "games-no-data": "You dont have any played games yet",
+    "select-lang": "Select the language for case:"
 }
