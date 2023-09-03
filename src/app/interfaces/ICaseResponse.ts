@@ -14,6 +14,7 @@ export interface ICaseResponse {
     vitalSigns: string
     hr: string
     rr: string
+    infoCom: string
     description: string
     caseName: string
     language: Language

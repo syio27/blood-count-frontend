@@ -96,6 +96,16 @@
                             [kg/m2]: {{ caseDetails.bmi }}
                         </span>
                     </div>
+                    <div>
+                        <span class="font-bold"> {{ 'description' | translate }} </span>
+                        <br>
+                        <span class="ml-2">•</span> {{ caseDetails.description }}
+                    </div>
+                    <div>
+                        <span class="font-bold"> {{ 'information-and-comments' | translate }} </span>
+                        <br>
+                        <span class="ml-2">•</span> {{ caseDetails.infoCom }}
+                    </div>
                 </div>
                 <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' |
                     translate }}</div>
@@ -124,7 +134,8 @@
                 <div class="flex justify-center">
                     <div class="bg-noData bg-center bg-cover w-32 h-32"></div>
                 </div>
-                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{ 'cases-no-data' |
+                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{
+                    'cases-no-data' |
                     translate }}
                 </div>
             </div>
