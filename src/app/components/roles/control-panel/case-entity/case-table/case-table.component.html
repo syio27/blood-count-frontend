@@ -119,12 +119,12 @@
                 </table>
             </div>
         </div>
-        <div class="flex justify-center items-center border w-full h-[48vh]" *ngIf="tableData.length==0 && !isLoading">
+        <div class="flex justify-center items-center border w-full h-[68vh]" *ngIf="tableData.length==0 && !isLoading">
             <div class="flex flex-col">
                 <div class="flex justify-center">
-                    <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
+                    <div class="bg-noData bg-center bg-cover w-32 h-32"></div>
                 </div>
-                <div class="flex justify-center text-xl md:text-3xl font-bold select-none">{{ 'cases-no-data' |
+                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{ 'cases-no-data' |
                     translate }}
                 </div>
             </div>

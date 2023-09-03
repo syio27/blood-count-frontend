@@ -18,6 +18,7 @@ import { ExamComponent } from './components/exam/exam.component';
 import { CanDeactivateGuard } from './services/can-deactivate.guard';
 import { GameGuard } from './services/game.guard';
 import { RoleGuard } from './services/role.guard';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -96,6 +97,10 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegistrationComponent
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
       },
     ]
   },

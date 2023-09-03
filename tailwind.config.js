@@ -7,7 +7,7 @@ module.exports = {
         polandFlag: "url('./assets/polandflag.png')",
         englishFlag: "url('/assets/englishflag.png')",
         account: "url('/assets/user.png')",
-        noData: "url('/assets/noData.png')",
+        noData: "url('/assets/noData.jpeg')",
       },
     },
   },

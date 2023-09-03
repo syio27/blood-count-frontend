@@ -47,6 +47,7 @@ import { NotifierModule } from 'angular-notifier';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -84,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Page1Component,
     Page3Component,
     Page4Component,
+    ForgotPasswordComponent,
   ],
   imports: [
     ReactiveFormsModule,

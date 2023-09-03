@@ -54,19 +54,18 @@ export class HomeComponent implements OnInit {
         this.selectedOption = 'Your game is running, please press continue button';
       }
     })
+    if(!this.currentLang){
+      this.selectedOption = 'Please choose the language to get cases';
+    }
   }
 
   fetchCase() {
-    this.langService.language$.subscribe(data => {
-      this.currentLang = data;
-    
       this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
         this.dropdownOptions = [cases]
           .flatMap((subArray) => subArray)
           .filter(caseItem => caseItem.language === this.currentLang)
           .sort();
       });
-    });    
   }
 
   selectOption(option: string, id: number) {
@@ -76,7 +75,7 @@ export class HomeComponent implements OnInit {
   }
 
   startTest() {
-    let selectedLanguage = this.languageService.currentLang;
+    let selectedLanguage = this.currentLang;
     if (!selectedLanguage) {
       selectedLanguage = 'EN'
     }
@@ -93,5 +92,11 @@ export class HomeComponent implements OnInit {
 
   continueTest() {
     this.router.navigate(['/exam']);
+  }
+  pickLang(language){
+    this.currentLang = language
+    this.selectedOption = '';
+    this.onClick = false
+    this.fetchCase();
   }
 }
