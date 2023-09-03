@@ -94,7 +94,7 @@
                                 <td class="border">{{ user.role }}</td>
                                 <td class="border">
                                     <div class="flex justify-center items-center">
-                                        <div class="flex w-3/4" [class.mr-9]="user.id == userDetails.id">
+                                        <div class="flex w-3/4">
                                             <div class="text-blue-500 hover:text-blue-700 w-3/4 font-bold cursor-pointer"
                                                 (click)="openPopup2(user.id, user.email)">
                                                 {{ 'details' | translate }}
@@ -107,7 +107,7 @@
                                             </div>
                                         </div>
                                         <div (click)="deleteUserFromGroup(user.groupNumber, user.id)"
-                                            *ngIf="(userDetails.role == 'ROOT' || userDetails.role == 'ADMIN') && user.id != userDetails.id"
+                                            *ngIf="userDetails.role == 'ROOT' || userDetails.role == 'ADMIN'"
                                             class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer">
                                             <span class="material-symbols-outlined">
                                                 delete
