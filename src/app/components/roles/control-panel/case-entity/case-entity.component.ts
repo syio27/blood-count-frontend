@@ -713,16 +713,7 @@ export class CaseEntityComponent implements OnInit {
 
 
   createCaseWithAbnormality() {
-    const randomizedValuesMap = this.randomizeAllowedBloodCounts(this.addedValues);
-    this.addedValues = this.addedValues.map((abnormality) => {
-      const randomValue = randomizedValuesMap.get(abnormality.parameter);
-      if (randomValue !== undefined) {
-        abnormality.minValue = randomValue;
-        abnormality.maxValue = randomValue;
-      }
-      return abnormality;
-    });
-
+    this.randomizeAllowedBloodCounts(this.addedValues);
 
     if (!this.isSum100 && this.doesContainWhiteBloodCells) {
       return;
