@@ -133,5 +133,6 @@
     "cases-no-data": "Nie masz jeszcze żadnych przypadek",
     "users-no-data": "Nie masz jeszcze żadnych użytkowników",
     "groups-no-data": "Nie masz jeszcze żadnych grup",
-    "games-no-data": "Nie masz jeszcze żadnych rozegranych gier"
+    "games-no-data": "Nie masz jeszcze żadnych rozegranych gier",
+    "select-lang": "Wybierz język przypadku:"
 }
