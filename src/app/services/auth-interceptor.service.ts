@@ -19,7 +19,8 @@ export class AuthInterceptorService implements HttpInterceptor {
     `${environment.baseUrl}api/v1/auth/register`,
     `${environment.baseUrl}public/api/v1/groups`,
     `${environment.baseUrl}public/api/v1/reset-password`,
-    `${environment.baseUrl}public/api/v1/forgot-password`
+    `${environment.baseUrl}public/api/v1/forgot-password`,
+    `${environment.baseUrl}public/api/v1/validate-token`
   ];
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

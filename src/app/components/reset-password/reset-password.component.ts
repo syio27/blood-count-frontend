@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfileService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -19,6 +18,8 @@ export class ResetPasswordComponent implements OnInit {
   token: string;
   email: string;
   isLoading: boolean = false;
+  isTokenValid: boolean = true;
+  isPageLoading: boolean = true;
 
   private readonly notifier: NotifierService;
 
@@ -32,12 +33,12 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isPageLoading = true;
     this.token = this.route.snapshot.paramMap.get('token');
-
-    // Capture the email from the query parameters
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
     });
+    this.validateToken();
     this.form = this.fb.group({
       newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+?.-=])[0-9a-zA-Z!@#$%^&*()_+?.-=]{8,}$/)]],
       confirmPassword: ['', Validators.required]
@@ -52,6 +53,26 @@ export class ResetPasswordComponent implements OnInit {
     return (
       (!this.form.get(field).valid && this.form.get(field).touched) ||
       (this.form.get(field).untouched && this.formSubmitAttempt)
+    );
+  }
+
+  validateToken() {
+    this.isPageLoading = true;
+    this.userService.validateToken(this.token, this.email).subscribe(
+      () => {
+        this.isTokenValid = true;
+        setTimeout(() => {
+          this.isPageLoading = false;
+        }, 950);
+        console.log("token valid")
+      },
+      (error: HttpErrorResponse) => {
+        this.isTokenValid = false;
+        setTimeout(() => {
+          this.isPageLoading = false;
+        }, 950);
+        console.log("token invalid")
+      }
     );
   }
 

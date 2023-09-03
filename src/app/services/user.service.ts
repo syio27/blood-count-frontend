@@ -66,15 +66,24 @@ export class UserProfileService {
 
 
   resetPassword(token: string, email: string, form) {
-    console.log(form)
     const payload = {
       token: token,
       email: email,
       newPassword: form.newPassword,
       newPasswordRepeat: form.confirmPassword
     }
-    console.log(payload)
     return this.http.post(`${environment.baseUrl}public/api/v1/reset-password`, payload)
+      .pipe(
+        catchError(this.handleException)
+      )
+  }
+
+  validateToken(token: string, email: string) {
+    const payload = {
+      token: token,
+      email: email
+    }
+    return this.http.post(`${environment.baseUrl}public/api/v1/validate-token`, payload)
       .pipe(
         catchError(this.handleException)
       )
