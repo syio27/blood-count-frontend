@@ -4,8 +4,6 @@ import { AdminService } from '../../../../services/administration.service';
 import { IInviteUserRequest } from '../../../../interfaces/IInviteUserRequest';
 import { GroupService } from '../../../../services/group.service';
 import { Roles } from '../../../../enums/role.enum';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgToastService } from 'ng-angular-popup'
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { NotifierService } from 'angular-notifier';
@@ -28,12 +26,12 @@ export class InviteUserComponent implements OnInit {
   private readonly notifier: NotifierService;
   isLoading: boolean = false;
   allGroups: IGroupResponse[] = [];
+  formSubmitAttempt = false;
 
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
     private groupService: GroupService,
-    private toast: NgToastService,
     private sharedUserService: SharedUserDetailsService,
     notifierService: NotifierService
   ) {
@@ -42,7 +40,15 @@ export class InviteUserComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[\w-]+(\.[\w-]+)*@(student\.wum\.edu\.pl|wum\.edu\.pl|gmail\.com)$/)
+      ]],
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.formSubmitAttempt = false;
     });
 
     this.fetchGroupNumbers();
@@ -52,6 +58,13 @@ export class InviteUserComponent implements OnInit {
     if (this.userDetails.role != 'ROOT') {
       this.dropdownOptions = ['STUDENT', 'SUPERVISOR']
     }
+  }
+
+  isFieldInvalid(field: string) {
+    return (
+      (!this.form.get(field).valid && this.form.get(field).touched) ||
+      (this.formSubmitAttempt && !this.form.get(field).valid)
+    );
   }
 
   fetchGroupNumbers(): void {
@@ -89,6 +102,7 @@ export class InviteUserComponent implements OnInit {
         }
       );
     }
+    this.formSubmitAttempt = true;
   }
 
   updateGroupDropdownOptions(selectedRole: string): void {

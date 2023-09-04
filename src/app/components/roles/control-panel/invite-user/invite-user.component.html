@@ -9,11 +9,14 @@
                     class="appearance-none border rounded w-full lg:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email" formControlName="email" placeholder="Email">
             </div>
+            <app-error-message class="relative -top-3" *ngIf="formSubmitAttempt"
+                [isInvalidEmail]="isFieldInvalid('email')"></app-error-message>
             <div class="mt-2 w-full lg:w-1/2 relative mb-2" [class.open]="roleDropdownOpen">
                 <input type="text"
                     class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                    placeholder="{{ 'role' | translate }}" (click)="toggleRoleDropdown()" [class.rounded-t]="roleDropdownOpen"
-                    [class.rounded]="!roleDropdownOpen" [value]="selectedRoleOption" readonly>
+                    placeholder="{{ 'role' | translate }}" (click)="toggleRoleDropdown()"
+                    [class.rounded-t]="roleDropdownOpen" [class.rounded]="!roleDropdownOpen"
+                    [value]="selectedRoleOption" readonly>
                 <span
                     class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
                     [class.rotate-180]="roleDropdownOpen" [class.rotate-0]="!roleDropdownOpen">
@@ -30,8 +33,9 @@
             <div class="mt-2 w-full lg:w-1/2 relative mb-3" [class.open]="groupDropdownOpen">
                 <input type="text"
                     class="w-full border cursor-pointer rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                    placeholder="{{ 'group' | translate }}" (click)="toggleGroupDropdown()" [class.rounded-t]="groupDropdownOpen"
-                    [class.rounded]="!groupDropdownOpen" [value]="selectedGroupOption" readonly>
+                    placeholder="{{ 'group' | translate }}" (click)="toggleGroupDropdown()"
+                    [class.rounded-t]="groupDropdownOpen" [class.rounded]="!groupDropdownOpen"
+                    [value]="selectedGroupOption" readonly>
                 <span
                     class="material-symbols-outlined text-xl font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
                     [class.rotate-180]="groupDropdownOpen" [class.rotate-0]="!groupDropdownOpen">
