@@ -10,7 +10,6 @@ import { SharedLanguageService } from 'src/app/services/shared-lang.service';
 })
 export class LangSwitcherComponent {
   currentLang: string;
-  isExamPage: boolean;
 
   constructor(
     private translate: TranslateService,
@@ -22,12 +21,6 @@ export class LangSwitcherComponent {
     translate.setDefaultLang(this.currentLang);
     translate.use(this.currentLang);
     this.langService.setLanguage(this.currentLang);
-
-    router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.isExamPage = event.url === '/exam';
-      }
-    });
   }
 
   switchLang(lang: string) {
