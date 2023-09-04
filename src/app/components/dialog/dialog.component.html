@@ -1,14 +1,18 @@
-<div class="flex justify-center">
-    <h1 mat-dialog-title>BloodCount</h1>
-</div>
-<div class="mb-4">
-    <div mat-dialog-content> <!-- Add a margin-top here -->
-        You are currently on the exam page. Are you sure you want to leave?
+<div class="max-w-md">
+    <div class="flex justify-center">
+        <div class="w-9 h-9 rounded-full bg-red-400 text-white text-3xl flex flex-row items-center justify-center mt-5">
+            ?
+        </div>
     </div>
-</div>
-<div class="flex justify-center">
-    <mat-dialog-actions>
-        <button mat-button mat-dialog-close cdkFocusInitial>No</button>
-        <button mat-button mat-dialog-close [mat-dialog-close]="true">Yes</button>
-    </mat-dialog-actions>
+    <div class="mb-4">
+        <div class="text-center" mat-dialog-content>
+            {{ 'exam-dialog' | translate}}
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <mat-dialog-actions>
+            <button mat-button mat-dialog-close cdkFocusInitial>No</button>
+            <button mat-button mat-dialog-close [mat-dialog-close]="true">Yes</button>
+        </mat-dialog-actions>
+    </div>
 </div>
