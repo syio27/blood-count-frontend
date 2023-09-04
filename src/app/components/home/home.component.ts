@@ -47,16 +47,25 @@ export class HomeComponent implements OnInit {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-    this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
-      this.inProgress = response.inProgress;
-      this.gameId = response.gameId;
-      if (this.inProgress == true) {
-        this.selectedOption = 'Your game is running, please press continue button';
+    this.langService.language$.subscribe((language: string) => {
+      if (!this.currentLang && language == 'EN') {
+        this.selectedOption = 'Please choose the language to get cases';
       }
-    })
-    if(!this.currentLang){
-      this.selectedOption = 'Please choose the language to get cases';
-    }
+      else if(!this.currentLang && language == 'PL'){
+        this.selectedOption = "Proszę wybrać język, aby uzyskać przypadki"
+      }
+      this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
+        this.inProgress = response.inProgress;
+        this.gameId = response.gameId;
+        if (this.inProgress && language == 'EN') {
+          this.selectedOption = 'Your game is running, please press continue button';
+        }
+        else if(this.inProgress && language == 'PL'){
+          this.selectedOption = "Twoja gra jest w trakcie, proszę nacisnąć przycisk kontynuuj"
+        }
+      })
+    });
+    
   }
 
   fetchCase() {
@@ -79,7 +88,6 @@ export class HomeComponent implements OnInit {
     if (!selectedLanguage) {
       selectedLanguage = 'EN'
     }
-    console.log(selectedLanguage);
     let startRequest: IStartGameRequest = {
       userId: this.userDetails.id,
       caseId: this.selectedOptionId,
