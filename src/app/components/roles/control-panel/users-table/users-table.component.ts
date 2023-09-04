@@ -9,6 +9,7 @@ import { ExportService } from 'src/app/services/export.service';
 import { saveAs } from 'file-saver';
 import { NotifierService } from 'angular-notifier';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-users-table',
@@ -18,6 +19,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UsersTableComponent implements OnInit {
   Roles = Roles;
   openedPopup = false
+  isMobile: boolean;
   currentCategory = Roles.Student;
   tableData: UserDetails[] = [];
   currentPage = 1;
@@ -34,9 +36,15 @@ export class UsersTableComponent implements OnInit {
     private sharedUserService: SharedUserDetailsService,
     private toast: NgToastService,
     private exportService: ExportService,
-    notifierService: NotifierService
+    notifierService: NotifierService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.notifier = notifierService;
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe((result) => {
+        this.isMobile = result.matches;
+      });
   }
 
   changeCategory(role: Roles) {
@@ -56,6 +64,29 @@ export class UsersTableComponent implements OnInit {
 
   private fetchTableData(role: Roles) {
     this.isLoading = true
+    if (this.isMobile) {
+      this.adminService.fetchUsersByRole(role).subscribe(
+        (userDetails: UserDetails[]) => {
+          this.tableData = userDetails.map(item => {
+            const parts = item.email.split('@');
+            item.email = parts[0];
+            return item;
+          }).sort((a, b) => {
+            if (a.groupNumber < b.groupNumber) {
+              return -1;
+            }
+            if (a.groupNumber > b.groupNumber) {
+              return 1;
+            }
+            return 0;
+          });
+          this.isLoading = false;
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+    }
     this.adminService.fetchUsersByRole(role).subscribe(
       (userDetails: UserDetails[]) => {
         this.tableData = userDetails.sort((a, b) => {
