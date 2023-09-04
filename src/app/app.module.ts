@@ -49,6 +49,9 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -88,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Page4Component,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    DialogComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -121,7 +125,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     MatChipsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   
   schemas: [
