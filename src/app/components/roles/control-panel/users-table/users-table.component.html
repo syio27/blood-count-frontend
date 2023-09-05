@@ -84,14 +84,18 @@
                     <table class="w-full border text-xs">
                         <thead>
                             <tr>
-                                <th class="py-2 w-1/4 border">{{ 'start-time' | translate }}</th>
-                                <th class="py-2 w-1/4 border">{{ 'end-time' | translate }}</th>
-                                <th class="py-2 w-1/4 border">{{ 'test-duration' | translate }}</th>
-                                <th class="py-2 w-1/4 border">{{ 'score' | translate }}</th>
+                                <th class="py-2 w-1/8 border">Language</th>
+                                <th class="py-2 w-1/8 border">Played case</th>
+                                <th class="py-2 w-1/8 border">{{ 'start-time' | translate }}</th>
+                                <th class="py-2 w-1/8 border">{{ 'end-time' | translate }}</th>
+                                <th class="py-2 w-1/8 border">{{ 'test-duration' | translate }}</th>
+                                <th class="py-2 w-1/8 border">{{ 'score' | translate }}</th>
                             </tr>
                         </thead>
                         <tbody id="table-body" class="items-center text-center">
                             <tr *ngFor="let history of userHistory">
+                                <td class="border">{{ history.language}}</td>
+                                <td class="border">Case {{ history.caseId}}</td>
                                 <td class="border">{{ history.startTime | date:'dd/MM/yyyy, h:mm a' }}</td>
                                 <td class="border">{{ history.endTime | date:'dd/MM/yyyy, h:mm a' }}</td>
                                 <td class="border">{{ history.testDuration}}</td>

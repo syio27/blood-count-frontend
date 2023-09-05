@@ -16,8 +16,8 @@ import { IGameCaseDetailsResponse } from 'src/app/interfaces/IGameCaseResponse';
 import { NotifierService } from 'angular-notifier';
 import { IBloodCountResponse } from 'src/app/interfaces/IBloodCountResponse';
 import { IMSQuestionResponse } from 'src/app/interfaces/IMSQuestionResponse';
-import {MatDialog, MatDialogRef, MatDialogModule, MatDialogConfig} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import { MatDialog, MatDialogRef, MatDialogModule, MatDialogConfig } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -114,7 +114,7 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
   canDeactivate(): boolean {
     return this.openDialog();
   }
-  
+
   // SORT BY ID BEFORE SLICE
   get displayedElements() {
     let sortedTableDate = this.sortBcArrayById(this.testData);
@@ -186,28 +186,28 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     if (callback) callback();
     this.noTimer = true
   }
-  
-  
-openDialog() {
-  let isClose = false
 
-  const dialogConfig = new MatDialogConfig();
 
-  dialogConfig.disableClose = true;
-  dialogConfig.autoFocus = true;
+  openDialog() {
+    let isClose = false
 
-  const dialogRef = this.dialog.open(DialogComponent);
-  dialogRef.afterClosed().subscribe(result => {
-    if (result === true) {
-      isClose = true
-      console.log(isClose)
-      return isClose;    
-    } else {
-      isClose = false
-      console.log(isClose)
-      return isClose;
-    }
-  });
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        isClose = true
+        console.log(isClose)
+        return isClose;
+      } else {
+        isClose = false
+        console.log(isClose)
+        return isClose;
+      }
+    });
     return isClose;
-}
+  }
 }

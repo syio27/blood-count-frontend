@@ -137,5 +137,6 @@
     "select-lang": "Wybierz język przypadku:",
     "footer-description": "© 2023 Aplikacja testowa BloodCount, opracowana w Warszawie, w budynku Uniwersytetu PJATK. Repozytoria: Backend i Frontend. Więcej informacji o aplikacji",
     "footer-here-link": "TUTAJ",
-    "exam-dialog": "Jesteś obecnie na stronie egzaminu. Jesteś pewny, że chcesz wyjść? Tak czy inaczej, wybrane odpowiedzi zostaną bezpiecznie zapisane."
+    "exam-dialog": "Jesteś obecnie na stronie egzaminu. Jesteś pewny, że chcesz wyjść? Tak czy inaczej, wybrane odpowiedzi zostaną bezpiecznie zapisane.",
+    "RR": "RR"
 }

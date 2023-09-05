@@ -71,6 +71,7 @@ export class HistoryComponent implements OnInit {
     this.userService.getHistory(this.userID).subscribe(
       (data) => {
         this.gameHistory = this.sortByDateField(data, 'endTime').reverse()
+        console.log(this.gameHistory)
         this.isLoading = false
       }
     )
