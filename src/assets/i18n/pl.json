@@ -141,5 +141,6 @@
     "RR": "RR",
     "language": "Język",
     "played-case-th": "Grał przypadek",
-    "game-language": "Język gry:"
+    "game-language": "Język gry:",
+    "age-tooltip-info": "Min wiek - 18, max wiek - 75"
 }

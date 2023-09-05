@@ -141,5 +141,6 @@
     "RR": "BP",
     "language": "Language",
     "played-case-th": "Played Case",
-    "game-language": "Game language:"
+    "game-language": "Game language:",
+    "age-tooltip-info": "Min age - 18, Max age - 75"
 }
