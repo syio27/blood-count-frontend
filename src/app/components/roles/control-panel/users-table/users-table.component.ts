@@ -30,6 +30,7 @@ export class UsersTableComponent implements OnInit {
   private readonly notifier: NotifierService;
   isBanned: boolean
   isLoading: boolean
+  isBanLoading: boolean
 
   constructor(
     private adminService: AdminService,
@@ -140,14 +141,23 @@ export class UsersTableComponent implements OnInit {
   }
 
   banAdmin(id) {
+    let foundUser;
+    this.isBanLoading = true;
     this.adminService.ban(id).subscribe(
-      ()=>{
+      () => {
         this.fetchTableData(this.currentCategory);
+        this.isBanLoading = false;
+        foundUser = this.tableData.find(user => user.id === id);
+        if (foundUser.active) {
+          this.notifier.notify('success', 'User has been banned');
+        } else {
+          this.notifier.notify('success', 'User has been unbanned');
+        }
       }
     )
   }
 
-  
+
   deleteUser(id) {
     this.adminService.deleteUserById(id).subscribe(
       () => {
