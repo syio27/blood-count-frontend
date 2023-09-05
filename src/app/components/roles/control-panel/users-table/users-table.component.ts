@@ -31,11 +31,11 @@ export class UsersTableComponent implements OnInit {
   isBanned: boolean
   isLoading: boolean
   isBanLoading: boolean
+  activeBanId: string;
 
   constructor(
     private adminService: AdminService,
     private sharedUserService: SharedUserDetailsService,
-    private toast: NgToastService,
     private exportService: ExportService,
     notifierService: NotifierService,
     private breakpointObserver: BreakpointObserver
@@ -143,10 +143,12 @@ export class UsersTableComponent implements OnInit {
   banAdmin(id) {
     let foundUser;
     this.isBanLoading = true;
+    this.activeBanId = id;
     this.adminService.ban(id).subscribe(
       () => {
         this.fetchTableData(this.currentCategory);
         this.isBanLoading = false;
+        this.activeBanId = '';
         foundUser = this.tableData.find(user => user.id === id);
         if (foundUser.active) {
           this.notifier.notify('success', 'User has been banned');
