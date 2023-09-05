@@ -3,13 +3,11 @@ import { Roles } from '../../../../enums/role.enum';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { AdminService } from 'src/app/services/administration.service';
 import { SharedUserDetailsService } from 'src/app/services/shared-user-details.service';
-import { NgToastService } from 'ng-angular-popup'
 import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
 import { ExportService } from 'src/app/services/export.service';
 import { saveAs } from 'file-saver';
 import { NotifierService } from 'angular-notifier';
-import { HttpErrorResponse } from '@angular/common/http';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-users-table',
@@ -41,12 +39,10 @@ export class UsersTableComponent implements OnInit {
     private breakpointObserver: BreakpointObserver
   ) {
     this.notifier = notifierService;
-    this.breakpointObserver
-      .observe([Breakpoints.XSmall, Breakpoints.Small])
-      .subscribe((result) => {
-        this.isMobile = result.matches;
-      });
+
   }
+
+
 
   changeCategory(role: Roles) {
     this.tableData = []
@@ -65,46 +61,53 @@ export class UsersTableComponent implements OnInit {
 
   private fetchTableData(role: Roles) {
     this.isLoading = true
-    if (this.isMobile) {
-      this.adminService.fetchUsersByRole(role).subscribe(
-        (userDetails: UserDetails[]) => {
-          this.tableData = userDetails.map(item => {
-            const parts = item.email.split('@');
-            item.email = parts[0];
-            return item;
-          }).sort((a, b) => {
-            if (a.groupNumber < b.groupNumber) {
-              return -1;
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe((result: BreakpointState) => {
+        this.isMobile = result.matches;
+        if (this.isMobile) {
+          this.adminService.fetchUsersByRole(role).subscribe(
+            (userDetails: UserDetails[]) => {
+              this.tableData = userDetails.map(item => {
+                const parts = item.email.split('@');
+                item.email = parts[0];
+                return item;
+              }).sort((a, b) => {
+                if (a.groupNumber < b.groupNumber) {
+                  return -1;
+                }
+                if (a.groupNumber > b.groupNumber) {
+                  return 1;
+                }
+                return 0;
+              });
+              this.isLoading = false;
+            },
+            (error: any) => {
+              console.error(error);
             }
-            if (a.groupNumber > b.groupNumber) {
-              return 1;
-            }
-            return 0;
-          });
-          this.isLoading = false;
-        },
-        (error: any) => {
-          console.error(error);
+          );
         }
-      );
-    }
-    this.adminService.fetchUsersByRole(role).subscribe(
-      (userDetails: UserDetails[]) => {
-        this.tableData = userDetails.sort((a, b) => {
-          if (a.groupNumber < b.groupNumber) {
-            return -1;
-          }
-          if (a.groupNumber > b.groupNumber) {
-            return 1;
-          }
-          return 0;
-        });
-        this.isLoading = false
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
+        else {
+          this.adminService.fetchUsersByRole(role).subscribe(
+            (userDetails: UserDetails[]) => {
+              this.tableData = userDetails.sort((a, b) => {
+                if (a.groupNumber < b.groupNumber) {
+                  return -1;
+                }
+                if (a.groupNumber > b.groupNumber) {
+                  return 1;
+                }
+                return 0;
+              });
+              this.isLoading = false
+            },
+            (error: any) => {
+              console.error(error);
+            }
+          );
+        }
+      });
   }
 
   get totalPages(): number {
