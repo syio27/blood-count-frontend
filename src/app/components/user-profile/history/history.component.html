@@ -13,15 +13,13 @@
                     <div class="p-2" *ngFor="let games of displayedGames">
                         <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
                             <div class="flex flex-col pr-20 md:pr-40">
-                                <div class="text-gray-700 font-bold text-2xl mb-2">{{ 'game' | translate }} {{ games.id
+                                <div class="text-gray-700 font-bold text-xl mb-2">{{ 'game' | translate }} {{ games.id
                                     }}</div>
-                                <div class="text-gray-700 text-sm mb-1">Game language: {{ games.language
+                                <div class="text-gray-700 text-sm mb-1">{{ 'game-language' | translate }} {{
+                                    games.language
                                     }}</div>
                                 <div class="text-gray-600 mb-1 text-sm">
-                                    {{ 'start-date' | translate }} {{ (games.startTime | date:'dd/MM/yyyy') }}
-                                </div>
-                                <div class="text-gray-600 mb-1 text-sm">
-                                    {{ 'start-time1' | translate }} {{ (games.startTime | date:'HH:mm:ss') }}
+                                    {{ 'start-date' | translate }} {{ (games.startTime | date:'dd/MM/yyyy, h:mm a') }}
                                 </div>
                             </div>
                             <div class="flex items-center">

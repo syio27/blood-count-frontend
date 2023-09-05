@@ -119,7 +119,7 @@
     "information-and-comments": "Informacje i uwagi",
     "height": "Wzrost[cm]",
     "body-mass": "Masa ciała[kg]",
-    "case": "Sprawa",
+    "case": "Przypadek",
     "parameter": "Parametr:",
     "min-value": "Min wartości",
     "max-value": "Max wartości",
@@ -138,5 +138,8 @@
     "footer-description": "© 2023 Aplikacja testowa BloodCount, opracowana w Warszawie, w budynku Uniwersytetu PJATK. Repozytoria: Backend i Frontend. Więcej informacji o aplikacji",
     "footer-here-link": "TUTAJ",
     "exam-dialog": "Jesteś obecnie na stronie egzaminu. Jesteś pewny, że chcesz wyjść? Tak czy inaczej, wybrane odpowiedzi zostaną bezpiecznie zapisane.",
-    "RR": "RR"
+    "RR": "RR",
+    "language": "Język",
+    "played-case-th": "Grał przypadek",
+    "game-language": "Język gry:"
 }

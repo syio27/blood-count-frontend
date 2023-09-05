@@ -138,5 +138,8 @@
     "footer-description": "© 2023 BloodCount Test App, Developed in Warsaw, Poland in PJATK University Building. Repositories: Backend &Frontend. More Information about the application",
     "footer-here-link": "HERE",
     "exam-dialog": "You are currently on the exam page. Are you sure you want to leave? Anyways, your selected answers will be safely saved.",
-    "RR": "BP"
+    "RR": "BP",
+    "language": "Language",
+    "played-case-th": "Played Case",
+    "game-language": "Game language:"
 }
