@@ -97,7 +97,6 @@ export class CaseEntityComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private caseService: CaseService,
-    private toast: NgToastService,
     private caseDataService: CaseDataService,
     private referanceTable: ReferenceTableService,
     private breakpointObserver: BreakpointObserver,
@@ -112,7 +111,7 @@ export class CaseEntityComponent implements OnInit {
       'description': ['', Validators.required],
       'bodyMass': ['', Validators.required],
       'height': ['', Validators.required],
-      'bmi': ['', Validators.required],
+      'bmi': [{ value: '', disabled: true }, Validators.required],
       'infoCom': ['', Validators.required],
       'first-min': ['', Validators.required],
       'first-max': ['', Validators.required],
@@ -296,8 +295,6 @@ export class CaseEntityComponent implements OnInit {
     }
   }
 
-
-
   saveFormValues(input) {
     switch (input) {
       case 1:
@@ -338,9 +335,11 @@ export class CaseEntityComponent implements OnInit {
         break;
       case 14:
         sessionStorage.setItem('bodyMass', this.form.get('bodyMass').value);
+        this.calculateAndSetBMI();
         break;
       case 15:
         sessionStorage.setItem('height', this.form.get('height').value);
+        this.calculateAndSetBMI();
         break;
       case 16:
         sessionStorage.setItem('bmi', this.form.get('bmi').value);
@@ -348,6 +347,18 @@ export class CaseEntityComponent implements OnInit {
     }
   }
 
+  calculateAndSetBMI() {
+    const bodyMass = parseFloat(this.form.get('bodyMass').value);
+    const heightInCm = parseFloat(this.form.get('height').value);
+
+    const heightInMeters = heightInCm / 100;
+
+    if (bodyMass && heightInMeters) {
+      const bmi = bodyMass / Math.pow(heightInMeters, 2);
+      this.form.get('bmi').setValue(bmi.toFixed(2));
+      sessionStorage.setItem('bmi', bmi.toFixed(2));
+    }
+  }
 
 
   toggleGenderDropdown() {
@@ -680,16 +691,14 @@ export class CaseEntityComponent implements OnInit {
 
     let remainingPercentage = 100;
     const randomizedValuesMap = new Map<string, number>();
-    this.isSum100 = true; // Initialize to true
+    this.isSum100 = true;
 
-    // Calculate the minimum and maximum possible sum of all the percentages
     let minPossibleSum = filteredBloodCounts.reduce((acc, cur) => acc + cur.minValue, 0);
     let maxPossibleSum = filteredBloodCounts.reduce((acc, cur) => acc + cur.maxValue, 0);
 
-    // Check if it's possible for the sum to be 100
     if (minPossibleSum > 100 || maxPossibleSum < 100) {
       this.isSum100 = false;
-      return randomizedValuesMap; // return empty map
+      return randomizedValuesMap;
     }
 
     if (this.isSum100) {
@@ -702,7 +711,6 @@ export class CaseEntityComponent implements OnInit {
         remainingPercentage -= randomizedValue;
       }
 
-      // Add the remaining percentage for the last parameter
       if (filteredBloodCounts.length > 0) {
         randomizedValuesMap.set(filteredBloodCounts[filteredBloodCounts.length - 1].parameter, remainingPercentage);
       }
