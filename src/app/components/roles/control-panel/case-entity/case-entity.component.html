@@ -95,7 +95,20 @@
                     </div>
                     <div class="w-full md:w-1/2">
                         <div class="mb-3 relative">
-                            <div class="absolute bottom-9 left-0">{{ 'first-range' | translate }}</div>
+                            <div class="absolute bottom-9 left-0 flex items-center justify-center">
+                                <div>{{ 'first-range' | translate }}</div>
+                                <div *ngIf="showTooltip" class="group relative w-max">
+                                    <button (mouseenter)="showAgeTooltipInfo = true"
+                                        (mouseleave)="showAgeTooltipInfo = false"
+                                        class="w-4 h-4 rounded-full bg-red-400 text-white flex items-center justify-center hover:bg-red-800 cursor-pointer ml-2">
+                                        ?
+                                    </button>
+                                    <span *ngIf="showAgeTooltipInfo"
+                                        class="pointer-events-none absolute px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg -bottom-6 left-9 whitespace-normal w-max transition-opacity opacity-100">
+                                        Min age - 18, Max age 75
+                                    </span>
+                                </div>
+                            </div>
                             <input type="number" (input)="saveFormValues(3)"
                                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="first-min" formControlName="first-min" placeholder="Min">

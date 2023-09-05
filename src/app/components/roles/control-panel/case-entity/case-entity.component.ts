@@ -90,6 +90,7 @@ export class CaseEntityComponent implements OnInit {
   showTooltip = window.innerWidth > 450;
   showCaseTooltipInfo: boolean = false;
   showAbnormalTooltipInfo: boolean = false;
+  showAgeTooltipInfo: boolean = false;
   isSum100: boolean = true;
   doesContainWhiteBloodCells: boolean = false;
   paramStatus: ParamStatus = ParamStatus.INITIAL;
