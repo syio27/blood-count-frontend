@@ -24,6 +24,10 @@ export class CaseTableComponent implements OnInit {
   caseDetails: ICaseResponse;
   selectedLanguage: string = 'EN';
   isLoading: boolean
+  showFullDescription: boolean = false;
+  showFullInfoCom: boolean = false;
+  showFullDiagnosis: boolean = false;
+  textLimit: number = 400;
 
   private readonly notifier: NotifierService;
 
@@ -66,6 +70,19 @@ export class CaseTableComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+
+  toggleDescription() {
+    this.showFullDescription = !this.showFullDescription;
+  }
+
+  toggleInfoCom() {
+    this.showFullInfoCom = !this.showFullInfoCom;
+  }
+
+  toggleDiagnosis() {
+    this.showFullDiagnosis = !this.showFullDiagnosis;
   }
 
   get totalPages(): number {

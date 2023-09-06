@@ -59,7 +59,28 @@
                     </div>
                     <div>
                         <span class="font-bold">{{ 'exam-patient-diagnosis' | translate }}</span>
-                        {{caseDetails.diagnosis}}
+                        <br>
+                        <span class="ml-2">
+                            • <!-- Display truncated description -->
+                            <ng-container *ngIf="!showFullDiagnosis && (caseDetails.diagnosis.length > textLimit)">
+                                {{ caseDetails.diagnosis.substring(0, textLimit) }}...
+                                <a href="javascript:void(0)"
+                                    class="text-blue-600 border px-1 py-1 rounded-md bg-blue-200"
+                                    (click)="toggleDiagnosis()">Read
+                                    More</a>
+                            </ng-container>
+
+                            <!-- Display full description -->
+                            <ng-container *ngIf="showFullDiagnosis || (caseDetails.diagnosis.length <= textLimit)">
+                                {{ caseDetails.diagnosis }}
+                                <ng-container *ngIf="showFullDiagnosis">
+                                    <a href="javascript:void(0)"
+                                        class="text-blue-600 border px-1 py-1 rounded-md bg-blue-200"
+                                        (click)="toggleDiagnosis()">Read
+                                        Less</a>
+                                </ng-container>
+                            </ng-container>
+                        </span>
                     </div>
                     <div>
                         <span class="font-bold">{{ 'exam-patient-gender' | translate }}</span>
@@ -99,12 +120,51 @@
                     <div>
                         <span class="font-bold"> {{ 'description' | translate }} </span>
                         <br>
-                        <span class="ml-2">•</span> {{ caseDetails.description }}
+                        <span class="ml-2">
+                            • <!-- Display truncated description -->
+                            <ng-container *ngIf="!showFullDescription && (caseDetails.description.length > textLimit)">
+                                {{ caseDetails.description.substring(0, textLimit) }}...
+                                <a href="javascript:void(0)"
+                                    class="text-blue-600 border px-1 py-1 rounded-md bg-blue-200"
+                                    (click)="toggleDescription()">Read
+                                    More</a>
+                            </ng-container>
+
+                            <!-- Display full description -->
+                            <ng-container *ngIf="showFullDescription || (caseDetails.description.length <= textLimit)">
+                                {{ caseDetails.description }}
+                                <ng-container *ngIf="showFullDescription">
+                                    <a href="javascript:void(0)"
+                                        class="text-blue-600 border px-1 py-1 rounded-md bg-blue-200"
+                                        (click)="toggleDescription()">Read Less</a>
+                                </ng-container>
+                            </ng-container>
+                        </span>
                     </div>
                     <div>
                         <span class="font-bold"> {{ 'information-and-comments' | translate }} </span>
                         <br>
-                        <span class="ml-2">•</span> {{ caseDetails.infoCom }}
+                        <span class="ml-2">
+                            • <!-- Display truncated description -->
+                            <ng-container *ngIf="!showFullInfoCom && (caseDetails.infoCom.length > textLimit)">
+                                {{ caseDetails.infoCom.substring(0, textLimit) }}...
+                                <a href="javascript:void(0)"
+                                    class="text-blue-600 border px-1 py-1 rounded-md bg-blue-200"
+                                    (click)="toggleInfoCom()">Read
+                                    More</a>
+                            </ng-container>
+
+                            <!-- Display full description -->
+                            <ng-container *ngIf="showFullInfoCom || (caseDetails.infoCom.length <= textLimit)">
+                                {{ caseDetails.infoCom }}
+                                <ng-container *ngIf="showFullInfoCom">
+                                    <a href="javascript:void(0)"
+                                        class="text-blue-600 border px-1 py-1 rounded-md bg-blue-200"
+                                        (click)="toggleInfoCom()">Read
+                                        Less</a>
+                                </ng-container>
+                            </ng-container>
+                        </span>
                     </div>
                 </div>
                 <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' |
