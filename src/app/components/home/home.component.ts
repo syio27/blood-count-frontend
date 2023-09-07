@@ -74,6 +74,14 @@ export class HomeComponent implements OnInit {
           .flatMap((subArray) => subArray)
           .filter(caseItem => caseItem.language === this.currentLang)
           .sort();
+          this.langService.language$.subscribe((language: string) => { 
+            if (this.dropdownOptions.length == 0 && language == 'EN'){
+              this.selectedOption = 'No cases yet';
+            }
+            else if (this.dropdownOptions.length == 0 && language == 'PL'){
+              this.selectedOption = 'Nie ma jeszcze żadnych przypadków';
+            }
+          })
       });
   }
 
