@@ -28,6 +28,8 @@ export class CaseTableComponent implements OnInit {
   showFullInfoCom: boolean = false;
   showFullDiagnosis: boolean = false;
   textLimit: number = 400;
+  isDeleteLoading: boolean
+  deletingCaseId: number;
 
   private readonly notifier: NotifierService;
 
@@ -152,10 +154,14 @@ export class CaseTableComponent implements OnInit {
   }
 
   deletCase(item) {
+    this.isDeleteLoading = true;
+    this.deletingCaseId = item.id;
     this.caseService.deleteCase(item).subscribe(
       () => {
-        this.notifier.notify('success', 'Case has been deleted');
         this.fetchTableData()
+        this.isDeleteLoading = false;
+        this.deletingCaseId = null;
+        this.notifier.notify('success', 'Case has been deleted');
       },
       (error: HttpErrorResponse) => {
         this.notifier.notify('error', error.message);
