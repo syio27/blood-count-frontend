@@ -61,7 +61,8 @@ export class CaseTableComponent implements OnInit {
     this.caseService.getAllCasesWithAbnormalities().subscribe(
       (data) => {
         // Filter data based on selected language
-        this.tableData = [data].flatMap((subArray) => subArray)
+        let sortedData = this.sortByDateField(data, 'id');
+        this.tableData = [sortedData].flatMap((subArray) => subArray)
           .filter(item => item.language === this.selectedLanguage);
         this.isLoading = false
 
@@ -118,7 +119,6 @@ export class CaseTableComponent implements OnInit {
     }
   }
 
-
   openPopup(item) {
     this.abnormalityData = item.abnormalities
     this.openedPopup = true
@@ -160,5 +160,11 @@ export class CaseTableComponent implements OnInit {
       (error: HttpErrorResponse) => {
         this.notifier.notify('error', error.message);
       })
+  }
+
+  sortByDateField<T>(array: T[], fieldName: string): T[] {
+    return array.sort((a: any, b: any) => {
+      return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime();
+    });
   }
 }
