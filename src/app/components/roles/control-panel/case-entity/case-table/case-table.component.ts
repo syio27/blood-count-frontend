@@ -155,7 +155,8 @@ export class CaseTableComponent implements OnInit {
 
   deletCase(item) {
     this.isDeleteLoading = true;
-    this.deletingCaseId = item.id;
+    this.deletingCaseId = item;
+    console.log(this.deletingCaseId)
     this.caseService.deleteCase(item).subscribe(
       () => {
         this.fetchTableData()
