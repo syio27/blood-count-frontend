@@ -8,22 +8,23 @@
 <app-white-box>
     <div class="flex flex-col justify-center">
         <div class="flex justify-center" *ngIf="displayedGames.length!=0">
-            <div class="md:w-1/2 h-[70vh] mb-3 relative flex justify-center">
+            <div class="w-full h-[70vh] mb-3 relative flex justify-center">
                 <div [class.blur]="openedPopup" class="flex flex-col">
                     <div class="p-2" *ngFor="let games of displayedGames">
                         <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
-                            <div class="flex flex-col pr-20 md:pr-40">
-                                <div class="text-gray-700 font-bold text-xl mb-2">{{ 'game' | translate }} {{ games.id
+                            <div class="flex flex-col md:pr-5 pr-2">
+                                <div class="text-gray-700 font-bold md:text-xl text-base mb-2">{{ 'game' | translate }}
+                                    {{ games.id
                                     }}</div>
-                                <div class="text-gray-700 text-sm mb-1">{{ 'game-language' | translate }} {{
+                                <div class="text-gray-700 md:text-sm text-xs mb-1">{{ 'game-language' | translate }} {{
                                     games.language
                                     }}</div>
-                                <div class="text-gray-600 mb-1 text-sm">
+                                <div class="text-gray-600 w-full mb-1 md:text-sm text-xs">
                                     {{ 'start-date' | translate }} {{ (games.startTime | date:'dd/MM/yyyy, h:mm a') }}
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer select-none"
+                                <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 md:py-2 md:px-4 rounded cursor-pointer select-none text-xs md:text-sm"
                                     [class.pointer-events-none]="openedPopup" (click)="openPopup(games.id)"
                                     (click)="selectedGame = games">
                                     {{ 'details' | translate }}
@@ -67,7 +68,8 @@
                 <div class="flex justify-center">
                     <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
                 </div>
-                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{ 'games-no-data' |
+                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{
+                    'games-no-data' |
                     translate }}</div>
             </div>
         </div>

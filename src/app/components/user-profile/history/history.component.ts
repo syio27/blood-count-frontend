@@ -49,7 +49,7 @@ export class HistoryComponent implements OnInit {
     }
 
     // Mobile in landscape orientation
-    return 1;
+    return 2;
   }
 
   @HostListener('window:resize', ['$event'])
