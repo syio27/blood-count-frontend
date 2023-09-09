@@ -40,7 +40,7 @@ export class HistoryComponent implements OnInit {
 
     // Desktop viewport
     if (w > 768 && h > 450) {
-      return 3;
+      return 4;
     }
 
     // Mobile in portrait orientation
