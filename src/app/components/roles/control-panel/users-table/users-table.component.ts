@@ -110,38 +110,6 @@ export class UsersTableComponent implements OnInit {
       });
   }
 
-  get totalPages(): number {
-    return Math.ceil(this.tableData.length / this.groupsPerPage);
-  }
-
-  get displayedUsers(): UserDetails[] {
-    const startIndex = (this.currentPage - 1) * this.groupsPerPage;
-    const endIndex = startIndex + this.groupsPerPage;
-    return this.tableData.slice(startIndex, endIndex);
-  }
-
-
-  get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
-  }
-
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
 
   banAdmin(id) {
     let foundUser;
