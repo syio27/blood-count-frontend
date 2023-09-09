@@ -76,7 +76,7 @@
                         <span class="font-bold">{{ 'exam-patient-diagnosis' | translate }}</span>
                         <br>
                         <span class="ml-2">
-                            • <!-- Display truncated description -->
+                            •
                             <ng-container *ngIf="!showFullDiagnosis && (caseDetails.diagnosis.length > textLimit)">
                                 {{ caseDetails.diagnosis.substring(0, textLimit) }}...
                                 <a href="javascript:void(0)"
@@ -85,7 +85,6 @@
                                     More</a>
                             </ng-container>
 
-                            <!-- Display full description -->
                             <ng-container *ngIf="showFullDiagnosis || (caseDetails.diagnosis.length <= textLimit)">
                                 {{ caseDetails.diagnosis }}
                                 <ng-container *ngIf="showFullDiagnosis">
@@ -136,7 +135,7 @@
                         <span class="font-bold"> {{ 'description' | translate }} </span>
                         <br>
                         <span class="ml-2">
-                            • <!-- Display truncated description -->
+                            •
                             <ng-container *ngIf="!showFullDescription && (caseDetails.description.length > textLimit)">
                                 {{ caseDetails.description.substring(0, textLimit) }}...
                                 <a href="javascript:void(0)"
@@ -145,7 +144,6 @@
                                     More</a>
                             </ng-container>
 
-                            <!-- Display full description -->
                             <ng-container *ngIf="showFullDescription || (caseDetails.description.length <= textLimit)">
                                 {{ caseDetails.description }}
                                 <ng-container *ngIf="showFullDescription">
@@ -160,7 +158,7 @@
                         <span class="font-bold"> {{ 'information-and-comments' | translate }} </span>
                         <br>
                         <span class="ml-2">
-                            • <!-- Display truncated description -->
+                            •
                             <ng-container *ngIf="!showFullInfoCom && (caseDetails.infoCom.length > textLimit)">
                                 {{ caseDetails.infoCom.substring(0, textLimit) }}...
                                 <a href="javascript:void(0)"
@@ -169,7 +167,6 @@
                                     More</a>
                             </ng-container>
 
-                            <!-- Display full description -->
                             <ng-container *ngIf="showFullInfoCom || (caseDetails.infoCom.length <= textLimit)">
                                 {{ caseDetails.infoCom }}
                                 <ng-container *ngIf="showFullInfoCom">
@@ -182,9 +179,11 @@
                         </span>
                     </div>
                 </div>
-                <div class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' |
+                <div *ngIf="abnormalityData.length == 0" class="mt-5 text-center italic">No abnormalities added</div>
+                <div *ngIf="abnormalityData.length != 0"
+                    class="mt-8 font-bold flex justify-center text-center text-base md:text-xl">{{ 'abnormalities' |
                     translate }}</div>
-                <table class="w-full border">
+                <table *ngIf="abnormalityData.length != 0" class="w-full border">
                     <thead>
                         <tr>
                             <th class="py-2 w-1/5 border">{{ 'exam-table-th-param' | translate }}</th>
