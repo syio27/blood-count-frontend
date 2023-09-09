@@ -45,7 +45,7 @@ export class HistoryComponent implements OnInit {
 
     // Mobile in portrait orientation
     if (h > w) {
-      return 3;
+      return 4;
     }
 
     // Mobile in landscape orientation
