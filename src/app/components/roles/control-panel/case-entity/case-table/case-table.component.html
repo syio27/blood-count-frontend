@@ -12,8 +12,8 @@
         <table class="w-full border">
             <thead class="border">
                 <tr>
-                    <th class="py-2 w-2/12 border">{{ 'case-number1' | translate }}</th>
-                    <th class="py-2 w-5/12 border">{{ 'anemia-type' | translate }}</th>
+                    <th class="py-2 w-3/12 border">{{ 'case-name' | translate }}</th>
+                    <th class="py-2 w-4/12 border">{{ 'anemia-type' | translate }}</th>
                     <th class="w-5/12">
                         <div class="flex items-center">
                             <div class="w-3/5 border-r">{{ 'full' | translate }}</div>
@@ -25,7 +25,7 @@
             <tbody id="table-body" class="items-center text-center" [class.blur]="openedPopup"
                 *ngIf="tableData.length!=0">
                 <tr *ngFor="let item of displayedGroups">
-                    <td class="border-b">{{ item.id }}</td>
+                    <td class="border-b">{{ item.caseName }}</td>
                     <td class="border-b">{{ item.anemiaType }}</td>
                     <td class="border-b">
                         <div class="flex justify-center items-center">

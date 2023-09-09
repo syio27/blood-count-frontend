@@ -20,36 +20,36 @@
         <table class="w-full border" [class.blur]="openedPopup">
             <thead class="border">
                 <tr>
-                    <th class="py-2 w-3/12 border">Email</th>
-                    <th class="py-2 w-3/12 border">{{ 'group' | translate }}</th>
-                    <th class="py-2 w-3/12 border">{{ 'more' | translate }}</th>
+                    <th class="py-2 w-4/12 border">Email</th>
+                    <th class="py-2 w-4/12 border">{{ 'group' | translate }}</th>
+                    <th class="py-2 w-4/12 border">{{ 'more' | translate }}</th>
                 </tr>
             </thead>
             <tbody id="table-body" class="items-center text-center" *ngIf="!isLoading">
                 <tr *ngFor="let item of displayedUsers">
-                    <td class="border-b ">{{ item.email }}</td>
+                    <td class="border-b">{{ item.email }}</td>
                     <td class="border-b">{{ item.groupNumber }}</td>
                     <td class="border-b">
                         <div class="flex justify-center items-center">
-                            <div class="text-blue-500  hover:text-blue-700 w-3/4 font-bold cursor-pointer"
+                            <div class="text-blue-500  hover:text-blue-700 w-2/4 font-bold cursor-pointer"
                                 (click)="openPopup(item.id, item.email)" [class.pointer-events-none]="openedPopup">
                                 {{ 'details' | translate }}
                             </div>
                             <div *ngIf="(userDetails.role == 'ROOT' || userDetails.role == 'ADMIN') && (currentCategory === Roles.Student || currentCategory === Roles.Teacher)"
-                                class="text-red-500 hover:text-red-700 w-1/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer"
+                                class="text-red-500 hover:text-red-700 w-2/4 font-bold py-1 px-2 mt-1 text-xs  cursor-pointer"
                                 (click)="deleteUser(item.id)" [class.pointer-events-none]="openedPopup">
                                 <span class="material-symbols-outlined">
                                     delete
                                 </span>
                             </div>
                             <div (click)="banAdmin(item.id)"
-                                class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                class="text-red-500 select-none hover:text-red-700 w-2/4 font-bold cursor-pointer py-2.5"
                                 *ngIf="currentCategory === Roles.Admin && item.active && (activeBanId !== item.id || !isBanLoading)"
                                 [class.pointer-events-none]="openedPopup">
                                 Ban
                             </div>
                             <div (click)="banAdmin(item.id)"
-                                class="text-red-500 select-none hover:text-red-700 w-3/4 font-bold cursor-pointer"
+                                class="text-red-500 select-none hover:text-red-700 w-2/4 font-bold cursor-pointer py-2.5"
                                 *ngIf="currentCategory === Roles.Admin && !item.active && (activeBanId !== item.id || !isBanLoading)"
                                 [class.pointer-events-none]="openedPopup">
                                 Unban

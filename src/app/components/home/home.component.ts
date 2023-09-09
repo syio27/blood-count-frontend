@@ -75,10 +75,10 @@ export class HomeComponent implements OnInit {
           .filter(caseItem => caseItem.language === this.currentLang)
           .sort();
           this.langService.language$.subscribe((language: string) => { 
-            if (this.dropdownOptions.length == 0 && language == 'EN'){
+            if (this.dropdownOptions.length == 0 && language == 'EN' && this.currentLang){
               this.selectedOption = 'No cases yet';
             }
-            else if (this.dropdownOptions.length == 0 && language == 'PL'){
+            else if (this.dropdownOptions.length == 0 && language == 'PL' && this.currentLang){
               this.selectedOption = 'Nie ma jeszcze żadnych przypadków';
             }
           })
