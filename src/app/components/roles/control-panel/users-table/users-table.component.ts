@@ -42,8 +42,6 @@ export class UsersTableComponent implements OnInit {
 
   }
 
-
-
   changeCategory(role: Roles) {
     this.tableData = []
     this.currentCategory = role;
@@ -110,7 +108,6 @@ export class UsersTableComponent implements OnInit {
       });
   }
 
-
   banAdmin(id) {
     let foundUser;
     this.isBanLoading = true;
@@ -130,7 +127,6 @@ export class UsersTableComponent implements OnInit {
     )
   }
 
-
   deleteUser(id) {
     this.adminService.deleteUserById(id).subscribe(
       () => {
@@ -142,21 +138,30 @@ export class UsersTableComponent implements OnInit {
       }
     )
   }
+
   openPopup(id, email) {
     this.adminService.getCompletedGames(id).subscribe(
       (data) => {
-        this.userHistory = data
+        this.userHistory = this.sortByDateField(data, 'endTime').reverse();
       }
     )
     this.openedPopup = true
     this.currentUserEmail = email
   }
+
   closePopup() {
     this.openedPopup = false
   }
+
   export() {
     this.exportService.exportGameStats().subscribe(data => {
       saveAs(data, `game statistics - ${new Date().toISOString()}.xlsx`);
+    });
+  }
+
+  sortByDateField<T>(array: T[], fieldName: string): T[] {
+    return array.sort((a: any, b: any) => {
+      return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime();
     });
   }
 }
