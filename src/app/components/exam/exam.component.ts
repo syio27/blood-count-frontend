@@ -200,11 +200,9 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         isClose = true
-        console.log(isClose)
         return isClose;
       } else {
         isClose = false
-        console.log(isClose)
         return isClose;
       }
     });

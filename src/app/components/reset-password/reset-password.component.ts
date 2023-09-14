@@ -64,14 +64,12 @@ export class ResetPasswordComponent implements OnInit {
         setTimeout(() => {
           this.isPageLoading = false;
         }, 950);
-        console.log("token valid")
       },
       (error: HttpErrorResponse) => {
         this.isTokenValid = false;
         setTimeout(() => {
           this.isPageLoading = false;
         }, 950);
-        console.log("token invalid")
       }
     );
   }

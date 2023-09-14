@@ -130,7 +130,7 @@ export class CaseEntityComponent implements OnInit {
       });
 
     this.resizeSubject.pipe(
-      debounceTime(200)  // Adjust debounce time as needed
+      debounceTime(200)
     ).subscribe(event => {
       this.showTooltip = window.innerWidth > 450;
     });
@@ -636,7 +636,6 @@ export class CaseEntityComponent implements OnInit {
       this.paramStatus = ParamStatus.ALL_ALLOWED_DELETED;
     }
   }
-
 
   addValue() {
     const parameter = this.selectedParameterOption

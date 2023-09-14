@@ -9,7 +9,6 @@ import { tap, shareReplay, catchError, of, switchMap, throwError } from 'rxjs';
 import * as moment from 'moment';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { SharedUserDetailsService } from '../services/shared-user-details.service';
-import { ICreateAbnormalityRequest } from '../interfaces/ICreateAbnormalityRequest';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -41,7 +40,6 @@ export class AuthService {
           return this.userDetailsService.fetchUserDetailsByEmail(authenticationRequest.email);
         }),
         tap((userDetails: UserDetails) => {
-          //save userDetails to BehaviorSubject
           this.userDetailsService.setUserDetails(userDetails);
           this.router.navigate(['/']);
         }),
@@ -68,7 +66,6 @@ export class AuthService {
           return this.userDetailsService.fetchUserDetailsByEmail(registerRequest.email);
         }),
         tap((userDetails: UserDetails) => {
-          //save userDetails to BehaviorSubject
           this.userDetailsService.setUserDetails(userDetails);
           this.router.navigate(['/']);
         }),
@@ -83,8 +80,8 @@ export class AuthService {
   }
 
   logout() {
-    this.removeAccess();
     this.router.navigate(['/login']);
+    this.removeAccess();
     sessionStorage.setItem('anemia-type', '');
     sessionStorage.setItem('diagnosis', '');
     sessionStorage.removeItem('first-min');

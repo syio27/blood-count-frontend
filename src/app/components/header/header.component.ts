@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     private sharedUserService: SharedUserDetailsService,
   ) {
     this.resizeSubject.pipe(
-      debounceTime(200)  // Adjust debounce time as needed
+      debounceTime(200)
     ).subscribe(event => {
       this.showPcLogo = window.innerWidth > 450;
     });

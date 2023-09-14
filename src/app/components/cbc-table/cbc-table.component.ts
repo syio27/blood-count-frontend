@@ -18,7 +18,7 @@ export class CbcTableComponent implements OnInit {
 
   constructor(private referenceTableService: ReferenceTableService) {
     this.resizeSubject.pipe(
-      debounceTime(200)  // Adjust debounce time as needed
+      debounceTime(200)
     ).subscribe(event => {
       this.showTooltip = window.innerWidth > 450;
     });

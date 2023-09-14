@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
       if (!this.currentLang && language == 'EN') {
         this.selectedOption = 'Please choose the language to get cases';
       }
-      else if(!this.currentLang && language == 'PL'){
+      else if (!this.currentLang && language == 'PL') {
         this.selectedOption = "Proszę wybrać język, aby uzyskać przypadki"
       }
       this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
@@ -60,29 +60,28 @@ export class HomeComponent implements OnInit {
         if (this.inProgress && language == 'EN') {
           this.selectedOption = 'Your game is running, please press continue button';
         }
-        else if(this.inProgress && language == 'PL'){
+        else if (this.inProgress && language == 'PL') {
           this.selectedOption = "Twoja gra jest w trakcie, proszę nacisnąć przycisk kontynuuj"
         }
       })
     });
-    
   }
 
   fetchCase() {
-      this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
-        this.dropdownOptions = [cases]
-          .flatMap((subArray) => subArray)
-          .filter(caseItem => caseItem.language === this.currentLang)
-          .sort();
-          this.langService.language$.subscribe((language: string) => { 
-            if (this.dropdownOptions.length == 0 && language == 'EN' && this.currentLang){
-              this.selectedOption = 'No cases yet';
-            }
-            else if (this.dropdownOptions.length == 0 && language == 'PL' && this.currentLang){
-              this.selectedOption = 'Nie ma jeszcze żadnych przypadków';
-            }
-          })
-      });
+    this.caseService.getAllCasesWithAbnormalities().subscribe(cases => {
+      this.dropdownOptions = [cases]
+        .flatMap((subArray) => subArray)
+        .filter(caseItem => caseItem.language === this.currentLang)
+        .sort();
+      this.langService.language$.subscribe((language: string) => {
+        if (this.dropdownOptions.length == 0 && language == 'EN' && this.currentLang) {
+          this.selectedOption = 'No cases yet';
+        }
+        else if (this.dropdownOptions.length == 0 && language == 'PL' && this.currentLang) {
+          this.selectedOption = 'Nie ma jeszcze żadnych przypadków';
+        }
+      })
+    });
   }
 
   selectOption(option: string, id: number) {
@@ -109,7 +108,8 @@ export class HomeComponent implements OnInit {
   continueTest() {
     this.router.navigate(['/exam']);
   }
-  pickLang(language){
+
+  pickLang(language) {
     this.currentLang = language
     this.selectedOption = '';
     this.onClick = false

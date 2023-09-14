@@ -125,7 +125,6 @@ export class UserProfileComponent implements OnInit {
         }
       )
     }
-    console.log(this.invalidPassword)
     this.formSubmitAttempt = true;
   }
 

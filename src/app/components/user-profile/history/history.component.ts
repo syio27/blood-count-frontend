@@ -71,7 +71,6 @@ export class HistoryComponent implements OnInit {
     this.userService.getHistory(this.userID).subscribe(
       (data) => {
         this.gameHistory = this.sortByDateField(data, 'endTime').reverse()
-        console.log(this.gameHistory)
         this.isLoading = false
       }
     )
@@ -87,7 +86,6 @@ export class HistoryComponent implements OnInit {
     this.userService.getCompletedGameById(this.userID, item).subscribe(
       (data) => {
         this.caseInfo = data
-        console.log(data)
       }
     )
     this.openedPopup = true
