@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationRequest } from '../interfaces/IAuthenticationRequest';
 import { RegisterRequest } from '../interfaces/IRegisterRequest';
@@ -27,6 +27,13 @@ export class AuthService {
     private userDetailsService: SharedUserDetailsService
   ) {
     this.loggedIn.next(this.isLoginExpired());
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/login') {
+          this.removeAccess();
+        }
+      }
+    });
   }
 
   login(authenticationRequest: AuthenticationRequest) {
@@ -81,7 +88,6 @@ export class AuthService {
 
   logout() {
     this.router.navigate(['/login']);
-    this.removeAccess();
     sessionStorage.setItem('anemia-type', '');
     sessionStorage.setItem('diagnosis', '');
     sessionStorage.removeItem('first-min');

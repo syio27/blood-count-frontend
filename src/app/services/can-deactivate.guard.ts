@@ -16,24 +16,22 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
   constructor(
     private sharedGameSubmittedService: SharedGameSubmittedService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   canDeactivate(component: CanComponentDeactivate): boolean | Observable<boolean> {
-    // Use an observable to get the submitted value
     return this.sharedGameSubmittedService.gameStatus$.pipe(
-      take(1), // Ensure we only take one value and unsubscribe
+      take(1),
       switchMap((submitted: string) => {
         if (submitted !== 'IN_PROGRESS') {
-          return of(true); // Game is not in progress, allow deactivation
+          return of(true);
         }
 
-        // Game is in progress, open the dialog
         return this.openDialog().pipe(
           map((result: boolean) => {
             if (result) {
-              return true; // User confirmed, allow deactivation
+              return true;
             } else {
-              return false; // User canceled, prevent deactivation
+              return false;
             }
           })
         );
@@ -50,7 +48,7 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
 
     return dialogRef.afterClosed().pipe(
       map((result) => {
-        return result === true; // Assuming 'true' means confirmation, 'false' means cancelation
+        return result === true;
       })
     );
   }
