@@ -25,14 +25,10 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authToken = this.getjwtToken();
-
-    // Check if the request URL is in the excludedUrls list
     if (this.excludedUrls.some(url => req.url.includes(url))) {
-      // If it is, pass the request unchanged
       return next.handle(req);
     }
 
-    // If it's not, add the Authorization header
     const authReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${authToken}`)
     });
@@ -40,16 +36,13 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(authReq).pipe(
       tap(
         event => {
-          // Success case, continue with the flow.
           if (event instanceof HttpResponse) {
             // Do nothing for now
           }
         },
         error => {
-          // Error case, check for 403 error code.
           if (error instanceof HttpErrorResponse) {
             if (error.status === 403) {
-              // Redirect to login page
               this.router.navigate(['/login']);
             }
           }
