@@ -142,5 +142,7 @@
     "language": "Language",
     "played-case-th": "Played Case",
     "game-language": "Game language:",
-    "age-tooltip-info": "Min age - 18, Max age - 75"
+    "age-tooltip-info": "Min age - 18, Max age - 75",
+    "minutes for": "minutes for",
+    "questions": "questions"
 }
