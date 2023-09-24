@@ -27,15 +27,14 @@ export class HomeComponent implements OnInit {
   inProgress: boolean;
   gameId: number
   currentLang: string
+  isGameStarting: boolean = false;
 
   constructor(
     private caseService: CaseService,
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private languageService: TranslateService,
     private langService: SharedLanguageService
-
   ) { }
 
   toggleClick() {
@@ -91,6 +90,7 @@ export class HomeComponent implements OnInit {
   }
 
   startTest() {
+    this.isGameStarting = true;
     let selectedLanguage = this.currentLang;
     if (!selectedLanguage) {
       selectedLanguage = 'EN'
@@ -102,6 +102,7 @@ export class HomeComponent implements OnInit {
     }
     this.gameService.start(startRequest).subscribe(() => {
       this.router.navigate(['/exam']);
+      this.isGameStarting = false;
     });
   }
 
