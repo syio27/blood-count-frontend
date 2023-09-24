@@ -76,11 +76,11 @@
       </div>
     </div>
     <div class="flex justify-center lg:justify-end">
-      <div class="px-3 py-2 border bg-gray-500 text-white text-xl rounded-md select-none cursor-pointer md:text-2xl"
+      <div class="px-6 py-2 border bg-gray-500 text-white text-xl rounded-full select-none cursor-pointer md:text-2xl"
         (click)="startTest()" *ngIf="!inProgress">
         {{ 'start' | translate }}
       </div>
-      <div class="px-3 py-2 border bg-gray-500 text-white text-xl rounded-md select-none cursor-pointer md:text-2xl"
+      <div class="px-6 py-2 border bg-gray-500 text-white text-xl rounded-full select-none cursor-pointer md:text-2xl"
         (click)="continueTest()" *ngIf="inProgress">
         {{ 'continue' | translate }}
       </div>
