@@ -20,9 +20,9 @@ export class GameService {
         private http: HttpClient
     ) { }
 
-    start(startRequest: IStartGameRequest): Observable<IGameResponse> {
+    start(startRequest: IStartGameRequest): Observable<void> {
         const url = `${this.baseUrl}`;
-        return this.http.post<IGameResponse>(url, startRequest)
+        return this.http.post<void>(url, startRequest)
             .pipe(
                 catchError(this.handleException)
             );

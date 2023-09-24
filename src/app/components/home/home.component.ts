@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
       caseId: this.selectedOptionId,
       language: Language[selectedLanguage.toUpperCase() as keyof typeof Language]
     }
-    this.gameService.start(startRequest).subscribe(data => {
+    this.gameService.start(startRequest).subscribe(() => {
       this.router.navigate(['/exam']);
     });
   }
