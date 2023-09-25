@@ -10,6 +10,8 @@ import { IStartGameRequest } from 'src/app/interfaces/IStartGameRequest';
 import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/enums/language.enum';
 import { SharedLanguageService } from 'src/app/services/shared-lang.service';
+import { NotifierService } from 'angular-notifier';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,14 +30,19 @@ export class HomeComponent implements OnInit {
   gameId: number
   currentLang: string
   isGameStarting: boolean = false;
+  private readonly notifier: NotifierService;
+
 
   constructor(
     private caseService: CaseService,
     private router: Router,
     private gameService: GameService,
     private sharedUserService: SharedUserDetailsService,
-    private langService: SharedLanguageService
-  ) { }
+    private langService: SharedLanguageService,
+    notifierService: NotifierService,
+  ) { 
+    this.notifier = notifierService;
+  }
 
   toggleClick() {
     this.onClick = !this.onClick;
@@ -90,22 +97,39 @@ export class HomeComponent implements OnInit {
   }
 
   startTest() {
-    this.isGameStarting = true;
-    let selectedLanguage = this.currentLang;
-    if (!selectedLanguage) {
-      selectedLanguage = 'EN'
+    if (this.selectedOption.startsWith('Case')) {
+      this.isGameStarting = true;
+      let selectedLanguage = this.currentLang;
+      if (!selectedLanguage) {
+        selectedLanguage = 'EN';
+      }
+      let startRequest: IStartGameRequest = {
+        userId: this.userDetails.id,
+        caseId: this.selectedOptionId,
+        language: Language[selectedLanguage.toUpperCase() as keyof typeof Language],
+      };
+      this.gameService.start(startRequest).subscribe(() => {
+        this.router.navigate(['/exam']);
+        this.isGameStarting = false;
+      });
+    } else if (!this.selectedOption.startsWith('Case')) {
+      this.notifyLanguageNotSelected();
     }
-    let startRequest: IStartGameRequest = {
-      userId: this.userDetails.id,
-      caseId: this.selectedOptionId,
-      language: Language[selectedLanguage.toUpperCase() as keyof typeof Language]
-    }
-    this.gameService.start(startRequest).subscribe(() => {
-      this.router.navigate(['/exam']);
-      this.isGameStarting = false;
-    });
   }
-
+  
+  private notifyLanguageNotSelected() {
+    this.langService.language$
+      .pipe(take(1)) // Take only the first emitted value
+      .subscribe((language: string) => {
+        language == 'EN'
+          ? this.notifier.notify('default', 'Please choose the case to start')
+          : this.notifier.notify(
+              'default',
+              'Wybierz sprawę, od której chcesz rozpocząć'
+            );
+      });
+  }
+  
   continueTest() {
     this.router.navigate(['/exam']);
   }
