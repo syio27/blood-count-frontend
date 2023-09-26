@@ -14,7 +14,7 @@
                         <div class="bg-white rounded-lg shadow-lg p-4 flex justify-between">
                             <div class="flex flex-col md:pr-5 pr-2">
                                 <div class="text-gray-700 font-bold md:text-xl text-base mb-2">{{ 'game' | translate }}
-                                    {{ gameHistory.length - i }}</div>
+                                    {{ calculateIndex(i) }}</div>
                                 <div class="text-gray-700 md:text-sm text-xs mb-1">{{ 'game-language' | translate }} {{
                                     games.language
                                     }}</div>

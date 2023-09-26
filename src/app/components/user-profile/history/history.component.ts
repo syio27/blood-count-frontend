@@ -75,6 +75,11 @@ export class HistoryComponent implements OnInit {
       }
     )
   }
+  calculateIndex(displayedIndex: number): number {
+    const startIndex = (this.currentPage - 1) * this.gamesPerPage;
+    const gameIndex = this.gameHistory.length - startIndex - displayedIndex; 
+    return gameIndex;
+  }
 
   get displayedGames(): ISimpleGameResponse[] {
     const startIndex = (this.currentPage - 1) * this.gamesPerPage;
