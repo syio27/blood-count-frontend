@@ -21,7 +21,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { HistoryComponent } from './components/user-profile/history/history.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { WhiteBoxComponent } from './components/white-box/white-box.component';
+import { WhiteBoxComponent } from './components/reusable-components/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PanelButtonComponent } from './components/header/panel-button/panel-button.component';
 import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
