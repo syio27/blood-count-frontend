@@ -151,9 +151,11 @@ export class GroupsManageComponent implements OnInit {
   }
 
   openPopup(item) {
+    this.isLoading = true
     this.adminService.fetchGroupParticipants(item).subscribe(
       (data) => {
         this.groupParticipants = data
+        this.isLoading = false
       }
     )
     this.openedPopup = true
@@ -204,9 +206,11 @@ export class GroupsManageComponent implements OnInit {
   }
 
   openPopup2(id, email) {
+    this.isLoading = true
     this.adminService.getCompletedGames(id).subscribe(
       (data) => {
         this.userHistory = data
+        this.isLoading = false
       }
     )
     this.openedPopup2 = true
