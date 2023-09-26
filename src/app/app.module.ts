@@ -52,7 +52,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogComponent } from './components/dialog/dialog.component';
-
+import { LoadingComponent } from './components/reusable-components/loading.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -92,6 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ForgotPasswordComponent,
     ResetPasswordComponent,
     DialogComponent,
+    LoadingComponent,
   ],
   imports: [
     ReactiveFormsModule,

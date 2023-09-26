@@ -67,7 +67,6 @@ export class CaseTableComponent implements OnInit {
         this.tableData = [sortedData].flatMap((subArray) => subArray)
           .filter(item => item.language === this.selectedLanguage);
         this.isLoading = false
-
       },
       (error: any) => {
         console.error(error);
