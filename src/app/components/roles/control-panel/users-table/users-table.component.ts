@@ -140,9 +140,11 @@ export class UsersTableComponent implements OnInit {
   }
 
   openPopup(id, email) {
+    this.isLoading = true
     this.adminService.getCompletedGames(id).subscribe(
       (data) => {
         this.userHistory = this.sortByDateField(data, 'endTime').reverse();
+        this.isLoading = false
       }
     )
     this.openedPopup = true
