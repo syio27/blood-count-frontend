@@ -61,9 +61,8 @@
           placeholder="{{ 'select1' | translate }}" (click)="toggleClick()" [class.rounded-t]="onClick"
           [class.rounded]="!onClick" [value]="selectedOption" readonly>
         <span *ngIf="!inProgress && currentLang"
-          class="material-symbols-outlined text-xl select-none font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
+          class="caret text-xl select-none font-bold transition duration-150 transform absolute right-3 top-1/2 -translate-y-1/2"
           [class.rotate-180]="onClick" [class.rotate-0]="!onClick">
-          expand_more
         </span>
         <ul
           class="absolute left-0 right-0 max-h-48 overflow-y-auto bg-white border rounded-b transition origin-top duration-150"
