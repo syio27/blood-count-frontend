@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { tap, Observable, map } from 'rxjs';
 import { GameService } from './game.service';
-import { SharedUserDetailsService } from './shared-user-details.service';
+import { SharedUserDetailsService } from '../shared/shared-user-details.service';
 
 @Injectable({
   providedIn: 'root',

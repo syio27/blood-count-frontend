@@ -1,25 +1,25 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AuthGuard } from './auth/auth.guard';
-import { HomeComponent } from './components/home/home.component';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { HistoryComponent } from './components/user-profile/history/history.component'
-import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
-import { ControlPanelComponent } from './components/roles/control-panel/control-panel.component';
-import { UsersTableComponent } from './components/roles/control-panel/users-table/users-table.component';
-import { InviteUserComponent } from './components/roles/control-panel/invite-user/invite-user.component';
-import { GroupsManageComponent } from './components/roles/control-panel/groups-manage/groups-manage.component';
-import { CaseEntityComponent } from './components/roles/control-panel/case-entity/case-entity.component';
-import { ExamComponent } from './components/exam/exam.component';
-import { CanDeactivateGuard } from './services/can-deactivate.guard';
+import { HomeComponent } from './pages/home/home.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { HistoryComponent } from './pages/user-profile/history/history.component'
+import { CbcTableComponent } from './pages/reference-table-page/reference-page.component';
+import { ControlPanelComponent } from './pages/control-panel-pages/control-panel.component';
+import { UsersComponent } from './pages/control-panel-pages/users/users.component';
+import { InviteUserComponent } from './pages/control-panel-pages/invite-user/invite-user.component';
+import { GroupsComponent } from './pages/control-panel-pages/groups/groups.component';
+import { CaseComponent } from './pages/control-panel-pages/cases/case.component';
+import { ExamComponent } from './pages/exam-pages/exam.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { GameGuard } from './services/game.guard';
-import { RoleGuard } from './services/role.guard';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { RoleGuard } from './guards/role.guard';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -61,7 +61,7 @@ const routes: Routes = [
           },
           {
             path: 'users',
-            component: UsersTableComponent,
+            component: UsersComponent,
             canActivate: [RoleGuard],
             data: { expectedRoles: ['ROOT', 'SUPERVISOR', 'ADMIN'] },
           },
@@ -73,13 +73,13 @@ const routes: Routes = [
           },
           {
             path: 'groups',
-            component: GroupsManageComponent,
+            component: GroupsComponent,
             canActivate: [RoleGuard],
             data: { expectedRoles: ['ROOT', 'ADMIN'] },
           },
           {
             path: 'cases',
-            component: CaseEntityComponent,
+            component: CaseComponent,
             canActivate: [RoleGuard],
             data: { expectedRoles: ['ROOT', 'ADMIN'] },
           },

@@ -1,27 +1,22 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { SharedUserDetailsService } from 'src/app/shared/shared-user-details.service';
+import { UserDetails } from 'src/app/interfaces/IUserDetails';
 
 @Component({
-  selector: 'app-panel-button',
-  templateUrl: './panel-button.component.html',
-  styleUrls: ['./panel-button.component.css']
+  selector: 'app-navigation-bar',
+  templateUrl: './navigation-bar.component.html',
+  styleUrls: ['./navigation-bar.component.css']
 })
-export class PanelButtonComponent {
+export class NavigationBarComponent {
   userDetails: UserDetails;
 
   constructor(
-    private router: Router,
     private sharedUserService: SharedUserDetailsService,
-
   ) { }
+
   ngOnInit() {
     this.sharedUserService.getUserDetails().subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-  }
-  onControlPanel() {
-    this.router.navigate(['/control-panel'])
   }
 }

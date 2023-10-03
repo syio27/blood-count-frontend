@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { SharedLanguageService } from 'src/app/services/shared-lang.service';
+import { SharedLanguageService } from 'src/app/shared/shared-lang.service';
 
 @Component({
   selector: 'app-lang-switcher',

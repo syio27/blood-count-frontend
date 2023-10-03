@@ -8,51 +8,50 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { HeaderComponent } from './components/header/header.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-import { LoginComponent } from './components/login/login.component';
-import { RouterModule, Routes } from '@angular/router';
-import { RegistrationComponent } from './components/registration/registration.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
 import { PopupComponent } from './components/header/popup/popup.component';
 import { LangSwitcherComponent } from './components/header/lang-switcher/lang-switcher.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { HistoryComponent } from './components/user-profile/history/history.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { HistoryComponent } from './pages/user-profile/history/history.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { WhiteBoxComponent } from './components/reusable-components/white-box.component';
+import { WhiteBoxComponent } from './ui/white-box.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PanelButtonComponent } from './components/header/panel-button/panel-button.component';
-import { CbcTableComponent } from './components/cbc-table/cbc-table.component';
-import { ControlPanelComponent } from './components/roles/control-panel/control-panel.component';
-import { NavigationBarComponent } from './components/roles/navigation-bar/navigation-bar.component';
-import { UsersTableComponent } from './components/roles/control-panel/users-table/users-table.component';
-import { InviteUserComponent } from './components/roles/control-panel/invite-user/invite-user.component';
-import { GroupsManageComponent } from './components/roles/control-panel/groups-manage/groups-manage.component';
-import { CaseEntityComponent } from './components/roles/control-panel/case-entity/case-entity.component';
-import { CaseTableComponent } from './components/roles/control-panel/case-entity/case-table/case-table.component';
-import { ExamComponent } from './components/exam/exam.component';
-import { TimerComponent } from './components/exam/timer/timer.component';
+import { CbcTableComponent } from './pages/reference-table-page/reference-page.component';
+import { ControlPanelComponent } from './pages/control-panel-pages/control-panel.component';
+import { NavigationBarComponent } from './pages/control-panel-pages/components/navigation-bar/navigation-bar.component';
+import { UsersComponent } from './pages/control-panel-pages/users/users.component';
+import { InviteUserComponent } from './pages/control-panel-pages/invite-user/invite-user.component';
+import { GroupsComponent } from './pages/control-panel-pages/groups/groups.component';
+import { CaseComponent } from './pages/control-panel-pages/cases/case.component';
+import { CaseTableComponent } from './pages/control-panel-pages/cases/case-table/case-table.component';
+import { ExamComponent } from './pages/exam-pages/exam.component';
+import { TimerComponent } from './pages/exam-pages/components/timer/timer.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { MatStepperModule } from '@angular/material/stepper';
-import { Page2Component } from './components/exam/page2/page2.component';
-import { Page1Component } from './components/exam/page1/page1.component'
-import { CanDeactivateGuard } from './services/can-deactivate.guard';
-import { Page3Component } from './components/exam/page3/page3.component';
-import { Page4Component } from './components/exam/page4/page4.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { NotifierModule } from 'angular-notifier';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
-import {MatChipsModule} from '@angular/material/chips';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { LoadingComponent } from './components/reusable-components/loading.component';
+import { LoadingComponent } from './ui/loading.component';
+import { BCAssessmentComponent } from './pages/exam-pages/bc-assessment/bc-assessment.component';
+import { MultipleChoiceComponent } from './pages/exam-pages/multiple-choice/multiple-choice.component';
+import { SubmissionComponent } from './pages/exam-pages/submission/submission.component';
+import { FinalComponent } from './pages/exam-pages/final/final.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -78,21 +77,21 @@ export function HttpLoaderFactory(http: HttpClient) {
     CbcTableComponent,
     ControlPanelComponent,
     NavigationBarComponent,
-    UsersTableComponent,
+    UsersComponent,
     InviteUserComponent,
-    GroupsManageComponent,
-    CaseEntityComponent,
+    GroupsComponent,
+    CaseComponent,
     CaseTableComponent,
     ExamComponent,
     TimerComponent,
-    Page2Component,
-    Page1Component,
-    Page3Component,
-    Page4Component,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     DialogComponent,
     LoadingComponent,
+    SubmissionComponent,
+    FinalComponent,
+    BCAssessmentComponent,
+    MultipleChoiceComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -130,7 +129,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     MatButtonModule
   ],
-  
+
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],

@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
-import { SharedUserDetailsService } from '../../services/shared-user-details.service'
+import { SharedUserDetailsService } from '../../shared/shared-user-details.service'
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 

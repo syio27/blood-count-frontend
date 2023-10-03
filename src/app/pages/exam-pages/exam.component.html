@@ -1,0 +1,24 @@
+<exam-timer *ngIf="!isGameLoading" (timeUp)="submitGame()" [gameData]="gameData" [submitted]='submitted'
+    [currentPage]='currentPage' [isGameLoading]='isGameLoading' [noTimer]="noTimer"></exam-timer>
+<app-white-box *ngIf="!isGameLoading">
+    <bc-assessment-page *ngIf="currentPage=='ONE' && submitted=='IN_PROGRESS'" [displayedElements]="displayedElements"
+        [displayedElements2]="displayedElements2" [gender]="gender" [age]="age" [answers]="answers"
+        [testData]="testData" [savedAnswers]='savedAnswers' [gameId]="gameId" [userDetails]="userDetails"
+        [currentPage]="currentPage" [nextPage]='nextPage' [gameCaseDetails]='gameCaseDetails'></bc-assessment-page>
+    <multiple-choice-page *ngIf="currentPage=='TWO' && submitted=='IN_PROGRESS'" [msAssesmentTest]="msAssesmentTest"
+        [answers]="answers" [savedAnswers]='savedAnswers' [userDetails]="userDetails" [currentPage]="currentPage"
+        [nextPage]='nextPage' [testData]="testData" [gameId]="gameId"></multiple-choice-page>
+    <submission-page *ngIf="currentPage=='THREE'&& submitted=='IN_PROGRESS'" [userDetails]='userDetails'
+        [gender]="gender" [age]="age" [tableData]='tableData' [submitGame]='submitGame' [answers]="answers"
+        [savedAnswers]='savedAnswers' [gameCaseDetails]="gameCaseDetails"></submission-page>
+    <final-page *ngIf="submitted=='COMPLETED'" [score]="score" [age]="age" [gender]="gender"
+        [gameCaseDetails]="gameCaseDetails"></final-page>
+</app-white-box>
+<div *ngIf="isGameLoading" class="flex flex-col justify-center items-center h-screen">
+    <div class="lds-facebook">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<notifier-container></notifier-container>

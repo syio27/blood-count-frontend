@@ -8,7 +8,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { tap, shareReplay, catchError, of, switchMap, throwError } from 'rxjs';
 import * as moment from 'moment';
 import { UserDetails } from '../interfaces/IUserDetails';
-import { SharedUserDetailsService } from '../services/shared-user-details.service';
+import { SharedUserDetailsService } from '../shared/shared-user-details.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
