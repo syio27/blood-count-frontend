@@ -21,6 +21,7 @@ import { HistoryComponent } from './pages/user-profile/history/history.component
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { WhiteBoxComponent } from './ui/white-box.component';
+import { NoDataComponent } from './ui/no-data.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PanelButtonComponent } from './components/header/panel-button/panel-button.component';
 import { CbcTableComponent } from './pages/reference-table-page/reference-page.component';
@@ -91,7 +92,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubmissionComponent,
     FinalComponent,
     BCAssessmentComponent,
-    MultipleChoiceComponent
+    MultipleChoiceComponent,
+    NoDataComponent
   ],
   imports: [
     ReactiveFormsModule,

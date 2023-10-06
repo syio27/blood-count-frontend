@@ -37,23 +37,24 @@
                         class="absolute left-0 top-0 w-full h-80 bg-white border shadow-2xl rounded-xl">
                         <div class="p-4">
                             <div class="flex justify-between">
-                                <div>{{ 'game' | translate }} {{caseInfo.id}}</div>
+                                <div>{{ 'game' | translate }} ID: {{caseInfo?.id}}</div>
                                 <button class="float-right text-gray-500 hover:text-gray-700" (click)="closePopup()">
                                     {{'close'| translate }}
                                 </button>
                             </div>
                             <div class="w-full bg-gray-100 rounded-md p-4 overflow-y-auto text-base">
-                                <div>{{ 'played-case' | translate }} {{caseInfo.caseId}}</div>
-                                <div>{{ 'start-time1' | translate }} {{(caseInfo.startTime| date:'dd/MM/yyyy HH:mm:ss')}}</div>
-                                <div>{{ 'end-time1' | translate }} {{(caseInfo.endTime| date:'dd/MM/yyyy HH:mm:ss')}}
+                                <div>{{ 'played-case' | translate }} {{caseInfo?.caseId}}</div>
+                                <div>{{ 'start-time1' | translate }} {{(caseInfo?.startTime| date:'dd/MM/yyyyHH:mm:ss')}}
                                 </div>
-                                <div>{{ 'test-duration1' | translate }}{{caseInfo.testDuration}} </div>
+                                <div>{{ 'end-time1' | translate }} {{(caseInfo?.endTime| date:'dd/MM/yyyy HH:mm:ss')}}
+                                </div>
+                                <div>{{ 'test-duration1' | translate }}{{caseInfo?.testDuration}} </div>
                             </div>
                             <div class="flex justify-center mt-7">
                                 <div class="flex flex-col">
                                     <div class="text-3xl">{{ 'your-score1' | translate }} </div>
-                                    <div class="text-2xl flex justify-center mt-2">{{caseInfo.score * 5}}% |
-                                        {{caseInfo.score}}/20</div>
+                                    <div class="text-2xl flex justify-center mt-2">{{caseInfo?.score * 5}}% |
+                                        {{caseInfo?.score}}/20</div>
                                 </div>
                             </div>
                         </div>
@@ -61,22 +62,14 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center w-full h-[70vh]" *ngIf="displayedGames.length==0 && !isLoading">
-            <div class="flex flex-col">
-                <div class="flex justify-center">
-                    <div class="w-24 h-24 bg-center bg-cover md:w-32 md:h-32 bg-noData"></div>
-                </div>
-                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{
-                    'games-no-data' |
-                    translate }}</div>
-            </div>
-        </div>
+        <app-no-data *ngIf="displayedGames.length==0 && !isLoading">{{'games-no-data' | translate }}</app-no-data>
         <app-loading class="h-[70vh]" *ngIf="displayedGames.length==0 && isLoading"></app-loading>
         <div class="w-full flex justify-center select-none" *ngIf="displayedGames.length!=0">
             <nav class="inline-flex">
                 <div class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                     (click)="previousPage()" [class.opacity-50]="currentPage === 1">
-                    <span> < </span>
+                    <span>
+                        < </span>
                 </div>
                 <ng-container *ngIf="totalPages <= 5; else ellipsisSection">
                     <ng-container *ngFor="let page of pages">
