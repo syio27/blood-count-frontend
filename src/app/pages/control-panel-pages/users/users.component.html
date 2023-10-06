@@ -107,18 +107,10 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center border w-full h-full" *ngIf="tableData.length==0 && !isLoading">
-            <div class="flex flex-col">
-                <div class="flex justify-center">
-                    <div class="bg-noData bg-center bg-cover w-32 h-32"></div>
-                </div>
-                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{
-                    'users-no-data' |
-                    translate }}
-                </div>
-            </div>
+        <div class="h-[48vh]">
+            <app-no-data  *ngIf="tableData.length==0 && !isLoading">{{'users-no-data' | translate }}</app-no-data>
+            <app-loading  *ngIf="tableData.length==0 && isLoading"></app-loading>
         </div>
-        <app-loading class="h-[48vh]" *ngIf="tableData.length==0 && isLoading"></app-loading>
     </div>
     <div class="flex" *ngIf="tableData.length!=0 && currentCategory === Roles.Student">
         <div class="flex flex-row mt-5 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none

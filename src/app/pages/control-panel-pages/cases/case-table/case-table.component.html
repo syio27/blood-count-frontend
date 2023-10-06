@@ -203,18 +203,12 @@
                 </table>
             </div>
         </div>
-        <div class="flex justify-center items-center border w-full h-[68vh]" *ngIf="tableData.length==0 && !isLoading">
-            <div class="flex flex-col">
-                <div class="flex justify-center">
-                    <div class="bg-noData bg-center bg-cover w-32 h-32"></div>
-                </div>
-                <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{
-                    'cases-no-data' |
-                    translate }}
-                </div>
-            </div>
+        <div class="h-[50vh]">
+            <app-no-data *ngIf="tableData.length==0 && !isLoading">
+                {{'cases-no-data' |  translate }}
+            </app-no-data>
+            <app-loading *ngIf="tableData.length==0 && isLoading"></app-loading>
         </div>
-        <app-loading class="h-[48vh]" *ngIf="tableData.length==0 && isLoading"></app-loading>
     </div>
     <div class="w-full mt-4 flex justify-center select-none" [class.hidden]="openedPopup" *ngIf="tableData.length!=0">
         <nav class="inline-flex">
@@ -231,7 +225,6 @@
                     </div>
                 </ng-container>
             </ng-container>
-
             <ng-template #ellipsisSection>
                 <ng-container *ngFor="let page of visiblePages">
                     <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"

@@ -202,17 +202,7 @@
             </div>
         </div>
     </div>
-    <div class="flex justify-center items-center w-full h-[68vh]" *ngIf="groups.length==0 && !isLoading">
-        <div class="flex flex-col">
-            <div class="flex justify-center">
-                <div class="bg-noData bg-center bg-cover w-32 h-32"></div>
-            </div>
-            <div class="flex justify-center text-center text-xl font-bold select-none text-gray-500">{{ 'groups-no-data'
-                |
-                translate }}
-            </div>
-        </div>
-    </div>
+    <app-no-data  *ngIf="groups.length==0 && !isLoading">{{ 'groups-no-data'| translate }}</app-no-data>
     <app-loading class="h-[68vh]" *ngIf="groups.length==0 && isLoading"></app-loading>
     <div class="w-full mt-4 flex justify-center select-none" *ngIf="groups.length!=0">
         <nav class="inline-flex">

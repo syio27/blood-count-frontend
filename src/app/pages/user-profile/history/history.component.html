@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <app-no-data *ngIf="displayedGames.length==0 && !isLoading">{{'games-no-data' | translate }}</app-no-data>
+        <app-no-data class="h-[70vh]" *ngIf="displayedGames.length==0 && !isLoading">{{'games-no-data' | translate }}</app-no-data>
         <app-loading class="h-[70vh]" *ngIf="displayedGames.length==0 && isLoading"></app-loading>
         <div class="w-full flex justify-center select-none" *ngIf="displayedGames.length!=0">
             <nav class="inline-flex">
