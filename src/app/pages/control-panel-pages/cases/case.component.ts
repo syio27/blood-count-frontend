@@ -675,6 +675,7 @@ export class CaseComponent implements OnInit {
     sessionStorage.removeItem('selectedUnitOption')
     sessionStorage.removeItem('selectedLevelTypeOption')
     sessionStorage.removeItem('selectedParameterOption')
+    this.disabledRange = false;
   }
 
   randomizeAllowedBloodCounts(addedValues: ICreateAbnormalityRequest[]): Map<string, number> {
@@ -795,6 +796,7 @@ export class CaseComponent implements OnInit {
         this.caseDataService.refreshTable();
         this.selectedLanguageOption = 'EN';
         this.isSum100 = true;
+        this.disabledRange = false;
       },
       (error: HttpErrorResponse) => {
         this.notifier.notify('error', error.message);

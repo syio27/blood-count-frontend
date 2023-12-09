@@ -555,13 +555,15 @@
                         <input type="number" (input)="saveFormValues(8)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter-min" formControlName="parameter-min"
-                            placeholder="{{ 'min-value' | translate }}" [class.pointer-events-none]="disabledRange">
+                            placeholder="{{ 'min-value' | translate }}" [class.pointer-events-none]="disabledRange"
+                            [class.bg-gray-100]="disabledRange" [class.border-gray-300]="disabledRange">
                     </div>
                     <div class="w-full lg:w-1/5">
                         <input type="number" (input)="saveFormValues(9)"
                             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="parameter-max" formControlName="parameter-max"
-                            placeholder="{{ 'max-value' | translate }}" [class.pointer-events-none]="disabledRange">
+                            placeholder="{{ 'max-value' | translate }}" [class.pointer-events-none]="disabledRange"
+                            [class.bg-gray-100]="disabledRange" [class.border-gray-300]="disabledRange">
                     </div>
                     <div class="relative" [class.open]="levelTypeDropdownOpen">
                         <input type="text"
