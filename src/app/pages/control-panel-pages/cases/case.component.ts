@@ -226,7 +226,7 @@ export class CaseComponent implements OnInit {
       this.selectedUnitOption = storedSelectedUnitOption;
     }
     if (this.selectedParameterOption == 'HGB') {
-      this.selectedUnitOption = 'g/dl'
+      this.selectedUnitOption = 'g/dL'
       this.disabledUnit = true
       this.disabledRange = true
       this.unitDropdownOpen = false
@@ -268,7 +268,7 @@ export class CaseComponent implements OnInit {
       this.levelTypeDropdownOptions = ['Below normal 1', 'Below normal 2', 'Normal', 'Above normal 1', 'Above normal 2']
     }
     else if (this.selectedParameterOption == 'MCHC') {
-      this.selectedUnitOption = 'g/dl'
+      this.selectedUnitOption = 'g/dL'
       this.disabledUnit = true
       this.unitDropdownOpen = false
       this.disabledRange = false
@@ -518,7 +518,7 @@ export class CaseComponent implements OnInit {
     sessionStorage.setItem('parameter-max', '')
     sessionStorage.setItem('selectedParameterOption', option);
     if (this.selectedParameterOption == 'HGB') {
-      this.selectedUnitOption = 'g/dl'
+      this.selectedUnitOption = 'g/dL'
       this.disabledUnit = true
       this.unitDropdownOpen = false
       this.disabledRange = true
