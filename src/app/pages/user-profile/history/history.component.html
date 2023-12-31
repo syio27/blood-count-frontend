@@ -44,7 +44,9 @@
                             </div>
                             <div class="w-full bg-gray-100 rounded-md p-4 overflow-y-auto text-base">
                                 <div>{{ 'played-case' | translate }} {{caseInfo?.caseId}}</div>
-                                <div>{{ 'start-time1' | translate }} {{(caseInfo?.startTime| date:'dd/MM/yyyyHH:mm:ss')}}
+                                <div>
+                                    {{ 'start-time1' | translate }}
+                                    {{(caseInfo?.startTime| date:'dd/MM/yyyy HH:mm:ss')}}
                                 </div>
                                 <div>{{ 'end-time1' | translate }} {{(caseInfo?.endTime| date:'dd/MM/yyyy HH:mm:ss')}}
                                 </div>
@@ -62,7 +64,8 @@
                 </div>
             </div>
         </div>
-        <app-no-data class="h-[70vh]" *ngIf="displayedGames.length==0 && !isLoading">{{'games-no-data' | translate }}</app-no-data>
+        <app-no-data class="h-[70vh]" *ngIf="displayedGames.length==0 && !isLoading">{{'games-no-data' | translate
+            }}</app-no-data>
         <app-loading class="h-[70vh]" *ngIf="displayedGames.length==0 && isLoading"></app-loading>
         <div class="w-full flex justify-center select-none" *ngIf="displayedGames.length!=0">
             <nav class="inline-flex">
