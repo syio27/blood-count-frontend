@@ -144,5 +144,9 @@
     "game-language": "Game language:",
     "age-tooltip-info": "Min age - 18, Max age - 75",
     "minutes for": "minutes for",
-    "questions": "questions"
+    "questions": "questions",
+    "have-game-in-progress": "You have a game in progress",
+    "progress-bar-text1": "Answered",
+    "progress-bar-text2": "out of",
+    "progress-bar-text3": "questions"
 }

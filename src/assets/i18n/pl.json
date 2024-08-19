@@ -144,5 +144,9 @@
     "game-language": "Język gry:",
     "age-tooltip-info": "Min wiek - 18, max wiek - 75",
     "minutes for": "minut na",
-    "questions": "pytań"
+    "questions": "pytań",
+    "have-game-in-progress": "Masz Grę w toku",
+    "progress-bar-text1": "Odpowiedziano na",
+    "progress-bar-text2": "z",
+    "progress-bar-text3": "pytań"
 }

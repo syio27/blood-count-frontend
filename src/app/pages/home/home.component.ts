@@ -24,11 +24,12 @@ export class HomeComponent implements OnInit {
   dropdownOptions: ICaseResponse[] = [];
   selectedOption = null;
   selectedOptionId = null;
-  isTestFinished: string;
   inProgress: boolean;
-  gameId: number
-  currentLang: string
+  gameId: number;
+  currentLang: string;
   isGameStarting: boolean = false;
+  numberOfQuestions: number;
+  numberOfAnsweredQuestions: number;
   private readonly notifier: NotifierService;
 
 
@@ -62,6 +63,8 @@ export class HomeComponent implements OnInit {
       this.gameService.checkIfAnyInProgress(this.userDetails.id).subscribe(response => {
         this.inProgress = response.inProgress;
         this.gameId = response.gameId;
+        this.numberOfQuestions = response.numberOfQuestions;
+        this.numberOfAnsweredQuestions = response.numberOfAnsweredQuestions;
         if (this.inProgress && language == 'EN') {
           this.selectedOption = 'Your game is running, please press continue button';
         }
