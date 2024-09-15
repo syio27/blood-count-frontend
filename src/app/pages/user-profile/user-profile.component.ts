@@ -66,8 +66,10 @@ export class UserProfileComponent implements OnInit {
         this.formSubmitAttempt = false;
       }),
       this.sharedUserService.getUserDetails().subscribe(userDetails => {
-        this.userDetails = userDetails;
-        this.fetchLastGameHistory()
+        const userEmail = userDetails.email;
+        this.sharedUserService.fetchUserDetailsByEmail(userEmail).subscribe(userDetails => {
+          this.userDetails = userDetails;
+        })
       });
   }
 
