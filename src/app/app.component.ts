@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
         if (event.url === '/login' || event.url === '/register') {
           this.authService.removeAccess();
         }
+        window.scrollTo(0, 0);
       });
   }
 }
