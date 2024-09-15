@@ -152,7 +152,7 @@
                         <tbody id="table-body" class="items-center text-center">
                             <tr *ngFor="let history of userHistory">
                                 <td class="border">{{ history.language }}</td>
-                                <td class="border">{{ 'case' | translate }}  {{ history.caseId}}</td>
+                                <td class="border">{{ 'case' | translate }} {{ history.caseId}}</td>
                                 <td class="border">{{ history.startTime | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                                 <td class="border">{{ history.endTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                                 <td class="border">{{ history.testDuration}}</td>
@@ -195,14 +195,14 @@
                     </div>
                     <div class="mt-32 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded select-none
                     focus:outline-none focus:shadow-outline w-full lg:w-auto text-center cursor-pointer"
-                        (click)="onSubmit()">
+                        (click)="changeUserGroup()">
                         Assign
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <app-no-data  *ngIf="groups.length==0 && !isLoading">{{ 'groups-no-data'| translate }}</app-no-data>
+    <app-no-data *ngIf="groups.length==0 && !isLoading">{{ 'groups-no-data'| translate }}</app-no-data>
     <app-loading class="h-[68vh]" *ngIf="groups.length==0 && isLoading"></app-loading>
     <div class="w-full mt-4 flex justify-center select-none" *ngIf="groups.length!=0">
         <nav class="inline-flex">

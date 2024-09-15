@@ -6,7 +6,6 @@ import { ICreateGroupRequest } from 'src/app/interfaces/ICreateGroupRequest';
 import { GroupType } from 'src/app/enums/groupType.enum';
 import { AdminService } from 'src/app/services/administration.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgToastService } from 'ng-angular-popup'
 import { SharedUserDetailsService } from 'src/app/shared/shared-user-details.service';
 import { UserDetails } from 'src/app/interfaces/IUserDetails';
 import { ISimpleGameResponse } from 'src/app/interfaces/ISimpleGameResponse';
@@ -46,7 +45,6 @@ export class GroupsComponent implements OnInit {
     private groupService: GroupService,
     private fb: FormBuilder,
     private adminService: AdminService,
-    private toast: NgToastService,
     private sharedUserService: SharedUserDetailsService,
     notifierService: NotifierService
   ) {
@@ -241,7 +239,7 @@ export class GroupsComponent implements OnInit {
     this.onClick = false;
   }
 
-  onSubmit() {
+  changeUserGroup() {
     this.adminService.changeUserGroup(this.currentUserID, this.selectedOption).subscribe(
       () => {
         this.notifier.notify('success', 'User assigned to the selected group');
