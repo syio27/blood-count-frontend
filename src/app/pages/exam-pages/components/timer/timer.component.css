@@ -1,0 +1,32 @@
+/* Default state with no glow, but a smooth transition */
+.border {
+    border: 2px solid transparent;
+    transition: border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+/* Glowing border with animation */
+.glowing-border {
+    border: 2px solid orange;
+    animation: glow 1s ease-in-out infinite alternate;
+    /* Set initial box-shadow to prevent a jump */
+    box-shadow: 0 0 5px orange, 0 0 10px yellow, 0 0 15px orange;
+}
+
+/* Define the glowing effect */
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px orange, 0 0 10px yellow, 0 0 15px orange;
+        border-color: orange;
+    }
+
+    to {
+        box-shadow: 0 0 20px yellow, 0 0 30px orange, 0 0 40px yellow;
+        border-color: yellow;
+    }
+}
+
+/* After the glow, smooth the transition back to normal */
+.w-full:not(.glowing-border) {
+    /* Ensure a gradual fade-out of the glow */
+    box-shadow: 0 0 5px transparent, 0 0 10px transparent, 0 0 15px transparent;
+}
