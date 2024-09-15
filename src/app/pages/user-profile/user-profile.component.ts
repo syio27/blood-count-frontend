@@ -71,6 +71,7 @@ export class UserProfileComponent implements OnInit {
           this.userDetails = userDetails;
         })
       });
+    this.fetchLastGameHistory()
   }
 
   isFieldInvalid(field: string) {
