@@ -138,9 +138,16 @@ export class ExamComponent implements OnInit, CanComponentDeactivate {
 
   private invokeNextApi(mergedAnswers: any[]) {
     this.gameService.next(this.gameId, this.userDetails.id, mergedAnswers).subscribe(
-      data =>
-        this.currentPage = data.currentPage
+      (data) => {
+        this.currentPage = data.currentPage;
+        // After the currentPage changes, reset scroll to top
+        this.scrollToTop();
+      }
     )
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);  // Reset the scroll position
   }
 
   private invokeCompleteApi() {
