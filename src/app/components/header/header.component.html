@@ -3,8 +3,9 @@
   <div *ngIf="showPcLogo" class="md:px-8 md:py-3 sm:px-6 sm:py-2 z-10">
     <div (click)="onLogo()" class="select-none cursor-pointer ">
       <span class="text-2xl md:text-3xl font-normal logo">BLOODCOUNT</span>
-      <div class="position rounded-md border bg-red-500 red-dot"></div>
-      <span class="logo text-1xl">| app</span>
+      <span class="logo text-1xl relative">| app
+        <div class="rounded-md border bg-red-500 red-dot absolute"></div>
+      </span>
     </div>
   </div>
   <!-- MOBILE LOGO -->

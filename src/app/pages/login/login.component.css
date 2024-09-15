@@ -1,0 +1,19 @@
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    display: inline-block;
+    /* Ensure that it behaves as a block for proper positioning */
+    position: relative;
+    /* Add relative positioning to 'app' to place the red dot inside it */
+}
+
+.red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    left: 13px;
+    /* Position the red dot over the 'a' of 'app' */
+    top: -10px;
+    /* Adjust the height to move the dot above the text */
+}
