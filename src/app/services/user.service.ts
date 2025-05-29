@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, catchError, tap, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { PasswordChangeRequest } from '../interfaces/IPasswordChangeRequest';
 import { AuthService } from '../auth/auth.service';
 import { AuthenticationResponse } from '../interfaces/IAuthenticationResponse';
 import { IUserSelectedAnswerResponse } from '../interfaces/ISelectedUserAnswers';
 import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
-import { environment } from 'src/environments/environment';
+import { BaseService } from './base.service';
 
 /**
  * Service for UserProfile component to communicate with backend
@@ -14,34 +15,33 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserProfileService {
-
-  private readonly baseUrl = `${environment.baseUrl}api/v1/users/`
-
+export class UserProfileService extends BaseService {
   constructor(
-    private http: HttpClient,
+    http: HttpClient,
     private authService: AuthService
-  ) { }
+  ) {
+    super(http, 'users');
+  }
 
   /**
    * function to request the backend to change the password
    * @param passwordChangeRequest FORM entered by user
    * @param id of current logged-in user, passed from localStorage.getItem("userDetails")
    */
-  updatePassword(passwordChangeRequest: PasswordChangeRequest, id: string) {
-    return this.http.put<AuthenticationResponse>(this.baseUrl + `${id}/password`, passwordChangeRequest, { observe: 'body' })
+  updatePassword(passwordChangeRequest: PasswordChangeRequest, id: string): Observable<AuthenticationResponse> {
+    return this.put<AuthenticationResponse>(`${id}/password`, passwordChangeRequest)
       .pipe(
         tap((res: AuthenticationResponse) => {
-          localStorage.removeItem("jwt")
-          localStorage.removeItem("expirationDate")
-          this.authService.setSession(res)
+          localStorage.removeItem("jwt");
+          localStorage.removeItem("expirationDate");
+          this.authService.setSession(res);
         }),
         catchError(this.handleException)
       );
   }
 
   getSelectedAnswersOfStudent(userId: string, gameId: number): Observable<IUserSelectedAnswerResponse[]> {
-    return this.http.get<IUserSelectedAnswerResponse[]>(`${this.baseUrl}${userId}/games/${gameId}`);
+    return this.get<IUserSelectedAnswerResponse[]>(`${userId}/games/${gameId}`);
   }
 
   /**
@@ -50,52 +50,35 @@ export class UserProfileService {
    * @returns 
    */
   getHistory(userId: string): Observable<ISimpleGameResponse[]> {
-    return this.http.get<ISimpleGameResponse[]>(`${this.baseUrl}${userId}/games/completed`);
+    return this.get<ISimpleGameResponse[]>(`${userId}/games/completed`);
   }
 
   getCompletedGameById(userId: string, gameId: number): Observable<ISimpleGameResponse> {
-    return this.http.get<ISimpleGameResponse>(`${this.baseUrl}${userId}?gameId=${gameId}`);
+    return this.get<ISimpleGameResponse>(userId, { gameId });
   }
 
-  forgotPassword(email) {
-    return this.http.post(`${environment.baseUrl}public/api/v1/forgot-password`, email)
-      .pipe(
-        catchError(this.handleException)
-      )
+  forgotPassword(email: any): Observable<any> {
+    return this.postPublic<void>('forgot-password', email)
+      .pipe(catchError(this.handleException));
   }
 
-
-  resetPassword(token: string, email: string, form) {
+  resetPassword(token: string, email: string, form: { newPassword: string; confirmPassword: string }): Observable<any> {
     const payload = {
       token: token,
       email: email,
       newPassword: form.newPassword,
       newPasswordRepeat: form.confirmPassword
-    }
-    return this.http.post(`${environment.baseUrl}public/api/v1/reset-password`, payload)
-      .pipe(
-        catchError(this.handleException)
-      )
+    };
+    return this.postPublic<void>('reset-password', payload)
+      .pipe(catchError(this.handleException));
   }
 
-  validateToken(token: string, email: string) {
+  validateToken(token: string, email: string): Observable<any> {
     const payload = {
       token: token,
       email: email
-    }
-    return this.http.post(`${environment.baseUrl}public/api/v1/validate-token`, payload)
-      .pipe(
-        catchError(this.handleException)
-      )
-  }
-
-  private handleException(exception: HttpErrorResponse) {
-    if (exception.status === 0) {
-      console.error(`Error on client-side occured:, ${exception.error}`)
-    } else {
-      console.error(`Error on server-side occured with status code: ${exception.status} and message: ${JSON.stringify(exception.error)}`)
-    }
-
-    return throwError(() => exception.error)
+    };
+    return this.postPublic<void>('validate-token', payload)
+      .pipe(catchError(this.handleException));
   }
 }

@@ -1,31 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, catchError, retry, tap, Observable, switchMap, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { IGameResponse } from '../interfaces/IGameResponse';
 import { IAnswerRequest } from '../interfaces/IAnswerRequest';
-import { environment } from 'src/environments/environment';
 import { IGameCurrentSessionState } from '../interfaces/IGameCurrentSessionState';
-import { IGameInProgress } from '../interfaces/IGameInProgress';
-import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
 import { IStartGameRequest } from '../interfaces/IStartGameRequest';
-
+import { BaseService } from './base.service';
+import { catchError } from 'rxjs/operators';
+import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
+import { IGameInProgress } from '../interfaces/IGameInProgress';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GameService {
-    private readonly baseUrl = `${environment.baseUrl}api/v1/games/`
-
-    constructor(
-        private http: HttpClient
-    ) { }
+export class GameService extends BaseService {
+    constructor(http: HttpClient) {
+        super(http, 'games');
+    }
 
     start(startRequest: IStartGameRequest): Observable<void> {
-        const url = `${this.baseUrl}`;
-        return this.http.post<void>(url, startRequest)
-            .pipe(
-                catchError(this.handleException)
-            );
+        return this.post<void>('', startRequest)
+            .pipe(catchError(this.handleException));
     }
 
     complete(gameId: number, userId: string): Observable<ISimpleGameResponse> {
@@ -37,11 +32,8 @@ export class GameService {
     }
 
     getInProgressGame(gameId: number, userId: string): Observable<IGameResponse> {
-        const url = `${this.baseUrl}${gameId}?userId=${userId}`;
-        return this.http.get<IGameResponse>(url, {})
-            .pipe(
-                catchError(this.handleException)
-            );
+        return this.get<IGameResponse>(`${gameId}`, { userId })
+            .pipe(catchError(this.handleException));
     }
 
     checkIfAnyInProgress(userId: string): Observable<IGameInProgress> {
@@ -52,29 +44,13 @@ export class GameService {
             );
     }
 
-    autoSave(gameId: number, userId: string, answerRequests: IAnswerRequest[]) {
-        const url = `${this.baseUrl}${gameId}/save?userId=${userId}`;
-        return this.http.post<void>(url, answerRequests)
-            .pipe(
-                catchError(this.handleException)
-            );
+    autoSave(gameId: number, userId: string, answerRequests: IAnswerRequest[]): Observable<void> {
+        return this.post<void>(`${gameId}/save`, answerRequests, { userId })
+            .pipe(catchError(this.handleException));
     }
 
     next(gameId: number, userId: string, answerRequests: IAnswerRequest[]): Observable<IGameCurrentSessionState> {
-        const url = `${this.baseUrl}${gameId}/next?userId=${userId}`;
-        return this.http.post<IGameCurrentSessionState>(url, answerRequests)
-            .pipe(
-                catchError(this.handleException)
-            );
-    }
-
-    private handleException(exception: HttpErrorResponse) {
-        if (exception.status === 0) {
-            console.error(`Error on client-side occured:, ${exception.message}`)
-        } else {
-            console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.message}`)
-        }
-
-        return throwError(() => exception.message)
+        return this.post<IGameCurrentSessionState>(`${gameId}/next`, answerRequests, { userId })
+            .pipe(catchError(this.handleException));
     }
 }

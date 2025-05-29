@@ -1,81 +1,63 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { throwError, catchError, retry, tap, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { IInviteUserRequest } from '../interfaces/IInviteUserRequest';
 import { UserDetails } from '../interfaces/IUserDetails';
 import { Roles } from '../enums/role.enum';
 import { ISimpleGameResponse } from '../interfaces/ISimpleGameResponse';
-import { environment } from 'src/environments/environment';
-
+import { BaseService } from './base.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AdminService {
-    private readonly baseUrl = `${environment.baseUrl}api/v1/users/`
-
-    constructor(
-        private http: HttpClient
-    ) { }
-
-    invite(inviteRequest: IInviteUserRequest) {
-        return this.http.post(this.baseUrl + "invite", inviteRequest)
-            .pipe(
-                catchError(this.handleException)
-            )
+export class AdminService extends BaseService {
+    constructor(http: HttpClient) {
+        super(http, 'users');
     }
 
-    assignUserToGroup(groupNumber: string, uuid: string) {
+    invite(inviteRequest: IInviteUserRequest): Observable<void> {
+        return this.post<void>('invite', inviteRequest)
+            .pipe(catchError(this.handleException));
+    }
+
+    assignUserToGroup(groupNumber: string, uuid: string): Observable<void> {
         const payload = { groupNumber: groupNumber };
-        return this.http.post(this.baseUrl + `${uuid}/group`, payload)
-            .pipe(
-                catchError(this.handleException)
-            )
+        return this.post<void>(`${uuid}/group`, payload)
+            .pipe(catchError(this.handleException));
     }
 
-    assignBatchUsersToGroup(groupNumber: string, uuids: string[]) {
+    assignBatchUsersToGroup(groupNumber: string, uuids: string[]): Observable<void> {
         const payload = {
             userIds: uuids,
             groupNumber: groupNumber
         };
-        return this.http.post(this.baseUrl + "group", payload)
-            .pipe(
-                catchError(this.handleException)
-            )
+        return this.post<void>('group', payload)
+            .pipe(catchError(this.handleException));
     }
 
-    changeUserGroup(uuid: string, groupNumber: string) {
+    changeUserGroup(uuid: string, groupNumber: string): Observable<void> {
         const payload = {
             id: uuid,
             groupNumber: groupNumber
-        }
-        return this.http.put(this.baseUrl + "user/group", payload)
-            .pipe(
-                catchError(this.handleException)
-            )
+        };
+        return this.put<void>('user/group', payload)
+            .pipe(catchError(this.handleException));
     }
 
     fetchGroupParticipants(groupNumber: string): Observable<UserDetails[]> {
-        let params = new HttpParams().set('groupNumber', groupNumber);
-        return this.http.get<UserDetails[]>(this.baseUrl + "group", { params: params })
-            .pipe(
-                catchError(this.handleException)
-            );
+        return this.get<UserDetails[]>('group', { groupNumber })
+            .pipe(catchError(this.handleException));
     }
 
     fetchUsersByRole(role: Roles): Observable<UserDetails[]> {
-        let params = new HttpParams().set('role', role);
-        return this.http.get<UserDetails[]>(this.baseUrl, { params: params })
-            .pipe(
-                catchError(this.handleException)
-            );
+        return this.get<UserDetails[]>('', { role })
+            .pipe(catchError(this.handleException));
     }
 
     ban(userId: string): Observable<void> {
-        return this.http.post<void>(this.baseUrl + `${userId}/ban`, {})
-            .pipe(
-                catchError(this.handleException)
-            )
+        return this.post<void>(`${userId}/ban`, {})
+            .pipe(catchError(this.handleException));
     }
 
     /**
@@ -84,24 +66,14 @@ export class AdminService {
      * @returns 
      */
     getCompletedGames(userId: string): Observable<ISimpleGameResponse[]> {
-        return this.http.get<ISimpleGameResponse[]>(`${this.baseUrl}${userId}/games`);
+        return this.get<ISimpleGameResponse[]>(`${userId}/games`);
     }
 
     deleteUserById(userId: string): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}${userId}`);
+        return this.delete<void>(userId);
     }
 
     assignUserToAnotherGroup(userId: string, groupNumber: string): Observable<void> {
-        return this.http.put<void>(this.baseUrl + 'user/group', { userId, groupNumber });
-    }
-
-    private handleException(exception: HttpErrorResponse) {
-        if (exception.status === 0) {
-            console.error(`Error on client-side occured:, ${exception.error}`)
-        } else {
-            console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.error}`)
-        }
-
-        return throwError(() => exception.error)
+        return this.put<void>('user/group', { userId, groupNumber });
     }
 }

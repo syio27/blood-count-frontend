@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { throwError, catchError, retry, tap, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { BaseService } from './base.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ExportService {
-    private readonly baseUrl = `${environment.baseUrl}api/v1/files/`
-
-    constructor(
-        private http: HttpClient
-    ) { }
+export class ExportService extends BaseService {
+    constructor(http: HttpClient) {
+        super(http, 'files');
+    }
 
     exportGameStats(): Observable<Blob> {
         const headers = new HttpHeaders({
             'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         });
 
-        return this.http.get<Blob>(this.baseUrl + "export", { headers, responseType: 'blob' as 'json' });
+        return this.get<Blob>('export', { headers, responseType: 'blob' as 'json' })
+            .pipe(catchError(this.handleException));
     }
 }

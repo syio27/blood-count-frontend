@@ -1,34 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, catchError, retry, tap, Observable, switchMap, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, retry, switchMap, map } from 'rxjs/operators';
 import { ICreateCaseRequest } from '../interfaces/ICreateCaseRequest';
 import { ICreateAbnormalityRequest } from '../interfaces/ICreateAbnormalityRequest';
 import { ICaseResponse } from '../interfaces/ICaseResponse';
-import { environment } from 'src/environments/environment';
-
+import { BaseService } from './base.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CaseService {
-    private readonly baseUrl = `${environment.baseUrl}api/v1/cases/`
-
-    constructor(
-        private http: HttpClient
-    ) { }
-
-    private createCase(caseRequest: ICreateCaseRequest): Observable<ICaseResponse> {
-        return this.http.post<ICaseResponse>(this.baseUrl, caseRequest)
-            .pipe(
-                catchError(this.handleException)
-            );
+export class CaseService extends BaseService {
+    constructor(http: HttpClient) {
+        super(http, 'cases');
     }
 
-    private createAbnormality(caseId: number, abnormalityRequestList: ICreateAbnormalityRequest[]) {
-        return this.http.post<void>(this.baseUrl + `${caseId}/abnormalities`, abnormalityRequestList)
-            .pipe(
-                catchError(this.handleException)
-            );
+    createCase(caseRequest: ICreateCaseRequest): Observable<ICaseResponse> {
+        return this.post<ICaseResponse>('', caseRequest)
+            .pipe(catchError(this.handleException));
+    }
+
+    createAbnormality(caseId: number, abnormalityRequestList: ICreateAbnormalityRequest[]): Observable<void> {
+        return this.post<void>(`${caseId}/abnormalities`, abnormalityRequestList)
+            .pipe(catchError(this.handleException));
     }
 
     createCaseWithAbnormality(caseData: ICreateCaseRequest, abnormalityDataList: ICreateAbnormalityRequest[]): Observable<ICaseResponse> {
@@ -43,7 +37,7 @@ export class CaseService {
     }
 
     getAllCasesWithAbnormalities(): Observable<ICaseResponse[]> {
-        return this.http.get<ICaseResponse[]>(this.baseUrl + "abnormalities", { observe: 'body', responseType: 'json' })
+        return this.get<ICaseResponse[]>('abnormalities')
             .pipe(
                 retry(3),
                 catchError(this.handleException)
@@ -51,24 +45,15 @@ export class CaseService {
     }
 
     getCaseWithAbnormalities(id: number): Observable<ICaseResponse> {
-        return this.http.get<ICaseResponse>(this.baseUrl + `${id}/abnormalities`, { observe: 'body', responseType: 'json' })
+        return this.get<ICaseResponse>(`${id}/abnormalities`)
             .pipe(
                 retry(3),
                 catchError(this.handleException)
             );
     }
 
-    deleteCase(id: number) {
-        return this.http.delete(this.baseUrl + `${id}`);
-    }
-
-    private handleException(exception: HttpErrorResponse) {
-        if (exception.status === 0) {
-            console.error(`Error on client-side occured:, ${exception.error}`)
-        } else {
-            console.error(`Error on server-side occured with status code: ${exception.status} and message: ${exception.error}`)
-        }
-
-        return throwError(() => exception.error)
+    deleteCase(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}${id}`)
+            .pipe(catchError(this.handleException));
     }
 }
